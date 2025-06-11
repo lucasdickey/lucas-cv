@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Repository & Article List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .terminal-header {
+            border: 1px solid #30363d;
+            background-color: #161b22;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .terminal-prompt {
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+
+        .terminal-title {
+            color: #58a6ff;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .terminal-subtitle {
+            color: #8b949e;
+            font-size: 0.9em;
+        }
+
+        .type-section {
+            margin-bottom: 30px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .type-header {
+            background-color: #21262d;
+            padding: 12px 15px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .type-title {
+            color: #f0883e;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .type-count {
+            color: #8b949e;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .entries-list {
+            background-color: #0d1117;
+        }
+
+        .entry {
+            padding: 15px;
+            border-bottom: 1px solid #21262d;
+            transition: background-color 0.2s ease;
+        }
+
+        .entry:last-child {
+            border-bottom: none;
+        }
+
+        .entry:hover {
+            background-color: #161b22;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .entry-title {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .entry-title:hover {
+            color: #79c0ff;
+            text-decoration: underline;
+        }
+
+        .entry-date {
+            color: #7c3aed;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .entry-description {
+            color: #c9d1d9;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .entry-source {
+            color: #8b949e;
+            font-size: 0.85em;
+        }
+
+        .entry-source a {
+            color: #f85149;
+            text-decoration: none;
+        }
+
+        .entry-source a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            color: #7c3aed;
+            padding: 20px;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .entry-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .entry-date {
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-header">
+        <div class="terminal-prompt">user@terminal:~$ ls -la repositories/</div>
+        <h1 class="terminal-title">Repository & Article Archive</h1>
+        <p class="terminal-subtitle">Curated collection of code repositories and technical articles</p>
+    </div>
+
+    <div id="content">
+        <div class="loading">
+            Loading entries<span class="cursor">_</span>
+        </div>
+    </div>
+
+    <script>
+        // Sample data structure (in a real implementation, this could be loaded from markdown files)
+        const entries = [
+            {
+                title: "React Performance Optimization Guide",
+                description: "A comprehensive guide covering React performance optimization techniques including memoization, code splitting, and bundle analysis.",
+                publishedDate: "2024-01-15",
+                type: "code",
+                sourceUrl: "https://github.com/user/react-performance",
+                sourceTitle: "GitHub Repository",
+                sourceDescription: "Complete React performance optimization examples and benchmarks"
+            },
+            {
+                title: "The Future of Web Development",
+                description: "An in-depth analysis of emerging trends in web development, including WebAssembly, edge computing, and the evolution of JavaScript frameworks.",
+                publishedDate: "2024-01-10",
+                type: "opinion",
+                sourceUrl: "https://techblog.com/future-web-dev",
+                sourceTitle: "Tech Blog",
+                sourceDescription: "Weekly insights on technology trends and industry analysis"
+            },
+            {
+                title: "Docker Container Security Best Practices",
+                description: "Essential security practices for Docker containers in production environments, covering image scanning, runtime security, and network policies.",
+                publishedDate: "2024-01-08",
+                type: "code",
+                sourceUrl: "https://github.com/user/docker-security",
+                sourceTitle: "GitHub Repository",
+                sourceDescription: "Docker security configurations and scanning tools"
+            },
+            {
+                title: "AI in Software Development Podcast",
+                description: "Discussion about the impact of artificial intelligence on software development workflows, featuring industry experts and practical examples.",
+                publishedDate: "2024-01-05",
+                type: "podcast",
+                sourceUrl: "https://podcast.com/ai-software-dev",
+                sourceTitle: "Dev Podcast Network",
+                sourceDescription: "Weekly podcast covering software development trends and technologies"
+            },
+            {
+                title: "Breaking: New JavaScript Framework Released",
+                description: "Major announcement of a new JavaScript framework that promises to revolutionize frontend development with improved performance and developer experience.",
+                publishedDate: "2024-01-03",
+                type: "news",
+                sourceUrl: "https://news.dev/new-js-framework",
+                sourceTitle: "Developer News",
+                sourceDescription: "Latest news and updates from the software development community"
+            },
+            {
+                title: "Microservices Architecture Patterns",
+                description: "Implementation patterns for microservices architecture including service discovery, API gateways, and distributed tracing solutions.",
+                publishedDate: "2024-01-01",
+                type: "code",
+                sourceUrl: "https://github.com/user/microservices-patterns",
+                sourceTitle: "GitHub Repository",
+                sourceDescription: "Microservices implementation examples and architectural patterns"
+            },
+            {
+                title: "Why TypeScript is Taking Over",
+                description: "Analysis of TypeScript adoption trends and why more development teams are choosing TypeScript over vanilla JavaScript for large-scale applications.",
+                publishedDate: "2023-12-28",
+                type: "opinion",
+                sourceUrl: "https://devblog.com/typescript-adoption",
+                sourceTitle: "Developer Blog",
+                sourceDescription: "Insights and opinions on modern development practices"
+            },
+            {
+                title: "Cloud Native Development Podcast",
+                description: "Deep dive into cloud-native development practices, containerization strategies, and Kubernetes deployment patterns with industry practitioners.",
+                publishedDate: "2023-12-25",
+                type: "podcast",
+                sourceUrl: "https://podcast.com/cloud-native",
+                sourceTitle: "Cloud Tech Podcast",
+                sourceDescription: "Weekly discussions on cloud technologies and DevOps practices"
+            }
+        ];
+
+        // Group entries by type and sort by date
+        function groupAndSortEntries(entries) {
+            const grouped = {};
+            
+            entries.forEach(entry => {
+                if (!grouped[entry.type]) {
+                    grouped[entry.type] = [];
+                }
+                grouped[entry.type].push(entry);
+            });
+
+            // Sort each group by date (newest first)
+            Object.keys(grouped).forEach(type => {
+                grouped[type].sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
+            });
+
+            return grouped;
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Get type display name and icon
+        function getTypeInfo(type) {
+            const typeMap = {
+                'code': { name: 'Code Repositories', icon: '📦' },
+                'news': { name: 'News Articles', icon: '📰' },
+                'opinion': { name: 'Opinion Pieces', icon: '💭' },
+                'podcast': { name: 'Podcasts', icon: '🎧' }
+            };
+            return typeMap[type] || { name: type.charAt(0).toUpperCase() + type.slice(1), icon: '📄' };
+        }
+
+        // Render entries
+        function renderEntries() {
+            const contentDiv = document.getElementById('content');
+            const groupedEntries = groupAndSortEntries(entries);
+            
+            let html = '';
+            
+            // Sort types for consistent display order
+            const sortedTypes = Object.keys(groupedEntries).sort();
+            
+            sortedTypes.forEach(type => {
+                const typeInfo = getTypeInfo(type);
+                const typeEntries = groupedEntries[type];
+                
+                html += `
+                    <div class="type-section">
+                        <div class="type-header">
+                            <span class="type-title">${typeInfo.icon} ${typeInfo.name}</span>
+                            <span class="type-count">(${typeEntries.length} entries)</span>
+                        </div>
+                        <div class="entries-list">
+                `;
+                
+                typeEntries.forEach(entry => {
+                    html += `
+                        <div class="entry">
+                            <div class="entry-header">
+                                <a href="${entry.sourceUrl}" class="entry-title" target="_blank" rel="noopener noreferrer">
+                                    ${entry.title}
+                                </a>
+                                <span class="entry-date">${formatDate(entry.publishedDate)}</span>
+                            </div>
+                            <div class="entry-description">${entry.description}</div>
+                            <div class="entry-source">
+                                Source: <a href="${entry.sourceUrl}" target="_blank" rel="noopener noreferrer">${entry.sourceTitle}</a>
+                                ${entry.sourceDescription ? ` - ${entry.sourceDescription}` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            contentDiv.innerHTML = html;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading delay for terminal effect
+            setTimeout(() => {
+                renderEntries();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
