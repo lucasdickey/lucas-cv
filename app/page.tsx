@@ -1,6 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react"
+import AudioPlayer from "../components/AudioPlayer"
 
 interface Entry {
   title: string
@@ -13,48 +15,118 @@ interface Entry {
 }
 
 const entries: Entry[] = [
-  // CV Section
+  // CV Section - Professional Background
   {
-    title: "Professional Experience & Background",
+    title: "Lucas Dickey - Senior Product Leader & Serial Founder",
     description:
-      "Comprehensive professional profile including work experience, skills, education, and career achievements. Connect with me to explore collaboration opportunities.",
-    publishedDate: "2024-01-20",
+      "20+ years as PM and product leader across all stages: Amazon (growth), acquisitions, co-founder at Fernish ($45M raised, 250+ employees), founder at DeepCast. Known for 0→1 and 1→10 execution, product-market fit hunting, and hands-on GTM. Experience from public behemoth (Amazon) to VC-backed startups to PE-owned companies.",
+    publishedDate: "2025-06-20",
     type: "cv",
     sourceUrl: "https://linkedin.com/in/lucasdickey",
-    sourceTitle: "LinkedIn Profile",
-    sourceDescription: "Professional networking and career information",
+    sourceTitle: "Professional Profile",
+    sourceDescription: "Senior operator, founder, and product leader",
+  },
+  {
+    title: "DeepCast - CEO & Founder (2023-2025)",
+    description:
+      "Founded and led podcast intelligence platform leveraging AI for transcription, summarization, and search. Built on Claude LLM, AssemblyAI, Pinecone vector DB. CEO & CPO responsible for product strategy, fundraising, and team building in the rapidly evolving AI/audio space.",
+    publishedDate: "2025-06-20",
+    type: "cv",
+    sourceUrl: "https://deepcast.fm",
+    sourceTitle: "DeepCast",
+    sourceDescription: "AI-powered podcast intelligence platform",
+  },
+  {
+    title: "Fernish - Co-Founder & CPTO (2017-2023)",
+    description:
+      "Co-founded furniture rental startup focused on circular economy for renters. Scaled to $45M raised, $20M+ debt facilities, 10K+ customers, 250+ employees, nationwide operations across 7+ major markets. Led product, engineering, design, data science, and shared P&L ownership. Acquired in 2023.",
+    publishedDate: "2023-06-28",
+    type: "cv",
+    sourceUrl: "https://fernish.com",
+    sourceTitle: "Fernish",
+    sourceDescription: "Furniture rental platform - Co-founder & CPTO",
+  },
+  {
+    title: "Amazon MP3 - Product Manager (2007-2011)",
+    description:
+      "Early PM on Amazon's digital music business from launch, scaling from $0 to $300M in 3 years. Launched internationally across EU and Japan. Led Cloud Drive/Cloud Player strategy, presented to Jeff Bezos S-team. First internal consumer of CloudFront and S3 for consumer applications - foundation for Amazon Music.",
+    publishedDate: "2011-02-01",
+    type: "cv",
+    sourceUrl: "https://amazon.com",
+    sourceTitle: "Amazon",
+    sourceDescription: "Digital music platform - launched and scaled to $300M",
+  },
+  {
+    title: "Azibo - Chief Product Officer (2022-2023)",
+    description:
+      "CPO of Series A landlord management platform. Led product management, design, and strategy. Managed 3 PMs, 1 analyst, 5 designers. Re-launched brand, shipped lease generation, banking features, and accounting suite. Management participant in board meetings.",
+    publishedDate: "2023-06-01",
+    type: "cv",
+    sourceUrl: "https://azibo.com",
+    sourceTitle: "Azibo",
+    sourceDescription: "Real estate management platform - CPO",
   },
 
-  // Code Repositories (keeping existing ones for now)
+  // GitHub Projects - Real Projects
   {
-    title: "React Performance Optimization Guide",
+    title: "a-ok-shop",
     description:
-      "A comprehensive guide covering React performance optimization techniques including memoization, code splitting, and bundle analysis.",
-    publishedDate: "2024-01-15",
+      "AI-generated satire fashion brand with fully automated Shopify storefront. Features GraphQL integration, custom Next.js infrastructure, dynamic game-based discount codes, and self-replicating art generation.",
+    publishedDate: "2024-12-01",
     type: "code",
-    sourceUrl: "https://github.com/user/react-performance",
+    sourceUrl: "https://github.com/lucas-dickey/a-ok-shop",
     sourceTitle: "GitHub Repository",
-    sourceDescription: "Complete React performance optimization examples and benchmarks",
+    sourceDescription: "Automated e-commerce with AI art generation - 1 star",
   },
   {
-    title: "Docker Container Security Best Practices",
+    title: "obbb - One Big Beautiful Bill",
     description:
-      "Essential security practices for Docker containers in production environments, covering image scanning, runtime security, and network policies.",
-    publishedDate: "2024-01-08",
+      "Research tool for government affairs and policy analysis. HTML-based platform for tracking legislative information and providing insights for government relations work.",
+    publishedDate: "2024-11-01",
     type: "code",
-    sourceUrl: "https://github.com/user/docker-security",
+    sourceUrl: "https://github.com/lucas-dickey/obbb",
     sourceTitle: "GitHub Repository",
-    sourceDescription: "Docker security configurations and scanning tools",
+    sourceDescription: "Government affairs research tool - 1 star",
   },
   {
-    title: "Microservices Architecture Patterns",
+    title: "self-replicating-art",
     description:
-      "Implementation patterns for microservices architecture including service discovery, API gateways, and distributed tracing solutions.",
-    publishedDate: "2024-01-01",
+      "Experimental TypeScript project exploring generative art creation with self-replicating algorithms. Part of the broader A-OK brand ecosystem for automated creative content generation.",
+    publishedDate: "2024-10-01",
     type: "code",
-    sourceUrl: "https://github.com/user/microservices-patterns",
+    sourceUrl: "https://github.com/lucas-dickey/self-replicating-art",
     sourceTitle: "GitHub Repository",
-    sourceDescription: "Microservices implementation examples and architectural patterns",
+    sourceDescription: "Generative art with self-replicating algorithms - 1 star",
+  },
+  {
+    title: "key-to-sleep",
+    description:
+      "AI-powered sleep story generation platform with end-to-end pipeline for content creation, audio synthesis, and automated distribution. Features multi-agent workflow with TypeScript, Next.js, and AI integrations.",
+    publishedDate: "2024-09-01",
+    type: "code",
+    sourceUrl: "https://github.com/lucas-dickey/key-to-sleep",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Sleep story generator with AI pipeline - 18 stars",
+  },
+  {
+    title: "run-human-run",
+    description:
+      "Fitness tracking and motivation platform exploring gamification mechanics for running and endurance activities. Built with modern web technologies to encourage consistent exercise habits through competitive elements.",
+    publishedDate: "2024-08-01",
+    type: "code",
+    sourceUrl: "https://github.com/lucas-dickey/run-human-run",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Gamified fitness tracking platform",
+  },
+  {
+    title: "a-ok-audio-news [Work in Progress]",
+    description:
+      "🚧 Aggregated 2x daily AI/Tech news podcast generator with automated content curation, script generation, and audio production. Built with Python for news aggregation and content processing. Currently active development with multi-agent workflow improvements.",
+    publishedDate: "2024-07-01",
+    type: "code",
+    sourceUrl: "https://github.com/lucas-dickey/a-ok-audio-news",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Automated news podcast generator - 2 stars [WIP]",
   },
 
   // News Articles - COMMENTED OUT
@@ -69,74 +141,128 @@ const entries: Entry[] = [
   //   sourceDescription: "Latest news and updates from the software development community",
   // },
 
-  // Twitter Posts Section (placeholder for dynamic content)
+  // Industry Insights & Thought Leadership
   {
-    title: "Latest thoughts on web development trends",
+    title: "AI-Powered Content Creation at Scale",
     description:
-      "Quick thoughts and insights on the latest developments in web technology, shared in real-time with the developer community.",
-    publishedDate: "2024-01-12",
-    type: "twitter",
-    sourceUrl: "https://twitter.com/username/status/123456789",
-    sourceTitle: "Twitter",
-    sourceDescription: "Real-time thoughts and industry insights",
+      "Insights from building DeepCast and A-OK projects on leveraging Claude, GPT, and other LLMs for automated content generation, from podcasts to e-commerce. Real-world learnings on multi-agent workflows and production AI applications.",
+    publishedDate: "2025-01-15",
+    type: "opinion",
+    sourceUrl: "https://twitter.com/lucasdickey4",
+    sourceTitle: "Industry Analysis",
+    sourceDescription: "AI implementation insights from startup experience",
   },
   {
-    title: "Just shipped a new feature using React Server Components",
+    title: "Beyond Legacy Thinking: Modernizing Podcast Monetization for Creator Success",
     description:
-      "Excited to share the experience of implementing React Server Components in production. The performance improvements are incredible!",
-    publishedDate: "2024-01-09",
-    type: "twitter",
-    sourceUrl: "https://twitter.com/username/status/123456790",
-    sourceTitle: "Twitter",
-    sourceDescription: "Development updates and technical insights",
+      "Analysis of challenges facing podcast creators in monetizing content, exploring outdated industry practices and proposing innovative solutions. Examines how AI and advanced targeting can improve podcast monetization strategies beyond traditional advertising models.",
+    publishedDate: "2024-11-15",
+    type: "opinion",
+    sourceUrl: "https://www.deepcast.pro/resources/beyond-legacy-thinking-modernizing-podcast-monetization-for-creator-success",
+    sourceTitle: "DeepCast Resources",
+    sourceDescription: "Podcast monetization strategy and industry analysis",
+  },
+  {
+    title: "The DeepChat Vision: Transforming How Audiences Engage With Podcasts",
+    description:
+      "Exploration of how AI technology revolutionizes podcast engagement by creating interactive, conversational experiences between listeners and content. Details unprecedented audience insights and new monetization opportunities through automated affiliate links.",
+    publishedDate: "2024-10-15",
+    type: "opinion",
+    sourceUrl: "https://www.deepcast.pro/resources/the-deepchat-vision-transforming-how-audiences-engage-with-podcasts",
+    sourceTitle: "DeepCast Resources",
+    sourceDescription: "AI-powered podcast engagement transformation",
+  },
+  {
+    title: "Why Quality Podcast Transcription Is Critical for Success",
+    description:
+      "In-depth exploration of how high-quality podcast transcription dramatically improves discoverability, engagement, and monetization potential. Advocates for comprehensive, AI-powered transcription as solution to current industry limitations in SEO and accessibility.",
+    publishedDate: "2024-09-15",
+    type: "opinion",
+    sourceUrl: "https://www.deepcast.pro/resources/why-quality-podcast-transcription-is-critical-for-success",
+    sourceTitle: "DeepCast Resources",
+    sourceDescription: "Podcast transcription strategy and technical implementation",
+  },
+  {
+    title: "Why Podcast Discovery is Broken (And How We're Fixing It)",
+    description:
+      "Analysis of current podcast discovery challenges and DeepCast's innovative solutions including semantic search, topic-based navigation, and transcript search capabilities. Addresses limitations of major platforms that rely primarily on word-of-mouth discovery.",
+    publishedDate: "2024-08-15",
+    type: "opinion",
+    sourceUrl: "https://www.deepcast.pro/resources/why-podcast-discovery-is-broken-and-how-were-fixing-it",
+    sourceTitle: "DeepCast Resources",
+    sourceDescription: "Podcast discovery infrastructure and search technology",
+  },
+  {
+    title: "Supercharging The Thing",
+    description:
+      "Medium article exploring product strategy, growth tactics, and the intersection of technology and human behavior. Insights from years of building and scaling digital products across multiple industries.",
+    publishedDate: "2024-12-20",
+    type: "opinion",
+    sourceUrl: "https://lucasdickey.medium.com/supercharging-the-thing-45bfb47bb933",
+    sourceTitle: "Medium",
+    sourceDescription: "Product strategy and growth insights",
   },
 
-  // Keep existing opinion and podcast entries
+  // Podcast & Media
   {
-    title: "The Future of Web Development",
+    title: "Sound Strategy Podcast",
     description:
-      "An in-depth analysis of emerging trends in web development, including WebAssembly, edge computing, and the evolution of JavaScript frameworks.",
-    publishedDate: "2024-01-10",
-    type: "opinion",
-    sourceUrl: "https://techblog.com/future-web-dev",
-    sourceTitle: "Tech Blog",
-    sourceDescription: "Weekly insights on technology trends and industry analysis",
-  },
-  {
-    title: "Why TypeScript is Taking Over",
-    description:
-      "Analysis of TypeScript adoption trends and why more development teams are choosing TypeScript over vanilla JavaScript for large-scale applications.",
-    publishedDate: "2023-12-28",
-    type: "opinion",
-    sourceUrl: "https://devblog.com/typescript-adoption",
-    sourceTitle: "Developer Blog",
-    sourceDescription: "Insights and opinions on modern development practices",
-  },
-  {
-    title: "AI in Software Development Podcast",
-    description:
-      "Discussion about the impact of artificial intelligence on software development workflows, featuring industry experts and practical examples.",
-    publishedDate: "2024-01-05",
+      "Human-generated podcast leveraging DeepCast technology for marketing automation, metadata generation, and content distribution. Explores intersection of technology, strategy, and entrepreneurship from a founder's perspective.",
+    publishedDate: "2024-06-01",
     type: "podcast",
-    sourceUrl: "https://podcast.com/ai-software-dev",
-    sourceTitle: "Dev Podcast Network",
-    sourceDescription: "Weekly podcast covering software development trends and technologies",
+    sourceUrl: "https://soundstrategy.fm",
+    sourceTitle: "Sound Strategy",
+    sourceDescription: "Technology and entrepreneurship insights with AI-powered production",
   },
   {
-    title: "Cloud Native Development Podcast",
+    title: "Key To Sleep",
     description:
-      "Deep dive into cloud-native development practices, containerization strategies, and Kubernetes deployment patterns with industry practitioners.",
-    publishedDate: "2023-12-25",
+      "AI-generated sleep stories and calming content designed to help listeners fall asleep naturally. Features automated content creation pipeline with soothing narratives and ambient soundscapes.",
+    publishedDate: "2024-05-01",
     type: "podcast",
-    sourceUrl: "https://podcast.com/cloud-native",
-    sourceTitle: "Cloud Tech Podcast",
-    sourceDescription: "Weekly discussions on cloud technologies and DevOps practices",
+    sourceUrl: "https://anchor.fm/s/104b5c3cc/podcast/rss",
+    sourceTitle: "Key To Sleep",
+    sourceDescription: "AI-generated sleep stories and calming content",
+  },
+  // Cross-Industry Product Leadership
+  {
+    title: "Multi-Industry Product Leadership: Digital Media, AdTech, Ticketing & Biometrics",
+    description:
+      "Led product across diverse high-growth sectors: doubleTwist (digital music/media management, 'iTunes for Android' with Pandora-like radio using Echo Nest, 7 OS integrations, featured at Google I/O); Thinknear (adtech/martech, scaled $1M→$35M revenue, employee #10→85); Atom Tickets (adtech/data services, Fandango competitor); Rival (ticketing/biometrics, facial recognition + rotating QR codes for stadium access, sold to Ticketmaster). Consistent track record of 0→1 execution across consumer and B2B platforms.",
+    publishedDate: "2017-05-01",
+    type: "cv",
+    sourceUrl: "https://linkedin.com/in/lucasdickey",
+    sourceTitle: "Cross-Industry Experience",
+    sourceDescription: "Product leadership across adtech, martech, ticketing, and biometrics",
+  },
+  // Angel Investing & Advisory
+  {
+    title: "Angel Investor & Startup Advisor Portfolio",
+    description:
+      "Active angel investor and advisor since 2011. Portfolio includes Trellis (legal intelligence), Abstract (government affairs), Nine Sixteen (acquired by Fyllo), Mapfit (acquired by Foursquare), and others. Focus on B2B SaaS, AI/ML applications, and marketplace businesses.",
+    publishedDate: "2025-01-01",
+    type: "cv",
+    sourceUrl: "https://linkedin.com/in/lucasdickey",
+    sourceTitle: "Investment Portfolio",
+    sourceDescription: "Angel investor and startup advisor since 2011",
+  },
+  // Civic & Ecosystem Leadership
+  {
+    title: "LA Tech Ecosystem & Civic Leadership",
+    description:
+      "Decade-long commitment to LA civic engagement and entrepreneurship ecosystem: Westwood Neighborhood Council (Policy Committee & At-Large Board), North Area Neighborhood Development Council (Renter Representative), PledgeLA/Fund for South LA Founders, Annenberg Tech, UNITE-LA, Riordan College-to-Career (C2C), LA-Tech.org, Bixel Exchange, Grid110, SoCal Tech for SoCal Hospitals, and IAB working groups. Focus on workforce development, pipeline access, job creation, and policy advocacy.",
+    publishedDate: "2024-12-01",
+    type: "cv",
+    sourceUrl: "https://westwoodcouncil.org",
+    sourceTitle: "Civic & Ecosystem Leadership",
+    sourceDescription: "LA tech ecosystem building and civic policy engagement",
   },
 ]
 
 export default function TerminalRepoList() {
   const [loading, setLoading] = useState(true)
   const [groupedEntries, setGroupedEntries] = useState<Record<string, Entry[]>>({})
+  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
   useEffect(() => {
     // Simulate loading delay for terminal effect
@@ -201,11 +327,112 @@ export default function TerminalRepoList() {
           <div className="w-3 h-3 rounded-full bg-[#28ca41]"></div>
           <div className="ml-4 text-[#666666] text-sm">terminal — bash</div>
         </div>
-        <div className="text-[#8b0000] mb-2">Fri Jun 06 2025 08:41 am ~/Documents/repos git:(master)±9</div>
+        <div className="text-[#8b0000] mb-2">Fri Jun 20 2025 08:41 am ~/lucas-dickey git:(master)±9</div>
         <div className="text-[#333333] mb-1">
-          <span className="text-[#8b0000]">$</span> ls -la repositories/
+          <span className="text-[#8b0000]">$</span> ls -la professional-profile/
         </div>
       </div>
+
+      {/* Table of Contents */}
+      <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
+        <div className="text-[#8b0000] font-bold mb-3">Table of Contents</div>
+        <div className="text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {Object.keys(groupedEntries)
+              .sort()
+              .map((type) => {
+                const typeInfo = getTypeInfo(type)
+                return (
+                  <a
+                    key={type}
+                    href={`#${type}`}
+                    className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+                  >
+                    {typeInfo.icon} {typeInfo.name} ({groupedEntries[type].length})
+                  </a>
+                )
+              })}
+          </div>
+        </div>
+      </div>
+
+      {/* Audio Resume */}
+      <div className="mb-5">
+        <AudioPlayer 
+          audioSrc="/resume-audio.mp3"
+          title="🎧 Listen to Resume"
+          description="Hear this resume read aloud using AI voice synthesis"
+        />
+      </div>
+
+      {/* Quick Links */}
+      <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
+        <div className="text-[#8b0000] font-bold mb-3">Quick Links</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+          <div className="flex items-center gap-2">
+            <Linkedin size={16} className="text-[#333333]" />
+            <a href="https://linkedin.com/in/lucasdickey" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">./lucasdickey</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <Github size={16} className="text-[#333333]" />
+            <a href="https://github.com/lucas-dickey" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">./lucasdickey</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <Twitter size={16} className="text-[#333333]" />
+            <a href="https://twitter.com/lucasdickey4" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">@lucasdickey4</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <Youtube size={16} className="text-[#333333]" />
+            <a href="https://youtube.com/@apesonkeys" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">@apesonkeys</a>
+          </div>
+        </div>
+        <div className="mt-3 flex items-center gap-2">
+          <ShoppingBag size={16} className="text-[#333333]" />
+          <a href="https://a-ok.shop" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">A-OK.shop</a> 
+          <span className="text-[#666666] text-xs ml-2">(AI-driven nerdwear satire fashion brand)</span>
+        </div>
+      </div>
+
+      {/* Floating Navigation */}
+      {!loading && Object.keys(groupedEntries).length > 0 && (
+        <div className="fixed bottom-6 right-6 flex flex-col gap-2 z-10">
+          <button
+            onClick={() => {
+              const sectionKeys = Object.keys(groupedEntries).sort()
+              if (currentSection > 0 && sectionKeys.length > 0) {
+                const prevSection = currentSection - 1
+                setCurrentSection(prevSection)
+                scrollToSection(sectionKeys[prevSection])
+              }
+            }}
+            disabled={loading || currentSection === 0 || Object.keys(groupedEntries).length === 0}
+            className="w-12 h-12 bg-[#e8e8d0] border-2 border-[#cccccc] rounded-full text-[#333333] hover:bg-[#e0e0d0] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex items-center justify-center font-bold text-lg"
+            title="Previous section (↑)"
+          >
+            ↑
+          </button>
+          <button
+            onClick={() => {
+              const sectionKeys = Object.keys(groupedEntries).sort()
+              console.log('Down button clicked:', { currentSection, sectionKeys, length: sectionKeys.length })
+              if (currentSection < sectionKeys.length - 1 && sectionKeys.length > 0) {
+                const nextSection = currentSection + 1
+                console.log('Moving to section:', nextSection, 'which is:', sectionKeys[nextSection])
+                setCurrentSection(nextSection)
+                scrollToSection(sectionKeys[nextSection])
+              }
+            }}
+            disabled={loading || currentSection === Object.keys(groupedEntries).length - 1 || Object.keys(groupedEntries).length === 0}
+            className="w-12 h-12 bg-[#e8e8d0] border-2 border-[#cccccc] rounded-full text-[#333333] hover:bg-[#e0e0d0] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex items-center justify-center font-bold text-lg"
+            title="Next section (↓)"
+          >
+            ↓
+          </button>
+          <div className="text-xs text-center text-[#666666] bg-[#f5f5dc] px-2 py-1 rounded border border-[#cccccc] shadow-sm">
+            {currentSection + 1}/{Object.keys(groupedEntries).length}
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <div>
@@ -216,7 +443,11 @@ export default function TerminalRepoList() {
             const typeEntries = groupedEntries[type]
 
             return (
-              <div key={type} className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm">
+              <div 
+                key={type} 
+                ref={(el) => (sectionRefs.current[type] = el)}
+                className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
+              >
                 {/* Type Header */}
                 <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc]">
                   <span className="text-[#8b0000] text-lg font-bold">

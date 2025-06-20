@@ -1,0 +1,31 @@
+Hi there! I'm Lucas Dickey, and you're listening to my resume. Yes, that's right - an audio resume generated programmatically using Claude AI and ElevenLabs with my cloned voice. Because why not make job searching a little more interesting, and showcase some AI capabilities while we're at it?
+
+I'm a senior product leader and serial founder with over 20 years of experience building and scaling digital products. I've worked everywhere from Amazon to venture-backed startups to private equity-owned companies, and I love the challenge of taking products from zero to one and one to ten.
+
+Let me walk you through my journey.
+
+Most recently, I was the CEO and founder of DeepCast, a podcast intelligence platform that I built from 2023 to 2025. We leveraged AI for transcription, summarization, and search, built on Claude LLM, AssemblyAI, and Pinecone vector database. As both CEO and Chief Product Officer, I was responsible for product strategy, fundraising, and team building in the rapidly evolving AI and audio space.
+
+Before that, I co-founded Fernish, where I served as Co-founder and Chief Technology and Product Officer from 2017 to 2023. Fernish was a furniture rental startup focused on the circular economy for renters. We scaled to 45 million dollars raised, over 20 million in debt facilities, 10,000 plus customers, 250 plus employees, and nationwide operations across 7 major markets. I led product, engineering, design, data science, and shared P&L ownership. The company was acquired in 2023.
+
+In 2022 and 2023, I also served as Chief Product Officer at Azibo, a Series A landlord management platform. I led product management, design, and strategy, managing 3 product managers, 1 analyst, and 5 designers. We re-launched the brand and shipped lease generation, banking features, and an accounting suite.
+
+Going back earlier in my career, I was a Product Manager at Amazon MP3 from 2007 to 2011. I was an early PM on Amazon's digital music business from launch, helping scale it from zero dollars to 300 million dollars in just 3 years. I launched the service internationally across the EU and Japan, led Cloud Drive and Cloud Player strategy, and even presented to Jeff Bezos's S-team. We were the first internal consumer of CloudFront and S3 for consumer applications, which became the foundation for what's now Amazon Music.
+
+Throughout my career, I've also had multi-industry product leadership experience across digital media, ad tech, ticketing, and biometrics. I led product at doubleTwist, which was like iTunes for Android with Pandora-like radio; Thinknear, where we scaled from 1 million to 35 million in revenue; Atom Tickets, a Fandango competitor; and Rival, a ticketing and biometrics company with facial recognition technology that was eventually sold to Ticketmaster.
+
+I'm also an active angel investor and startup advisor. Since 2011, my portfolio has included companies like Trellis for legal intelligence, Abstract for government affairs, Nine Sixteen which was acquired by Fyllo, and Mapfit which was acquired by Foursquare.
+
+When I'm not building products or investing, I'm deeply involved in the LA tech ecosystem and civic leadership. I've served on the Westwood Neighborhood Council, North Area Neighborhood Development Council, and worked with organizations like PledgeLA, Annenberg Tech, UNITE-LA, and Grid110, focusing on workforce development, pipeline access, and policy advocacy.
+
+On the side, I build some pretty wild projects. There's A-OK Shop, an AI-generated satire fashion brand with a fully automated Shopify storefront. Key to Sleep, an AI-powered sleep story generation platform. And A-OK Audio News, which generates aggregated daily AI and tech news podcasts with automated content curation and audio production.
+
+I also host the Sound Strategy Podcast, where I explore the intersection of technology, strategy, and entrepreneurship from a founder's perspective, and I've written extensively about AI-powered content creation, podcast monetization, and product strategy.
+
+What drives me is the challenge of product-market fit hunting and hands-on go-to-market execution. I love working across all stages of company growth, whether it's the scrappy zero-to-one phase or the more complex one-to-ten scaling challenges.
+
+If you're looking for someone who can bridge the gap between technical execution and business strategy, who's comfortable with both public behemoths and early-stage startups, and who brings a unique perspective on AI, product development, and market building, I'd love to chat.
+
+You can find me on LinkedIn at linkedin.com/in/lucasdickey, GitHub at github.com/lucas-dickey, Twitter at @lucasdickey4, or check out my AI-driven fashion brand at A-OK.shop.
+
+Thanks for listening to my resume. Now back to your regularly scheduled job search.
