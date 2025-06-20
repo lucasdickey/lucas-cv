@@ -262,7 +262,6 @@ const entries: Entry[] = [
 export default function TerminalRepoList() {
   const [loading, setLoading] = useState(true)
   const [groupedEntries, setGroupedEntries] = useState<Record<string, Entry[]>>({})
-  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
   useEffect(() => {
     // Simulate loading delay for terminal effect
@@ -393,46 +392,6 @@ export default function TerminalRepoList() {
         </div>
       </div>
 
-      {/* Floating Navigation */}
-      {!loading && Object.keys(groupedEntries).length > 0 && (
-        <div className="fixed bottom-6 right-6 flex flex-col gap-2 z-10">
-          <button
-            onClick={() => {
-              const sectionKeys = Object.keys(groupedEntries).sort()
-              if (currentSection > 0 && sectionKeys.length > 0) {
-                const prevSection = currentSection - 1
-                setCurrentSection(prevSection)
-                scrollToSection(sectionKeys[prevSection])
-              }
-            }}
-            disabled={loading || currentSection === 0 || Object.keys(groupedEntries).length === 0}
-            className="w-12 h-12 bg-[#e8e8d0] border-2 border-[#cccccc] rounded-full text-[#333333] hover:bg-[#e0e0d0] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex items-center justify-center font-bold text-lg"
-            title="Previous section (↑)"
-          >
-            ↑
-          </button>
-          <button
-            onClick={() => {
-              const sectionKeys = Object.keys(groupedEntries).sort()
-              console.log('Down button clicked:', { currentSection, sectionKeys, length: sectionKeys.length })
-              if (currentSection < sectionKeys.length - 1 && sectionKeys.length > 0) {
-                const nextSection = currentSection + 1
-                console.log('Moving to section:', nextSection, 'which is:', sectionKeys[nextSection])
-                setCurrentSection(nextSection)
-                scrollToSection(sectionKeys[nextSection])
-              }
-            }}
-            disabled={loading || currentSection === Object.keys(groupedEntries).length - 1 || Object.keys(groupedEntries).length === 0}
-            className="w-12 h-12 bg-[#e8e8d0] border-2 border-[#cccccc] rounded-full text-[#333333] hover:bg-[#e0e0d0] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex items-center justify-center font-bold text-lg"
-            title="Next section (↓)"
-          >
-            ↓
-          </button>
-          <div className="text-xs text-center text-[#666666] bg-[#f5f5dc] px-2 py-1 rounded border border-[#cccccc] shadow-sm">
-            {currentSection + 1}/{Object.keys(groupedEntries).length}
-          </div>
-        </div>
-      )}
 
       {/* Content */}
       <div>
@@ -445,7 +404,7 @@ export default function TerminalRepoList() {
             return (
               <div 
                 key={type} 
-                ref={(el) => (sectionRefs.current[type] = el)}
+                id={type}
                 className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
               >
                 {/* Type Header */}
