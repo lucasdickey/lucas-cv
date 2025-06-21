@@ -79,13 +79,13 @@ const entries: Entry[] = [
     sourceDescription: "Automated e-commerce with AI art generation - 1 star",
   },
   {
-    title: "obbb - One Big Beautiful Bill",
+    title: "OB3.chat - One Big Beautiful Bill discovery app",
     description:
-      "RAG-based chat application that explores House Resolution 1 - 2025, enabling legislators, journalists, and citizens to dig into the thousand-plus page piece of legislation through conversational AI.",
+      "RAG-based chat application that explores House Resolution 1 - 2025, enabling legislators, journalists, and citizens to dig into the thousand-plus page piece of legislation through conversational AI. Live at OB3.chat",
     publishedDate: "2025-06-09",
     type: "code",
-    sourceUrl: "https://github.com/lucas-dickey/obbb",
-    sourceTitle: "GitHub Repository",
+    sourceUrl: "https://ob3.chat",
+    sourceTitle: "OB3.chat",
     sourceDescription: "Government affairs research tool - 1 star",
   },
   {
