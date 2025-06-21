@@ -72,7 +72,7 @@ const entries: Entry[] = [
     title: "a-ok-shop",
     description:
       "AI-generated satire fashion brand with fully automated Shopify storefront. Features GraphQL integration, custom Next.js infrastructure, dynamic game-based discount codes, and self-replicating art generation.",
-    publishedDate: "2024-12-01",
+    publishedDate: "2025-04-20",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/a-ok-shop",
     sourceTitle: "GitHub Repository",
@@ -82,7 +82,7 @@ const entries: Entry[] = [
     title: "obbb - One Big Beautiful Bill",
     description:
       "Research tool for government affairs and policy analysis. HTML-based platform for tracking legislative information and providing insights for government relations work.",
-    publishedDate: "2024-11-01",
+    publishedDate: "2025-06-09",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/obbb",
     sourceTitle: "GitHub Repository",
@@ -92,7 +92,7 @@ const entries: Entry[] = [
     title: "self-replicating-art",
     description:
       "Experimental TypeScript project exploring generative art creation with self-replicating algorithms. Part of the broader A-OK brand ecosystem for automated creative content generation.",
-    publishedDate: "2024-10-01",
+    publishedDate: "2025-05-14",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/self-replicating-art",
     sourceTitle: "GitHub Repository",
@@ -103,7 +103,7 @@ const entries: Entry[] = [
     title: "key-to-sleep",
     description:
       "AI-powered sleep story generation platform with end-to-end pipeline for content creation, audio synthesis, and automated distribution. Features multi-agent workflow with TypeScript, Next.js, and AI integrations.",
-    publishedDate: "2024-09-01",
+    publishedDate: "2025-05-28",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/key-to-sleep",
     sourceTitle: "GitHub Repository",
@@ -113,9 +113,9 @@ const entries: Entry[] = [
     title: "run-human-run",
     description:
       "Fitness tracking and motivation platform exploring gamification mechanics for running and endurance activities. Built with modern web technologies to encourage consistent exercise habits through competitive elements.",
-    publishedDate: "2024-08-01",
+    publishedDate: "2025-05-29",
     type: "code",
-    sourceUrl: "https://github.com/lucas-dickey/run-human-run",
+    sourceUrl: "https://github.com/lucasdickey/run-humans-run",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Gamified fitness tracking platform",
   },
@@ -123,7 +123,7 @@ const entries: Entry[] = [
     title: "a-ok-audio-news [Work in Progress]",
     description:
       "🚧 Aggregated 2x daily AI/Tech news podcast generator with automated content curation, script generation, and audio production. Built with Python for news aggregation and content processing. Currently active development with multi-agent workflow improvements.",
-    publishedDate: "2024-07-01",
+    publishedDate: "2025-05-19",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/a-ok-audio-news",
     sourceTitle: "GitHub Repository",
