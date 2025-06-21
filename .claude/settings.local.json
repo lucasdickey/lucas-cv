@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "Bash(git clone:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(mv:*)",
+      "Bash(true)",
+      "Bash(rmdir:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(pdftotext:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:www.deepcast.pro)",
+      "Bash(vercel:*)",
+      "Bash(npx sharp-cli:*)",
+      "Bash(grep:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(npm run deploy:*)",
+      "Bash(python3 -m pip install:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": []
+  }
+}
