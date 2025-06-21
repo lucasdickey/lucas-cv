@@ -24,7 +24,7 @@ const entries: Entry[] = [
     type: "cv",
     sourceUrl: "https://linkedin.com/in/lucasdickey",
     sourceTitle: "Professional Profile",
-    sourceDescription: "Senior operator, founder, and product leader",
+    sourceDescription: "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
   },
   {
     title: "DeepCast - CEO & Founder (2023-2025)",
@@ -81,7 +81,7 @@ const entries: Entry[] = [
   {
     title: "obbb - One Big Beautiful Bill",
     description:
-      "Research tool for government affairs and policy analysis. HTML-based platform for tracking legislative information and providing insights for government relations work.",
+      "RAG-based chat application that explores House Resolution 1 - 2025, enabling legislators, journalists, and citizens to dig into the thousand-plus page piece of legislation through conversational AI.",
     publishedDate: "2025-06-09",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/obbb",
@@ -102,7 +102,7 @@ const entries: Entry[] = [
   {
     title: "key-to-sleep",
     description:
-      "AI-powered sleep story generation platform with end-to-end pipeline for content creation, audio synthesis, and automated distribution. Features multi-agent workflow with TypeScript, Next.js, and AI integrations.",
+      "Sleep story generator that evolved from manual content creation to a fully automated, agentic pipeline. Inspired by bedtime stories for my son JJ, this platform uses AI agents for content creation, audio synthesis, and distribution.",
     publishedDate: "2025-05-28",
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/key-to-sleep",
@@ -112,7 +112,7 @@ const entries: Entry[] = [
   {
     title: "run-human-run",
     description:
-      "Fitness tracking and motivation platform exploring gamification mechanics for running and endurance activities. Built with modern web technologies to encourage consistent exercise habits through competitive elements.",
+      "2D casual game inspired by Pacman and Snake where a human is chased by apes (representing AI agents) while collecting UBI credits to win discounts at the A-OK shop. A darkly humorous take on AI doomerism and economic anxiety.",
     publishedDate: "2025-05-29",
     type: "code",
     sourceUrl: "https://github.com/lucasdickey/run-humans-run",
@@ -151,7 +151,7 @@ const entries: Entry[] = [
     type: "opinion",
     sourceUrl: "https://twitter.com/lucasdickey4",
     sourceTitle: "Industry Analysis",
-    sourceDescription: "AI implementation insights from startup experience",
+    sourceDescription: "AI implementation insights from startup experience (AI engineering explorations, political rants, VC/startup musings)",
   },
   {
     title:
@@ -237,7 +237,7 @@ const entries: Entry[] = [
   {
     title: "Apes on Keys YouTube Channel",
     description:
-      "Creative video content exploring music, technology, and digital creativity. Features original compositions, tech experiments, and behind-the-scenes content from various projects and creative endeavors.",
+      "Creative video content exploring music, technology, and digital creativity (piano performances, tech tutorials, and creative process videos). Features original compositions, tech experiments, and behind-the-scenes content from various projects and creative endeavors.",
     publishedDate: "2024-03-01",
     type: "media",
     sourceUrl: "https://www.youtube.com/@apesonkeys/videos",
@@ -475,6 +475,9 @@ export default function TerminalRepoList() {
             >
               ./lucasdickey
             </a>
+            <span className="text-[#666666] text-xs ml-2">
+              (Recent projects emphasizing fun vibe coded projects of different magnitudes)
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <Twitter size={16} className="text-[#333333]" />
