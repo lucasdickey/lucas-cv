@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react"
-import AudioPlayer from "../components/AudioPlayer"
+import { useState, useEffect, useRef } from "react";
+import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
+import AudioPlayer from "../components/AudioPlayer";
 
 interface Entry {
-  title: string
-  description: string
-  publishedDate: string
-  type: "cv" | "code" | "news" | "opinion" | "podcast" | "twitter"
-  sourceUrl: string
-  sourceTitle: string
-  sourceDescription: string
+  title: string;
+  description: string;
+  publishedDate: string;
+  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter";
+  sourceUrl: string;
+  sourceTitle: string;
+  sourceDescription: string;
 }
 
 const entries: Entry[] = [
@@ -96,7 +96,8 @@ const entries: Entry[] = [
     type: "code",
     sourceUrl: "https://github.com/lucas-dickey/self-replicating-art",
     sourceTitle: "GitHub Repository",
-    sourceDescription: "Generative art with self-replicating algorithms - 1 star",
+    sourceDescription:
+      "Generative art with self-replicating algorithms - 1 star",
   },
   {
     title: "key-to-sleep",
@@ -145,7 +146,7 @@ const entries: Entry[] = [
   {
     title: "AI-Powered Content Creation at Scale",
     description:
-      "Insights from building DeepCast and A-OK projects on leveraging Claude, GPT, and other LLMs for automated content generation, from podcasts to e-commerce. Real-world learnings on multi-agent workflows and production AI applications.",
+      "My X account represents my thoughts on AI, product, and entrepreneurship. For example, insights from building DeepCast and A-OK projects on leveraging Claude, GPT, and other LLMs for automated content generation, from podcasts to e-commerce. Real-world learnings on multi-agent workflows and production AI applications.",
     publishedDate: "2025-01-15",
     type: "opinion",
     sourceUrl: "https://twitter.com/lucasdickey4",
@@ -153,22 +154,26 @@ const entries: Entry[] = [
     sourceDescription: "AI implementation insights from startup experience",
   },
   {
-    title: "Beyond Legacy Thinking: Modernizing Podcast Monetization for Creator Success",
+    title:
+      "Beyond Legacy Thinking: Modernizing Podcast Monetization for Creator Success",
     description:
       "Analysis of challenges facing podcast creators in monetizing content, exploring outdated industry practices and proposing innovative solutions. Examines how AI and advanced targeting can improve podcast monetization strategies beyond traditional advertising models.",
     publishedDate: "2024-11-15",
     type: "opinion",
-    sourceUrl: "https://www.deepcast.pro/resources/beyond-legacy-thinking-modernizing-podcast-monetization-for-creator-success",
+    sourceUrl:
+      "https://www.deepcast.pro/resources/beyond-legacy-thinking-modernizing-podcast-monetization-for-creator-success",
     sourceTitle: "DeepCast Resources",
     sourceDescription: "Podcast monetization strategy and industry analysis",
   },
   {
-    title: "The DeepChat Vision: Transforming How Audiences Engage With Podcasts",
+    title:
+      "The DeepChat Vision: Transforming How Audiences Engage With Podcasts",
     description:
       "Exploration of how AI technology revolutionizes podcast engagement by creating interactive, conversational experiences between listeners and content. Details unprecedented audience insights and new monetization opportunities through automated affiliate links.",
     publishedDate: "2024-10-15",
     type: "opinion",
-    sourceUrl: "https://www.deepcast.pro/resources/the-deepchat-vision-transforming-how-audiences-engage-with-podcasts",
+    sourceUrl:
+      "https://www.deepcast.pro/resources/the-deepchat-vision-transforming-how-audiences-engage-with-podcasts",
     sourceTitle: "DeepCast Resources",
     sourceDescription: "AI-powered podcast engagement transformation",
   },
@@ -178,9 +183,11 @@ const entries: Entry[] = [
       "In-depth exploration of how high-quality podcast transcription dramatically improves discoverability, engagement, and monetization potential. Advocates for comprehensive, AI-powered transcription as solution to current industry limitations in SEO and accessibility.",
     publishedDate: "2024-09-15",
     type: "opinion",
-    sourceUrl: "https://www.deepcast.pro/resources/why-quality-podcast-transcription-is-critical-for-success",
+    sourceUrl:
+      "https://www.deepcast.pro/resources/why-quality-podcast-transcription-is-critical-for-success",
     sourceTitle: "DeepCast Resources",
-    sourceDescription: "Podcast transcription strategy and technical implementation",
+    sourceDescription:
+      "Podcast transcription strategy and technical implementation",
   },
   {
     title: "Why Podcast Discovery is Broken (And How We're Fixing It)",
@@ -188,7 +195,8 @@ const entries: Entry[] = [
       "Analysis of current podcast discovery challenges and DeepCast's innovative solutions including semantic search, topic-based navigation, and transcript search capabilities. Addresses limitations of major platforms that rely primarily on word-of-mouth discovery.",
     publishedDate: "2024-08-15",
     type: "opinion",
-    sourceUrl: "https://www.deepcast.pro/resources/why-podcast-discovery-is-broken-and-how-were-fixing-it",
+    sourceUrl:
+      "https://www.deepcast.pro/resources/why-podcast-discovery-is-broken-and-how-were-fixing-it",
     sourceTitle: "DeepCast Resources",
     sourceDescription: "Podcast discovery infrastructure and search technology",
   },
@@ -198,7 +206,8 @@ const entries: Entry[] = [
       "Medium article exploring product strategy, growth tactics, and the intersection of technology and human behavior. Insights from years of building and scaling digital products across multiple industries.",
     publishedDate: "2024-12-20",
     type: "opinion",
-    sourceUrl: "https://lucasdickey.medium.com/supercharging-the-thing-45bfb47bb933",
+    sourceUrl:
+      "https://lucasdickey.medium.com/supercharging-the-thing-45bfb47bb933",
     sourceTitle: "Medium",
     sourceDescription: "Product strategy and growth insights",
   },
@@ -209,31 +218,44 @@ const entries: Entry[] = [
     description:
       "Human-generated podcast leveraging DeepCast technology for marketing automation, metadata generation, and content distribution. Explores intersection of technology, strategy, and entrepreneurship from a founder's perspective.",
     publishedDate: "2024-06-01",
-    type: "podcast",
+    type: "media",
     sourceUrl: "https://soundstrategy.fm",
     sourceTitle: "Sound Strategy",
-    sourceDescription: "Technology and entrepreneurship insights with AI-powered production",
+    sourceDescription:
+      "Technology and entrepreneurship insights with AI-powered production",
   },
   {
     title: "Key To Sleep",
     description:
-      "AI-generated sleep stories and calming content designed to help listeners fall asleep naturally. Features automated content creation pipeline with soothing narratives and ambient soundscapes.",
+      "AI-generated sleep stories and calming content designed to help listeners fall asleep naturally. Created after manually doing scripts through ChatGPT, artwork with DALL-E, and speech-to-text with Eleven Labs for my son. This podcast was my first agile spike on an end-to-end agentic creation of a podcast. My son loves it when I publish a new episode for him. Features automated content creation pipeline with soothing narratives and ambient soundscapes.",
     publishedDate: "2024-05-01",
-    type: "podcast",
+    type: "media",
     sourceUrl: "https://anchor.fm/s/104b5c3cc/podcast/rss",
     sourceTitle: "Key To Sleep",
     sourceDescription: "AI-generated sleep stories and calming content",
   },
+  {
+    title: "Apes on Keys YouTube Channel",
+    description:
+      "Creative video content exploring music, technology, and digital creativity. Features original compositions, tech experiments, and behind-the-scenes content from various projects and creative endeavors.",
+    publishedDate: "2024-03-01",
+    type: "media",
+    sourceUrl: "https://www.youtube.com/@apesonkeys/videos",
+    sourceTitle: "Apes on Keys",
+    sourceDescription: "YouTube channel for music and creative content",
+  },
   // Cross-Industry Product Leadership
   {
-    title: "Multi-Industry Product Leadership: Digital Media, AdTech, Ticketing & Biometrics",
+    title:
+      "Multi-Industry Product Leadership: Digital Media, AdTech, Ticketing & Biometrics",
     description:
       "Led product across diverse high-growth sectors: doubleTwist (digital music/media management, 'iTunes for Android' with Pandora-like radio using Echo Nest, 7 OS integrations, featured at Google I/O); Thinknear (adtech/martech, scaled $1M→$35M revenue, employee #10→85); Atom Tickets (adtech/data services, Fandango competitor); Rival (ticketing/biometrics, facial recognition + rotating QR codes for stadium access, sold to Ticketmaster). Consistent track record of 0→1 execution across consumer and B2B platforms.",
     publishedDate: "2017-05-01",
     type: "cv",
     sourceUrl: "https://linkedin.com/in/lucasdickey",
     sourceTitle: "Cross-Industry Experience",
-    sourceDescription: "Product leadership across adtech, martech, ticketing, and biometrics",
+    sourceDescription:
+      "Product leadership across adtech, martech, ticketing, and biometrics",
   },
   // Angel Investing & Advisory
   {
@@ -257,54 +279,110 @@ const entries: Entry[] = [
     sourceTitle: "Civic & Ecosystem Leadership",
     sourceDescription: "LA tech ecosystem building and civic policy engagement",
   },
-]
+];
 
 export default function TerminalRepoList() {
-  const [loading, setLoading] = useState(true)
-  const [groupedEntries, setGroupedEntries] = useState<Record<string, Entry[]>>({})
+  const [loading, setLoading] = useState(true);
+  const [groupedEntries, setGroupedEntries] = useState<Record<string, Entry[]>>(
+    {}
+  );
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [asteriskIndex, setAsteriskIndex] = useState(0);
+  const [thinkingIndex, setThinkingIndex] = useState(0);
+
+  const asteriskVariants = ['*', '✻', '∗', '※', '❄', '✢'];
+  const thinkingVariants = [
+    'cogitating', 'processing', 'reflecting', 'evaluating', 'concluding',
+    'generating', 'developing', 'assembling', 'composing', 'digesting',
+    'exploring', 'examining', 'ideating', 'iterating', 'computing',
+    'planning', 'scheming', 'thinking', 'working', 'crafting',
+    'building', 'creating', 'weaving', 'molding', 'shaping',
+    'designing', 'plotting', 'hatching', 'cooking', 'formulating'
+  ];
+
+  useEffect(() => {
+    // Update time every second
+    const timeInterval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 3000);
+
+    return () => clearInterval(timeInterval);
+  }, []);
+
+  useEffect(() => {
+    // Animate asterisk and thinking words every 500ms with random selection
+    const animationInterval = setInterval(() => {
+      setAsteriskIndex(Math.floor(Math.random() * asteriskVariants.length));
+      setThinkingIndex(Math.floor(Math.random() * thinkingVariants.length));
+    }, 1000);
+
+    return () => clearInterval(animationInterval);
+  }, []);
 
   useEffect(() => {
     // Simulate loading delay for terminal effect
     setTimeout(() => {
-      const grouped: Record<string, Entry[]> = {}
+      const grouped: Record<string, Entry[]> = {};
 
       entries.forEach((entry) => {
         if (!grouped[entry.type]) {
-          grouped[entry.type] = []
+          grouped[entry.type] = [];
         }
-        grouped[entry.type].push(entry)
-      })
+        grouped[entry.type].push(entry);
+      });
 
       // Sort each group by date (newest first)
       Object.keys(grouped).forEach((type) => {
-        grouped[type].sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
-      })
+        grouped[type].sort(
+          (a, b) =>
+            new Date(b.publishedDate).getTime() -
+            new Date(a.publishedDate).getTime()
+        );
+      });
 
-      setGroupedEntries(grouped)
-      setLoading(false)
-    }, 500)
-  }, [])
+      setGroupedEntries(grouped);
+      setLoading(false);
+    }, 500);
+  }, []);
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
+    const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
-    })
-  }
+    });
+  };
+
+  const formatCurrentTime = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    };
+    return date.toLocaleDateString("en-US", options).replace(",", "");
+  };
 
   const getTypeInfo = (type: string) => {
     const typeMap: Record<string, { name: string; icon: string }> = {
       cv: { name: "Professional Profile", icon: "👤" },
       code: { name: "Code Repositories", icon: "📦" },
       // news: { name: "News Articles", icon: "📰" }, // COMMENTED OUT
-      opinion: { name: "Opinion Pieces", icon: "💭" },
-      podcast: { name: "Podcasts", icon: "🎧" },
+      opinion: { name: "Recent Opinion Pieces", icon: "💭" },
+      media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
-    }
-    return typeMap[type] || { name: type.charAt(0).toUpperCase() + type.slice(1), icon: "📄" }
-  }
+    };
+    return (
+      typeMap[type] || {
+        name: type.charAt(0).toUpperCase() + type.slice(1),
+        icon: "📄",
+      }
+    );
+  };
 
   if (loading) {
     return (
@@ -313,22 +391,29 @@ export default function TerminalRepoList() {
           Loading entries<span className="animate-pulse">_</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
       {/* Terminal Header */}
-      <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
+      <div className="border border-[#cccccc] bg-[#e8e8d8] p-4 mb-5 rounded-md shadow-sm">
         <div className="flex items-center mb-2">
           <div className="w-3 h-3 rounded-full bg-[#ff6057] mr-2"></div>
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e] mr-2"></div>
           <div className="w-3 h-3 rounded-full bg-[#28ca41]"></div>
           <div className="ml-4 text-[#666666] text-sm">terminal — bash</div>
         </div>
-        <div className="text-[#8b0000] mb-2">Fri Jun 20 2025 08:41 am ~/lucas-dickey git:(master)±9</div>
+        <div className="text-[#8b0000] mb-2">
+          {formatCurrentTime(currentTime)} ~/
+          <span className="font-bold">lucas-dickey</span> git:(master)±9
+        </div>
         <div className="text-[#333333] mb-1">
-          <span className="text-[#8b0000]">$</span> ls -la professional-profile/
+          <span className="text-[#8b0000]">$</span> echo "Vibe coded by Lucas with Fred Again.., Philz, and his homie Claude Code -- flattering hallucinations, '{asteriskVariants[asteriskIndex]} {thinkingVariants[thinkingIndex]}', and all!" >> ABOUT.md
+        </div>
+        <div className="text-[#333333] mb-1">
+          <span className="text-[#8b0000]">$</span> ls -la{" "}
+          <span className="font-bold">professional-profile/</span>
         </div>
       </div>
 
@@ -340,16 +425,17 @@ export default function TerminalRepoList() {
             {Object.keys(groupedEntries)
               .sort()
               .map((type) => {
-                const typeInfo = getTypeInfo(type)
+                const typeInfo = getTypeInfo(type);
                 return (
                   <a
                     key={type}
                     href={`#${type}`}
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
-                    {typeInfo.icon} {typeInfo.name} ({groupedEntries[type].length})
+                    {typeInfo.icon} {typeInfo.name} (
+                    {groupedEntries[type].length})
                   </a>
-                )
+                );
               })}
           </div>
         </div>
@@ -357,10 +443,10 @@ export default function TerminalRepoList() {
 
       {/* Audio Resume */}
       <div className="mb-5">
-        <AudioPlayer 
+        <AudioPlayer
           audioSrc="/resume-audio.mp3"
-          title="🎧 Listen to Resume"
-          description="Hear this resume read aloud using AI voice synthesis"
+          title="🎧 Listen to Lucas Dickey's CV"
+          description="Hear this resume read aloud using Eleven Labs TTS with Lucas's voice clone"
         />
       </div>
 
@@ -370,40 +456,76 @@ export default function TerminalRepoList() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
           <div className="flex items-center gap-2">
             <Linkedin size={16} className="text-[#333333]" />
-            <a href="https://linkedin.com/in/lucasdickey" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">./lucasdickey</a>
+            <a
+              href="https://linkedin.com/in/lucasdickey"
+              className="text-[#0000ff] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ./lucasdickey
+            </a>
           </div>
           <div className="flex items-center gap-2">
             <Github size={16} className="text-[#333333]" />
-            <a href="https://github.com/lucas-dickey" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">./lucasdickey</a>
+            <a
+              href="https://github.com/lucas-dickey"
+              className="text-[#0000ff] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ./lucasdickey
+            </a>
           </div>
           <div className="flex items-center gap-2">
             <Twitter size={16} className="text-[#333333]" />
-            <a href="https://twitter.com/lucasdickey4" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">@lucasdickey4</a>
+            <a
+              href="https://twitter.com/lucasdickey4"
+              className="text-[#0000ff] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @lucasdickey4
+            </a>
           </div>
           <div className="flex items-center gap-2">
             <Youtube size={16} className="text-[#333333]" />
-            <a href="https://youtube.com/@apesonkeys" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">@apesonkeys</a>
+            <a
+              href="https://youtube.com/@apesonkeys"
+              className="text-[#0000ff] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @apesonkeys
+            </a>
           </div>
         </div>
         <div className="mt-3 flex items-center gap-2">
           <ShoppingBag size={16} className="text-[#333333]" />
-          <a href="https://a-ok.shop" className="text-[#0000ff] hover:underline" target="_blank" rel="noopener noreferrer">A-OK.shop</a> 
-          <span className="text-[#666666] text-xs ml-2">(AI-driven nerdwear satire fashion brand)</span>
+          <a
+            href="https://a-ok.shop"
+            className="text-[#0000ff] hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            A-OK.shop
+          </a>
+          <span className="text-[#666666] text-xs ml-2">
+            (AI-driven nerdwear satire fashion brand)
+          </span>
         </div>
       </div>
-
 
       {/* Content */}
       <div>
         {Object.keys(groupedEntries)
           .sort()
           .map((type) => {
-            const typeInfo = getTypeInfo(type)
-            const typeEntries = groupedEntries[type]
+            const typeInfo = getTypeInfo(type);
+            const typeEntries = groupedEntries[type];
 
             return (
-              <div 
-                key={type} 
+              <div
+                key={type}
                 id={type}
                 className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
               >
@@ -412,7 +534,9 @@ export default function TerminalRepoList() {
                   <span className="text-[#8b0000] text-lg font-bold">
                     {typeInfo.icon} {typeInfo.name}
                   </span>
-                  <span className="text-[#666666] text-sm ml-2">({typeEntries.length} entries)</span>
+                  <span className="text-[#666666] text-sm ml-2">
+                    ({typeEntries.length} entries)
+                  </span>
                 </div>
 
                 {/* Entries List */}
@@ -438,7 +562,26 @@ export default function TerminalRepoList() {
                       </div>
 
                       {/* Entry Description */}
-                      <div className="text-[#333333] mb-2 leading-relaxed">{entry.description}</div>
+                      <div className="text-[#333333] mb-2 leading-relaxed">
+                        {entry.description}
+                      </div>
+
+                      {/* YouTube Embed for YouTube URLs */}
+                      {entry.sourceUrl.includes("youtube.com") &&
+                        entry.sourceUrl.includes("@apesonkeys") && (
+                          <div className="mb-4">
+                            <iframe
+                              width="100%"
+                              height="315"
+                              src="https://www.youtube.com/embed/videoseries?list=PL-h0A9N1vFdUnUZ0aYk-Z8M7NTy2jtKdL"
+                              title={entry.title}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="rounded border border-[#cccccc]"
+                            ></iframe>
+                          </div>
+                        )}
 
                       {/* Entry Source */}
                       <div className="text-[#666666] text-sm">
@@ -451,15 +594,16 @@ export default function TerminalRepoList() {
                         >
                           {entry.sourceTitle}
                         </a>
-                        {entry.sourceDescription && ` - ${entry.sourceDescription}`}
+                        {entry.sourceDescription &&
+                          ` - ${entry.sourceDescription}`}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            )
+            );
           })}
       </div>
     </div>
-  )
+  );
 }
