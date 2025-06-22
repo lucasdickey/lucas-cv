@@ -29,7 +29,9 @@
       "Bash(python3:*)",
       "Bash(gh api:*)",
       "Bash(gh repo list:*)",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(ls:*)",
+      "Bash(npm run lint)"
     ],
     "deny": []
   }
