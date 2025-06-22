@@ -586,6 +586,36 @@ export default function TerminalRepoList() {
                           </div>
                         )}
 
+                      {/* Spotify Embed for Key To Sleep */}
+                      {entry.title === "Key To Sleep" && (
+                        <div className="mb-4">
+                          <iframe
+                            style={{ borderRadius: "12px" }}
+                            src="https://open.spotify.com/embed/show/5mzflcTu9vWhB0Nw0lABRo?utm_source=generator"
+                            width="100%"
+                            height="352"
+                            frameBorder="0"
+                            allowFullScreen
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                          ></iframe>
+                        </div>
+                      )}
+
+                      {/* Apple Podcasts Embed for Sound Strategy */}
+                      {entry.title === "Sound Strategy Podcast" && (
+                        <div className="mb-4">
+                          <iframe
+                            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                            frameBorder="0"
+                            height="450"
+                            style={{ width: "100%", maxWidth: "660px", overflow: "hidden", borderRadius: "10px" }}
+                            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                            src="https://embed.podcasts.apple.com/us/podcast/sound-strategy-with-lucas-dickey-the-most-meta/id1805261979"
+                          ></iframe>
+                        </div>
+                      )}
+
                       {/* Entry Source */}
                       <div className="text-[#666666] text-sm">
                         Source:{" "}
