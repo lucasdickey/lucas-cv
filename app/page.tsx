@@ -24,7 +24,8 @@ const entries: Entry[] = [
     type: "cv",
     sourceUrl: "https://linkedin.com/in/lucasdickey",
     sourceTitle: "Professional Profile",
-    sourceDescription: "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
+    sourceDescription:
+      "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
   },
   {
     title: "DeepCast - CEO & Founder (2023-2025)",
@@ -151,7 +152,8 @@ const entries: Entry[] = [
     type: "opinion",
     sourceUrl: "https://twitter.com/lucasdickey4",
     sourceTitle: "Industry Analysis",
-    sourceDescription: "AI implementation insights from startup experience (AI engineering explorations, political rants, VC/startup musings)",
+    sourceDescription:
+      "AI implementation insights from startup experience (AI engineering explorations, political rants, VC/startup musings)",
   },
   {
     title:
@@ -290,14 +292,38 @@ export default function TerminalRepoList() {
   const [asteriskIndex, setAsteriskIndex] = useState(0);
   const [thinkingIndex, setThinkingIndex] = useState(0);
 
-  const asteriskVariants = ['*', '✻', '∗', '※', '❄', '✢'];
+  const asteriskVariants = ["*", "✻", "∗", "※", "❄", "✢"];
   const thinkingVariants = [
-    'cogitating', 'processing', 'reflecting', 'evaluating', 'concluding',
-    'generating', 'developing', 'assembling', 'composing', 'digesting',
-    'exploring', 'examining', 'ideating', 'iterating', 'computing',
-    'planning', 'scheming', 'thinking', 'working', 'crafting',
-    'building', 'creating', 'weaving', 'molding', 'shaping',
-    'designing', 'plotting', 'hatching', 'cooking', 'formulating'
+    "cogitating",
+    "processing",
+    "reflecting",
+    "evaluating",
+    "concluding",
+    "generating",
+    "developing",
+    "assembling",
+    "composing",
+    "digesting",
+    "exploring",
+    "examining",
+    "ideating",
+    "iterating",
+    "computing",
+    "planning",
+    "scheming",
+    "thinking",
+    "working",
+    "crafting",
+    "building",
+    "creating",
+    "weaving",
+    "molding",
+    "shaping",
+    "designing",
+    "plotting",
+    "hatching",
+    "cooking",
+    "formulating",
   ];
 
   useEffect(() => {
@@ -406,14 +432,32 @@ export default function TerminalRepoList() {
         </div>
         <div className="text-[#8b0000] mb-2">
           {formatCurrentTime(currentTime)} ~/
-          <span className="font-bold">lucas-dickey</span> git:(master)±9
+          <span className="font-bold">lucas-dickey</span> git:(master)±9 lucas
+        </div>
+        <pre className="text-[#8b0000] mb-2 text-xs leading-none">
+          {`
+▒▒▒        ▒▒▒  ▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒    ▒▒▒▒▒▒ 
+▒▒▒        ▒▒▒  ▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒    ▒▒▒▒▒▒ 
+▒▒▒        ▒▒▒  ▒▒▒  ▒▒▒       ▒▒▒  ▒▒▒  ▒▒▒     
+▒▒▒        ▒▒▒  ▒▒▒  ▒▒▒       ▒▒▒  ▒▒▒  ▒▒▒     
+▒▒▒        ▒▒▒  ▒▒▒  ▒▒▒       ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒ 
+▒▒▒        ▒▒▒  ▒▒▒  ▒▒▒       ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒ 
+▒▒▒        ▒▒▒  ▒▒▒  ▒▒▒       ▒▒▒  ▒▒▒       ▒▒▒
+▒▒▒        ▒▒▒  ▒▒▒  ▒▒▒       ▒▒▒  ▒▒▒       ▒▒▒
+▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒   ▒▒▒  ▒▒▒   ▒▒▒▒▒▒ 
+▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒   ▒▒▒  ▒▒▒   ▒▒▒▒▒▒`}
+        </pre>
+        <div className="text-[#333333] mb-1">
+          Vibe coded by Lucas with Fred Again.., Philz, and his homie Claude
+          Code -- flattering hallucinations, '{asteriskVariants[asteriskIndex]}{" "}
+          {thinkingVariants[thinkingIndex]}', and all!
         </div>
         <div className="text-[#333333] mb-1">
-          <span className="text-[#8b0000]">$</span> echo "Vibe coded by Lucas with Fred Again.., Philz, and his homie Claude Code -- flattering hallucinations, '{asteriskVariants[asteriskIndex]} {thinkingVariants[thinkingIndex]}', and all!" >> ABOUT.md
+          <span className="text-[#8b0000]">$</span> cd{" "}
+          <b>professional-profile</b>/{" "}
         </div>
         <div className="text-[#333333] mb-1">
           <span className="text-[#8b0000]">$</span> ls -la{" "}
-          <span className="font-bold">professional-profile/</span>
         </div>
       </div>
 
@@ -476,7 +520,8 @@ export default function TerminalRepoList() {
               ./lucasdickey
             </a>
             <span className="text-[#666666] text-xs ml-2">
-              (Recent projects emphasizing fun vibe coded projects of different magnitudes)
+              (Recent projects emphasizing fun vibe coded projects of different
+              magnitudes)
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -602,16 +647,18 @@ export default function TerminalRepoList() {
                         </div>
                       )}
 
-                      {/* Apple Podcasts Embed for Sound Strategy */}
+                      {/* Spotify Embed for Sound Strategy */}
                       {entry.title === "Sound Strategy Podcast" && (
                         <div className="mb-4">
                           <iframe
-                            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-                            frameBorder="0"
+                            style={{ borderRadius: "12px" }}
+                            src="https://open.spotify.com/embed/show/0WxvhkDeHnvTisq0UTpIZK?utm_source=generator"
+                            width="100%"
                             height="450"
-                            style={{ width: "100%", maxWidth: "660px", overflow: "hidden", borderRadius: "10px" }}
-                            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-                            src="https://embed.podcasts.apple.com/us/podcast/sound-strategy-with-lucas-dickey-the-most-meta/id1805261979"
+                            frameBorder="0"
+                            allowFullScreen={true}
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
                           ></iframe>
                         </div>
                       )}
