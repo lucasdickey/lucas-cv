@@ -8,11 +8,78 @@ interface Entry {
   title: string;
   description: string;
   publishedDate: string;
-  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter";
+  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books";
   sourceUrl: string;
   sourceTitle: string;
   sourceDescription: string;
 }
+
+interface Book {
+  title: string;
+  author: string;
+  description: string;
+  coverUrl: string;
+  amazonUrl: string;
+}
+
+const recentBooks: Book[] = [
+  {
+    title: "Tomorrow, and Tomorrow, and Tomorrow",
+    author: "Gabrielle Zevin",
+    description: "A novel exploring friendship, gaming, and creativity",
+    coverUrl: "/images/books/tomorrow-and-tomorrow.jpg",
+    amazonUrl: "https://amzn.to/4lnvrBX"
+  },
+  {
+    title: "Amusing Ourselves to Death",
+    author: "Neil Postman",
+    description: "A critical analysis of media and public discourse",
+    coverUrl: "/images/books/amusing-ourselves-to-death.jpg",
+    amazonUrl: "https://amzn.to/4lMkbyS"
+  },
+  {
+    title: "Abundance: Progress Takes Imagination",
+    author: "Ezra Klein",
+    description: "A book about progress and imagination in society",
+    coverUrl: "/images/books/abundance-progress.jpg",
+    amazonUrl: "https://amzn.to/4m5EBTJ"
+  },
+  {
+    title: "Animal Farm",
+    author: "George Orwell",
+    description: "A classic allegorical novel critiquing totalitarian systems through farm animals",
+    coverUrl: "/images/books/animal-farm.jpg",
+    amazonUrl: "https://amzn.to/3IiGC06"
+  },
+  {
+    title: "Do Androids Dream Of Electric Sheep?",
+    author: "Philip K. Dick",
+    description: "A science fiction novel exploring artificial intelligence and humanity",
+    coverUrl: "/images/books/do-androids-dream.jpg",
+    amazonUrl: "https://amzn.to/46xjAMS"
+  },
+  {
+    title: "Artificial Intelligence: A Modern Approach",
+    author: "Peter Norvig & Stuart Russell",
+    description: "A comprehensive textbook on artificial intelligence covering modern approaches",
+    coverUrl: "/images/books/ai-modern-approach.jpg",
+    amazonUrl: "https://amzn.to/44EUsRO"
+  },
+  {
+    title: "The Business of Venture Capital",
+    author: "Mahendra Ramsinghani",
+    description: "A guide to venture capital strategies from industry experts",
+    coverUrl: "/images/books/business-venture-capital.jpg",
+    amazonUrl: "https://amzn.to/3TsNXwr"
+  },
+  {
+    title: "Exhalation: Stories",
+    author: "Ted Chiang",
+    description: "A collection of short stories by acclaimed science fiction author Ted Chiang",
+    coverUrl: "/images/books/exhalation-stories.jpg",
+    amazonUrl: "https://amzn.to/46wer7N"
+  }
+];
 
 const entries: Entry[] = [
   // CV Section - Professional Background
@@ -213,6 +280,17 @@ const entries: Entry[] = [
     sourceTitle: "Medium",
     sourceDescription: "Product strategy and growth insights",
   },
+  
+  // Recent Reads
+  {
+    title: "Recent Reads",
+    description: "Books I've read or re-read in the last 90 days. These are contemporaneous books as well as ones I've revisited recently. A mix of fiction, philosophy, psychology, and economics that inform my thinking on technology, society, and human nature.",
+    publishedDate: "2025-01-01",
+    type: "books",
+    sourceUrl: "#books",
+    sourceTitle: "Personal Library",
+    sourceDescription: "Recent reading list and book recommendations"
+  },
 
   // Podcast & Media
   {
@@ -401,6 +479,7 @@ export default function TerminalRepoList() {
       opinion: { name: "Recent Opinion Pieces", icon: "💭" },
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
+      books: { name: "Recent Reads", icon: "📚" },
     };
     return (
       typeMap[type] || {
@@ -448,7 +527,7 @@ export default function TerminalRepoList() {
 ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒   ▒▒▒  ▒▒▒   ▒▒▒▒▒▒`}
         </pre>
         <div className="text-[#333333] mb-1">
-          Vibe coded by Lucas with Fred Again.., Philz, and his homie Claude
+          Vibe coded by Lucas with his colleague Claude
           Code -- flattering hallucinations, '{asteriskVariants[asteriskIndex]}{" "}
           {thinkingVariants[thinkingIndex]}', and all!
         </div>
@@ -467,7 +546,10 @@ export default function TerminalRepoList() {
         <div className="text-sm">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {Object.keys(groupedEntries)
-              .sort()
+              .sort((a, b) => {
+                const order = ['cv', 'code', 'opinion', 'books', 'media', 'twitter'];
+                return order.indexOf(a) - order.indexOf(b);
+              })
               .map((type) => {
                 const typeInfo = getTypeInfo(type);
                 return (
@@ -477,7 +559,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {groupedEntries[type].length})
+                    {type === 'books' ? recentBooks.length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -566,7 +648,10 @@ export default function TerminalRepoList() {
       {/* Content */}
       <div>
         {Object.keys(groupedEntries)
-          .sort()
+          .sort((a, b) => {
+            const order = ['cv', 'code', 'opinion', 'books', 'media', 'twitter'];
+            return order.indexOf(a) - order.indexOf(b);
+          })
           .map((type) => {
             const typeInfo = getTypeInfo(type);
             const typeEntries = groupedEntries[type];
@@ -583,7 +668,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({typeEntries.length} entries)
+                    ({type === 'books' ? recentBooks.length : typeEntries.length} {type === 'books' ? 'books' : 'entries'})
                   </span>
                 </div>
 
@@ -613,6 +698,44 @@ export default function TerminalRepoList() {
                       <div className="text-[#333333] mb-2 leading-relaxed">
                         {entry.description}
                       </div>
+
+                      {/* Books Grid for Recent Reads */}
+                      {entry.type === "books" && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          {recentBooks.map((book, bookIndex) => (
+                            <div key={bookIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
+                              <div className="flex gap-4">
+                                <div className="flex-shrink-0">
+                                  <img 
+                                    src={book.coverUrl} 
+                                    alt={`${book.title} cover`}
+                                    className="w-16 h-24 object-cover rounded shadow-sm"
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                    {book.title}
+                                  </h4>
+                                  <p className="text-[#666666] text-xs mb-2">
+                                    by {book.author}
+                                  </p>
+                                  <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                    {book.description}
+                                  </p>
+                                  <a 
+                                    href={book.amazonUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#0000ff] text-xs hover:underline"
+                                  >
+                                    View on Amazon
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
 
                       {/* YouTube Embed for YouTube URLs */}
                       {entry.sourceUrl.includes("youtube.com") &&
