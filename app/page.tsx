@@ -8,7 +8,7 @@ interface Entry {
   title: string;
   description: string;
   publishedDate: string;
-  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books";
+  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "toys";
   sourceUrl: string;
   sourceTitle: string;
   sourceDescription: string;
@@ -20,6 +20,14 @@ interface Book {
   description: string;
   coverUrl: string;
   amazonUrl: string;
+}
+
+interface Toy {
+  title: string;
+  description: string;
+  imageUrl: string;
+  amazonUrl: string;
+  comment?: string;
 }
 
 const recentBooks: Book[] = [
@@ -78,6 +86,57 @@ const recentBooks: Book[] = [
     description: "A collection of short stories by acclaimed science fiction author Ted Chiang",
     coverUrl: "/images/books/exhalation-stories.jpg",
     amazonUrl: "https://amzn.to/46wer7N"
+  }
+];
+
+const recentToys: Toy[] = [
+  {
+    title: "Opal Tadpole",
+    description: "Tiny 4K webcam that clips to your laptop screen",
+    imageUrl: "/images/toys/opal-tadpole.jpg",
+    amazonUrl: "https://amzn.to/4eO3d0P"
+  },
+  {
+    title: "Nova Wave 2",
+    description: "AI-powered light that adapts to your circadian rhythm",
+    imageUrl: "/images/toys/nova-wave-2.jpg",
+    amazonUrl: "https://amzn.to/4lrKRoN"
+  },
+  {
+    title: "Focusrite Scarlett 2i2",
+    description: "USB audio interface for recording with professional sound quality",
+    imageUrl: "/images/toys/focusrite-scarlett-2i2.jpg",
+    amazonUrl: "https://amzn.to/4lVDupz"
+  },
+  {
+    title: "AIAIAI TMA-2 DJ Wireless Headphones",
+    description: "Professional wireless DJ headphones with high isolation",
+    imageUrl: "/images/toys/aiaiai-tma2-headphones.jpg",
+    amazonUrl: "https://amzn.to/3Tx9jJ5"
+  },
+  {
+    title: "AKAI Professional LPD8",
+    description: "Compact USB MIDI pad controller for beat making",
+    imageUrl: "/images/toys/akai-lpd8.jpg",
+    amazonUrl: "https://amzn.to/4kAcMSg"
+  },
+  {
+    title: "Desk Clamp Power Strip",
+    description: "Mountable power strip that clamps to your desk edge",
+    imageUrl: "/images/toys/desk-clamp-power-strip.jpg",
+    amazonUrl: "https://amzn.to/4liQ1TX"
+  },
+  {
+    title: "Native Instruments Maschine Mikro Mk3",
+    description: "Compact drum machine and sampler controller",
+    imageUrl: "/images/toys/maschine-mikro-mk3.jpg",
+    amazonUrl: "https://amzn.to/44YxbeY"
+  },
+  {
+    title: "Shure MV7i Smart Microphone",
+    description: "USB microphone with built-in audio interface for podcasting",
+    imageUrl: "/images/toys/shure-mv7i.jpg",
+    amazonUrl: "https://amzn.to/4lpE3bl"
   }
 ];
 
@@ -291,6 +350,17 @@ const entries: Entry[] = [
     sourceTitle: "Personal Library",
     sourceDescription: "Recent reading list and book recommendations"
   },
+  
+  // Recent Toys
+  {
+    title: "Recent Toys",
+    description: "Gadgets, tools, and interesting products I've recently purchased and can recommend. Each comes with my personal thoughts on why I bought it and how it's been working out.",
+    publishedDate: "2025-01-11",
+    type: "toys",
+    sourceUrl: "#toys",
+    sourceTitle: "Personal Gear",
+    sourceDescription: "Recent purchases and product recommendations"
+  },
 
   // Podcast & Media
   {
@@ -480,6 +550,7 @@ export default function TerminalRepoList() {
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
       books: { name: "Recent Reads", icon: "📚" },
+      toys: { name: "Recent Toys", icon: "🧸" },
     };
     return (
       typeMap[type] || {
@@ -547,7 +618,7 @@ export default function TerminalRepoList() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {Object.keys(groupedEntries)
               .sort((a, b) => {
-                const order = ['cv', 'code', 'opinion', 'books', 'media', 'twitter'];
+                const order = ['cv', 'code', 'opinion', 'books', 'toys', 'media', 'twitter'];
                 return order.indexOf(a) - order.indexOf(b);
               })
               .map((type) => {
@@ -559,7 +630,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : groupedEntries[type].length})
+                    {type === 'books' ? recentBooks.length : type === 'toys' ? recentToys.length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -649,7 +720,7 @@ export default function TerminalRepoList() {
       <div>
         {Object.keys(groupedEntries)
           .sort((a, b) => {
-            const order = ['cv', 'code', 'opinion', 'books', 'media', 'twitter'];
+            const order = ['cv', 'code', 'opinion', 'books', 'toys', 'media', 'twitter'];
             return order.indexOf(a) - order.indexOf(b);
           })
           .map((type) => {
@@ -668,7 +739,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : typeEntries.length} {type === 'books' ? 'books' : 'entries'})
+                    ({type === 'books' ? recentBooks.length : type === 'toys' ? recentToys.length : typeEntries.length} {type === 'books' ? 'books' : type === 'toys' ? 'toys' : 'entries'})
                   </span>
                 </div>
 
@@ -724,6 +795,46 @@ export default function TerminalRepoList() {
                                   </p>
                                   <a 
                                     href={book.amazonUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#0000ff] text-xs hover:underline"
+                                  >
+                                    View on Amazon
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Toys Grid for Recent Toys */}
+                      {entry.type === "toys" && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          {recentToys.map((toy, toyIndex) => (
+                            <div key={toyIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
+                              <div className="flex gap-4">
+                                <div className="flex-shrink-0">
+                                  <img 
+                                    src={toy.imageUrl} 
+                                    alt={`${toy.title} product image`}
+                                    className="w-16 h-16 object-cover rounded shadow-sm"
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                    {toy.title}
+                                  </h4>
+                                  <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                    {toy.description}
+                                  </p>
+                                  {toy.comment && (
+                                    <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
+                                      "{toy.comment}"
+                                    </p>
+                                  )}
+                                  <a 
+                                    href={toy.amazonUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-[#0000ff] text-xs hover:underline"

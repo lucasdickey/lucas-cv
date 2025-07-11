@@ -31,7 +31,11 @@
       "Bash(gh repo list:*)",
       "Bash(gh auth:*)",
       "Bash(ls:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "WebFetch(domain:amzn.to)",
+      "WebFetch(domain:www.amazon.com)",
+      "WebFetch(domain:lucas-myfryejbs-lucasdickeys-projects.vercel.app)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }
