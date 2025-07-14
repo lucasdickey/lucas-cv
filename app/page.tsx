@@ -573,18 +573,20 @@ export default function TerminalRepoList() {
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
       {/* Terminal Header */}
-      <div className="border border-[#cccccc] bg-[#e8e8d8] p-4 mb-5 rounded-md shadow-sm">
+      <div className="border border-[#cccccc] bg-[#e8e8d8] p-2 md:p-4 mb-5 rounded-md shadow-sm overflow-x-auto">
         <div className="flex items-center mb-2">
           <div className="w-3 h-3 rounded-full bg-[#ff6057] mr-2"></div>
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e] mr-2"></div>
           <div className="w-3 h-3 rounded-full bg-[#28ca41]"></div>
           <div className="ml-4 text-[#666666] text-sm">terminal — bash</div>
         </div>
-        <div className="text-[#8b0000] mb-2">
-          {formatCurrentTime(currentTime)} ~/
+        <div className="text-[#8b0000] mb-2 text-xs md:text-sm">
+          <span className="hidden sm:inline">{formatCurrentTime(currentTime)} </span>
+          <span className="inline sm:hidden">~/</span>
           <span className="font-bold">lucas-dickey</span> git:(master)±9 lucas
         </div>
-        <pre className="text-[#8b0000] mb-2 text-xs leading-none">
+        {/* Desktop ASCII Art */}
+        <pre className="text-[#8b0000] mb-2 text-xs leading-none hidden lg:block">
           {`
 ▒▒▒        ▒▒▒  ▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒    ▒▒▒▒▒▒ 
 ▒▒▒        ▒▒▒  ▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒    ▒▒▒▒▒▒ 
@@ -597,10 +599,29 @@ export default function TerminalRepoList() {
 ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒   ▒▒▒  ▒▒▒   ▒▒▒▒▒▒ 
 ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒   ▒▒▒  ▒▒▒   ▒▒▒▒▒▒`}
         </pre>
-        <div className="text-[#333333] mb-1">
-          Vibe coded by Lucas with his colleague Claude
+        {/* Tablet ASCII Art */}
+        <pre className="text-[#8b0000] mb-2 text-xs leading-none hidden md:block lg:hidden">
+          {`
+▒▒▒     ▒▒  ▒▒  ▒▒▒▒   ▒▒▒▒   ▒▒▒▒ 
+▒▒▒     ▒▒  ▒▒  ▒▒     ▒▒▒▒   ▒▒   
+▒▒▒     ▒▒  ▒▒  ▒▒     ▒▒▒▒   ▒▒▒▒ 
+▒▒▒     ▒▒  ▒▒  ▒▒     ▒  ▒      ▒▒
+▒▒▒▒▒▒  ▒▒▒▒▒   ▒▒▒▒   ▒  ▒   ▒▒▒▒`}
+        </pre>
+        {/* Mobile ASCII Art */}
+        <pre className="text-[#8b0000] mb-2 text-xs leading-none block md:hidden">
+          {`
+▒▒    ▒▒  ▒▒  ▒▒▒  ▒▒▒  ▒▒▒
+▒▒    ▒▒  ▒▒  ▒    ▒▒▒  ▒  
+▒▒    ▒▒  ▒▒  ▒    ▒▒▒  ▒▒▒
+▒▒    ▒▒  ▒▒  ▒    ▒ ▒    ▒
+▒▒▒▒  ▒▒▒▒   ▒▒▒  ▒  ▒  ▒▒▒`}
+        </pre>
+        <div className="text-[#333333] mb-1 text-xs md:text-sm">
+          <span className="hidden sm:inline">Vibe coded by Lucas with his colleague Claude
           Code -- flattering hallucinations, '{asteriskVariants[asteriskIndex]}{" "}
-          {thinkingVariants[thinkingIndex]}', and all!
+          {thinkingVariants[thinkingIndex]}', and all!</span>
+          <span className="inline sm:hidden">Vibe coded by Lucas with Claude Code</span>
         </div>
         <div className="text-[#333333] mb-1">
           <span className="text-[#8b0000]">$</span> cd{" "}
