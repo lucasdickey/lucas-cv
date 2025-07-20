@@ -98,6 +98,12 @@ const recentBooks: Book[] = [
 
 const recentToys: Toy[] = [
   {
+    title: "InnoGear Video Conference Light",
+    description: "Professional video conferencing light bar with remote control",
+    imageUrl: "/images/toys/innogear-video-bar.jpg",
+    amazonUrl: "https://amzn.to/3Ul7tev"
+  },
+  {
     title: "Opal Tadpole",
     description: "Tiny 4K webcam that clips to your laptop screen",
     imageUrl: "/images/toys/opal-tadpole.jpg",
