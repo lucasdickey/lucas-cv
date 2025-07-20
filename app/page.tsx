@@ -32,6 +32,13 @@ interface Toy {
 
 const recentBooks: Book[] = [
   {
+    title: "It Lasts Forever and Then It's Over",
+    author: "Anne de Marcken",
+    description: "A novel exploring mortality, memory, and the passage of time",
+    coverUrl: "/images/books/it-lasts-forever.jpg",
+    amazonUrl: "https://amzn.to/3TPwluN"
+  },
+  {
     title: "Tomorrow, and Tomorrow, and Tomorrow",
     author: "Gabrielle Zevin",
     description: "A novel exploring friendship, gaming, and creativity",
