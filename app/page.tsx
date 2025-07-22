@@ -948,7 +948,11 @@ export default function TerminalRepoList() {
 
                       {/* Books Grid for Recent Reads */}
                       {entry.type === "books" && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <>
+                          <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 mb-4 text-sm">
+                            <strong>📎 Affiliate Links:</strong> All book links below are Amazon affiliate links. I may earn a small commission if you purchase through these links, at no extra cost to you.
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           {recentBooks.map((book, bookIndex) => (
                             <div key={bookIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
                               <div className="flex gap-4">
@@ -981,12 +985,17 @@ export default function TerminalRepoList() {
                               </div>
                             </div>
                           ))}
-                        </div>
+                          </div>
+                        </>
                       )}
 
                       {/* Toys Grid for Recent Toys */}
                       {entry.type === "toys" && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <>
+                          <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 mb-4 text-sm">
+                            <strong>📎 Affiliate Links:</strong> All product links below are Amazon affiliate links. I may earn a small commission if you purchase through these links, at no extra cost to you.
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           {recentToys.map((toy, toyIndex) => (
                             <div key={toyIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
                               <div className="flex gap-4">
@@ -1021,12 +1030,17 @@ export default function TerminalRepoList() {
                               </div>
                             </div>
                           ))}
-                        </div>
+                          </div>
+                        </>
                       )}
 
                       {/* Lenny's Recommendations Grid */}
                       {entry.type === "lenny" && (
-                        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
+                        <>
+                          <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 mb-4 text-sm">
+                            <strong>📎 Affiliate Links:</strong> All book links below are Amazon affiliate links. I may earn a small commission if you purchase through these links, at no extra cost to you.
+                          </div>
+                          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
                           {lennyRecommendations.map((book, bookIndex) => (
                             <a 
                               key={bookIndex} 
@@ -1064,7 +1078,8 @@ export default function TerminalRepoList() {
                               </div>
                             </a>
                           ))}
-                        </div>
+                          </div>
+                        </>
                       )}
 
                       {/* YouTube Embed for YouTube URLs */}
