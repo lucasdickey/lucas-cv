@@ -496,7 +496,7 @@ const entries: Entry[] = [
 
   // Lenny's Recommendations
   {
-    title: "Lenny's Recommendations",
+    title: "",
     description: "Curated book recommendations from Lenny Rachitsky's newsletter. These are essential reads for product managers, entrepreneurs, and startup founders.",
     publishedDate: "2025-01-01",
     type: "lenny",
@@ -1036,11 +1036,7 @@ export default function TerminalRepoList() {
 
                       {/* Lenny's Recommendations Grid */}
                       {entry.type === "lenny" && (
-                        <>
-                          <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 mb-4 text-sm">
-                            <strong>📎 Affiliate Links:</strong> All book links below are Amazon affiliate links. I may earn a small commission if you purchase through these links, at no extra cost to you.
-                          </div>
-                          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
+                        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
                           {lennyRecommendations.map((book, bookIndex) => (
                             <a 
                               key={bookIndex} 
@@ -1078,8 +1074,7 @@ export default function TerminalRepoList() {
                               </div>
                             </a>
                           ))}
-                          </div>
-                        </>
+                        </div>
                       )}
 
                       {/* YouTube Embed for YouTube URLs */}
@@ -1132,7 +1127,7 @@ export default function TerminalRepoList() {
                       )}
 
                       {/* Entry Source */}
-                      <div className="text-[#666666] text-sm">
+                      <div className="text-[#666666] text-sm mb-4">
                         Source:{" "}
                         <a
                           href={entry.sourceUrl}
@@ -1145,6 +1140,13 @@ export default function TerminalRepoList() {
                         {entry.sourceDescription &&
                           ` - ${entry.sourceDescription}`}
                       </div>
+                      
+                      {/* Affiliate Links Call-out for Lenny's section */}
+                      {entry.type === "lenny" && (
+                        <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 text-sm">
+                          <strong>Affiliate Links:</strong> All book links above are Amazon affiliate links. I may earn a small commission if you purchase through these links, at no extra cost to you.
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
