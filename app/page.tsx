@@ -485,9 +485,9 @@ const entries: Entry[] = [
   
   // Recent Reads
   {
-    title: "Recent Reads",
+    title: "",
     description: "Books I've read or re-read in the last 90 days. These are contemporaneous books as well as ones I've revisited recently. A mix of fiction, philosophy, psychology, and economics that inform my thinking on technology, society, and human nature.",
-    publishedDate: "2025-01-01",
+    publishedDate: "2025-07-15",
     type: "books",
     sourceUrl: "#books",
     sourceTitle: "Personal Library",
@@ -498,7 +498,7 @@ const entries: Entry[] = [
   {
     title: "",
     description: "Curated book recommendations from Lenny Rachitsky's newsletter. These are essential reads for product managers, entrepreneurs, and startup founders.",
-    publishedDate: "2025-01-01",
+    publishedDate: "2025-07-21",
     type: "lenny",
     sourceUrl: "#lenny",
     sourceTitle: "Lenny's Newsletter",
@@ -507,9 +507,9 @@ const entries: Entry[] = [
   
   // Recent Toys
   {
-    title: "Recent Toys",
+    title: "",
     description: "Gadgets, tools, and interesting products I've recently purchased and can recommend. Each comes with my personal thoughts on why I bought it and how it's been working out.",
-    publishedDate: "2025-01-11",
+    publishedDate: "2025-07-15",
     type: "toys",
     sourceUrl: "#toys",
     sourceTitle: "Personal Gear",
