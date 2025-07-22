@@ -8,7 +8,7 @@ interface Entry {
   title: string;
   description: string;
   publishedDate: string;
-  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "toys";
+  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "lenny" | "toys";
   sourceUrl: string;
   sourceTitle: string;
   sourceDescription: string;
@@ -28,6 +28,13 @@ interface Toy {
   imageUrl: string;
   amazonUrl: string;
   comment?: string;
+}
+
+interface LennyBook {
+  title: string;
+  author: string;
+  coverUrl: string;
+  amazonUrl: string;
 }
 
 const recentBooks: Book[] = [
@@ -93,6 +100,129 @@ const recentBooks: Book[] = [
     description: "A collection of short stories by acclaimed science fiction author Ted Chiang",
     coverUrl: "/images/books/exhalation-stories.jpg",
     amazonUrl: "https://amzn.to/46wer7N"
+  }
+];
+
+const lennyRecommendations: LennyBook[] = [
+  {
+    title: "The 15 Commitments of Conscious Leadership: A New Paradigm for Sustainable Success",
+    author: "Jim Dethmer, Diana Chapman, Kaley Warner Klemp",
+    coverUrl: "/images/books/lennys-list/15-commitments-of-conscious-leadership.jpg",
+    amazonUrl: "https://amzn.to/46S8Oku"
+  },
+  {
+    title: "Build: An Unorthodox Guide to Making Things Worth Making",
+    author: "Tony Fadell",
+    coverUrl: "/images/books/lennys-list/build.jpg",
+    amazonUrl: "https://amzn.to/40vflxP"
+  },
+  {
+    title: "Crossing the Chasm: Marketing and Selling Disruptive Products to Mainstream Customers",
+    author: "Geoffrey Moore",
+    coverUrl: "/images/books/lennys-list/crossing-the-chasm.jpg",
+    amazonUrl: "https://amzn.to/4m5mI7c"
+  },
+  {
+    title: "Good Strategy Bad Strategy: The Difference and Why It Matters",
+    author: "Richard Rumelt",
+    coverUrl: "/images/books/lennys-list/good-strategy-bad-strategy.jpg",
+    amazonUrl: "https://amzn.to/44VM5S6"
+  },
+  {
+    title: "The Hard Thing About Hard Things",
+    author: "Ben Horowitz",
+    coverUrl: "/images/books/lennys-list/hard-thing-about-hard-things.jpg",
+    amazonUrl: "https://amzn.to/44ZtW5O"
+  },
+  {
+    title: "High Output Management",
+    author: "Andy Grove",
+    coverUrl: "/images/books/lennys-list/high-output-management.jpg",
+    amazonUrl: "https://amzn.to/44FyvU2"
+  },
+  {
+    title: "How to Win Friends & Influence People",
+    author: "Dale Carnegie",
+    coverUrl: "/images/books/lennys-list/how-to-win-friends.jpg",
+    amazonUrl: "https://amzn.to/40XQJ0I"
+  },
+  {
+    title: "Inspired: How to Create Tech Products Customers Love",
+    author: "Marty Cagan",
+    coverUrl: "/images/books/lennys-list/inspired.jpg",
+    amazonUrl: "https://amzn.to/44JROvq"
+  },
+  {
+    title: "The Lean Startup: How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses",
+    author: "Eric Ries",
+    coverUrl: "/images/books/lennys-list/lean-startup.jpg",
+    amazonUrl: "https://amzn.to/4f4DKjR"
+  },
+  {
+    title: "Make Time: How to Focus on What Matters Every Day",
+    author: "Jake Knapp",
+    coverUrl: "/images/books/lennys-list/make-time.jpg",
+    amazonUrl: "https://amzn.to/3TTqRzd"
+  },
+  {
+    title: "Never Split the Difference: Negotiating As If Your Life Depended On It",
+    author: "Chris Voss",
+    coverUrl: "/images/books/lennys-list/never-split-the-difference.jpg",
+    amazonUrl: "https://amzn.to/3Un1LJ5"
+  },
+  {
+    title: "Obviously Awesome: How to Nail Product Positioning so Customers",
+    author: "April Dunford",
+    coverUrl: "/images/books/lennys-list/obviously-awesome.jpg",
+    amazonUrl: "https://amzn.to/3GQcjO0"
+  },
+  {
+    title: "On Writing: A Memoir of the Craft",
+    author: "Stephen King",
+    coverUrl: "/images/books/lennys-list/on-writing.jpg",
+    amazonUrl: "https://amzn.to/40xEl7A"
+  },
+  {
+    title: "Playing to Win: How Strategy Really Works",
+    author: "A.G. Lafley & Roger Martin",
+    coverUrl: "/images/books/lennys-list/playingto-win.jpg",
+    amazonUrl: "#"
+  },
+  {
+    title: "Poor Charlie's Almanack: The Essential Wit and Wisdom of Charles T. Munger",
+    author: "Charlie Munger & Peter Kaufman",
+    coverUrl: "/images/books/lennys-list/poor-charlie.jpg",
+    amazonUrl: "https://amzn.to/4fkXe3T"
+  },
+  {
+    title: "Radical Candor: Fully Revised & Updated Edition: Be a Kick-Ass Boss Without Losing Your Humanity",
+    author: "Kim Scott",
+    coverUrl: "/images/books/lennys-list/radical-candor.jpg",
+    amazonUrl: "https://amzn.to/3Iyi9UK"
+  },
+  {
+    title: "Range: Why Generalists Triumph in a Specialized World",
+    author: "David Epstein",
+    coverUrl: "/images/books/lennys-list/range.jpg",
+    amazonUrl: "https://amzn.to/40u5sAk"
+  },
+  {
+    title: "Scaling People: Tactics for Management and Company Building",
+    author: "Claire Hughes Johnson",
+    coverUrl: "/images/books/lennys-list/scaling-people.jpg",
+    amazonUrl: "https://amzn.to/3TRLITG"
+  },
+  {
+    title: "The Goal: A Process of Ongoing Improvement",
+    author: "Eliyahu Goldratt",
+    coverUrl: "/images/books/lennys-list/the-goal.jpg",
+    amazonUrl: "https://amzn.to/44ZrITY"
+  },
+  {
+    title: "Working backwards",
+    author: "Bill Carr & Collin Bryar",
+    coverUrl: "/images/books/lennys-list/working-backwards.jpg",
+    amazonUrl: "https://amzn.to/3UorvEZ"
   }
 ];
 
@@ -363,6 +493,17 @@ const entries: Entry[] = [
     sourceTitle: "Personal Library",
     sourceDescription: "Recent reading list and book recommendations"
   },
+
+  // Lenny's Recommendations
+  {
+    title: "Lenny's Recommendations",
+    description: "Curated book recommendations from Lenny Rachitsky's newsletter. These are essential reads for product managers, entrepreneurs, and startup founders.",
+    publishedDate: "2025-01-01",
+    type: "lenny",
+    sourceUrl: "#lenny",
+    sourceTitle: "Lenny's Newsletter",
+    sourceDescription: "Essential startup and product management reads"
+  },
   
   // Recent Toys
   {
@@ -563,6 +704,7 @@ export default function TerminalRepoList() {
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
       books: { name: "Recent Reads", icon: "📚" },
+      lenny: { name: "Lenny's Recommendations", icon: "📖" },
       toys: { name: "Recent Toys", icon: "🧸" },
     };
     return (
@@ -652,7 +794,7 @@ export default function TerminalRepoList() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {Object.keys(groupedEntries)
               .sort((a, b) => {
-                const order = ['cv', 'code', 'opinion', 'books', 'toys', 'media', 'twitter'];
+                const order = ['cv', 'code', 'opinion', 'books', 'lenny', 'toys', 'media', 'twitter'];
                 return order.indexOf(a) - order.indexOf(b);
               })
               .map((type) => {
@@ -664,7 +806,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : type === 'toys' ? recentToys.length : groupedEntries[type].length})
+                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? recentToys.length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -754,7 +896,7 @@ export default function TerminalRepoList() {
       <div>
         {Object.keys(groupedEntries)
           .sort((a, b) => {
-            const order = ['cv', 'code', 'opinion', 'books', 'toys', 'media', 'twitter'];
+            const order = ['cv', 'code', 'opinion', 'books', 'lenny', 'toys', 'media', 'twitter'];
             return order.indexOf(a) - order.indexOf(b);
           })
           .map((type) => {
@@ -773,7 +915,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : type === 'toys' ? recentToys.length : typeEntries.length} {type === 'books' ? 'books' : type === 'toys' ? 'toys' : 'entries'})
+                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? recentToys.length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : 'entries'})
                   </span>
                 </div>
 
@@ -878,6 +1020,49 @@ export default function TerminalRepoList() {
                                 </div>
                               </div>
                             </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Lenny's Recommendations Grid */}
+                      {entry.type === "lenny" && (
+                        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
+                          {lennyRecommendations.map((book, bookIndex) => (
+                            <a 
+                              key={bookIndex} 
+                              href={book.amazonUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group relative block aspect-[2/3] bg-[#fafafa] rounded overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                            >
+                              <img 
+                                src={book.coverUrl} 
+                                alt={`${book.title} cover`}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center p-1">
+                                <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                  <div className="font-bold text-xs mb-1 leading-tight" 
+                                       style={{
+                                         display: '-webkit-box',
+                                         WebkitLineClamp: 3,
+                                         WebkitBoxOrient: 'vertical',
+                                         overflow: 'hidden'
+                                       }}>
+                                    {book.title}
+                                  </div>
+                                  <div className="text-xs opacity-90"
+                                       style={{
+                                         display: '-webkit-box',
+                                         WebkitLineClamp: 2,
+                                         WebkitBoxOrient: 'vertical',
+                                         overflow: 'hidden'
+                                       }}>
+                                    by {book.author}
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
                           ))}
                         </div>
                       )}
