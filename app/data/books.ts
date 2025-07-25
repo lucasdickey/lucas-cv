@@ -29,20 +29,7 @@ export const books: Book[] = [
     publisher: "Graywolf Press",
     rating: "4.2/5"
   },
-  {
-    title: "The Wager",
-    author: "David Grann",
-    description: "A tale of shipwreck, mutiny, and murder set in the 18th century",
-    coverUrl: "/images/books/the-wager.jpg",
-    amazonUrl: "https://amzn.to/3ZqQxQV",
-    slug: "the-wager-david-grann",
-    detailedDescription: "From the #1 New York Times bestselling author of Killers of the Flower Moon comes a masterful true story of shipwreck, survival, and savagery. In 1741, on a secret mission during an imperial war, a British warship was wrecked on a desolate island off the coast of Patagonia. The survivors, marooned for months and facing starvation, split into warring factions—some choosing to build the flimsy craft and sail to safety, others refusing to venture into the deadly seas. The resulting tale is a riveting story of human nature under extreme duress.",
-    genre: "History/Adventure",
-    publishedYear: "2023",
-    pages: "352",
-    publisher: "Doubleday",
-    rating: "4.4/5"
-  },
+
   {
     title: "Tomorrow, and Tomorrow, and Tomorrow",
     author: "Gabrielle Zevin",
@@ -57,34 +44,8 @@ export const books: Book[] = [
     publisher: "Knopf",
     rating: "4.3/5"
   },
-  {
-    title: "Demon Copperhead",
-    author: "Barbara Kingsolver",
-    description: "A Pulitzer Prize-winning novel about a boy's journey through foster care in Appalachia",
-    coverUrl: "/images/books/demon-copperhead.jpg",
-    amazonUrl: "https://amzn.to/3ZqQxQV",
-    slug: "demon-copperhead-barbara-kingsolver",
-    detailedDescription: "Winner of the 2023 Pulitzer Prize for Fiction, Demon Copperhead is a contemporary retelling of Charles Dickens' David Copperfield set in the mountains of southern Appalachia. The novel follows Damon Fields, known as Demon, as he navigates a childhood marked by poverty, addiction, and the foster care system. Kingsolver's masterful storytelling brings to life the opioid crisis and its devastating impact on communities, while celebrating the resilience of the human spirit and the power of art to transform lives.",
-    genre: "Literary Fiction",
-    publishedYear: "2022",
-    pages: "560",
-    publisher: "Harper",
-    rating: "4.5/5"
-  },
-  {
-    title: "The Seven Moons of Maali Almeida",
-    author: "Shehan Karunatilaka",
-    description: "A darkly comic fantasy about a photographer navigating the afterlife during Sri Lanka's civil war",
-    coverUrl: "/images/books/seven-moons-maali.jpg",
-    amazonUrl: "https://amzn.to/4gfVWXY",
-    slug: "seven-moons-of-maali-almeida",
-    detailedDescription: "Winner of the 2022 Booker Prize, this darkly comic novel follows Maali Almeida, a war photographer who wakes up dead in what seems like a celestial visa office. Given seven moons to contact someone from his past life to expose hidden photographs that could change the course of Sri Lanka's civil war, Maali must navigate the afterlife's bureaucracy while coming to terms with his own mortality. Karunatilaka blends magical realism with biting social commentary to create a unique and powerful narrative about war, love, and redemption.",
-    genre: "Magical Realism/Literary Fiction",
-    publishedYear: "2022",
-    pages: "432",
-    publisher: "Sort Of Books",
-    rating: "4.1/5"
-  },
+
+
   {
     title: "Amusing Ourselves to Death",
     author: "Neil Postman",
