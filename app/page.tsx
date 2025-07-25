@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from 'next/link';
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
 
@@ -9,279 +10,18 @@ interface Entry {
   description: string;
   publishedDate: string;
   type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "lenny" | "toys";
-  sourceUrl: string;
+  sourceUrl?: string;
   sourceTitle: string;
   sourceDescription: string;
 }
 
-interface Book {
-  title: string;
-  author: string;
-  description: string;
-  coverUrl: string;
-  amazonUrl: string;
-}
+import { type Book, books as recentBooks } from './data/books';
+import { toys } from './data/toys';
+import { lennyRecommendations } from './data/lenny';
 
-interface Toy {
-  title: string;
-  description: string;
-  imageUrl: string;
-  amazonUrl: string;
-  comment?: string;
-}
 
-interface LennyBook {
-  title: string;
-  author: string;
-  coverUrl: string;
-  amazonUrl: string;
-}
 
-const recentBooks: Book[] = [
-  {
-    title: "It Lasts Forever and Then It's Over",
-    author: "Anne de Marcken",
-    description: "A novel exploring mortality, memory, and the passage of time",
-    coverUrl: "/images/books/it-lasts-forever.jpg",
-    amazonUrl: "https://amzn.to/3TPwluN"
-  },
-  {
-    title: "Tomorrow, and Tomorrow, and Tomorrow",
-    author: "Gabrielle Zevin",
-    description: "A novel exploring friendship, gaming, and creativity",
-    coverUrl: "/images/books/tomorrow-and-tomorrow.jpg",
-    amazonUrl: "https://amzn.to/4lnvrBX"
-  },
-  {
-    title: "Amusing Ourselves to Death",
-    author: "Neil Postman",
-    description: "A critical analysis of media and public discourse",
-    coverUrl: "/images/books/amusing-ourselves-to-death.jpg",
-    amazonUrl: "https://amzn.to/4lMkbyS"
-  },
-  {
-    title: "Abundance: Progress Takes Imagination",
-    author: "Ezra Klein",
-    description: "A book about progress and imagination in society",
-    coverUrl: "/images/books/abundance-progress.jpg",
-    amazonUrl: "https://amzn.to/4m5EBTJ"
-  },
-  {
-    title: "Animal Farm",
-    author: "George Orwell",
-    description: "A classic allegorical novel critiquing totalitarian systems through farm animals",
-    coverUrl: "/images/books/animal-farm.jpg",
-    amazonUrl: "https://amzn.to/3IiGC06"
-  },
-  {
-    title: "Do Androids Dream Of Electric Sheep?",
-    author: "Philip K. Dick",
-    description: "A science fiction novel exploring artificial intelligence and humanity",
-    coverUrl: "/images/books/do-androids-dream.jpg",
-    amazonUrl: "https://amzn.to/46xjAMS"
-  },
-  {
-    title: "Artificial Intelligence: A Modern Approach",
-    author: "Peter Norvig & Stuart Russell",
-    description: "A comprehensive textbook on artificial intelligence covering modern approaches",
-    coverUrl: "/images/books/ai-modern-approach.jpg",
-    amazonUrl: "https://amzn.to/44EUsRO"
-  },
-  {
-    title: "The Business of Venture Capital",
-    author: "Mahendra Ramsinghani",
-    description: "A guide to venture capital strategies from industry experts",
-    coverUrl: "/images/books/business-venture-capital.jpg",
-    amazonUrl: "https://amzn.to/3TsNXwr"
-  },
-  {
-    title: "Exhalation: Stories",
-    author: "Ted Chiang",
-    description: "A collection of short stories by acclaimed science fiction author Ted Chiang",
-    coverUrl: "/images/books/exhalation-stories.jpg",
-    amazonUrl: "https://amzn.to/46wer7N"
-  }
-];
 
-const lennyRecommendations: LennyBook[] = [
-  {
-    title: "The 15 Commitments of Conscious Leadership: A New Paradigm for Sustainable Success",
-    author: "Jim Dethmer, Diana Chapman, Kaley Warner Klemp",
-    coverUrl: "/images/books/lennys-list/15-commitments-of-conscious-leadership.jpg",
-    amazonUrl: "https://amzn.to/46S8Oku"
-  },
-  {
-    title: "Build: An Unorthodox Guide to Making Things Worth Making",
-    author: "Tony Fadell",
-    coverUrl: "/images/books/lennys-list/build.jpg",
-    amazonUrl: "https://amzn.to/40vflxP"
-  },
-  {
-    title: "Crossing the Chasm: Marketing and Selling Disruptive Products to Mainstream Customers",
-    author: "Geoffrey Moore",
-    coverUrl: "/images/books/lennys-list/crossing-the-chasm.jpg",
-    amazonUrl: "https://amzn.to/4m5mI7c"
-  },
-  {
-    title: "Good Strategy Bad Strategy: The Difference and Why It Matters",
-    author: "Richard Rumelt",
-    coverUrl: "/images/books/lennys-list/good-strategy-bad-strategy.jpg",
-    amazonUrl: "https://amzn.to/44VM5S6"
-  },
-  {
-    title: "The Hard Thing About Hard Things",
-    author: "Ben Horowitz",
-    coverUrl: "/images/books/lennys-list/hard-thing-about-hard-things.jpg",
-    amazonUrl: "https://amzn.to/44ZtW5O"
-  },
-  {
-    title: "High Output Management",
-    author: "Andy Grove",
-    coverUrl: "/images/books/lennys-list/high-output-management.jpg",
-    amazonUrl: "https://amzn.to/44FyvU2"
-  },
-  {
-    title: "How to Win Friends & Influence People",
-    author: "Dale Carnegie",
-    coverUrl: "/images/books/lennys-list/how-to-win-friends.jpg",
-    amazonUrl: "https://amzn.to/40XQJ0I"
-  },
-  {
-    title: "Inspired: How to Create Tech Products Customers Love",
-    author: "Marty Cagan",
-    coverUrl: "/images/books/lennys-list/inspired.jpg",
-    amazonUrl: "https://amzn.to/44JROvq"
-  },
-  {
-    title: "The Lean Startup: How Today's Entrepreneurs Use Continuous Innovation to Create Radically Successful Businesses",
-    author: "Eric Ries",
-    coverUrl: "/images/books/lennys-list/lean-startup.jpg",
-    amazonUrl: "https://amzn.to/4f4DKjR"
-  },
-  {
-    title: "Make Time: How to Focus on What Matters Every Day",
-    author: "Jake Knapp",
-    coverUrl: "/images/books/lennys-list/make-time.jpg",
-    amazonUrl: "https://amzn.to/3TTqRzd"
-  },
-  {
-    title: "Never Split the Difference: Negotiating As If Your Life Depended On It",
-    author: "Chris Voss",
-    coverUrl: "/images/books/lennys-list/never-split-the-difference.jpg",
-    amazonUrl: "https://amzn.to/3Un1LJ5"
-  },
-  {
-    title: "Obviously Awesome: How to Nail Product Positioning so Customers",
-    author: "April Dunford",
-    coverUrl: "/images/books/lennys-list/obviously-awesome.jpg",
-    amazonUrl: "https://amzn.to/3GQcjO0"
-  },
-  {
-    title: "On Writing: A Memoir of the Craft",
-    author: "Stephen King",
-    coverUrl: "/images/books/lennys-list/on-writing.jpg",
-    amazonUrl: "https://amzn.to/40xEl7A"
-  },
-  {
-    title: "Playing to Win: How Strategy Really Works",
-    author: "A.G. Lafley & Roger Martin",
-    coverUrl: "/images/books/lennys-list/playingto-win.jpg",
-    amazonUrl: "#"
-  },
-  {
-    title: "Poor Charlie's Almanack: The Essential Wit and Wisdom of Charles T. Munger",
-    author: "Charlie Munger & Peter Kaufman",
-    coverUrl: "/images/books/lennys-list/poor-charlie.jpg",
-    amazonUrl: "https://amzn.to/4fkXe3T"
-  },
-  {
-    title: "Radical Candor: Fully Revised & Updated Edition: Be a Kick-Ass Boss Without Losing Your Humanity",
-    author: "Kim Scott",
-    coverUrl: "/images/books/lennys-list/radical-candor.jpg",
-    amazonUrl: "https://amzn.to/3Iyi9UK"
-  },
-  {
-    title: "Range: Why Generalists Triumph in a Specialized World",
-    author: "David Epstein",
-    coverUrl: "/images/books/lennys-list/range.jpg",
-    amazonUrl: "https://amzn.to/40u5sAk"
-  },
-  {
-    title: "Scaling People: Tactics for Management and Company Building",
-    author: "Claire Hughes Johnson",
-    coverUrl: "/images/books/lennys-list/scaling-people.jpg",
-    amazonUrl: "https://amzn.to/3TRLITG"
-  },
-  {
-    title: "The Goal: A Process of Ongoing Improvement",
-    author: "Eliyahu Goldratt",
-    coverUrl: "/images/books/lennys-list/the-goal.jpg",
-    amazonUrl: "https://amzn.to/44ZrITY"
-  },
-  {
-    title: "Working backwards",
-    author: "Bill Carr & Collin Bryar",
-    coverUrl: "/images/books/lennys-list/working-backwards.jpg",
-    amazonUrl: "https://amzn.to/3UorvEZ"
-  }
-];
-
-const recentToys: Toy[] = [
-  {
-    title: "InnoGear Video Conference Light",
-    description: "Professional video conferencing light bar with remote control",
-    imageUrl: "/images/toys/innogear-video-bar.jpg",
-    amazonUrl: "https://amzn.to/3Ul7tev"
-  },
-  {
-    title: "Opal Tadpole",
-    description: "Tiny 4K webcam that clips to your laptop screen",
-    imageUrl: "/images/toys/opal-tadpole.jpg",
-    amazonUrl: "https://amzn.to/4eO3d0P"
-  },
-  {
-    title: "Nova Wave 2",
-    description: "AI-powered light that adapts to your circadian rhythm",
-    imageUrl: "/images/toys/nova-wave-2.jpg",
-    amazonUrl: "https://amzn.to/4lrKRoN"
-  },
-  {
-    title: "Focusrite Scarlett 2i2",
-    description: "USB audio interface for recording with professional sound quality",
-    imageUrl: "/images/toys/focusrite-scarlett-2i2.jpg",
-    amazonUrl: "https://amzn.to/4lVDupz"
-  },
-  {
-    title: "AIAIAI TMA-2 DJ Wireless Headphones",
-    description: "Professional wireless DJ headphones with high isolation",
-    imageUrl: "/images/toys/aiaiai-tma2-headphones.jpg",
-    amazonUrl: "https://amzn.to/3Tx9jJ5"
-  },
-  {
-    title: "AKAI Professional LPD8",
-    description: "Compact USB MIDI pad controller for beat making",
-    imageUrl: "/images/toys/akai-lpd8.jpg",
-    amazonUrl: "https://amzn.to/4kAcMSg"
-  },
-  {
-    title: "Desk Clamp Power Strip",
-    description: "Mountable power strip that clamps to your desk edge",
-    imageUrl: "/images/toys/desk-clamp-power-strip.jpg",
-    amazonUrl: "https://amzn.to/4liQ1TX"
-  },
-  {
-    title: "Native Instruments Maschine Mikro Mk3",
-    description: "Compact drum machine and sampler controller",
-    imageUrl: "/images/toys/maschine-mikro-mk3.jpg",
-    amazonUrl: "https://amzn.to/44YxbeY"
-  },
-  {
-    title: "Shure MV7i Smart Microphone",
-    description: "USB microphone with built-in audio interface for podcasting",
-    imageUrl: "/images/toys/shure-mv7i.jpg",
-    amazonUrl: "https://amzn.to/4lpE3bl"
-  }
-];
 
 const entries: Entry[] = [
   // CV Section - Professional Background
@@ -489,7 +229,6 @@ const entries: Entry[] = [
     description: "Books I've read or re-read in the last 90 days. These are contemporaneous books as well as ones I've revisited recently. A mix of fiction, philosophy, psychology, and economics that inform my thinking on technology, society, and human nature.",
     publishedDate: "2025-07-15",
     type: "books",
-    sourceUrl: "#books",
     sourceTitle: "Personal Library",
     sourceDescription: "Recent reading list and book recommendations"
   },
@@ -673,6 +412,19 @@ export default function TerminalRepoList() {
     }, 500);
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  }, [loading]);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -806,7 +558,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? recentToys.length : groupedEntries[type].length})
+                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -915,7 +667,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? recentToys.length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : 'entries'})
+                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : 'entries'})
                   </span>
                 </div>
 
@@ -928,14 +680,20 @@ export default function TerminalRepoList() {
                     >
                       {/* Entry Header */}
                       <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
-                        <a
-                          href={entry.sourceUrl}
-                          className="text-[#0000ff] font-bold text-lg hover:underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {entry.title}
-                        </a>
+                        <div className="text-[#0000ff] font-bold text-lg">
+                          {entry.sourceUrl ? (
+                            <a
+                              href={entry.sourceUrl}
+                              className="hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {entry.title}
+                            </a>
+                          ) : (
+                            <span>{entry.title}</span>
+                          )}
+                        </div>
                         <span className="text-[#8b0000] text-sm whitespace-nowrap">
                           {formatDate(entry.publishedDate)}
                         </span>
@@ -949,7 +707,7 @@ export default function TerminalRepoList() {
                       {/* Books Grid for Recent Reads */}
                       {entry.type === "books" && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                          {recentBooks.map((book, bookIndex) => (
+                          {recentBooks.map((book: Book, bookIndex: number) => (
                             <div key={bookIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
                               <div className="flex gap-4">
                                 <div className="flex-shrink-0">
@@ -969,14 +727,21 @@ export default function TerminalRepoList() {
                                   <p className="text-[#333333] text-xs mb-2 leading-relaxed">
                                     {book.description}
                                   </p>
-                                  <a 
-                                    href={book.amazonUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-[#0000ff] text-xs hover:underline"
-                                  >
-                                    View on Amazon
-                                  </a>
+                                  <div className="flex items-center gap-4">
+                                    <a 
+                                      href={book.amazonUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[#0000ff] text-xs hover:underline"
+                                    >
+                                      View on Amazon
+                                    </a>
+                                    <Link href={`/books/${book.slug}`} className="text-[#0000ff] hover:underline" title="View details">
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                      </svg>
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -987,7 +752,7 @@ export default function TerminalRepoList() {
                       {/* Toys Grid for Recent Toys */}
                       {entry.type === "toys" && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                          {recentToys.map((toy, toyIndex) => (
+                          {toys.map((toy, toyIndex) => (
                             <div key={toyIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
                               <div className="flex gap-4">
                                 <div className="flex-shrink-0">
@@ -1009,14 +774,21 @@ export default function TerminalRepoList() {
                                       "{toy.comment}"
                                     </p>
                                   )}
-                                  <a 
-                                    href={toy.amazonUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-[#0000ff] text-xs hover:underline"
-                                  >
-                                    View on Amazon
-                                  </a>
+                                  <div className="flex items-center gap-4">
+                                    <a 
+                                      href={toy.amazonUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[#0000ff] text-xs hover:underline"
+                                    >
+                                      View on Amazon
+                                    </a>
+                                    <Link href={`/toys/${toy.slug}`} className="text-[#0000ff] hover:underline" title="View details">
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                      </svg>
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -1027,48 +799,54 @@ export default function TerminalRepoList() {
                       {/* Lenny's Recommendations Grid */}
                       {entry.type === "lenny" && (
                         <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
-                          {lennyRecommendations.map((book, bookIndex) => (
-                            <a 
-                              key={bookIndex} 
-                              href={book.amazonUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="group relative block aspect-[2/3] bg-[#fafafa] rounded overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                            >
-                              <img 
-                                src={book.coverUrl} 
-                                alt={`${book.title} cover`}
-                                className="w-full h-full object-cover"
-                              />
-                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center p-1">
-                                <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  <div className="font-bold text-xs mb-1 leading-tight" 
-                                       style={{
-                                         display: '-webkit-box',
-                                         WebkitLineClamp: 3,
-                                         WebkitBoxOrient: 'vertical',
-                                         overflow: 'hidden'
-                                       }}>
-                                    {book.title}
-                                  </div>
-                                  <div className="text-xs opacity-90"
-                                       style={{
-                                         display: '-webkit-box',
-                                         WebkitLineClamp: 2,
-                                         WebkitBoxOrient: 'vertical',
-                                         overflow: 'hidden'
-                                       }}>
-                                    by {book.author}
+                           {lennyRecommendations.map((book, bookIndex) => (
+                            <div key={bookIndex} className="group relative aspect-[2/3] bg-[#fafafa] rounded overflow-hidden shadow-sm">
+                              <a 
+                                href={book.amazonUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block w-full h-full hover:shadow-md transition-all duration-300 hover:scale-105"
+                              >
+                                <img 
+                                  src={book.coverUrl} 
+                                  alt={`${book.title} cover`}
+                                  className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center p-1">
+                                  <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="font-bold text-xs mb-1 leading-tight" 
+                                         style={{
+                                           display: '-webkit-box',
+                                           WebkitLineClamp: 3,
+                                           WebkitBoxOrient: 'vertical',
+                                           overflow: 'hidden'
+                                         }}>
+                                      {book.title}
+                                    </div>
+                                    <div className="text-xs opacity-90"
+                                         style={{
+                                           display: '-webkit-box',
+                                           WebkitLineClamp: 2,
+                                           WebkitBoxOrient: 'vertical',
+                                           overflow: 'hidden'
+                                         }}>
+                                      by {book.author}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </a>
+                              </a>
+                              <Link href={`/lenny/${book.slug}`} className="absolute top-1 right-1 z-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50 rounded-full p-1 hover:bg-opacity-75" title="View details">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                </svg>
+                              </Link>
+                            </div>
                           ))}
                         </div>
                       )}
 
                       {/* YouTube Embed for YouTube URLs */}
-                      {entry.sourceUrl.includes("youtube.com") &&
+                      {entry.sourceUrl && entry.sourceUrl.includes("youtube.com") &&
                         entry.sourceUrl.includes("@apesonkeys") && (
                           <div className="mb-4">
                             <iframe
