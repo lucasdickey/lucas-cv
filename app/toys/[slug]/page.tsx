@@ -1,8 +1,111 @@
 import { notFound } from 'next/navigation';
 import TerminalLayout from '../../components/TerminalLayout';
 import { toys } from '../../data/toys';
+import type { Metadata } from 'next';
 
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const toy = toys.find(t => t.slug === params.slug);
+  
+  if (!toy) {
+    return {
+      title: 'Product Not Found | Lucas Dickey',
+      description: 'The requested product could not be found.',
+    };
+  }
 
+  const title = `${toy.title} - Recent Purchase | Lucas Dickey`;
+  const description = (toy.detailedDescription || toy.description || `${toy.title}. Recently purchased by Lucas Dickey.`).substring(0, 160);
+  const url = `https://lucas.cv/toys/${toy.slug}`;
+  const imageUrl = `https://lucas.cv${toy.imageUrl}`;
+
+  // Generate keywords based on product content
+  const keywords = [
+    toy.title,
+    "product review",
+    "Lucas Dickey",
+    "recent purchase",
+    "tech gear",
+    "productivity tools",
+    "product recommendation",
+    "gadget review",
+    "technology products",
+    "startup founder gear",
+    "product manager tools",
+    ...toy.features?.map(feature => feature.toLowerCase().split(' ').slice(0, 2).join(' ')) || []
+  ].filter(Boolean);
+
+  return {
+    title,
+    description,
+    keywords: keywords.join(', '),
+    authors: [{ name: "Lucas Dickey" }],
+    creator: "Lucas Dickey",
+    publisher: "Lucas Dickey",
+    
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Lucas Dickey CV",
+      images: [
+        {
+          url: imageUrl,
+          width: 800,
+          height: 600,
+          alt: `${toy.title} product image`,
+        },
+      ],
+      locale: "en_US",
+      type: "article",
+      publishedTime: new Date().toISOString(),
+      authors: ["Lucas Dickey"],
+      tags: keywords,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+      creator: "@lucasdickey4",
+      site: "@lucasdickey4",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+
+    other: {
+      // AI Search Optimization
+      'AI-content-type': 'product-review',
+      'AI-reviewer': 'Lucas Dickey',
+      'AI-price': toy.price || '',
+      'AI-reviewer-context': 'Product Manager and Serial Founder',
+      'AI-features': toy.features?.join('; ') || '',
+      
+      // Product-specific structured data
+      'product:title': toy.title,
+      'product:price': toy.price || '',
+      'product:description': toy.description || '',
+      'product:features': toy.features?.join('; ') || '',
+      'product:specifications': toy.specifications ? Object.entries(toy.specifications).map(([k, v]) => `${k}: ${v}`).join('; ') : '',
+      
+      // Review context
+      'review:author': 'Lucas Dickey',
+      'review:context': 'Product Management and Technology Leadership',
+      'review:category': 'recent-purchases',
+      'review:comment': toy.comment || '',
+    },
+  };
+}
 
 export default function ToyPage({ params }: { params: { slug: string } }) {
   const toy = toys.find(t => t.slug === params.slug);

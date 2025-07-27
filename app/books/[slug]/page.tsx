@@ -1,6 +1,114 @@
 import { notFound } from 'next/navigation';
 import TerminalLayout from '../../components/TerminalLayout';
 import { books } from '../../data/books';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const book = books.find(b => b.slug === params.slug);
+  
+  if (!book) {
+    return {
+      title: 'Book Not Found | Lucas Dickey',
+      description: 'The requested book could not be found.',
+    };
+  }
+
+  const title = `${book.title} by ${book.author} - Recent Read | Lucas Dickey`;
+  const description = (book.detailedDescription || book.description || `${book.title} by ${book.author}. Recently read by Lucas Dickey.`).substring(0, 160);
+  const url = `https://lucas.cv/books/${book.slug}`;
+  const imageUrl = `https://lucas.cv${book.coverUrl}`;
+
+  // Generate keywords based on book content
+  const keywords = [
+    book.title,
+    book.author,
+    "recent read",
+    "book review",
+    "Lucas Dickey",
+    "reading list",
+    "book recommendation",
+    book.genre || "",
+    "product manager reading",
+    "startup books",
+    "business books",
+    "technology books"
+  ].filter(Boolean);
+
+  return {
+    title,
+    description,
+    keywords: keywords.join(', '),
+    authors: [{ name: book.author }, { name: "Lucas Dickey" }],
+    creator: "Lucas Dickey",
+    publisher: "Lucas Dickey",
+    
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Lucas Dickey CV",
+      images: [
+        {
+          url: imageUrl,
+          width: 400,
+          height: 600,
+          alt: `${book.title} book cover`,
+        },
+      ],
+      locale: "en_US",
+      type: "article",
+      publishedTime: new Date().toISOString(),
+      authors: [book.author, "Lucas Dickey"],
+      tags: keywords,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+      creator: "@lucasdickey4",
+      site: "@lucasdickey4",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+
+    other: {
+      // AI Search Optimization
+      'AI-content-type': 'recent-read',
+      'AI-reader': 'Lucas Dickey',
+      'AI-genre': book.genre || '',
+      'AI-rating': book.rating || '',
+      'AI-published-year': book.publishedYear || '',
+      'AI-reader-context': 'Product Manager and Serial Founder',
+      
+      // Book-specific structured data
+      'book:title': book.title,
+      'book:author': book.author,
+      'book:genre': book.genre || '',
+      'book:published_year': book.publishedYear || '',
+      'book:rating': book.rating || '',
+      'book:pages': book.pages || '',
+      'book:publisher': book.publisher || '',
+      
+      // Reading context
+      'reading:status': 'completed',
+      'reading:reader': 'Lucas Dickey',
+      'reading:context': 'Product Management and Technology Leadership',
+      'reading:category': 'recent-reads',
+    },
+  };
+}
 
 export default function BookPage({ params }: { params: { slug: string } }) {
   const book = books.find(b => b.slug === params.slug);
