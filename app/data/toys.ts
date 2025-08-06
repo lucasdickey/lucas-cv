@@ -126,5 +126,51 @@ export const toys: Toy[] = [
     imageUrl: "/images/toys/shure-mv7i.jpg",
     amazonUrl: "https://amzn.to/4lpE3bl",
     slug: "shure-mv7i-smart-microphone"
+  },
+  {
+    title: "HUANUO Dual Monitor Stand",
+    description: "Full adjustable monitor desk mount with swivel Vesa bracket",
+    imageUrl: "/images/toys/HUANUO-Dual-Monitor-Stand.jpg",
+    amazonUrl: "https://amzn.to/3HqrZHM",
+    slug: "huanuo-dual-monitor-stand",
+    comment: "Perfect for dual monitor setups. The adjustability is fantastic and it freed up so much desk space.",
+    detailedDescription: "The HUANUO Dual Monitor Stand is a versatile monitor mounting solution that allows you to position two monitors flexibly on your desk. With both C-clamp and grommet mounting options, it accommodates various desk types and thicknesses.",
+    features: [
+      "Full adjustable monitor desk mount",
+      "Swivel Vesa bracket for optimal positioning",
+      "C Clamp and Grommet mounting base options",
+      "Compatible with 13 to 32 inch computer screens",
+      "Each arm can hold 4.4 to 19.8 lbs"
+    ],
+    specifications: {
+      "Screen Size Compatibility": "13-32 inches",
+      "Weight Capacity": "4.4 - 19.8 lbs per arm",
+      "Mounting Options": "C-clamp or Grommet base"
+    }
+  },
+  {
+    title: "Dell 27 Plus 4K USB-C Monitor - S2725QC",
+    description: "27-inch 4K display with 120Hz refresh rate and USB-C connectivity",
+    imageUrl: "/images/toys/dell-monitorjpg.jpg",
+    amazonUrl: "https://amzn.to/4mQIv3d",
+    slug: "dell-27-plus-4k-usb-c-monitor",
+    comment: "Stunning 4K clarity with smooth 120Hz. The USB-C hub functionality is a huge convenience bonus.",
+    detailedDescription: "The Dell 27 Plus 4K USB-C Monitor delivers professional-grade visual performance with its 4K resolution and high refresh rate. Designed for users seeking sharp image quality and smooth motion, it combines premium display technology with convenient connectivity features.",
+    features: [
+      "27-inch 4K (3840 x 2160) display",
+      "120Hz refresh rate for smooth motion",
+      "AMD FreeSync Premium technology",
+      "sRGB 99% color coverage",
+      "Comfortview Plus for reduced eye strain",
+      "Integrated speakers"
+    ],
+    specifications: {
+      "Screen Size": "27 inches",
+      "Resolution": "4K (3840 x 2160)",
+      "Refresh Rate": "120Hz",
+      "Aspect Ratio": "16:9",
+      "Contrast Ratio": "1500:1",
+      "Color": "Ash White"
+    }
   }
 ];
