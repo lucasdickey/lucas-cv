@@ -222,6 +222,36 @@ const entries: Entry[] = [
     sourceTitle: "Medium",
     sourceDescription: "Product strategy and growth insights",
   },
+  {
+    title: "Install Once, Deploy Everywhere: The Publisher's Dream in the Agentic Era",
+    description:
+      "Reflecting on DeepCast experience and what publishers need in the agentic era. Explores the vision of install-once, deploy-everywhere solutions for publishers navigating the evolving AI landscape and monetization opportunities.",
+    publishedDate: "2025-08-15",
+    type: "opinion",
+    sourceUrl: "https://promptyield.com/blog/install-once-publishers-dream",
+    sourceTitle: "PromptYield Blog",
+    sourceDescription: "Publisher strategy and agentic era insights",
+  },
+  {
+    title: "Advertising is Critical for AI Adoption: LLMs Are Everywhere—Affiliate Monetization Should Be Too",
+    description:
+      "AI is becoming a ubiquitous collaborator across the internet, creating countless unmonetized commercial opportunities beyond traditional chat interfaces. Analysis of how affiliate marketing and advertising can capitalize on the expanding LLM ecosystem.",
+    publishedDate: "2025-07-18",
+    type: "opinion",
+    sourceUrl: "https://promptyield.com/blog/advertising-critical-ai-adoption",
+    sourceTitle: "PromptYield Blog", 
+    sourceDescription: "AI monetization and affiliate marketing strategy",
+  },
+  {
+    title: "A Former Ecomm Exec's Perspective on Natural Language Advertising and Expectations of Affiliate Platforms",
+    description:
+      "Prompt Yield is anticipating the needs of the demand side (publishers & developers) and merchants alike. Merchants should push for more from their monetization stack tooling, including affiliate revenue platforms. Insights from e-commerce experience on natural language advertising in the agentic era.",
+    publishedDate: "2025-08-13",
+    type: "opinion",
+    sourceUrl: "https://promptyield.com/blog/merchant-expectations-in-an-agentic-era",
+    sourceTitle: "PromptYield Blog",
+    sourceDescription: "E-commerce and affiliate platform expectations",
+  },
   
   // Recent Reads
   {
