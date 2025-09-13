@@ -146,7 +146,7 @@ export default function ToyPage({ params }: { params: { slug: string } }) {
             </p>
             {toy.comment && (
               <blockquote className="border-l-4 border-green-400 pl-4 italic text-gray-400">
-                "{toy.comment}"
+                &ldquo;{toy.comment}&rdquo;
               </blockquote>
             )}
           </div>
