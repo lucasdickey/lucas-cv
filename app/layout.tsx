@@ -113,7 +113,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      <body>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RRM60KD28D"
           strategy="afterInteractive"
@@ -126,8 +126,8 @@ export default function RootLayout({
             gtag('config', 'G-RRM60KD28D');
           `}
         </Script>
-      </head>
-      <body>{children}</body>
+        {children}
+      </body>
     </html>
   );
 }
