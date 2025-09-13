@@ -552,7 +552,7 @@ export default function LennyBookPage({ params }: { params: { slug: string } }) 
           href="/#lenny" 
           className="inline-flex items-center text-[#8b0000] hover:underline mb-6"
         >
-          ← Back to Lenny's Recommendations
+          ← Back to Lenny&apos;s Recommendations
         </Link>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -565,7 +565,7 @@ export default function LennyBookPage({ params }: { params: { slug: string } }) 
             />
             <div className="text-center">
               <span className="inline-block bg-[#28ca41] text-white px-3 py-1 rounded-full text-sm font-medium">
-                📖 Lenny's Pick
+                📖 Lenny&apos;s Pick
               </span>
             </div>
           </div>
@@ -588,9 +588,9 @@ export default function LennyBookPage({ params }: { params: { slug: string } }) 
 
             {book.lennyQuote && (
               <div className="bg-[#e8e8d8] border-l-4 border-[#8b0000] p-4 rounded">
-                <h3 className="font-semibold text-[#8b0000] mb-2">Lenny's Take:</h3>
+                <h3 className="font-semibold text-[#8b0000] mb-2">Lenny&apos;s Take:</h3>
                 <blockquote className="text-[#333333] italic">
-                  "{book.lennyQuote}"
+                  &ldquo;{book.lennyQuote}&rdquo;
                 </blockquote>
               </div>
             )}

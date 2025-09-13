@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
@@ -9,7 +9,7 @@ interface Entry {
   title: string;
   description: string;
   publishedDate: string;
-  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "lenny" | "toys";
+  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "lenny" | "toys" | "blog";
   sourceUrl?: string;
   sourceTitle: string;
   sourceDescription: string;
@@ -18,6 +18,7 @@ interface Entry {
 import { type Book, books as recentBooks } from './data/books';
 import { toys } from './data/toys';
 import { lennyRecommendations } from './data/lenny';
+import { blogPosts } from './data/blog';
 
 
 
@@ -253,6 +254,17 @@ const entries: Entry[] = [
     sourceDescription: "E-commerce and affiliate platform expectations",
   },
   
+  // Blog
+  {
+    title: "",
+    description: "Thoughts on product, technology, and building things. Written by a human (me), powered by simple TypeScript files rather than a complex CMS.",
+    publishedDate: "2025-09-12",
+    type: "blog",
+    sourceUrl: "/blog",
+    sourceTitle: "Personal Blog",
+    sourceDescription: "Lightweight blog built with Next.js and TypeScript"
+  },
+
   // Recent Reads
   {
     title: "",
@@ -483,6 +495,7 @@ export default function TerminalRepoList() {
       code: { name: "Code Repositories", icon: "📦" },
       // news: { name: "News Articles", icon: "📰" }, // COMMENTED OUT
       opinion: { name: "Recent Opinion Pieces", icon: "💭" },
+      blog: { name: "Blog", icon: "📝" },
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
       books: { name: "Recent Reads", icon: "📚" },
@@ -556,8 +569,8 @@ export default function TerminalRepoList() {
         </pre>
         <div className="text-[#333333] mb-1 text-xs md:text-sm">
           <span className="hidden sm:inline">Vibe coded by Lucas with his colleague Claude
-          Code -- flattering hallucinations, '{asteriskVariants[asteriskIndex]}{" "}
-          {thinkingVariants[thinkingIndex]}', and all!</span>
+          Code -- flattering hallucinations, &apos;{asteriskVariants[asteriskIndex]}{" "}
+          {thinkingVariants[thinkingIndex]}&apos;, and all!</span>
           <span className="inline sm:hidden">Vibe coded by Lucas with Claude Code</span>
         </div>
         <div className="text-[#333333] mb-1">
@@ -576,7 +589,7 @@ export default function TerminalRepoList() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {Object.keys(groupedEntries)
               .sort((a, b) => {
-                const order = ['cv', 'code', 'opinion', 'books', 'lenny', 'toys', 'media', 'twitter'];
+                const order = ['cv', 'code', 'opinion', 'blog', 'books', 'lenny', 'toys', 'media', 'twitter'];
                 return order.indexOf(a) - order.indexOf(b);
               })
               .map((type) => {
@@ -588,7 +601,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : groupedEntries[type].length})
+                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? blogPosts.length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -697,7 +710,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : 'entries'})
+                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? blogPosts.length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : type === 'blog' ? 'posts' : 'entries'})
                   </span>
                 </div>
 
@@ -801,7 +814,7 @@ export default function TerminalRepoList() {
                                   </p>
                                   {toy.comment && (
                                     <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
-                                      "{toy.comment}"
+                                      &ldquo;{toy.comment}&rdquo;
                                     </p>
                                   )}
                                   <div className="flex items-center gap-4">
@@ -823,6 +836,65 @@ export default function TerminalRepoList() {
                               </div>
                             </div>
                           ))}
+                        </div>
+                      )}
+
+                      {/* Blog Posts Grid */}
+                      {entry.type === "blog" && (
+                        <div className="grid grid-cols-1 gap-4 mb-4">
+                          {[...blogPosts]
+                            .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
+                            .slice(0, 3)
+                            .map((post, postIndex) => (
+                            <div key={postIndex} className="border border-[#cccccc] rounded-lg p-4 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
+                              <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
+                                <Link
+                                  href={`/blog/${post.slug}`}
+                                  className="text-[#0000ff] font-bold text-lg hover:underline flex-1"
+                                >
+                                  {post.title}
+                                </Link>
+                                <div className="flex items-center gap-4 text-sm text-[#666666]">
+                                  <span className="text-[#8b0000]">{new Date(post.publishedDate).toLocaleDateString("en-US", {
+                                    year: "numeric",
+                                    month: "short", 
+                                    day: "numeric",
+                                  })}</span>
+                                  <span>{post.readTime} min read</span>
+                                </div>
+                              </div>
+                              
+                              <p className="text-[#333333] text-sm mb-3 leading-relaxed">
+                                {post.excerpt}
+                              </p>
+                              
+                              <div className="flex flex-wrap gap-2 mb-3">
+                                {post.tags.map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"
+                                  >
+                                    #{tag}
+                                  </span>
+                                ))}
+                              </div>
+                              
+                              <Link
+                                href={`/blog/${post.slug}`}
+                                className="text-[#0000ff] text-sm hover:underline"
+                              >
+                                Read full post →
+                              </Link>
+                            </div>
+                          ))}
+                          <div className="text-center mt-4">
+                            <Link
+                              href="/blog"
+                              className="text-[#0000ff] hover:underline font-medium"
+                            >
+                              View all {blogPosts.length} blog posts →
+                            </Link>
+                          </div>
                         </div>
                       )}
 
