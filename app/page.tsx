@@ -18,7 +18,7 @@ interface Entry {
 import { type Book, books as recentBooks } from './data/books';
 import { toys } from './data/toys';
 import { lennyRecommendations } from './data/lenny';
-import { blogPosts } from './data/blog';
+import { getPublishedPosts } from './data/blog';
 
 
 
@@ -601,7 +601,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? blogPosts.length : groupedEntries[type].length})
+                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -710,7 +710,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? blogPosts.length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : type === 'blog' ? 'posts' : 'entries'})
+                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : type === 'blog' ? 'posts' : 'entries'})
                   </span>
                 </div>
 
@@ -842,7 +842,7 @@ export default function TerminalRepoList() {
                       {/* Blog Posts Grid */}
                       {entry.type === "blog" && (
                         <div className="grid grid-cols-1 gap-4 mb-4">
-                          {[...blogPosts]
+                          {[...getPublishedPosts()]
                             .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
                             .slice(0, 3)
                             .map((post, postIndex) => (
@@ -892,7 +892,7 @@ export default function TerminalRepoList() {
                               href="/blog"
                               className="text-[#0000ff] hover:underline font-medium"
                             >
-                              View all {blogPosts.length} blog posts →
+                              View all {getPublishedPosts().length} blog posts →
                             </Link>
                           </div>
                         </div>
