@@ -166,53 +166,6 @@ const entries: Entry[] = [
       "AI implementation insights from startup experience (AI engineering explorations, political rants, VC/startup musings)",
   },
   {
-    title:
-      "Beyond Legacy Thinking: Modernizing Podcast Monetization for Creator Success",
-    description:
-      "Analysis of challenges facing podcast creators in monetizing content, exploring outdated industry practices and proposing innovative solutions. Examines how AI and advanced targeting can improve podcast monetization strategies beyond traditional advertising models.",
-    publishedDate: "2024-11-15",
-    type: "opinion",
-    sourceUrl:
-      "https://www.deepcast.pro/resources/beyond-legacy-thinking-modernizing-podcast-monetization-for-creator-success",
-    sourceTitle: "DeepCast Resources",
-    sourceDescription: "Podcast monetization strategy and industry analysis",
-  },
-  {
-    title:
-      "The DeepChat Vision: Transforming How Audiences Engage With Podcasts",
-    description:
-      "Exploration of how AI technology revolutionizes podcast engagement by creating interactive, conversational experiences between listeners and content. Details unprecedented audience insights and new monetization opportunities through automated affiliate links.",
-    publishedDate: "2024-10-15",
-    type: "opinion",
-    sourceUrl:
-      "https://www.deepcast.pro/resources/the-deepchat-vision-transforming-how-audiences-engage-with-podcasts",
-    sourceTitle: "DeepCast Resources",
-    sourceDescription: "AI-powered podcast engagement transformation",
-  },
-  {
-    title: "Why Quality Podcast Transcription Is Critical for Success",
-    description:
-      "In-depth exploration of how high-quality podcast transcription dramatically improves discoverability, engagement, and monetization potential. Advocates for comprehensive, AI-powered transcription as solution to current industry limitations in SEO and accessibility.",
-    publishedDate: "2024-09-15",
-    type: "opinion",
-    sourceUrl:
-      "https://www.deepcast.pro/resources/why-quality-podcast-transcription-is-critical-for-success",
-    sourceTitle: "DeepCast Resources",
-    sourceDescription:
-      "Podcast transcription strategy and technical implementation",
-  },
-  {
-    title: "Why Podcast Discovery is Broken (And How We're Fixing It)",
-    description:
-      "Analysis of current podcast discovery challenges and DeepCast's innovative solutions including semantic search, topic-based navigation, and transcript search capabilities. Addresses limitations of major platforms that rely primarily on word-of-mouth discovery.",
-    publishedDate: "2024-08-15",
-    type: "opinion",
-    sourceUrl:
-      "https://www.deepcast.pro/resources/why-podcast-discovery-is-broken-and-how-were-fixing-it",
-    sourceTitle: "DeepCast Resources",
-    sourceDescription: "Podcast discovery infrastructure and search technology",
-  },
-  {
     title: "Supercharging The Thing",
     description:
       "Medium article exploring product strategy, growth tactics, and the intersection of technology and human behavior. Insights from years of building and scaling digital products across multiple industries.",
@@ -298,17 +251,6 @@ const entries: Entry[] = [
   },
 
   // Podcast & Media
-  {
-    title: "Sound Strategy Podcast",
-    description:
-      "Human-generated podcast leveraging DeepCast technology for marketing automation, metadata generation, and content distribution. Explores intersection of technology, strategy, and entrepreneurship from a founder's perspective.",
-    publishedDate: "2024-06-01",
-    type: "media",
-    sourceUrl: "https://soundstrategy.fm",
-    sourceTitle: "Sound Strategy",
-    sourceDescription:
-      "Technology and entrepreneurship insights with AI-powered production",
-  },
   {
     title: "Key To Sleep",
     description:
@@ -980,21 +922,6 @@ export default function TerminalRepoList() {
                         </div>
                       )}
 
-                      {/* Spotify Embed for Sound Strategy */}
-                      {entry.title === "Sound Strategy Podcast" && (
-                        <div className="mb-4">
-                          <iframe
-                            style={{ borderRadius: "12px" }}
-                            src="https://open.spotify.com/embed/show/0WxvhkDeHnvTisq0UTpIZK?utm_source=generator"
-                            width="100%"
-                            height="450"
-                            frameBorder="0"
-                            allowFullScreen={true}
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                            loading="lazy"
-                          ></iframe>
-                        </div>
-                      )}
 
                       {/* Entry Source */}
                       <div className="text-[#666666] text-sm mb-4">
