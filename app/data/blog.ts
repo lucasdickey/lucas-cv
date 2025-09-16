@@ -73,7 +73,7 @@ I'm definitely using this though, I'll give it that. If action following this is
 
 ### Career Exploration Matrix: Sectors, Companies, and Positioning Blurbs
 
-#### 1. Sectors & Example Companies
+### 1. Sectors & Example Companies
 
 **Strategic Enterprise Labs / R&D Groups**
 - Disney Imagineering + Disney Streaming Advanced Tech
@@ -128,7 +128,7 @@ I'm definitely using this though, I'll give it that. If action following this is
 - Northvolt
 - DeepL
 
-#### 2. Résumé Mapping: Credibility Stories
+### 2. Résumé Mapping: Credibility Stories
 
 **Strategic Enterprise Labs / R&D Groups**
 Amazon MP3 $0→$300M; scaled consumer infra; 0→1 spaces for skunkworks.
@@ -154,7 +154,7 @@ Volunteer history with PledgeLA, UNITE-LA, Riordan C2C; blends mission + market.
 **International Firms Expanding to U.S.**
 Amazon MP3 global launches; Fernish multi-city expansions.
 
-#### 3. Positioning Blurbs (Outreach Ready)
+### 3. Positioning Blurbs (Outreach Ready)
 
 **Strategic Enterprise Labs / R&D Groups**
 I've repeatedly turned early-stage ideas into scaled revenue streams — from Amazon MP3's $0→$300M ramp to launching new consumer surfaces at doubleTwist and Rival. I thrive in ambiguous, 0→1 spaces, particularly at the intersection of design, GTM, and engineering. I'd love to explore how your lab is approaching next-gen digital products.

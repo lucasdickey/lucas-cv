@@ -148,6 +148,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </h3>
           );
         }
+        if (line.startsWith('#### ')) {
+          return (
+            <h4 key={index} className="text-base font-bold text-[#333333] mb-2 mt-3">
+              {line.replace('#### ', '')}
+            </h4>
+          );
+        }
         
         // Handle code blocks
         if (line.startsWith('```')) {
