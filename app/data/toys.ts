@@ -13,6 +13,29 @@ export interface Toy {
 
 export const toys: Toy[] = [
   {
+    title: "Quntis Computer Monitor Lamp",
+    description: "Space-saving monitor light bar with asymmetric optical design",
+    imageUrl: "/images/toys/quntis-monitor-lamp.jpg",
+    amazonUrl: "https://amzn.to/46DKpyG",
+    slug: "quntis-computer-monitor-lamp",
+    comment: "Perfect lighting solution that doesn't take up desk space. The asymmetric design eliminates screen glare beautifully.",
+    detailedDescription: "The Quntis Computer Monitor Lamp features an innovative asymmetric optical design that illuminates your workspace while preventing screen glare. This space-saving solution clamps directly to your monitor, providing excellent task lighting without occupying valuable desk real estate.",
+    features: [
+      "Asymmetric optical design prevents screen glare",
+      "Stepless dimming and color temperature adjustment",
+      "Touch and remote control options",
+      "USB-C powered for convenience",
+      "Tool-free installation with weighted clamp"
+    ],
+    specifications: {
+      "Power": "15W",
+      "Color Temperature": "3000K - 6500K",
+      "Lumens": "1200",
+      "Compatibility": "Monitors 0.5-1.6 inches thick"
+    },
+    price: "$89.99"
+  },
+  {
     title: "InnoGear Video Conference Light",
     description: "Professional video conferencing light bar with remote control",
     imageUrl: "/images/toys/innogear-video-bar.jpg",

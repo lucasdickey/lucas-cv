@@ -16,6 +16,21 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "All Fours",
+    author: "Miranda July",
+    description: "A novel about a married artist's midlife awakening and journey of self-discovery",
+    coverUrl: "/images/books/all-fours.jpg",
+    amazonUrl: "https://amzn.to/47FH9Uv",
+    slug: "all-fours-miranda-july",
+    detailedDescription: "Miranda July's audacious and tender novel follows a married artist in her forties who embarks on an unexpected journey of self-discovery. When a planned road trip to New York gets derailed, she finds herself staying at a motel just miles from home, confronting desires and possibilities she never knew existed. A provocative exploration of marriage, motherhood, and female desire that challenges conventional narratives about women's lives at midlife.",
+    genre: "Literary Fiction",
+    publishedYear: "2024",
+    pages: "320",
+    publisher: "Riverhead Books",
+    rating: "4.1/5"
+  },
+
+  {
     title: "It Lasts Forever and Then It's Over",
     author: "Anne de Marcken",
     description: "A novel exploring mortality, memory, and the passage of time",
