@@ -27,6 +27,47 @@ export const getPublishedPosts = (): BlogPost[] => {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "the-stasis-problem",
+    title: "The Stasis Problem: Why Companies Stop Right-Sizing After Growth",
+    excerpt: "Why do mature organizations maintain bloated headcount even after products reach peak innovation? Exploring the organizational inertia that prevents right-sizing and how AI might finally provide the catalyst for change.",
+    content: `
+# The Stasis Problem: Why Companies Stop Right-Sizing After Growth
+
+## **The Apex of Product Value**
+
+I've been thinking about the asymptotic return on a given business unit. Products or services generally evolve towards what is effectively an apex point of the ultimate value that can be generated from the thing. If it is a physical unit, perhaps more units can be sold, but the actual improvement to the product itself doesn't necessarily change.
+
+At the same time, organizations tend to have a habit of not reducing the size of organizations despite the fact that new product innovations aren't necessarily needed. Best practices have been created that generate better efficiencies, and economies of scale have begun to hit in ways that also have positive ramifications for reduced headcount. Why do organizations tend to hit these big points of stasis and not correct until there is public market analyst scrutiny or similar from reporters in financial journals?
+
+## **Growth by Expansion, Not Innovation**
+
+It's one thing as an organization to extend your size or expand your size by releasing new businesses or lines of revenue, or if you're expanding geographically. More specifically in physical goods businesses than digital goods businesses, but those are still impacted as well by geographic expansion or identifying different market segments and going up or down that size scale and releasing slightly bespoke variations of your primary products.
+
+Those all make sense in terms of growing an organization, but even when those products reach a certain level of maturation, it seems almost natural that there should be less support structure necessary to keep those organizations humming along with efficiency that's been gained over the preceding years. Again, why the stasis of org size?
+
+## **The Stasis of Organizational Size**
+
+As organizations are encouraged to go leaner due to financial considerations as well as the imminent threat (depending on your perspective) of artificial intelligence and investor/board pressures to leverage AI to do more in terms of productivity or product innovation.
+
+With that in mind, do organizations that have hit stasis now begin to downsize because these new AI tools can support the more rote and ongoing support functions for a business that's been healthy and mature?
+
+## **AI as a Catalyst for Downsizing?**
+
+I'm certainly not advocating for mass layoffs, especially for somebody that's actively looking for new opportunities in the market. But this thought around ideal work size and how they kind of metastasize in a growth respect or human headcount respect over long periods of my career, especially when I noticed products that are on version 20 that haven't changed since version 12, and yet the work size is still the same.
+
+## **Perspectives from Social Science**
+
+Thoughts on this? Are there positions from social psychologists, business management experts, anthropologists, economists, or otherwise that explain this tendency to hold the bloat?
+
+## **And what does ChatGPT say about this?**
+
+Organizations often resist downsizing because structure becomes identity — teams, processes, and budgets calcify. Without external shocks (market pressure, new tech, activist investors), inertia usually wins. AI could provide the shock, but whether it triggers leaner orgs or just reallocated bloat remains the open question.
+    `,
+    publishedDate: "2025-09-19",
+    tags: ["organizational-design", "ai", "business-strategy", "management", "productivity", "scaling", "innovation", "efficiency"],
+    readTime: 4
+  },
+  {
     slug: "ai-assisted-job-search-beyond-network-bias",
     title: "Beyond Your Network: How LLMs Can Expand Your Job Search Horizons",
     excerpt: "After 7 years in founder roles, I turned to ChatGPT to help identify career opportunities outside my usual network. Here's what happened when I asked AI to map unexplored sectors and companies.",
