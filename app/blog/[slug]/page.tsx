@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { blogPosts, isPostPublished, getPublishedPosts } from '../../data/blog';
+import { blogPosts, isPostPublished } from '../../data/blog';
 import type { Metadata } from "next";
 import { notFound } from 'next/navigation';
 
@@ -30,6 +30,24 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const formatDateForOG = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  // Build the URL with query parameters properly
+  const ogParams = new URLSearchParams({
+    title: post.title,
+    date: formatDateForOG(post.publishedDate),
+    readTime: post.readTime.toString()
+  });
+  
+  const ogImageUrl = `https://lucas.cv/api/og?${ogParams.toString()}`;
+
   return {
     title: `${post.title} - Lucas Dickey`,
     description: post.excerpt,
@@ -40,7 +58,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       siteName: "Lucas Dickey CV",
       images: [
         {
-          url: "/og-image.png",
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -56,7 +74,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       card: "summary_large_image",
       title: `${post.title} - Lucas Dickey`,
       description: post.excerpt,
-      images: ["/og-image.png"],
+      images: [ogImageUrl],
       creator: "@lucasdickey4",
       site: "@lucasdickey4",
     },
