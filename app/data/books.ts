@@ -116,5 +116,19 @@ export const books: Book[] = [
     coverUrl: "/images/books/exhalation-stories.jpg",
     amazonUrl: "https://amzn.to/46wer7N",
     slug: "exhalation-stories"
+  },
+  {
+    title: "Moonbound",
+    author: "Robin Sloan",
+    description: "A genre-blending novel from the author of Mr. Penumbra's 24-Hour Bookstore",
+    coverUrl: "/images/books/moonbound.jpg",
+    amazonUrl: "https://amzn.to/42p4A0S",
+    slug: "moonbound-robin-sloan",
+    detailedDescription: "From bestselling author Robin Sloan comes a mind-bending adventure that blends science fiction and fantasy in entirely new ways. Set 11,000 years in the future, Moonbound follows a young boy raised by a robotic guardian on a desolate moon. When he discovers a mysterious talking animal, he embarks on a quest across time and space that challenges everything he knows about reality, family, and the nature of intelligence itself. Sloan crafts a wildly inventive tale that spans millennia while maintaining an intimate, character-driven narrative.",
+    genre: "Science Fiction/Fantasy",
+    publishedYear: "2024",
+    pages: "272",
+    publisher: "MCD",
+    rating: "4.0/5"
   }
 ];
