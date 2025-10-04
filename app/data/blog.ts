@@ -27,6 +27,59 @@ export const getPublishedPosts = (): BlogPost[] => {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "capital-destruction-or-value-creation",
+    title: "Capital Destruction or Value Creation? A Friday Thought on AI",
+    excerpt: "Peak bubble? Real value? We're in a moment where AI valuations are soaring while veterans from OpenAI can't answer basic questions. A collaborative human+AI exploration of whether we're building scaffolding or just burning capital.",
+    content: `
+# Capital Destruction or Value Creation? A Friday Thought on AI
+
+---
+
+## Opening Thoughts (by Lucas)
+
+> "We're doing an AI company with the best AI people, but we can't answer any questions." — Mira Murati (ex-OpenAI, now Thinking Machines), via *The Information.*
+
+Peak bubble? Nothing to see over here? Real people are doing real stuff, masked by a lot of noise. The idea of impending capital destruction, with even Bezos chiming in to that effect this week, seems like yet another tough notch for the economy at-large.  
+
+I'm an optimist, but given just how much slop/noise vs. signal ratio exists, or circular/vendor-financed capital dependencies, or CEOs staring down their CapEx and OpEx on the balance sheet while keeping an eye to year-end and Q4 earnings… man, it's a lot.  
+
+Bubbles don't impact only those directly participating. Through securitization, money managers, LPs, and the like, risk spreads across the economy as a whole. So simply saying, *"Those numbers are crazy, they can't be sustained, I'm going to bet against them and weather the storm"* seems a bit limited in perspective, IMHO.  
+
+Am I chicken-little-ing on a Friday here? 🤪  
+
+---
+
+## Counter-Argument: Brought to You by the AI 🤖
+
+It's tempting to frame today's AI landscape as froth, but the counter-factuals suggest otherwise:  
+
+- **Adoption velocity**: Enterprise AI tools are scaling at a pace closer to smartphones than SaaS. Tens of millions of users have adopted AI copilots in under two years.  
+- **Productivity ROI**: McKinsey estimates AI could add up to $4.4 trillion annually in productivity. Early case studies in legal, sales, and software engineering already show measurable cost reductions.  
+- **Capital cycle precedent**: Bubbles often fund infrastructure that later drives sustained value. The dot-com crash left behind fiber networks and data centers. Today's AI cycle is funding GPUs, distributed training stacks, and an increasingly skilled talent base.  
+- **Ecosystem maturity**: Unlike past bubbles, this one is already producing cash-flowing applications: GitHub Copilot revenue, enterprise contracts for foundation models, and AI-native startups scaling fast.  
+- **Resilience in downturns**: Efficiency platforms tend to thrive in recessions. AI, by cutting costs and unlocking productivity, is positioned to be counter-cyclical.  
+
+Valuations may correct, but the underlying signal is clear: AI tools are already delivering value, and the infrastructure being built will endure beyond the capital cycle.  
+
+---
+
+## Closing Synthesis: A Collaboration Between Human + AI
+
+The reality, of course, sits somewhere in the middle.  
+
+Yes, froth and noise abound — valuations are inflated, capital loops are fragile, and macro spillovers are real. At the same time, undeniable value is emerging. In my own week alone, I've found ROI from ChatGPT, Whispr Flow, Granola, Claude Code, and Warp. The tools aren't hypothetical; they're embedded in daily workflows.  
+
+So the real question isn't whether we're in a bubble or whether AI is real. It's how to navigate both truths at once: acknowledging distortions while recognizing durable value creation.  
+
+We might be in a bubble — but we're also laying the scaffolding for the next platform shift. The trick is knowing which is which.  
+
+---
+    `,
+    publishedDate: "2025-10-04",
+    tags: ["ai", "bubble", "investing", "economics", "productivity", "capital-markets", "strategy"],
+    readTime: 4
+  },
+  {
     slug: "the-stasis-problem",
     title: "The Stasis Problem: Why Companies Stop Right-Sizing After Growth",
     excerpt: "Why do mature organizations maintain bloated headcount even after products reach peak innovation? Exploring the organizational inertia that prevents right-sizing and how AI might finally provide the catalyst for change.",
