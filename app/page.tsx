@@ -128,7 +128,7 @@ const entries: Entry[] = [
     type: "code",
     sourceUrl: "https://github.com/lucasdickey/run-humans-run",
     sourceTitle: "GitHub Repository",
-    sourceDescription: "Gamified fitness tracking platform",
+    sourceDescription: "Darkly humorous AI doomerism game - 2 stars",
   },
   {
     title: "a-ok-audio-news [Work in Progress]",
@@ -139,6 +139,16 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucas-dickey/a-ok-audio-news",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Automated news podcast generator - 2 stars [WIP]",
+  },
+  {
+    title: "emojis-everywhere",
+    description:
+      "Simple Mac client for fetching emojis quickly for pasting in any context. Built with Swift and includes a Makefile-based build system. Designed for efficient emoji lookup and insertion across all macOS applications.",
+    publishedDate: "2025-10-10",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/emojis-everywhere",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Mac emoji quick-access utility - 0 stars",
   },
 
   // News Articles - COMMENTED OUT
