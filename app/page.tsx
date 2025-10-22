@@ -150,6 +150,16 @@ const entries: Entry[] = [
     sourceTitle: "GitHub Repository",
     sourceDescription: "Mac emoji quick-access utility - 0 stars",
   },
+  {
+    title: "./lucas-cv",
+    description:
+      "This very website - a terminal-styled personal CV and portfolio built with Next.js, TypeScript, and Tailwind CSS. Features dynamic content sections, audio resume player, integrated blog, book and toy recommendations with Amazon affiliates. Entirely agentically written with Claude Code - zero manual code contributions.",
+    publishedDate: "2025-06-11",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/lucas-cv",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Personal CV website - 100% agentically written - 0 stars",
+  },
 
   // News Articles - COMMENTED OUT
   // {
