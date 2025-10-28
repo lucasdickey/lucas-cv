@@ -161,6 +161,16 @@ const entries: Entry[] = [
     sourceDescription: "Visual development artifacts capture tool - MCP integration",
   },
   {
+    title: "quick-screenshot-annotator",
+    description:
+      "Quick screenshot annotation tool for macOS built with Swift. Streamlines the process of capturing and annotating screenshots with an intuitive interface. Designed for rapid markup and sharing of visual feedback, perfect for bug reports, design reviews, and documentation.",
+    publishedDate: "2025-10-28",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/quick-screenshot-annotator",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Mac screenshot annotation utility - 0 stars",
+  },
+  {
     title: "breathe-free",
     description:
       "Mindful breathing exercise web application designed to help users find calm through guided breathing techniques. Features box breathing with customizable breathing cycles, a visual breathing guide, and a minimal, distraction-free interface. Built with Next.js, React, Tailwind CSS, and TypeScript with responsive design for various devices.",
