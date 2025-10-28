@@ -27,6 +27,29 @@ export const getPublishedPosts = (): BlogPost[] => {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "expanding-aperture-agentic-coding-era",
+    title: "Expanding My Aperture: Learning Through Doing in the Agentic Coding Era",
+    excerpt: "Exploring software development across different environments, frameworks, and modalities through the lens of agentic coding and continuous learning.",
+    content: `
+# Expanding My Aperture: Learning Through Doing in the Agentic Coding Era
+
+I've been pushing myself as of late to experiment with development in different environments, with different frameworks, with different modalities. With the ease of use of agentic coding, there seems to be no excuse not to expand my aperture or revisit areas of software development that I haven't touched in years or decades.
+
+Lately, that's been delving into native applications on Mac OS or native applications on iOS and Android using web tech frameworks like Expo. I'm also digging into things like game development and wrapping my head around game design, which is in many ways a lot more pedantic and has a lot more need for deterministic clarity than some of the other interfaces I've designed for in the past. 
+
+It's an interesting thought exercise. As I step into the requirements for each of these, I really do have to go back to a first principles view or a jobs-to-be-done view, more so than wrapping my head around the nuances of the specific framework or platform. It's a good way to hone those product management skills or strategic marketing and product strategy ideation muscles.
+
+These are napkin applications or single-use applications for myself, but it is a good way to stay on top of my game and move between areas of concern that I might have myopically ignored or just not used out of personal preference or where I've chosen to invest my time.
+
+I really enjoy the educational factor here where I ask whatever my agenda tech IDE or CLI is to provide me with inputs on my own requirements before I get started requesting feedback loops on questions about either the application or service itself or how I might want to implement it and engage in user experience or technology trade-offs.
+
+I've always been one to learn through doing, and the ease of spinning up applications and iterating them quickly in the agentic coding era certainly enables me to move faster in this learn-through-do feedback loop.
+    `,
+    publishedDate: "2025-10-22",
+    tags: ["software-development", "learning", "agentic-coding", "product-strategy", "technology"],
+    readTime: 3
+  },
+  {
     slug: "capital-destruction-or-value-creation",
     title: "Capital Destruction or Value Creation? A Friday Thought on AI",
     excerpt: "Peak bubble? Real value? We're in a moment where AI valuations are soaring while veterans from OpenAI can't answer basic questions. A collaborative human+AI exploration of whether we're building scaffolding or just burning capital.",

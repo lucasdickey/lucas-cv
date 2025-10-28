@@ -35,7 +35,10 @@
       "WebFetch(domain:amzn.to)",
       "WebFetch(domain:www.amazon.com)",
       "WebFetch(domain:lucas-myfryejbs-lucasdickeys-projects.vercel.app)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebFetch(domain:promptyield.com)",
+      "WebFetch(domain:promptyield.com)",
+      "Bash(npx vercel build:*)"
     ],
     "deny": []
   }

@@ -1,0 +1,13 @@
+{
+  "sessions": [
+    {
+      "sessionId": "a85b8c2_2025-10-16T23-32-40-946Z_main",
+      "timestamp": "2025-10-16T23-32-40-946Z",
+      "commitHash": "a85b8c2",
+      "branch": "main",
+      "desktopPath": "/Users/lucasdickey/Documents/code/lucas-cv/.vizrepo/screenshots/a85b8c2_2025-10-16T23-32-40-946Z_main/desktop",
+      "mobilePath": "/Users/lucasdickey/Documents/code/lucas-cv/.vizrepo/screenshots/a85b8c2_2025-10-16T23-32-40-946Z_main/mobile"
+    }
+  ],
+  "lastCleanup": "2025-10-16T23:30:26.724Z"
+}

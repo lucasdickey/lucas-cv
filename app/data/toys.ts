@@ -13,6 +13,27 @@ export interface Toy {
 
 export const toys: Toy[] = [
   {
+    title: "ATESSON Fidget Spinner",
+    description: "Ultra-durable fidget spinner with high-speed stainless steel bearings",
+    imageUrl: "/images/toys/atesson-fidget-spinner.jpg",
+    amazonUrl: "https://www.amazon.com/dp/B06XQ3GGHY",
+    slug: "atesson-fidget-spinner",
+    comment: "Perfect EDC for focus and stress relief. The brass construction and precision bearings deliver impressively long spin times.",
+    detailedDescription: "The ATESSON Fidget Spinner features precision stainless steel bearings and brass construction for exceptional spin performance. Designed as an everyday carry tool, it helps with focus, anxiety relief, and stress management, making it ideal for ADHD management and combating boredom.",
+    features: [
+      "High-speed stainless steel bearings",
+      "2-5 minutes spin duration",
+      "Precision brass material construction",
+      "Ultra-durable design",
+      "Portable EDC size"
+    ],
+    specifications: {
+      "Material": "Brass with stainless steel bearings",
+      "Spin Time": "2-5 minutes"
+    }
+  },
+
+  {
     title: "Quntis Computer Monitor Lamp",
     description: "Space-saving monitor light bar with asymmetric optical design",
     imageUrl: "/images/toys/quntis-monitor-lamp.jpg",

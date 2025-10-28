@@ -16,6 +16,36 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "The Scaling Era: An Oral History of AI, 2019–2025",
+    author: "Dwarkesh Patel and Gavin Leech",
+    description: "An oral history documenting the rapid advancement of artificial intelligence",
+    coverUrl: "/images/books/scaling-era.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1953953557",
+    slug: "scaling-era-ai-history",
+    detailedDescription: "This oral history captures one of the most transformative periods in technological development through interviews with key figures who shaped the AI revolution. Chronicling the years when machine learning models grew exponentially in capability, the book provides firsthand accounts of breakthrough moments, strategic decisions, and the cultural shift as artificial intelligence moved from research labs to becoming a defining force in society.",
+    genre: "Technology/History",
+    publishedYear: "2025",
+    pages: "320",
+    publisher: "Stripe Press",
+    rating: "4.5/5"
+  },
+
+  {
+    title: "Sourdough",
+    author: "Robin Sloan",
+    description: "A novel about food, culture, and technology in San Francisco",
+    coverUrl: "/images/books/sourdough.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1250192757",
+    slug: "sourdough-robin-sloan",
+    detailedDescription: "From the author of Mr. Penumbra's 24-Hour Bookstore comes a whimsical novel about Lois, a software engineer who discovers a sourdough starter with mysterious origins. As she learns to bake bread, she's drawn into San Francisco's underground food culture and must navigate the worlds of artisan baking, fermentation, and robotics. A charming exploration of food, friendship, and finding meaning in unexpected places.",
+    genre: "Literary Fiction",
+    publishedYear: "2017",
+    pages: "272",
+    publisher: "MCD",
+    rating: "3.9/5"
+  },
+
+  {
     title: "Moonbound",
     author: "Robin Sloan",
     description: "A genre-blending novel from the author of Mr. Penumbra's 24-Hour Bookstore",

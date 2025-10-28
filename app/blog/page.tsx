@@ -7,10 +7,10 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Blog - Lucas Dickey",
-  description: "Thoughts on product, technology, and building things. Written by Lucas Dickey, product leader and serial founder.",
+  description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Written by Lucas Dickey, product leader and serial founder.",
   openGraph: {
     title: "Blog - Lucas Dickey",
-    description: "Thoughts on product, technology, and building things. Written by Lucas Dickey, product leader and serial founder.",
+    description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Written by Lucas Dickey, product leader and serial founder.",
     url: "https://lucas.cv/blog",
     siteName: "Lucas Dickey CV",
     images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Blog - Lucas Dickey",
-    description: "Thoughts on product, technology, and building things. Written by Lucas Dickey, product leader and serial founder.",
+    description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Written by Lucas Dickey, product leader and serial founder.",
     images: ["/og-image.png"],
     creator: "@lucasdickey4",
     site: "@lucasdickey4",
@@ -81,7 +81,7 @@ export default function BlogPage() {
       <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
         <div className="text-[#8b0000] text-2xl font-bold mb-2">📝 Blog</div>
         <div className="text-[#333333] text-sm">
-          Thoughts on product, technology, and building things. Written by a human (me), powered by simple TypeScript files.
+          Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Powered by simple TypeScript files.
         </div>
       </div>
 

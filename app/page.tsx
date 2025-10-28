@@ -150,6 +150,16 @@ const entries: Entry[] = [
     sourceTitle: "GitHub Repository",
     sourceDescription: "Mac emoji quick-access utility - 0 stars",
   },
+  {
+    title: "VizRepoAssist",
+    description:
+      "Visual Development Artifacts MCP Server that automatically captures screenshots of web applications during development. Preserves the visual journey of product development by taking screenshots at logical breakpoints and storing them in Git repositories alongside code. Features automated screenshot capture via pre-commit hooks, route auto-discovery for Next.js applications, multi-viewport support, and MCP server integration for Claude Code.",
+    publishedDate: "2025-10-16",
+    type: "code",
+    sourceUrl: "https://github.com/Prompt-Yield/VizRepoAssist",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Visual development artifacts capture tool - MCP integration",
+  },
 
   // News Articles - COMMENTED OUT
   // {
@@ -220,7 +230,7 @@ const entries: Entry[] = [
   // Blog
   {
     title: "",
-    description: "Thoughts on product, technology, and building things. Written by a human (me), powered by simple TypeScript files rather than a complex CMS.",
+    description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Powered by simple TypeScript files rather than a complex CMS.",
     publishedDate: "2025-09-12",
     type: "blog",
     sourceUrl: "/blog",
