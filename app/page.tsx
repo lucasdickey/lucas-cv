@@ -160,6 +160,16 @@ const entries: Entry[] = [
     sourceTitle: "GitHub Repository",
     sourceDescription: "Visual development artifacts capture tool - MCP integration",
   },
+  {
+    title: "breathe-free",
+    description:
+      "Mindful breathing exercise web application designed to help users find calm through guided breathing techniques. Features box breathing with customizable breathing cycles, a visual breathing guide, and a minimal, distraction-free interface. Built with Next.js, React, Tailwind CSS, and TypeScript with responsive design for various devices.",
+    publishedDate: "2025-10-27",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/breathe-free",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Guided breathing exercise app - 1 star",
+  },
 
   // News Articles - COMMENTED OUT
   // {
