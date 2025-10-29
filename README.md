@@ -60,6 +60,11 @@ Early PM on Amazon's digital music business. Scaled from **$0 to $300M in 3 year
 ## 💻 Recent Code Projects
 
 ```bash
+┌─ prompt-capture-mcp ────────────────────────── ⭐ 0
+│  Lightweight system for automatic prompt logging in Claude Code
+│  using UserPromptSubmit hooks with FastAPI backend
+└─
+
 ┌─ a-ok-shop ──────────────────────────────────── ⭐ 1
 │  AI-generated satire fashion brand with automated Shopify
 │  GraphQL integration, dynamic game-based discount codes
