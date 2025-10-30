@@ -13,6 +13,7 @@ interface Entry {
   sourceUrl?: string;
   sourceTitle: string;
   sourceDescription: string;
+  imageUrl?: string; // Optional thumbnail image for code repositories
 }
 
 import { type Book, books as recentBooks } from './data/books';
