@@ -80,6 +80,16 @@ const entries: Entry[] = [
 
   // GitHub Projects - Real Projects
   {
+    title: "prompt-capture-mcp",
+    description:
+      "Lightweight system for automatic prompt logging in Claude Code using UserPromptSubmit hooks with FastAPI backend. Captures every prompt sent to Claude Code with metadata including timestamps, project context, workspace info, and model information. Features non-intrusive background operation, markdown-formatted logs, and auto-start integration.",
+    publishedDate: "2025-10-30",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/prompt-capture-mcp",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Lightweight prompt logging for Claude Code - 0 stars",
+  },
+  {
     title: "a-ok-shop",
     description:
       "AI-generated satire fashion brand with fully automated Shopify storefront. Features GraphQL integration, custom Next.js infrastructure, dynamic game-based discount codes, and self-replicating art generation.",
