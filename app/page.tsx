@@ -604,7 +604,7 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : groupedEntries[type].length})
+                    {type === 'code' ? '10' : type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : groupedEntries[type].length})
                   </a>
                 );
               })}
@@ -713,7 +713,7 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : type === 'blog' ? 'posts' : 'entries'})
+                    ({type === 'code' ? 'Most recent 10 entries' : type === 'books' ? `${recentBooks.length} books` : type === 'lenny' ? `${lennyRecommendations.length} books` : type === 'toys' ? `${toys.length} toys` : type === 'blog' ? `${getPublishedPosts().length} posts` : `${typeEntries.length} entries`})
                   </span>
                 </div>
 
