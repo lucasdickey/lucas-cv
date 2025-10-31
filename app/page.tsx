@@ -141,16 +141,17 @@ const entries: Entry[] = [
     sourceTitle: "GitHub Repository",
     sourceDescription: "Darkly humorous AI doomerism game - 2 stars",
   },
-  {
-    title: "a-ok-audio-news [Work in Progress]",
-    description:
-      "🚧 Aggregated 2x daily AI/Tech news podcast generator with automated content curation, script generation, and audio production. Built with Python for news aggregation and content processing. Currently active development with multi-agent workflow improvements.",
-    publishedDate: "2025-05-19",
-    type: "code",
-    sourceUrl: "https://github.com/lucas-dickey/a-ok-audio-news",
-    sourceTitle: "GitHub Repository",
-    sourceDescription: "Automated news podcast generator - 2 stars [WIP]",
-  },
+  // Commented out - removed from visible set
+  // {
+  //   title: "a-ok-audio-news [Work in Progress]",
+  //   description:
+  //     "🚧 Aggregated 2x daily AI/Tech news podcast generator with automated content curation, script generation, and audio production. Built with Python for news aggregation and content processing. Currently active development with multi-agent workflow improvements.",
+  //   publishedDate: "2025-05-19",
+  //   type: "code",
+  //   sourceUrl: "https://github.com/lucas-dickey/a-ok-audio-news",
+  //   sourceTitle: "GitHub Repository",
+  //   sourceDescription: "Automated news podcast generator - 2 stars [WIP]",
+  // },
   {
     title: "emojis-everywhere",
     description:
