@@ -16,57 +16,82 @@ export default function GitHubContributions({ username = "lucasdickey" }: { user
   const [contributions, setContributions] = useState<ContributionWeek[]>([]);
   const [totalContributions, setTotalContributions] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [usingMockData, setUsingMockData] = useState(false);
 
   useEffect(() => {
-    // Generate mock data for the last 52 weeks (1 year)
-    // In production, you would fetch this from GitHub API
-    const generateMockData = () => {
-      const weeks: ContributionWeek[] = [];
-      const today = new Date();
+    const fetchContributions = async () => {
+      try {
+        const response = await fetch(`/api/github-contributions?username=${username}`);
+        const data = await response.json();
 
-      // Generate 52 weeks of data
-      for (let week = 0; week < 52; week++) {
-        const days: ContributionDay[] = [];
-
-        for (let day = 0; day < 7; day++) {
-          const date = new Date(today);
-          date.setDate(date.getDate() - (51 - week) * 7 - (6 - day));
-
-          // Generate random contribution count (weighted towards more recent)
-          const recencyBoost = week > 40 ? 2 : 1;
-          const count = Math.floor(Math.random() * 8 * recencyBoost);
-
-          // Determine level based on count
-          let level: 0 | 1 | 2 | 3 | 4 = 0;
-          if (count === 0) level = 0;
-          else if (count < 3) level = 1;
-          else if (count < 6) level = 2;
-          else if (count < 10) level = 3;
-          else level = 4;
-
-          days.push({
-            date: date.toISOString().split('T')[0],
-            count,
-            level
-          });
+        if (data.useMockData) {
+          // Fallback to mock data if GitHub API fails
+          console.log('Using mock data for GitHub contributions');
+          setUsingMockData(true);
+          const mockData = generateMockData();
+          setContributions(mockData);
+          const total = mockData.reduce((sum, week) =>
+            sum + week.days.reduce((daySum, day) => daySum + day.count, 0), 0
+          );
+          setTotalContributions(total);
+        } else {
+          // Use real data from GitHub
+          setContributions(data.weeks);
+          setTotalContributions(data.totalContributions);
+          setUsingMockData(false);
         }
-
-        weeks.push({ days });
+      } catch (error) {
+        console.error('Error fetching contributions:', error);
+        // Fallback to mock data on error
+        setUsingMockData(true);
+        const mockData = generateMockData();
+        setContributions(mockData);
+        const total = mockData.reduce((sum, week) =>
+          sum + week.days.reduce((daySum, day) => daySum + day.count, 0), 0
+        );
+        setTotalContributions(total);
+      } finally {
+        setLoading(false);
       }
-
-      return weeks;
     };
 
-    const data = generateMockData();
-    setContributions(data);
-
-    // Calculate total contributions
-    const total = data.reduce((sum, week) =>
-      sum + week.days.reduce((daySum, day) => daySum + day.count, 0), 0
-    );
-    setTotalContributions(total);
-    setLoading(false);
+    fetchContributions();
   }, [username]);
+
+  // Generate mock data fallback
+  const generateMockData = (): ContributionWeek[] => {
+    const weeks: ContributionWeek[] = [];
+    const today = new Date();
+
+    for (let week = 0; week < 52; week++) {
+      const days: ContributionDay[] = [];
+
+      for (let day = 0; day < 7; day++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - (51 - week) * 7 - (6 - day));
+
+        const recencyBoost = week > 40 ? 2 : 1;
+        const count = Math.floor(Math.random() * 8 * recencyBoost);
+
+        let level: 0 | 1 | 2 | 3 | 4 = 0;
+        if (count === 0) level = 0;
+        else if (count < 3) level = 1;
+        else if (count < 6) level = 2;
+        else if (count < 10) level = 3;
+        else level = 4;
+
+        days.push({
+          date: date.toISOString().split('T')[0],
+          count,
+          level
+        });
+      }
+
+      weeks.push({ days });
+    }
+
+    return weeks;
+  };
 
   const getLevelColor = (level: number) => {
     // Terminal-themed colors matching the site aesthetic
@@ -95,7 +120,12 @@ export default function GitHubContributions({ username = "lucasdickey" }: { user
   return (
     <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
       <div className="flex justify-between items-center mb-3">
-        <div className="text-[#8b0000] font-bold">GitHub Contributions</div>
+        <div className="text-[#8b0000] font-bold">
+          GitHub Contributions
+          {usingMockData && (
+            <span className="text-[10px] text-[#666666] ml-2 font-normal">(demo data)</span>
+          )}
+        </div>
         <div className="text-[#666666] text-sm">
           {totalContributions} contributions in the last year
         </div>
