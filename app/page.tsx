@@ -89,6 +89,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucasdickey/prompt-capture-mcp",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Lightweight prompt logging for Claude Code - 0 stars",
+    imageUrl: "/images/repos/prompt-capture-mcp.png",
   },
   {
     title: "a-ok-shop",
@@ -99,6 +100,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucas-dickey/a-ok-shop",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Automated e-commerce with AI art generation - 1 star",
+    imageUrl: "/images/repos/a-ok-shop.png",
   },
   {
     title: "OB3.chat - One Big Beautiful Bill discovery app",
@@ -109,6 +111,7 @@ const entries: Entry[] = [
     sourceUrl: "https://ob3.chat",
     sourceTitle: "OB3.chat",
     sourceDescription: "Government affairs research tool - 1 star",
+    imageUrl: "/images/repos/ob3-chat.png",
   },
   {
     title: "self-replicating-art",
@@ -130,6 +133,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucas-dickey/key-to-sleep",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Sleep story generator with AI pipeline - 18 stars",
+    imageUrl: "/images/repos/key-to-sleep.png",
   },
   {
     title: "run-human-run",
@@ -140,6 +144,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucasdickey/run-humans-run",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Darkly humorous AI doomerism game - 2 stars",
+    imageUrl: "/images/repos/run-human-run.png",
   },
   // Commented out - removed from visible set
   // {
@@ -161,6 +166,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucasdickey/emojis-everywhere",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Mac emoji quick-access utility - 0 stars",
+    imageUrl: "/images/repos/emojis-everywhere.png",
   },
   {
     title: "VizRepoAssist",
@@ -171,6 +177,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/Prompt-Yield/VizRepoAssist",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Visual development artifacts capture tool - MCP integration",
+    imageUrl: "/images/repos/vizrepoassist.png",
   },
   {
     title: "quick-screenshot-annotator",
@@ -181,6 +188,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucasdickey/quick-screenshot-annotator",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Mac screenshot annotation utility - 0 stars",
+    imageUrl: "/images/repos/quick-screenshot-annotator.png",
   },
   {
     title: "breathe-free",
@@ -191,6 +199,7 @@ const entries: Entry[] = [
     sourceUrl: "https://github.com/lucasdickey/breathe-free",
     sourceTitle: "GitHub Repository",
     sourceDescription: "Guided breathing exercise app - 1 star",
+    imageUrl: "/images/repos/breathe-free.png",
   },
 
   // News Articles - COMMENTED OUT
@@ -713,10 +722,10 @@ export default function TerminalRepoList() {
                   {typeEntries.map((entry, index) => (
                     <div
                       key={index}
-                      className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200"
+                      className={`p-4 ${!(entry.type === "code" && entry.imageUrl) ? 'border-b border-[#e0e0d0] last:border-b-0' : ''} hover:bg-[#f0f0e0] transition-colors duration-200`}
                     >
                       {/* Entry Header */}
-                      <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+                      <div className="flex justify-between items-start mb-1 flex-wrap gap-2">
                         <div className="text-[#0000ff] font-bold text-lg">
                           {entry.sourceUrl ? (
                             <a
@@ -736,10 +745,52 @@ export default function TerminalRepoList() {
                         </span>
                       </div>
 
-                      {/* Entry Description */}
-                      <div className="text-[#333333] mb-2 leading-relaxed">
-                        {entry.description}
-                      </div>
+                      {/* Code Repository Card with Image */}
+                      {entry.type === "code" && entry.imageUrl ? (
+                        <>
+                          {/* Source below title for code repos */}
+                          <div className="text-[#666666] text-xs mb-2">
+                            Source:{" "}
+                            <a
+                              href={entry.sourceUrl}
+                              className="text-[#006400] hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {entry.sourceTitle}
+                            </a>
+                            {entry.sourceDescription &&
+                              ` - ${entry.sourceDescription}`}
+                          </div>
+                          <div className="border border-[#cccccc] rounded-lg p-2 transition-colors">
+                            <div className="flex gap-3">
+                              <div className="flex-shrink-0">
+                                <a
+                                  href={entry.sourceUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    src={entry.imageUrl}
+                                    alt={`${entry.title} repository preview`}
+                                    className="w-[200px] h-auto object-cover rounded shadow-sm"
+                                  />
+                                </a>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[#333333] text-sm leading-relaxed">
+                                  {entry.description}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        /* Entry Description for non-code repos */
+                        <div className="text-[#333333] mb-2 leading-relaxed">
+                          {entry.description}
+                        </div>
+                      )}
 
                       {/* Books Grid for Recent Reads */}
                       {entry.type === "books" && (
@@ -975,20 +1026,22 @@ export default function TerminalRepoList() {
                       )}
 
 
-                      {/* Entry Source */}
-                      <div className="text-[#666666] text-sm mb-4">
-                        Source:{" "}
-                        <a
-                          href={entry.sourceUrl}
-                          className="text-[#006400] hover:underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {entry.sourceTitle}
-                        </a>
-                        {entry.sourceDescription &&
-                          ` - ${entry.sourceDescription}`}
-                      </div>
+                      {/* Entry Source - hide for code repos with images (already shown above) */}
+                      {!(entry.type === "code" && entry.imageUrl) && (
+                        <div className="text-[#666666] text-sm mb-4">
+                          Source:{" "}
+                          <a
+                            href={entry.sourceUrl}
+                            className="text-[#006400] hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {entry.sourceTitle}
+                          </a>
+                          {entry.sourceDescription &&
+                            ` - ${entry.sourceDescription}`}
+                        </div>
+                      )}
                       
                       {/* Affiliate Links Call-out for purchase sections */}
                       {(entry.type === "lenny" || entry.type === "books" || entry.type === "toys") && (
