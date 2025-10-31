@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
+import GitHubContributions from "../components/GitHubContributions";
 
 interface Entry {
   title: string;
@@ -611,6 +612,9 @@ export default function TerminalRepoList() {
           </div>
         </div>
       </div>
+
+      {/* GitHub Contributions */}
+      <GitHubContributions username="lucasdickey" />
 
       {/* Audio Resume */}
       <div className="mb-5">
