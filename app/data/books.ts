@@ -16,6 +16,21 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "The Tainted Cup",
+    author: "Robert Jackson Bennett",
+    description: "A gaslamp fantasy murder mystery featuring a brilliant inspector and her magically altered aide",
+    coverUrl: "/images/books/the-tainted-cup.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0525685815",
+    slug: "the-tainted-cup-robert-jackson-bennett",
+    detailedDescription: "In the lowland empire of Aördin, death by leviathan venom threatens the Imperial Court. When a high-ranking officer is found murdered, investigator Ana Dolabra and her magically modified aide Din must unravel a conspiracy that winds through botanical wizardry, courtly intrigue, and the looming menace of the leviathans. Bennett crafts a propulsive blend of mystery and fantasy where deduction, political maneuvering, and unforgettable characters drive the story forward.",
+    genre: "Gaslamp Fantasy/Mystery",
+    publishedYear: "2024",
+    pages: "432",
+    publisher: "Del Rey",
+    rating: "4.2/5"
+  },
+
+  {
     title: "The Scaling Era: An Oral History of AI, 2019–2025",
     author: "Dwarkesh Patel and Gavin Leech",
     description: "An oral history documenting the rapid advancement of artificial intelligence",

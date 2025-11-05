@@ -27,6 +27,33 @@ export const getPublishedPosts = (): BlogPost[] => {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "from-minus-one-to-zero-removing-friction-for-founders",
+    title: "From -1 to 0: Removing Friction for Founders by Democratizing the Start",
+    excerpt: "What creates the most friction at the very start of building something new? It's not always co-founders or funding—sometimes it's the basic administrative work that keeps founders from starting at all.",
+    content: `
+# From -1 to 0: Removing Friction for Founders by Democratizing the Start
+
+What creates the most friction at the very start of building something new?
+
+Co-founders, funding, "the idea", initial test customers—all critical.
+
+But there's also basic administrative stuff at the beginning that causes _just enough_ friction to keep many just like you from starting at all.
+
+I've always loathed G&A work as an early stage founder. But it's critical and required. Incorporation. Registered agents. Bank accounts. EINs. Formation paperwork. Funding docs. Payroll admin. Formative accounting & tax prep. You can't collect sales without it, can't take VC dollars without it, can't pay employees without it. It's structural legitimacy.
+
+The idea and the execution matter above all else, but managing the going concern of a business is an a priori requirement, too. It shouldn't be intimidating — or feel like an opaque ritual guarded by specialists.
+
+Everything is accelerating — time to value, time to ARR, time to scale. The same speed should apply to the '-1 to 0' G&A work every founder must do.
+
+We should accelerate economic participation, remove friction, and democratize structural legitimacy for founders of all stripes — from venture-backed builders to solopreneurs, gig creators, SMBs, and future mega-enterprises alike.
+
+We should also reduce the invisible drag of maintaining an ongoing concern — accelerating not just the jump-off, but the race thereafter. Legal and tax hurdles shouldn't determine who succeeds. The market should.
+    `,
+    publishedDate: "2025-11-05",
+    tags: ["startups", "entrepreneurship", "founders", "g&a", "incorporation", "business-formation", "friction"],
+    readTime: 2
+  },
+  {
     slug: "expanding-aperture-agentic-coding-era",
     title: "Expanding My Aperture: Learning Through Doing in the Agentic Coding Era",
     excerpt: "Exploring software development across different environments, frameworks, and modalities through the lens of agentic coding and continuous learning.",
