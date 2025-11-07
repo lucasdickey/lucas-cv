@@ -1,28 +1,61 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
+import { useViewMode } from "./contexts/view-mode-context";
+import MarketerHome from "./components/MarketerHome";
+import { getCodeProjectImage } from "./utils/codeProjectImages";
 
 interface Entry {
   title: string;
   description: string;
   publishedDate: string;
-  type: "cv" | "code" | "news" | "opinion" | "media" | "twitter" | "books" | "lenny" | "toys" | "blog";
+  type:
+    | "cv"
+    | "code"
+    | "news"
+    | "opinion"
+    | "media"
+    | "twitter"
+    | "books"
+    | "lenny"
+    | "toys"
+    | "blog";
   sourceUrl?: string;
   sourceTitle: string;
   sourceDescription: string;
 }
 
-import { type Book, books as recentBooks } from './data/books';
-import { toys } from './data/toys';
-import { lennyRecommendations } from './data/lenny';
-import { getPublishedPosts } from './data/blog';
+type ContributionLevelString =
+  | "NONE"
+  | "FIRST_QUARTILE"
+  | "SECOND_QUARTILE"
+  | "THIRD_QUARTILE"
+  | "FOURTH_QUARTILE";
 
+type ContributionDay = {
+  date: string;
+  contributionCount: number;
+  intensity?: number;
+  level?: number;
+  contributionLevel?: ContributionLevelString;
+};
 
+type ContributionWeek = {
+  contributionDays: ContributionDay[];
+};
 
+interface GitHubContributionData {
+  totalContributions: number;
+  weeks: ContributionWeek[];
+}
 
+import { type Book, books as recentBooks } from "./data/books";
+import { toys } from "./data/toys";
+import { lennyRecommendations } from "./data/lenny";
+import { getPublishedPosts } from "./data/blog";
 
 const entries: Entry[] = [
   // CV Section - Professional Background
@@ -141,16 +174,6 @@ const entries: Entry[] = [
     sourceDescription: "Darkly humorous AI doomerism game - 2 stars",
   },
   {
-    title: "a-ok-audio-news [Work in Progress]",
-    description:
-      "🚧 Aggregated 2x daily AI/Tech news podcast generator with automated content curation, script generation, and audio production. Built with Python for news aggregation and content processing. Currently active development with multi-agent workflow improvements.",
-    publishedDate: "2025-05-19",
-    type: "code",
-    sourceUrl: "https://github.com/lucas-dickey/a-ok-audio-news",
-    sourceTitle: "GitHub Repository",
-    sourceDescription: "Automated news podcast generator - 2 stars [WIP]",
-  },
-  {
     title: "emojis-everywhere",
     description:
       "Simple Mac client for fetching emojis quickly for pasting in any context. Built with Swift and includes a Makefile-based build system. Designed for efficient emoji lookup and insertion across all macOS applications.",
@@ -168,7 +191,8 @@ const entries: Entry[] = [
     type: "code",
     sourceUrl: "https://github.com/Prompt-Yield/VizRepoAssist",
     sourceTitle: "GitHub Repository",
-    sourceDescription: "Visual development artifacts capture tool - MCP integration",
+    sourceDescription:
+      "Visual development artifacts capture tool - MCP integration",
   },
   {
     title: "quick-screenshot-annotator",
@@ -227,7 +251,8 @@ const entries: Entry[] = [
     sourceDescription: "Product strategy and growth insights",
   },
   {
-    title: "Install Once, Deploy Everywhere: The Publisher's Dream in the Agentic Era",
+    title:
+      "Install Once, Deploy Everywhere: The Publisher's Dream in the Agentic Era",
     description:
       "Reflecting on DeepCast experience and what publishers need in the agentic era. Explores the vision of install-once, deploy-everywhere solutions for publishers navigating the evolving AI landscape and monetization opportunities.",
     publishedDate: "2025-08-15",
@@ -237,67 +262,74 @@ const entries: Entry[] = [
     sourceDescription: "Publisher strategy and agentic era insights",
   },
   {
-    title: "Advertising is Critical for AI Adoption: LLMs Are Everywhere—Affiliate Monetization Should Be Too",
+    title:
+      "Advertising is Critical for AI Adoption: LLMs Are Everywhere—Affiliate Monetization Should Be Too",
     description:
       "AI is becoming a ubiquitous collaborator across the internet, creating countless unmonetized commercial opportunities beyond traditional chat interfaces. Analysis of how affiliate marketing and advertising can capitalize on the expanding LLM ecosystem.",
     publishedDate: "2025-07-18",
     type: "opinion",
     sourceUrl: "https://promptyield.com/blog/advertising-critical-ai-adoption",
-    sourceTitle: "PromptYield Blog", 
+    sourceTitle: "PromptYield Blog",
     sourceDescription: "AI monetization and affiliate marketing strategy",
   },
   {
-    title: "A Former Ecomm Exec's Perspective on Natural Language Advertising and Expectations of Affiliate Platforms",
+    title:
+      "A Former Ecomm Exec's Perspective on Natural Language Advertising and Expectations of Affiliate Platforms",
     description:
       "Prompt Yield is anticipating the needs of the demand side (publishers & developers) and merchants alike. Merchants should push for more from their monetization stack tooling, including affiliate revenue platforms. Insights from e-commerce experience on natural language advertising in the agentic era.",
     publishedDate: "2025-08-13",
     type: "opinion",
-    sourceUrl: "https://promptyield.com/blog/merchant-expectations-in-an-agentic-era",
+    sourceUrl:
+      "https://promptyield.com/blog/merchant-expectations-in-an-agentic-era",
     sourceTitle: "PromptYield Blog",
     sourceDescription: "E-commerce and affiliate platform expectations",
   },
-  
+
   // Blog
   {
     title: "",
-    description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Powered by simple TypeScript files rather than a complex CMS.",
+    description:
+      "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Powered by simple TypeScript files rather than a complex CMS.",
     publishedDate: "2025-09-12",
     type: "blog",
     sourceUrl: "/blog",
     sourceTitle: "Personal Blog",
-    sourceDescription: "Lightweight blog built with Next.js and TypeScript"
+    sourceDescription: "Lightweight blog built with Next.js and TypeScript",
   },
 
   // Recent Reads
   {
     title: "",
-    description: "Books I've read or re-read in the last 90 days. These are contemporaneous books as well as ones I've revisited recently. A mix of fiction, philosophy, psychology, and economics that inform my thinking on technology, society, and human nature.",
+    description:
+      "Books I've read or re-read in the last 90 days. These are contemporaneous books as well as ones I've revisited recently. A mix of fiction, philosophy, psychology, and economics that inform my thinking on technology, society, and human nature.",
     publishedDate: "2025-07-15",
     type: "books",
     sourceTitle: "Personal Library",
-    sourceDescription: "Recent reading list and book recommendations"
+    sourceDescription: "Recent reading list and book recommendations",
   },
 
   // Lenny's Recommendations
   {
     title: "",
-    description: "Curated book recommendations from Lenny Rachitsky's newsletter. These are essential reads for product managers, entrepreneurs, and startup founders.",
+    description:
+      "Curated book recommendations from Lenny Rachitsky's newsletter. These are essential reads for product managers, entrepreneurs, and startup founders.",
     publishedDate: "2025-07-21",
     type: "lenny",
     sourceUrl: "#lenny",
     sourceTitle: "Lenny's Newsletter",
-    sourceDescription: "Essential startup and product management reads"
+    sourceDescription: "Essential startup and product management reads",
   },
-  
+
   // Recent Toys
   {
     title: "",
-    description: "Gadgets, tools, and interesting products I've recently purchased and can recommend. Each comes with my personal thoughts on why I bought it and how it's been working out.",
+    description:
+      "Gadgets, tools, and interesting products I've recently purchased and can recommend. Each comes with my personal thoughts on why I bought it and how it's been working out.",
     publishedDate: "2025-07-15",
     type: "toys",
     sourceUrl: "#toys",
     sourceTitle: "Personal Gear",
-    sourceDescription: "Recent purchases and product recommendations"
+    sourceDescription: "Recent purchases and product recommendations",
   },
 
   // Podcast & Media
@@ -359,6 +391,7 @@ const entries: Entry[] = [
 ];
 
 export default function TerminalRepoList() {
+  const { viewMode } = useViewMode();
   const [loading, setLoading] = useState(true);
   const [groupedEntries, setGroupedEntries] = useState<Record<string, Entry[]>>(
     {}
@@ -366,6 +399,74 @@ export default function TerminalRepoList() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [asteriskIndex, setAsteriskIndex] = useState(0);
   const [thinkingIndex, setThinkingIndex] = useState(0);
+  const [githubContributions, setGithubContributions] =
+    useState<GitHubContributionData | null>(null);
+  const [githubContributionsError, setGithubContributionsError] =
+    useState(false);
+
+  const contributionColors = [
+    "#f6f1d9",
+    "#eadbb4",
+    "#d4b185",
+    "#b07a4b",
+    "#6c4328",
+  ];
+
+  const getContributionLevel = (day: ContributionDay) => {
+    if (typeof day.intensity === "number") {
+      return Math.max(
+        0,
+        Math.min(contributionColors.length - 1, day.intensity)
+      );
+    }
+    if (typeof day.level === "number") {
+      return Math.max(0, Math.min(contributionColors.length - 1, day.level));
+    }
+    if (day.contributionLevel) {
+      const map: Record<ContributionLevelString, number> = {
+        NONE: 0,
+        FIRST_QUARTILE: 1,
+        SECOND_QUARTILE: 2,
+        THIRD_QUARTILE: 3,
+        FOURTH_QUARTILE: 4,
+      };
+      return map[day.contributionLevel];
+    }
+    if (typeof day.contributionCount === "number") {
+      if (day.contributionCount === 0) return 0;
+      if (day.contributionCount >= 20) return 4;
+      if (day.contributionCount >= 10) return 3;
+      if (day.contributionCount >= 5) return 2;
+      return 1;
+    }
+    return 0;
+  };
+
+  const getFallbackCodeProjectImage = (entry: Entry) => {
+    if (entry.sourceUrl) {
+      try {
+        const url = new URL(entry.sourceUrl);
+        if (url.hostname === "github.com") {
+          const segments = url.pathname.split("/").filter(Boolean);
+          const owner = segments[0];
+          const repo = segments[1];
+          if (owner && repo) {
+            return `https://opengraph.githubassets.com/1/${owner}/${repo}`;
+          }
+        }
+        return `https://v1.screenshot.11ty.dev/${encodeURIComponent(
+          entry.sourceUrl
+        )}/opengraph/`;
+      } catch (error) {
+        console.warn(
+          "Unable to generate project image for",
+          entry.title,
+          error
+        );
+      }
+    }
+    return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none"><rect width="400" height="240" rx="16" fill="%23F4F5F7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236B778C" font-family="Arial" font-size="18">Project Preview</text></svg>';
+  };
 
   const asteriskVariants = ["*", "✻", "∗", "※", "❄", "✢"];
   const thinkingVariants = [
@@ -421,6 +522,49 @@ export default function TerminalRepoList() {
   }, []);
 
   useEffect(() => {
+    const usernames = ["lucas-dickey", "lucasdickey"];
+
+    const fetchContributions = async () => {
+      for (const username of usernames) {
+        try {
+          const response = await fetch(
+            `https://github-contributions-api.jogruber.de/v4/${username}?type=calendar`
+          );
+          if (!response.ok) {
+            continue;
+          }
+          const data = await response.json();
+          const total =
+            data.totalContributions ??
+            data.contributions?.[0]?.totalContributions ??
+            data.contributionYears?.[0]?.total ??
+            0;
+          const weeks: ContributionWeek[] =
+            data.weeks ??
+            data.contributions?.[0]?.weeks ??
+            data.contributionYears?.[0]?.weeks ??
+            [];
+
+          if (weeks.length) {
+            setGithubContributions({ totalContributions: total, weeks });
+            setGithubContributionsError(false);
+            return;
+          }
+        } catch (error) {
+          console.warn(
+            `Failed to load GitHub contributions for ${username}`,
+            error
+          );
+        }
+      }
+
+      setGithubContributionsError(true);
+    };
+
+    fetchContributions();
+  }, []);
+
+  useEffect(() => {
     // Simulate loading delay for terminal effect
     setTimeout(() => {
       const grouped: Record<string, Entry[]> = {};
@@ -450,10 +594,10 @@ export default function TerminalRepoList() {
     if (!loading) {
       const hash = window.location.hash;
       if (hash) {
-        const id = hash.replace('#', '');
+        const id = hash.replace("#", "");
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }
     }
@@ -502,6 +646,11 @@ export default function TerminalRepoList() {
     );
   };
 
+  // Render marketer view if in marketer mode
+  if (viewMode === "marketer") {
+    return <MarketerHome />;
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
@@ -523,7 +672,9 @@ export default function TerminalRepoList() {
           <div className="ml-4 text-[#666666] text-sm">terminal — bash</div>
         </div>
         <div className="text-[#8b0000] mb-2 text-xs md:text-sm">
-          <span className="hidden sm:inline">{formatCurrentTime(currentTime)} </span>
+          <span className="hidden sm:inline">
+            {formatCurrentTime(currentTime)}{" "}
+          </span>
           <span className="inline sm:hidden">~/</span>
           <span className="font-bold">lucas-dickey</span> git:(master)±9 lucas
         </div>
@@ -560,10 +711,14 @@ export default function TerminalRepoList() {
 ▒▒▒▒  ▒▒▒▒   ▒▒▒  ▒  ▒  ▒▒▒`}
         </pre>
         <div className="text-[#333333] mb-1 text-xs md:text-sm">
-          <span className="hidden sm:inline">Vibe coded by Lucas with his colleague Claude
-          Code -- flattering hallucinations, &apos;{asteriskVariants[asteriskIndex]}{" "}
-          {thinkingVariants[thinkingIndex]}&apos;, and all!</span>
-          <span className="inline sm:hidden">Vibe coded by Lucas with Claude Code</span>
+          <span className="hidden sm:inline">
+            Vibe coded by Lucas with his colleague Claude Code -- flattering
+            hallucinations, &apos;{asteriskVariants[asteriskIndex]}{" "}
+            {thinkingVariants[thinkingIndex]}&apos;, and all!
+          </span>
+          <span className="inline sm:hidden">
+            Vibe coded by Lucas with Claude Code
+          </span>
         </div>
         <div className="text-[#333333] mb-1">
           <span className="text-[#8b0000]">$</span> cd{" "}
@@ -581,7 +736,17 @@ export default function TerminalRepoList() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {Object.keys(groupedEntries)
               .sort((a, b) => {
-                const order = ['cv', 'code', 'opinion', 'blog', 'books', 'lenny', 'toys', 'media', 'twitter'];
+                const order = [
+                  "cv",
+                  "code",
+                  "opinion",
+                  "blog",
+                  "books",
+                  "lenny",
+                  "toys",
+                  "media",
+                  "twitter",
+                ];
                 return order.indexOf(a) - order.indexOf(b);
               })
               .map((type) => {
@@ -593,7 +758,16 @@ export default function TerminalRepoList() {
                     className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
                   >
                     {typeInfo.icon} {typeInfo.name} (
-                    {type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : groupedEntries[type].length})
+                    {type === "books"
+                      ? recentBooks.length
+                      : type === "lenny"
+                      ? lennyRecommendations.length
+                      : type === "toys"
+                      ? toys.length
+                      : type === "blog"
+                      ? getPublishedPosts().length
+                      : groupedEntries[type].length}
+                    )
                   </a>
                 );
               })}
@@ -683,7 +857,16 @@ export default function TerminalRepoList() {
       <div>
         {Object.keys(groupedEntries)
           .sort((a, b) => {
-            const order = ['cv', 'code', 'opinion', 'books', 'lenny', 'toys', 'media', 'twitter'];
+            const order = [
+              "cv",
+              "code",
+              "opinion",
+              "books",
+              "lenny",
+              "toys",
+              "media",
+              "twitter",
+            ];
             return order.indexOf(a) - order.indexOf(b);
           })
           .map((type) => {
@@ -702,300 +885,425 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
-                    ({type === 'books' ? recentBooks.length : type === 'lenny' ? lennyRecommendations.length : type === 'toys' ? toys.length : type === 'blog' ? getPublishedPosts().length : typeEntries.length} {type === 'books' ? 'books' : type === 'lenny' ? 'books' : type === 'toys' ? 'toys' : type === 'blog' ? 'posts' : 'entries'})
+                    (
+                    {type === "books"
+                      ? recentBooks.length
+                      : type === "lenny"
+                      ? lennyRecommendations.length
+                      : type === "toys"
+                      ? toys.length
+                      : type === "blog"
+                      ? getPublishedPosts().length
+                      : typeEntries.length}{" "}
+                    {type === "books"
+                      ? "books"
+                      : type === "lenny"
+                      ? "books"
+                      : type === "toys"
+                      ? "toys"
+                      : type === "blog"
+                      ? "posts"
+                      : "entries"}
+                    )
                   </span>
                 </div>
 
                 {/* Entries List */}
                 <div className="bg-[#f5f5dc]">
-                  {typeEntries.map((entry, index) => (
-                    <div
-                      key={index}
-                      className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200"
-                    >
-                      {/* Entry Header */}
-                      <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
-                        <div className="text-[#0000ff] font-bold text-lg">
-                          {entry.sourceUrl ? (
-                            <a
-                              href={entry.sourceUrl}
-                              className="hover:underline"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {entry.title}
-                            </a>
-                          ) : (
-                            <span>{entry.title}</span>
-                          )}
-                        </div>
-                        <span className="text-[#8b0000] text-sm whitespace-nowrap">
-                          {formatDate(entry.publishedDate)}
-                        </span>
-                      </div>
+                  {typeEntries.map((entry, index) => {
+                    const isCodeEntry = entry.type === "code";
+                    const codeEntryImage = isCodeEntry
+                      ? (() => {
+                          const marketingImage = getCodeProjectImage(entry);
+                          return (
+                            marketingImage || getFallbackCodeProjectImage(entry)
+                          );
+                        })()
+                      : null;
 
-                      {/* Entry Description */}
-                      <div className="text-[#333333] mb-2 leading-relaxed">
-                        {entry.description}
-                      </div>
-
-                      {/* Books Grid for Recent Reads */}
-                      {entry.type === "books" && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                          {recentBooks.map((book: Book, bookIndex: number) => (
-                            <div key={bookIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
-                              <div className="flex gap-4">
-                                <div className="flex-shrink-0">
-                                  <img 
-                                    src={book.coverUrl} 
-                                    alt={`${book.title} cover`}
-                                    className="w-16 h-24 object-cover rounded shadow-sm"
-                                  />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                    {book.title}
-                                  </h4>
-                                  <p className="text-[#666666] text-xs mb-2">
-                                    by {book.author}
-                                  </p>
-                                  <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                    {book.description}
-                                  </p>
-                                  <div className="flex items-center gap-4">
-                                    <a 
-                                      href={book.amazonUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[#0000ff] text-xs hover:underline"
-                                    >
-                                      View on Amazon
-                                    </a>
-                                    <Link href={`/books/${book.slug}`} className="text-[#0000ff] hover:underline" title="View details">
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                                      </svg>
-                                    </Link>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Toys Grid for Recent Toys */}
-                      {entry.type === "toys" && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                          {toys.map((toy, toyIndex) => (
-                            <div key={toyIndex} className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
-                              <div className="flex gap-4">
-                                <div className="flex-shrink-0">
-                                  <img 
-                                    src={toy.imageUrl} 
-                                    alt={`${toy.title} product image`}
-                                    className="w-16 h-16 object-cover rounded shadow-sm"
-                                  />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                    {toy.title}
-                                  </h4>
-                                  <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                    {toy.description}
-                                  </p>
-                                  {toy.comment && (
-                                    <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
-                                      &ldquo;{toy.comment}&rdquo;
-                                    </p>
-                                  )}
-                                  <div className="flex items-center gap-4">
-                                    <a 
-                                      href={toy.amazonUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[#0000ff] text-xs hover:underline"
-                                    >
-                                      View on Amazon
-                                    </a>
-                                    <Link href={`/toys/${toy.slug}`} className="text-[#0000ff] hover:underline" title="View details">
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                                      </svg>
-                                    </Link>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Blog Posts Grid */}
-                      {entry.type === "blog" && (
-                        <div className="grid grid-cols-1 gap-4 mb-4">
-                          {[...getPublishedPosts()]
-                            .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
-                            .slice(0, 3)
-                            .map((post, postIndex) => (
-                            <div key={postIndex} className="border border-[#cccccc] rounded-lg p-4 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors">
-                              <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
-                                <Link
-                                  href={`/blog/${post.slug}`}
-                                  className="text-[#0000ff] font-bold text-lg hover:underline flex-1"
-                                >
-                                  {post.title}
-                                </Link>
-                                <div className="flex items-center gap-4 text-sm text-[#666666]">
-                                  <span className="text-[#8b0000]">{new Date(post.publishedDate).toLocaleDateString("en-US", {
-                                    year: "numeric",
-                                    month: "short", 
-                                    day: "numeric",
-                                  })}</span>
-                                  <span>{post.readTime} min read</span>
-                                </div>
-                              </div>
-                              
-                              <p className="text-[#333333] text-sm mb-3 leading-relaxed">
-                                {post.excerpt}
-                              </p>
-                              
-                              <div className="flex flex-wrap gap-2 mb-3">
-                                {post.tags.map((tag) => (
-                                  <span
-                                    key={tag}
-                                    className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"
-                                  >
-                                    #{tag}
-                                  </span>
-                                ))}
-                              </div>
-                              
-                              <Link
-                                href={`/blog/${post.slug}`}
-                                className="text-[#0000ff] text-sm hover:underline"
-                              >
-                                Read full post →
-                              </Link>
-                            </div>
-                          ))}
-                          <div className="text-center mt-4">
-                            <Link
-                              href="/blog"
-                              className="text-[#0000ff] hover:underline font-medium"
-                            >
-                              View all {getPublishedPosts().length} blog posts →
-                            </Link>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Lenny's Recommendations Grid */}
-                      {entry.type === "lenny" && (
-                        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
-                           {lennyRecommendations.map((book, bookIndex) => (
-                            <div key={bookIndex} className="group relative aspect-[2/3] bg-[#fafafa] rounded overflow-hidden shadow-sm">
-                              <a 
-                                href={book.amazonUrl}
+                    const renderEntryHeaderAndDescription = () => (
+                      <>
+                        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+                          <div className="text-[#0000ff] font-bold text-lg">
+                            {entry.sourceUrl ? (
+                              <a
+                                href={entry.sourceUrl}
+                                className="hover:underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block w-full h-full hover:shadow-md transition-all duration-300 hover:scale-105"
                               >
-                                <img 
-                                  src={book.coverUrl} 
-                                  alt={`${book.title} cover`}
-                                  className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center p-1">
-                                  <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div className="font-bold text-xs mb-1 leading-tight" 
-                                         style={{
-                                           display: '-webkit-box',
-                                           WebkitLineClamp: 3,
-                                           WebkitBoxOrient: 'vertical',
-                                           overflow: 'hidden'
-                                         }}>
-                                      {book.title}
+                                {entry.title}
+                              </a>
+                            ) : (
+                              <span>{entry.title}</span>
+                            )}
+                          </div>
+                          <span className="text-[#8b0000] text-sm whitespace-nowrap">
+                            {formatDate(entry.publishedDate)}
+                          </span>
+                        </div>
+
+                        <div className="text-[#333333] mb-2 leading-relaxed">
+                          {entry.description}
+                        </div>
+                      </>
+                    );
+
+                    return (
+                      <div
+                        key={index}
+                        className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200"
+                      >
+                        {isCodeEntry && codeEntryImage ? (
+                          <div className="flex flex-col md:flex-row gap-4 items-start mb-2">
+                            <img
+                              src={codeEntryImage}
+                              alt={`${entry.title} repository preview`}
+                              className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm"
+                            />
+                            <div className="flex-1">
+                              {renderEntryHeaderAndDescription()}
+                            </div>
+                          </div>
+                        ) : (
+                          renderEntryHeaderAndDescription()
+                        )}
+
+                        {entry.type === "books" && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            {recentBooks.map(
+                              (book: Book, bookIndex: number) => (
+                                <div
+                                  key={bookIndex}
+                                  className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                                >
+                                  <div className="flex gap-4">
+                                    <div className="flex-shrink-0">
+                                      <img
+                                        src={book.coverUrl}
+                                        alt={`${book.title} cover`}
+                                        className="w-16 h-24 object-cover rounded shadow-sm"
+                                      />
                                     </div>
-                                    <div className="text-xs opacity-90"
-                                         style={{
-                                           display: '-webkit-box',
-                                           WebkitLineClamp: 2,
-                                           WebkitBoxOrient: 'vertical',
-                                           overflow: 'hidden'
-                                         }}>
-                                      by {book.author}
+                                    <div className="flex-1 min-w-0">
+                                      <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                        {book.title}
+                                      </h4>
+                                      <p className="text-[#666666] text-xs mb-2">
+                                        by {book.author}
+                                      </p>
+                                      <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                        {book.description}
+                                      </p>
+                                      <div className="flex items-center gap-4">
+                                        <a
+                                          href={book.amazonUrl}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[#0000ff] text-xs hover:underline"
+                                        >
+                                          View on Amazon
+                                        </a>
+                                        <Link
+                                          href={`/books/${book.slug}`}
+                                          className="text-[#0000ff] hover:underline"
+                                          title="View details"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="h-4 w-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                          >
+                                            <path
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              strokeWidth={2}
+                                              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                            />
+                                          </svg>
+                                        </Link>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </a>
-                              <Link href={`/lenny/${book.slug}`} className="absolute top-1 right-1 z-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50 rounded-full p-1 hover:bg-opacity-75" title="View details">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                                </svg>
+                              )
+                            )}
+                          </div>
+                        )}
+
+                        {/* Toys Grid for Recent Toys */}
+                        {entry.type === "toys" && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            {toys.map((toy, toyIndex) => (
+                              <div
+                                key={toyIndex}
+                                className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                              >
+                                <div className="flex gap-4">
+                                  <div className="flex-shrink-0">
+                                    <img
+                                      src={toy.imageUrl}
+                                      alt={`${toy.title} product image`}
+                                      className="w-16 h-16 object-cover rounded shadow-sm"
+                                    />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                      {toy.title}
+                                    </h4>
+                                    <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                      {toy.description}
+                                    </p>
+                                    {toy.comment && (
+                                      <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
+                                        &ldquo;{toy.comment}&rdquo;
+                                      </p>
+                                    )}
+                                    <div className="flex items-center gap-4">
+                                      <a
+                                        href={toy.amazonUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-[#0000ff] text-xs hover:underline"
+                                      >
+                                        View on Amazon
+                                      </a>
+                                      <Link
+                                        href={`/toys/${toy.slug}`}
+                                        className="text-[#0000ff] hover:underline"
+                                        title="View details"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          className="h-4 w-4"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                          />
+                                        </svg>
+                                      </Link>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Blog Posts Grid */}
+                        {entry.type === "blog" && (
+                          <div className="grid grid-cols-1 gap-4 mb-4">
+                            {[...getPublishedPosts()]
+                              .sort(
+                                (a, b) =>
+                                  new Date(b.publishedDate).getTime() -
+                                  new Date(a.publishedDate).getTime()
+                              )
+                              .slice(0, 3)
+                              .map((post, postIndex) => (
+                                <div
+                                  key={postIndex}
+                                  className="border border-[#cccccc] rounded-lg p-4 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                                >
+                                  <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
+                                    <Link
+                                      href={`/blog/${post.slug}`}
+                                      className="text-[#0000ff] font-bold text-lg hover:underline flex-1"
+                                    >
+                                      {post.title}
+                                    </Link>
+                                    <div className="flex items-center gap-4 text-sm text-[#666666]">
+                                      <span className="text-[#8b0000]">
+                                        {new Date(
+                                          post.publishedDate
+                                        ).toLocaleDateString("en-US", {
+                                          year: "numeric",
+                                          month: "short",
+                                          day: "numeric",
+                                        })}
+                                      </span>
+                                      <span>{post.readTime} min read</span>
+                                    </div>
+                                  </div>
+
+                                  <p className="text-[#333333] text-sm mb-3 leading-relaxed">
+                                    {post.excerpt}
+                                  </p>
+
+                                  <div className="flex flex-wrap gap-2 mb-3">
+                                    {post.tags.map((tag) => (
+                                      <span
+                                        key={tag}
+                                        className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"
+                                      >
+                                        #{tag}
+                                      </span>
+                                    ))}
+                                  </div>
+
+                                  <Link
+                                    href={`/blog/${post.slug}`}
+                                    className="text-[#0000ff] text-sm hover:underline"
+                                  >
+                                    Read full post →
+                                  </Link>
+                                </div>
+                              ))}
+                            <div className="text-center mt-4">
+                              <Link
+                                href="/blog"
+                                className="text-[#0000ff] hover:underline font-medium"
+                              >
+                                View all {getPublishedPosts().length} blog posts
+                                →
                               </Link>
                             </div>
-                          ))}
-                        </div>
-                      )}
+                          </div>
+                        )}
 
-                      {/* YouTube Embed for YouTube URLs */}
-                      {entry.sourceUrl && entry.sourceUrl.includes("youtube.com") &&
-                        entry.sourceUrl.includes("@apesonkeys") && (
+                        {/* Lenny's Recommendations Grid */}
+                        {entry.type === "lenny" && (
+                          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 mb-4">
+                            {lennyRecommendations.map((book, bookIndex) => (
+                              <div
+                                key={bookIndex}
+                                className="group relative aspect-[2/3] bg-[#fafafa] rounded overflow-hidden shadow-sm"
+                              >
+                                <a
+                                  href={book.amazonUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block w-full h-full hover:shadow-md transition-all duration-300 hover:scale-105"
+                                >
+                                  <img
+                                    src={book.coverUrl}
+                                    alt={`${book.title} cover`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center p-1">
+                                    <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                      <div
+                                        className="font-bold text-xs mb-1 leading-tight"
+                                        style={{
+                                          display: "-webkit-box",
+                                          WebkitLineClamp: 3,
+                                          WebkitBoxOrient: "vertical",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {book.title}
+                                      </div>
+                                      <div
+                                        className="text-xs opacity-90"
+                                        style={{
+                                          display: "-webkit-box",
+                                          WebkitLineClamp: 2,
+                                          WebkitBoxOrient: "vertical",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        by {book.author}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </a>
+                                <Link
+                                  href={`/lenny/${book.slug}`}
+                                  className="absolute top-1 right-1 z-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50 rounded-full p-1 hover:bg-opacity-75"
+                                  title="View details"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={3}
+                                      d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                    />
+                                  </svg>
+                                </Link>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* YouTube Embed for YouTube URLs */}
+                        {entry.sourceUrl &&
+                          entry.sourceUrl.includes("youtube.com") &&
+                          entry.sourceUrl.includes("@apesonkeys") && (
+                            <div className="mb-4">
+                              <iframe
+                                width="100%"
+                                height="315"
+                                src="https://www.youtube.com/embed/videoseries?list=PL-h0A9N1vFdUnUZ0aYk-Z8M7NTy2jtKdL"
+                                title={entry.title}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="rounded border border-[#cccccc]"
+                              ></iframe>
+                            </div>
+                          )}
+
+                        {/* Spotify Embed for Key To Sleep */}
+                        {entry.title === "Key To Sleep" && (
                           <div className="mb-4">
                             <iframe
+                              style={{ borderRadius: "12px" }}
+                              src="https://open.spotify.com/embed/show/5mzflcTu9vWhB0Nw0lABRo?utm_source=generator"
                               width="100%"
-                              height="315"
-                              src="https://www.youtube.com/embed/videoseries?list=PL-h0A9N1vFdUnUZ0aYk-Z8M7NTy2jtKdL"
-                              title={entry.title}
+                              height="352"
                               frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                               allowFullScreen
-                              className="rounded border border-[#cccccc]"
+                              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                              loading="lazy"
                             ></iframe>
                           </div>
                         )}
 
-                      {/* Spotify Embed for Key To Sleep */}
-                      {entry.title === "Key To Sleep" && (
-                        <div className="mb-4">
-                          <iframe
-                            style={{ borderRadius: "12px" }}
-                            src="https://open.spotify.com/embed/show/5mzflcTu9vWhB0Nw0lABRo?utm_source=generator"
-                            width="100%"
-                            height="352"
-                            frameBorder="0"
-                            allowFullScreen
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                            loading="lazy"
-                          ></iframe>
+                        {/* Entry Source */}
+                        <div className="text-[#666666] text-sm mb-4">
+                          Source:{" "}
+                          <a
+                            href={entry.sourceUrl}
+                            className="text-[#006400] hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {entry.sourceTitle}
+                          </a>
+                          {entry.sourceDescription &&
+                            ` - ${entry.sourceDescription}`}
                         </div>
-                      )}
 
-
-                      {/* Entry Source */}
-                      <div className="text-[#666666] text-sm mb-4">
-                        Source:{" "}
-                        <a
-                          href={entry.sourceUrl}
-                          className="text-[#006400] hover:underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {entry.sourceTitle}
-                        </a>
-                        {entry.sourceDescription &&
-                          ` - ${entry.sourceDescription}`}
+                        {/* Affiliate Links Call-out for purchase sections */}
+                        {(entry.type === "lenny" ||
+                          entry.type === "books" ||
+                          entry.type === "toys") && (
+                          <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 text-sm">
+                            <strong>Affiliate Links:</strong> All{" "}
+                            {entry.type === "toys" ? "product" : "book"} links
+                            above are Amazon affiliate links. I may earn a small
+                            commission if you purchase through these links, at
+                            no extra cost to you.
+                          </div>
+                        )}
                       </div>
-                      
-                      {/* Affiliate Links Call-out for purchase sections */}
-                      {(entry.type === "lenny" || entry.type === "books" || entry.type === "toys") && (
-                        <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 text-sm">
-                          <strong>Affiliate Links:</strong> All {entry.type === "toys" ? "product" : "book"} links above are Amazon affiliate links. I may earn a small commission if you purchase through these links, at no extra cost to you.
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );

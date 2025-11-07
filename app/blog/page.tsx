@@ -1,40 +1,12 @@
+'use client';
+
 import Link from 'next/link';
-import { getPublishedPosts } from '../data/blog';
-import type { Metadata } from "next";
-
-// Force dynamic rendering to check dates at request time
-export const dynamic = 'force-dynamic';
-
-export const metadata: Metadata = {
-  title: "Blog - Lucas Dickey",
-  description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Written by Lucas Dickey, product leader and serial founder.",
-  openGraph: {
-    title: "Blog - Lucas Dickey",
-    description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Written by Lucas Dickey, product leader and serial founder.",
-    url: "https://lucas.cv/blog",
-    siteName: "Lucas Dickey CV",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Lucas Dickey - Blog",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog - Lucas Dickey",
-    description: "Exploring software development, learning, and technology through the lens of agentic coding and continuous personal growth. Written by Lucas Dickey, product leader and serial founder.",
-    images: ["/og-image.png"],
-    creator: "@lucasdickey4",
-    site: "@lucasdickey4",
-  },
-};
+import { getPublishedPosts, BlogPost } from '../data/blog';
+import { useViewMode } from '../contexts/view-mode-context';
+import { ArrowLeft } from 'lucide-react';
 
 export default function BlogPage() {
+  const { viewMode } = useViewMode();
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -44,7 +16,7 @@ export default function BlogPage() {
     });
   };
 
-  let sortedPosts;
+  let sortedPosts: BlogPost[];
   try {
     sortedPosts = [...getPublishedPosts()].sort(
       (a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
@@ -54,6 +26,80 @@ export default function BlogPage() {
     sortedPosts = [];
   }
 
+  // Marketer view
+  if (viewMode === 'marketer') {
+    return (
+      <div className="min-h-screen bg-white marketer-view">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header */}
+          <div className="mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 text-[#0052CC] hover:text-[#0065FF] mb-4">
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm font-medium">Back to home</span>
+            </Link>
+            <h1 className="text-4xl font-bold text-[#172B4D] mb-3">Latest Insights</h1>
+            <p className="text-lg text-[#6B778C]">
+              Strategic thinking on startups, AI, and business growth
+            </p>
+          </div>
+
+          {/* Posts List */}
+          <div className="space-y-6">
+            {sortedPosts.length === 0 ? (
+              <div className="bg-[#F4F5F7] rounded-lg p-8 text-center">
+                <p className="text-[#6B778C]">No blog posts found.</p>
+              </div>
+            ) : (
+              sortedPosts.map((post) => (
+                <div
+                  key={post.slug}
+                  className="bg-[#F4F5F7] rounded-lg p-6 hover:shadow-lg transition-shadow"
+                >
+                  <div className="flex justify-between items-start mb-3 flex-wrap gap-2">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="text-[#0052CC] font-bold text-xl hover:underline"
+                    >
+                      {post.title}
+                    </Link>
+                    <div className="flex items-center gap-4 text-sm text-[#6B778C]">
+                      <span>{formatDate(post.publishedDate)}</span>
+                      <span>{post.readTime} min read</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[#172B4D] mb-4 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {post.tags.map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-white text-[#6B778C] text-xs rounded-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="inline-flex items-center gap-1 text-[#0052CC] font-medium text-sm hover:underline"
+                  >
+                    Read full post
+                    <ArrowLeft className="w-4 h-4 rotate-180" />
+                  </Link>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Terminal view
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
       {/* Terminal Header */}
@@ -119,7 +165,7 @@ export default function BlogPage() {
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-3">
-                {post.tags.map((tag) => (
+                {post.tags.map((tag: string) => (
                   <span
                     key={tag}
                     className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"

@@ -3,8 +3,9 @@ import TerminalLayout from '../../components/TerminalLayout';
 import { toys } from '../../data/toys';
 import type { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const toy = toys.find(t => t.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const toy = toys.find(t => t.slug === slug);
   
   if (!toy) {
     return {
@@ -107,8 +108,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function ToyPage({ params }: { params: { slug: string } }) {
-  const toy = toys.find(t => t.slug === params.slug);
+export default async function ToyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const toy = toys.find(t => t.slug === slug);
 
   if (!toy) {
     notFound();
