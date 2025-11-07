@@ -3,8 +3,9 @@ import TerminalLayout from '../../components/TerminalLayout';
 import { books } from '../../data/books';
 import type { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const book = books.find(b => b.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const book = books.find(b => b.slug === slug);
   
   if (!book) {
     return {
@@ -110,8 +111,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function BookPage({ params }: { params: { slug: string } }) {
-  const book = books.find(b => b.slug === params.slug);
+export default async function BookPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const book = books.find(b => b.slug === slug);
 
   if (!book) {
     notFound();

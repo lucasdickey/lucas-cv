@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { ViewModeProvider } from "./contexts/view-mode-context";
+import ViewModeToggle from "./components/ViewModeToggle";
 
 export const metadata: Metadata = {
   title: "Lucas Dickey - Product Leader & Serial Founder",
@@ -113,7 +115,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ViewModeProvider>
+          <ViewModeToggle />
+          {children}
+        </ViewModeProvider>
+      </body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-RRM60KD28D"
         strategy="afterInteractive"

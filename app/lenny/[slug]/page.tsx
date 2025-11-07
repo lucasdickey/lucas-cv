@@ -420,8 +420,9 @@ const lennyRecommendations: LennyBook[] = [
   }
 ];
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const book = lennyRecommendations.find(b => b.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const book = lennyRecommendations.find(b => b.slug === slug);
   
   if (!book) {
     return {
@@ -525,8 +526,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function LennyBookPage({ params }: { params: { slug: string } }) {
-  const book = lennyRecommendations.find(b => b.slug === params.slug);
+export default async function LennyBookPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const book = lennyRecommendations.find(b => b.slug === slug);
 
   if (!book) {
     notFound();
