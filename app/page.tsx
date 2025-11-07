@@ -390,6 +390,40 @@ const entries: Entry[] = [
   },
 ];
 
+const asteriskVariants = ["*", "✻", "∗", "※", "❄", "✢"];
+const thinkingVariants = [
+  "cogitating",
+  "processing",
+  "reflecting",
+  "evaluating",
+  "concluding",
+  "generating",
+  "developing",
+  "assembling",
+  "composing",
+  "digesting",
+  "exploring",
+  "examining",
+  "ideating",
+  "iterating",
+  "computing",
+  "planning",
+  "scheming",
+  "thinking",
+  "working",
+  "crafting",
+  "building",
+  "creating",
+  "weaving",
+  "molding",
+  "shaping",
+  "designing",
+  "plotting",
+  "hatching",
+  "cooking",
+  "formulating",
+];
+
 export default function TerminalRepoList() {
   const { viewMode } = useViewMode();
   const [loading, setLoading] = useState(true);
@@ -399,9 +433,11 @@ export default function TerminalRepoList() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [asteriskIndex, setAsteriskIndex] = useState(0);
   const [thinkingIndex, setThinkingIndex] = useState(0);
-  const [githubContributions, setGithubContributions] =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_githubContributions, setGithubContributions] =
     useState<GitHubContributionData | null>(null);
-  const [githubContributionsError, setGithubContributionsError] =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_githubContributionsError, setGithubContributionsError] =
     useState(false);
 
   const contributionColors = [
@@ -412,7 +448,8 @@ export default function TerminalRepoList() {
     "#6c4328",
   ];
 
-  const getContributionLevel = (day: ContributionDay) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _getContributionLevel = (day: ContributionDay) => {
     if (typeof day.intensity === "number") {
       return Math.max(
         0,
@@ -467,40 +504,6 @@ export default function TerminalRepoList() {
     }
     return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none"><rect width="400" height="240" rx="16" fill="%23F4F5F7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236B778C" font-family="Arial" font-size="18">Project Preview</text></svg>';
   };
-
-  const asteriskVariants = ["*", "✻", "∗", "※", "❄", "✢"];
-  const thinkingVariants = [
-    "cogitating",
-    "processing",
-    "reflecting",
-    "evaluating",
-    "concluding",
-    "generating",
-    "developing",
-    "assembling",
-    "composing",
-    "digesting",
-    "exploring",
-    "examining",
-    "ideating",
-    "iterating",
-    "computing",
-    "planning",
-    "scheming",
-    "thinking",
-    "working",
-    "crafting",
-    "building",
-    "creating",
-    "weaving",
-    "molding",
-    "shaping",
-    "designing",
-    "plotting",
-    "hatching",
-    "cooking",
-    "formulating",
-  ];
 
   useEffect(() => {
     // Update time every second

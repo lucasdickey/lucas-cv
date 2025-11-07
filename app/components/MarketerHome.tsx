@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag, BookOpen, ArrowRight, TrendingUp, Briefcase, Code, MessageSquare, Film } from 'lucide-react';
-import { type Book, books as recentBooks } from '../data/books';
+import { books as recentBooks } from '../data/books';
 import { toys } from '../data/toys';
 import { lennyRecommendations } from '../data/lenny';
 import { getPublishedPosts } from '../data/blog';
@@ -346,11 +346,6 @@ export default function MarketerHome() {
     }
     return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none"><rect width="400" height="240" rx="16" fill="%23F4F5F7"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%236B778C" font-family="Arial" font-size="18">Project Preview</text></svg>';
   };
-
-  // Get all blog posts sorted by date
-  const allBlogPosts = getPublishedPosts().sort(
-    (a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
-  );
 
   if (loading) {
     return (
