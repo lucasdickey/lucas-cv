@@ -19,11 +19,6 @@ const REPO_SLUG_BY_TITLE: Record<string, string> = {
   'OB3.chat - One Big Beautiful Bill discovery app': 'ob3-chat',
 };
 
-const IMAGE_BASES = [
-  'https://lucasdickey.com/images/repos',
-  'https://lucas.cv/images/repos',
-];
-
 export function getCodeProjectImage(entry: CodeEntryLike): string | null {
   let slug: string | undefined;
 
@@ -51,5 +46,5 @@ export function getCodeProjectImage(entry: CodeEntryLike): string | null {
     return null;
   }
 
-  return `${IMAGE_BASES[0]}/${slug}.png`;
+  return `/images/repos/${slug}.png`;
 }
