@@ -1,0 +1,55 @@
+'use client';
+
+import React from 'react';
+import { PodcastCarousel } from './PodcastCarousel';
+import { subscribedPodcasts } from '@/src/data/podcasts';
+import { cn } from '@/lib/utils';
+import { Radio } from 'lucide-react';
+
+interface ListeningSectionProps {
+  className?: string;
+  maxPodcasts?: number;
+  showTitle?: boolean;
+  showDescription?: boolean;
+}
+
+export function ListeningSection({
+  className,
+  maxPodcasts,
+  showTitle = true,
+  showDescription = true,
+}: ListeningSectionProps) {
+  // Optionally limit the number of podcasts displayed
+  const podcastsToShow = maxPodcasts
+    ? subscribedPodcasts.slice(0, maxPodcasts)
+    : subscribedPodcasts;
+
+  return (
+    <section
+      className={cn(
+        'w-full py-12 md:py-16',
+        className
+      )}
+    >
+      {showTitle && (
+        <div className="mb-8 md:mb-12">
+          <div className="flex items-center gap-3 mb-2">
+            <Radio size={24} className="text-slate-700" />
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
+              Things I'm Listening To & Watching
+            </h2>
+          </div>
+          {showDescription && (
+            <p className="text-slate-600 mt-2 max-w-2xl">
+              A curated collection of {podcastsToShow.length} podcasts that keep me informed about
+              technology, business, AI, politics, and more.
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Podcast carousel */}
+      <PodcastCarousel podcasts={podcastsToShow} />
+    </section>
+  );
+}
