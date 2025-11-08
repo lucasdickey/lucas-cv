@@ -169,7 +169,7 @@ export const books: Book[] = [
     author: "Robert Jackson Bennett",
     description: "A gaslamp fantasy murder mystery featuring a brilliant inspector and her magically altered aide",
     coverUrl: "/images/books/the-tainted-cup.jpg",
-    amazonUrl: "https://www.amazon.com/dp/0525685815",
+    amazonUrl: "https://www.amazon.com/Tainted-Cup-Robert-Jackson-Bennett/dp/1984820702/",
     slug: "the-tainted-cup-robert-jackson-bennett",
     status: "reading",
     detailedDescription:
