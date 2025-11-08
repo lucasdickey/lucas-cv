@@ -977,6 +977,9 @@ export default function TerminalRepoList() {
                           <>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                               {recentBooks
+                                .filter(
+                                  (book) => book.status !== "pending"
+                                )
                                 .sort((a, b) => {
                                   if (a.status === "reading" && b.status !== "reading")
                                     return -1;
