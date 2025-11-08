@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
+import IngestionQueue from "../components/IngestionQueue";
 import { useViewMode } from "./contexts/view-mode-context";
 import MarketerHome from "./components/MarketerHome";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
@@ -973,67 +974,83 @@ export default function TerminalRepoList() {
                         )}
 
                         {entry.type === "books" && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            {recentBooks.map(
-                              (book: Book, bookIndex: number) => (
-                                <div
-                                  key={bookIndex}
-                                  className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
-                                >
-                                  <div className="flex gap-4">
-                                    <div className="flex-shrink-0">
-                                      <img
-                                        src={book.coverUrl}
-                                        alt={`${book.title} cover`}
-                                        className="w-16 h-24 object-cover rounded shadow-sm"
-                                      />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                        {book.title}
-                                      </h4>
-                                      <p className="text-[#666666] text-xs mb-2">
-                                        by {book.author}
-                                      </p>
-                                      <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                        {book.description}
-                                      </p>
-                                      <div className="flex items-center gap-4">
-                                        <a
-                                          href={book.amazonUrl}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-[#0000ff] text-xs hover:underline"
-                                        >
-                                          View on Amazon
-                                        </a>
-                                        <Link
-                                          href={`/books/${book.slug}`}
-                                          className="text-[#0000ff] hover:underline"
-                                          title="View details"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-4 w-4"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
+                          <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                              {recentBooks
+                                .sort((a, b) => {
+                                  if (a.status === "reading" && b.status !== "reading")
+                                    return -1;
+                                  if (a.status !== "reading" && b.status === "reading")
+                                    return 1;
+                                  return 0;
+                                })
+                                .map(
+                                (book: Book, bookIndex: number) => (
+                                  <div
+                                    key={bookIndex}
+                                    className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors relative"
+                                  >
+                                    {book.status === "reading" && (
+                                      <div className="absolute top-2 right-2 bg-[#ff0000] text-white text-xs font-bold px-2 py-1 rounded">
+                                        📖 Reading
+                                      </div>
+                                    )}
+                                    <div className="flex gap-4">
+                                      <div className="flex-shrink-0">
+                                        <img
+                                          src={book.coverUrl}
+                                          alt={`${book.title} cover`}
+                                          className="w-16 h-24 object-cover rounded shadow-sm"
+                                        />
+                                      </div>
+                                      <div className="flex-1 min-w-0 pr-16">
+                                        <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                          {book.title}
+                                        </h4>
+                                        <p className="text-[#666666] text-xs mb-2">
+                                          by {book.author}
+                                        </p>
+                                        <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                          {book.description}
+                                        </p>
+                                        <div className="flex items-center gap-4">
+                                          <a
+                                            href={book.amazonUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-[#0000ff] text-xs hover:underline"
                                           >
-                                            <path
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              strokeWidth={2}
-                                              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                                            />
-                                          </svg>
-                                        </Link>
+                                            View on Amazon
+                                          </a>
+                                          <Link
+                                            href={`/books/${book.slug}`}
+                                            className="text-[#0000ff] hover:underline"
+                                            title="View details"
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              className="h-4 w-4"
+                                              fill="none"
+                                              viewBox="0 0 24 24"
+                                              stroke="currentColor"
+                                            >
+                                              <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                              />
+                                            </svg>
+                                          </Link>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              )
-                            )}
-                          </div>
+                                )
+                              )}
+                            </div>
+                            <IngestionQueue books={recentBooks} />
+                          </>
                         )}
 
                         {/* Toys Grid for Recent Toys */}

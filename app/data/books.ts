@@ -5,6 +5,7 @@ export interface Book {
   coverUrl: string;
   amazonUrl: string;
   slug: string;
+  status?: "reading" | "read" | "pending";
   detailedDescription?: string;
   genre?: string;
   publishedYear?: string;
@@ -22,6 +23,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/scaling-era.jpg",
     amazonUrl: "https://www.amazon.com/dp/1953953557",
     slug: "scaling-era-ai-history",
+    status: "reading",
     detailedDescription: "This oral history captures one of the most transformative periods in technological development through interviews with key figures who shaped the AI revolution. Chronicling the years when machine learning models grew exponentially in capability, the book provides firsthand accounts of breakthrough moments, strategic decisions, and the cultural shift as artificial intelligence moved from research labs to becoming a defining force in society.",
     genre: "Technology/History",
     publishedYear: "2025",
@@ -169,6 +171,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-tainted-cup.jpg",
     amazonUrl: "https://www.amazon.com/dp/0525685815",
     slug: "the-tainted-cup-robert-jackson-bennett",
+    status: "reading",
     detailedDescription:
       "In the lowland empire of Aördin, death by leviathan venom threatens the Imperial Court. When a high-ranking officer is found murdered, investigator Ana Dolabra and her magically modified aide Din must unravel a conspiracy that winds through botanical wizardry, courtly intrigue, and the looming menace of the leviathans. Bennett crafts a propulsive blend of mystery and fantasy where deduction, political maneuvering, and unforgettable characters drive the story forward.",
     genre: "Gaslamp Fantasy/Mystery",
@@ -176,5 +179,165 @@ export const books: Book[] = [
     pages: "432",
     publisher: "Del Rey",
     rating: "4.2/5"
+  },
+
+  {
+    title: "Behave: The Biology of Humans at Our Best and Worst",
+    author: "Robert M. Sapolsky",
+    description: "A landmark synthesis exploring how biological processes—from neural circuits to hormones to evolutionary history—influence human behavior.",
+    coverUrl: "/images/books/behave-sapolsky.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1594205078",
+    slug: "behave-sapolsky",
+    status: "pending",
+    detailedDescription: "In this sweeping work, Sapolsky investigates human behaviours from mere seconds before an action to millennia of evolution, unpacking why we do what we do — for good and for ill.",
+    genre: "Science / Behavioral Neuroscience",
+    publishedYear: "2017",
+    pages: "800",
+    publisher: "Penguin Press",
+    rating: "4.4/5"
+  },
+
+  {
+    title: "We the Corporations: How American Businesses Won Their Civil Rights",
+    author: "Adam Winkler",
+    description: "A history of how U.S. corporations achieved many of the constitutional rights once reserved for individuals.",
+    coverUrl: "/images/books/we-the-corporations-winkler.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0871407124",
+    slug: "we-the-corporations-winkler",
+    status: "pending",
+    detailedDescription: "Winkler traces a ~200-year corporate rights movement in the U.S., culminating in landmark cases like Citizens United v. FEC, and reveals how business entities became near-equal 'persons' under the law.",
+    genre: "History / Constitutional Law",
+    publishedYear: "2018",
+    pages: "496",
+    publisher: "W. W. Norton / Liveright",
+    rating: "4.3/5"
+  },
+
+  {
+    title: "HBR Guide to Finance Basics for Managers",
+    author: "Harvard Business Review",
+    description: "A concise primer for managers on the fundamentals of finance—including reading statements, interpreting data and making informed decisions.",
+    coverUrl: "/images/books/hbr-guide-finance-basics-managers.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1422187306",
+    slug: "hbr-guide-finance-basics-for-managers",
+    status: "pending",
+    detailedDescription: "Designed for busy non-financial managers, this guide covers key concepts such as income statements, balance sheets, cash flows and shows how to apply them in decision-making.",
+    genre: "Business / Finance",
+    publishedYear: "2011",
+    pages: "272",
+    publisher: "Harvard Business Review Press",
+    rating: "4.2/5"
+  },
+
+  {
+    title: "The Federalist Papers",
+    author: "Alexander Hamilton, James Madison, John Jay",
+    description: "A foundational collection of essays advocating for the ratification of the United States Constitution and exploring the nature of republican government.",
+    coverUrl: "/images/books/the-federalist-papers-hamilton-madison-jay.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0553213407",
+    slug: "the-federalist-papers",
+    status: "pending",
+    detailedDescription: "Written under the pseudonym \"Publius,\" this series of 85 essays addresses the problems of the Articles of Confederation and argues in favour of adopting the U.S. Constitution.",
+    genre: "Political Science / History",
+    publishedYear: "1788",
+    pages: "approx. 500 (varies by edition)",
+    publisher: "J. & A. McLean (original 1788) / multiple later editions",
+    rating: ""
+  },
+
+  {
+    title: "The Economic Structure of Corporate Law",
+    author: "Frank H. Easterbrook & Daniel R. Fischel",
+    description: "A canonical text connecting corporate law rules to economic logic, arguing corporations mirror bargained contracts among insiders.",
+    coverUrl: "/images/books/economic-structure-corporate-law-easterbrook-fischel.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0674235398",
+    slug: "economic-structure-corporate-law",
+    status: "pending",
+    detailedDescription: "Easterbrook and Fischel argue the rules and practices of corporate law mimic the contractual provisions that parties would reach if they could bargain about every contingency.",
+    genre: "Law / Economics",
+    publishedYear: "1991",
+    pages: "370",
+    publisher: "Harvard University Press",
+    rating: ""
+  },
+
+  {
+    title: "Dancing in the Streets: A History of Collective Joy",
+    author: "Barbara Ehrenreich",
+    description: "An exploration of the human impulse for communal celebration, from ancient rituals to modern festivals.",
+    coverUrl: "/images/books/dancing-in-the-streets-ehrenreich.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0805057242",
+    slug: "dancing-in-the-streets-ehrenreich",
+    status: "pending",
+    detailedDescription: "Ehrenreich traces the history of ecstatic group events, masking, carnival, and communal revelry, arguing that collective joy has been repeatedly suppressed by social hierarchies.",
+    genre: "Cultural History / Anthropology",
+    publishedYear: "2006",
+    pages: "336",
+    publisher: "Metropolitan Books / Henry Holt & Company",
+    rating: ""
+  },
+
+  {
+    title: "The Tangled Tree: A Radical New History of Life",
+    author: "David Quammen",
+    description: "A narrative of how modern molecular biology—including horizontal gene transfer and symbiosis—reshapes our understanding of evolution and life's history.",
+    coverUrl: "/images/books/the-tangled-tree-quammen.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1476776628",
+    slug: "the-tangled-tree-quammen",
+    status: "pending",
+    detailedDescription: "Quammen presents recent discoveries in molecular biology and their implications for the tree of life, weaving scientific explanation with the stories of scientists behind them.",
+    genre: "Science / Natural History",
+    publishedYear: "2018",
+    pages: "461",
+    publisher: "Simon & Schuster / William Collins (UK)",
+    rating: ""
+  },
+
+  {
+    title: "The End of History and the Last Man",
+    author: "Francis Fukuyama",
+    description: "A controversial political philosophy argument that liberal democracy may be the endpoint of mankind's ideological evolution.",
+    coverUrl: "/images/books/the-end-of-history-fukuyama.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0743284550",
+    slug: "the-end-of-history-and-the-last-man",
+    status: "pending",
+    detailedDescription: "Arguing that the collapse of communism marked the 'end of history' in ideological terms, Fukuyama traces how Western liberal democracy became the dominant form and explores the implications for the 'last man'.",
+    genre: "Political Science / Philosophy",
+    publishedYear: "1992",
+    pages: "418",
+    publisher: "Free Press",
+    rating: ""
+  },
+
+  {
+    title: "Making Sense: Conversations on Consciousness, Morality, and the Future of Humanity",
+    author: "Sam Harris",
+    description: "A curated collection of thought-provoking conversations drawn from the author's podcast, covering consciousness, morality, politics and society.",
+    coverUrl: "/images/books/making-sense-harris.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0062857789",
+    slug: "making-sense-harris",
+    status: "pending",
+    detailedDescription: "Includes interviews with figures such as Daniel Kahneman, Nick Bostrom, Glenn Loury, and others, on topics ranging from free will to responsible living in the modern world.",
+    genre: "Philosophy / Contemporary Issues",
+    publishedYear: "2020",
+    pages: "444",
+    publisher: "Ecco (HarperCollins imprint)",
+    rating: ""
+  },
+
+  {
+    title: "Einstein: His Life and Universe",
+    author: "Walter Isaacson",
+    description: "A comprehensive biography of Albert Einstein that melds his scientific achievements with his personal life and politics.",
+    coverUrl: "/images/books/einstein-isaacson.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0743264746",
+    slug: "einstein-his-life-and-universe",
+    status: "pending",
+    detailedDescription: "Isaacson draws on newly available papers and sources to portray Einstein's scientific imagination, personal struggles, and broader legacy.",
+    genre: "Biography / Science History",
+    publishedYear: "2007",
+    pages: "675",
+    publisher: "Simon & Schuster",
+    rating: ""
   }
 ];
