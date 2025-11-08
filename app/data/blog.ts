@@ -366,7 +366,7 @@ DSFMs have natural moats:
 
 ## The Attention Allocation Problem
 
-Here's what I see in enterprise sales cycles: 
+Here's what I see in enterprise sales cycles:
 
 CTOs are spending 80% of their AI budget discussions on "Should we use GPT-4 or Claude?" when the real value might be in "Should we build a DSFM for our specific use case?"
 
@@ -410,7 +410,7 @@ This window won't last forever. In 3-5 years, the best opportunities in DSFMs wi
 
 ## My (Loosely Held) Thesis
 
-The next wave of $10B+ AI companies will be built on DSFMs, not frontier LLMs. 
+The next wave of $10B+ AI companies will be built on DSFMs, not frontier LLMs.
 
 The math is just too compelling: lower training costs, higher margins, stronger moats, less competition, and massive addressable markets in industries that desperately need AI but can't use general-purpose models effectively.
 
@@ -421,5 +421,38 @@ But I'm open to being wrong. The beautiful thing about markets is they'll tell u
     publishedDate: "2025-09-12",
     tags: ["ai", "enterprise", "strategy", "investing"],
     readTime: 6
+  },
+  {
+    slug: "ai-will-collapse-the-talent-stack",
+    title: "AI will collapse the talent stack",
+    excerpt: "Claire Vo's insight from Lenny & Friends Summit is finally here: AI will collapse the traditional talent stack, letting polymaths rise and enabling individuals to do work that once required specialized teams.",
+    content: `
+# AI will collapse the talent stack 💯
+
+<img src="/images/blog-shots/ai-will-collapse-the-talent-stack.png" alt="Claire Vo speaking about AI collapsing the talent stack at Lenny & Friends Summit 2024" style="width: 100%; max-width: 800px; margin: 20px 0; border-radius: 8px;" />
+
+[Claire Vo](https://x.com/clairevo) said this a year ago now at Lenny Rachitsky's "Lenny & Friends Summit" in 2024.
+
+In my case, she was preaching to the choir, and she was speaking right at my own predilection—for better or worse!—for being a "builder" at heart more than "manager". I really like to tinker with code, infra, design, metrics and everything just ancillary to each. :)
+
+Claire shares an anecdote here about a marketer with a bent for DevRel-quality engineering prototypes turned PM who has to quickly pick up UX design to unblock a project. THIS. I've been preaching this for years when someone asks me about transitioning to or starting a career in PM. And now it's here. AI agent assistance can move you up the ladder between jack and king vis-a-vis "jack of all trades and king of none". It can mos def get you closer to the value asymptote of what a typical SME offers in non-hardtech orgs, IMHO.
+
+And this collapsing of the talent stack isn't just for PMs. You're seeing the same thing with the merger of feature sets and products from anyone serving the product development triad—which is a good proxy for the entire job function cluster. Design tools empowering engineers. Engineering tools empowering designers. Project management tools empowering data scientists. Communication productivity tools empowering analysts. And so on. And even more so, these tools enabling non-triad roles to do more of design, engineering, and product functions and tasks.
+
+Claire was spot on in her forecast a year ago. And now it's happening at an even more accelerated pace. See "time to lean up", "time to streamline and remove bureaucracy", "fewer meetings", "fewer committees". This is all about faster time to value, and doing more with "less" (although arguably generalized knowledge packed into a little chat interface is "more" than ever before), and being able to pull in the wealth of humanity's wisdom to accelerate what was effectively a ton of data gathering and synthesis in highly manual and single-person bus constrained fashion historically.
+
+Certainly moving us closer to the solo person-$1BN company. In the interim, I think it's a call to arms to embrace this polymathic generalism (or maybe a call to arms to push back on entrenched specialist lanes, depending on your POV—clearly I have an affinity for one over the other).
+
+Anyway, my own pontificating aside, watch Claire's video. 20 minutes fly by fast.
+
+---
+
+## Claire Vo's Full Talk
+
+<iframe width="100%" height="400" style="max-width: 800px; margin: 20px 0; border-radius: 8px;" src="https://www.youtube.com/embed/93fCvFkY1Lg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-full-screen" allowfullscreen></iframe>
+    `,
+    publishedDate: "2025-11-07",
+    tags: ["ai", "talent", "product-management", "career", "generalism", "product-development"],
+    readTime: 4
   }
 ];

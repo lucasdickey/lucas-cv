@@ -285,11 +285,52 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           );
         }
         
+        // Handle HTML img tags
+        if (line.includes('<img ')) {
+          const imgRegex = /<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*(?:style="([^"]*)")?[^>]*\/?>/;
+          const match = line.match(imgRegex);
+          if (match) {
+            const [, src, alt] = match;
+            return (
+              <img
+                key={index}
+                src={src}
+                alt={alt}
+                className="rounded-lg float-right ml-6 mb-4 max-w-xl shadow-sm"
+              />
+            );
+          }
+        }
+
+        // Handle HTML iframe tags
+        if (line.includes('<iframe')) {
+          const iframeRegex = /<iframe[^>]*src="([^"]*)"[^>]*(?:width="([^"]*)")?[^>]*(?:height="([^"]*)")?[^>]*(?:.*?allowfullscreen)?[^>]*><\/iframe>/;
+          const match = line.match(iframeRegex);
+          if (match) {
+            const [, src] = match;
+            return (
+              <div key={index} className="flex justify-start my-6">
+                <iframe
+                  src={src}
+                  width="100%"
+                  height="400"
+                  title="Embedded video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="rounded-lg max-w-2xl shadow-sm"
+                  style={{ aspectRatio: '16 / 9' }}
+                />
+              </div>
+            );
+          }
+        }
+
         // Empty lines
         if (line.trim() === '') {
           return null;
         }
-        
+
         // Regular paragraphs
         const processedLine = processMarkdownLinks(line);
         return (
