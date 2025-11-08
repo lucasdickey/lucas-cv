@@ -635,10 +635,10 @@ export default function TerminalRepoList() {
       code: { name: "Code Repositories", icon: "📦" },
       // news: { name: "News Articles", icon: "📰" }, // COMMENTED OUT
       opinion: { name: "Recent Opinion Pieces", icon: "💭" },
-      blog: { name: "Blog", icon: "📝" },
+      blog: { name: "Musings: Work & Life", icon: "📝" },
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
-      books: { name: "Recent Reads", icon: "📚" },
+      books: { name: "Reading, Read, Reading Soon", icon: "📚" },
       lenny: { name: "Lenny's Recommendations", icon: "📖" },
       toys: { name: "Recent Toys", icon: "🧸" },
     };
