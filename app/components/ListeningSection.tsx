@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { PodcastCarousel } from './PodcastCarousel';
 import { PodcastCarouselV2 } from './PodcastCarouselV2';
 import { subscribedPodcasts } from '@/src/data/podcasts';
@@ -30,7 +30,7 @@ export function ListeningSection({
   return (
     <section
       className={cn(
-        'w-full py-12 md:py-16',
+        'w-full py-12 md:py-16 px-4 md:px-6',
         className
       )}
     >
@@ -43,7 +43,7 @@ export function ListeningSection({
             </h2>
           </div>
           {showDescription && (
-            <p className="text-slate-600 mt-2 max-w-2xl">
+            <p className="text-slate-600 mt-2">
               A curated collection of {podcastsToShow.length} podcasts that keep me informed about
               technology, business, AI, politics, and more.
             </p>

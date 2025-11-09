@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface Podcast {
   name: string;
   spotifyId: string;
+  imageUrl?: string | null;
 }
 
 interface PodcastCarouselV2Props {
@@ -67,15 +67,15 @@ export function PodcastCarouselV2({ podcasts, className }: PodcastCarouselV2Prop
           <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
             {/* Header */}
             <div className="p-4 border-b border-slate-200 bg-slate-50">
-              <h3 className="font-semibold text-slate-900">My Podcasts</h3>
+              <h3 className="font-semibold text-slate-900">Audio Knowledge: Ear & Time Input Constrained</h3>
               <p className="text-xs text-slate-500 mt-1">{podcasts.length} shows</p>
             </div>
 
             {/* Scrollable List */}
             <div className="overflow-y-auto flex-1 max-h-[500px]">
-              {podcasts.map((podcast) => (
+              {podcasts.map((podcast, index) => (
                 <button
-                  key={podcast.spotifyId}
+                  key={`${podcast.spotifyId}-${podcast.name}-${index}`}
                   onClick={() => setSelectedPodcastId(podcast.spotifyId)}
                   className={cn(
                     'w-full text-left px-4 py-3 border-b border-slate-100 transition-colors hover:bg-slate-50 flex items-center gap-3',
@@ -84,10 +84,18 @@ export function PodcastCarouselV2({ podcasts, className }: PodcastCarouselV2Prop
                       : 'hover:bg-slate-50'
                   )}
                 >
-                  {/* Podcast thumbnail placeholder using Spotify colors */}
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded flex items-center justify-center text-white text-xs font-bold">
-                    {podcast.name.charAt(0).toUpperCase()}
-                  </div>
+                  {/* Podcast thumbnail */}
+                  {podcast.imageUrl ? (
+                    <img
+                      src={podcast.imageUrl}
+                      alt={`${podcast.name} artwork`}
+                      className="flex-shrink-0 w-12 h-12 rounded object-cover"
+                    />
+                  ) : (
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded flex items-center justify-center text-white text-xs font-bold">
+                      {podcast.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
 
                   {/* Podcast info */}
                   <div className="flex-1 min-w-0">

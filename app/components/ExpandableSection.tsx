@@ -44,7 +44,7 @@ export function ExpandableSection({
       {/* Expand/Collapse button */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="mt-4 flex items-center gap-2 text-[#0000ff] hover:underline text-sm font-medium transition-colors"
+        className="mt-6 mb-2 flex items-center justify-center gap-2 text-[#0000ff] hover:underline text-sm font-medium transition-colors w-full"
       >
         {isExpanded ? (
           <>

@@ -781,6 +781,16 @@ export default function TerminalRepoList() {
                 );
               })}
 
+            {/* Opinion link in table of contents */}
+            {groupedEntries["opinion"] && (
+              <a
+                href="#opinion"
+                className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+              >
+                💭 Opinions Posted Elsewhere ({groupedEntries["opinion"].length})
+              </a>
+            )}
+
             {/* Podcast Brain Food link in table of contents */}
             <a
               href="#podcasts"
@@ -788,16 +798,6 @@ export default function TerminalRepoList() {
             >
               🎙️ Podcast Brain Food
             </a>
-
-            {/* Opinion link in table of contents */}
-            {groupedEntries["opinion"] && (
-              <a
-                href="#opinion"
-                className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
-              >
-                💭 Opinion ({groupedEntries["opinion"].length})
-              </a>
-            )}
           </div>
         </div>
       </div>
@@ -947,7 +947,10 @@ export default function TerminalRepoList() {
                       cv: 4,
                       code: 6,
                       blog: 5,
-                      toys: 4,
+                      toys: 3,
+                      books: 4,
+                      lenny: 1,
+                      opinion: 2,
                     };
                     const maxRows = expandableConfig[type];
                     const entriesContent = typeEntries.map((entry, index) => {
@@ -983,7 +986,7 @@ export default function TerminalRepoList() {
                           </span>
                         </div>
 
-                        <div className="text-[#333333] mb-2 leading-relaxed">
+                        <div className="text-[#333333] mb-4 leading-relaxed">
                           {entry.description}
                         </div>
                       </>
@@ -1016,51 +1019,139 @@ export default function TerminalRepoList() {
                         )}
 
                         {entry.type === "books" && (
-                          <>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                              {recentBooks
-                                .filter(
-                                  (book) => book.status !== "pending"
-                                )
-                                .sort((a, b) => {
-                                  if (a.status === "reading" && b.status !== "reading")
-                                    return -1;
-                                  if (a.status !== "reading" && b.status === "reading")
-                                    return 1;
-                                  return 0;
-                                })
-                                .map(
-                                (book: Book, bookIndex: number) => (
-                                  <div
-                                    key={bookIndex}
-                                    className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors relative"
-                                  >
-                                    {book.status === "reading" && (
-                                      <div className="absolute top-2 right-2 bg-[#ff0000] text-white text-xs font-bold px-2 py-1 rounded">
-                                        📖 Reading
+                          (() => {
+                            const booksToShow = recentBooks.filter(
+                              (book) => book.status !== "pending"
+                            ).sort((a, b) => {
+                              if (a.status === "reading" && b.status !== "reading")
+                                return -1;
+                              if (a.status !== "reading" && b.status === "reading")
+                                return 1;
+                              return 0;
+                            });
+
+                            const booksContent = (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                {booksToShow.map(
+                                  (book: Book, bookIndex: number) => (
+                                    <div
+                                      key={bookIndex}
+                                      className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors relative"
+                                    >
+                                      {book.status === "reading" && (
+                                        <div className="absolute top-2 right-2 bg-[#ff0000] text-white text-xs font-bold px-2 py-1 rounded">
+                                          📖 Reading
+                                        </div>
+                                      )}
+                                      <div className="flex gap-4">
+                                        <div className="flex-shrink-0">
+                                          <img
+                                            src={book.coverUrl}
+                                            alt={`${book.title} cover`}
+                                            className="w-16 h-24 object-cover rounded shadow-sm"
+                                          />
+                                        </div>
+                                        <div className="flex-1 min-w-0 pr-16">
+                                          <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                            {book.title}
+                                          </h4>
+                                          <p className="text-[#666666] text-xs mb-2">
+                                            by {book.author}
+                                          </p>
+                                          <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                            {book.description}
+                                          </p>
+                                          <div className="flex items-center gap-4">
+                                            <a
+                                              href={book.amazonUrl}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-[#0000ff] text-xs hover:underline"
+                                            >
+                                              View on Amazon
+                                            </a>
+                                            <Link
+                                              href={`/books/${book.slug}`}
+                                              className="text-[#0000ff] hover:underline"
+                                              title="View details"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-4 w-4"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                              >
+                                                <path
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  strokeWidth={2}
+                                                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                                />
+                                              </svg>
+                                            </Link>
+                                          </div>
+                                        </div>
                                       </div>
-                                    )}
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            );
+
+                            return (
+                              <>
+                                {booksToShow.length > 8 ? (
+                                  <ExpandableSection
+                                    maxRows={4}
+                                    rowHeight={160}
+                                    expandLabel="Show all books"
+                                    collapseLabel="Hide extra books"
+                                  >
+                                    {booksContent}
+                                  </ExpandableSection>
+                                ) : (
+                                  booksContent
+                                )}
+                                <IngestionQueue books={recentBooks} />
+                              </>
+                            );
+                          })()
+                        )}
+
+                        {/* Toys Grid for Recent Toys */}
+                        {entry.type === "toys" && (
+                          (() => {
+                            const toysContent = (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                {toys.map((toy, toyIndex) => (
+                                  <div
+                                    key={toyIndex}
+                                    className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                                  >
                                     <div className="flex gap-4">
                                       <div className="flex-shrink-0">
                                         <img
-                                          src={book.coverUrl}
-                                          alt={`${book.title} cover`}
-                                          className="w-16 h-24 object-cover rounded shadow-sm"
+                                          src={toy.imageUrl}
+                                          alt={`${toy.title} product image`}
+                                          className="w-16 h-16 object-cover rounded shadow-sm"
                                         />
                                       </div>
-                                      <div className="flex-1 min-w-0 pr-16">
+                                      <div className="flex-1 min-w-0">
                                         <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                          {book.title}
+                                          {toy.title}
                                         </h4>
-                                        <p className="text-[#666666] text-xs mb-2">
-                                          by {book.author}
-                                        </p>
                                         <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                          {book.description}
+                                          {toy.description}
                                         </p>
+                                        {toy.comment && (
+                                          <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
+                                            &ldquo;{toy.comment}&rdquo;
+                                          </p>
+                                        )}
                                         <div className="flex items-center gap-4">
                                           <a
-                                            href={book.amazonUrl}
+                                            href={toy.amazonUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-[#0000ff] text-xs hover:underline"
@@ -1068,7 +1159,7 @@ export default function TerminalRepoList() {
                                             View on Amazon
                                           </a>
                                           <Link
-                                            href={`/books/${book.slug}`}
+                                            href={`/toys/${toy.slug}`}
                                             className="text-[#0000ff] hover:underline"
                                             title="View details"
                                           >
@@ -1091,76 +1182,25 @@ export default function TerminalRepoList() {
                                       </div>
                                     </div>
                                   </div>
-                                )
-                              )}
-                            </div>
-                            <IngestionQueue books={recentBooks} />
-                          </>
-                        )}
-
-                        {/* Toys Grid for Recent Toys */}
-                        {entry.type === "toys" && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            {toys.map((toy, toyIndex) => (
-                              <div
-                                key={toyIndex}
-                                className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
-                              >
-                                <div className="flex gap-4">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={toy.imageUrl}
-                                      alt={`${toy.title} product image`}
-                                      className="w-16 h-16 object-cover rounded shadow-sm"
-                                    />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                      {toy.title}
-                                    </h4>
-                                    <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                      {toy.description}
-                                    </p>
-                                    {toy.comment && (
-                                      <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
-                                        &ldquo;{toy.comment}&rdquo;
-                                      </p>
-                                    )}
-                                    <div className="flex items-center gap-4">
-                                      <a
-                                        href={toy.amazonUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#0000ff] text-xs hover:underline"
-                                      >
-                                        View on Amazon
-                                      </a>
-                                      <Link
-                                        href={`/toys/${toy.slug}`}
-                                        className="text-[#0000ff] hover:underline"
-                                        title="View details"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                                          />
-                                        </svg>
-                                      </Link>
-                                    </div>
-                                  </div>
-                                </div>
+                                ))}
                               </div>
-                            ))}
-                          </div>
+                            );
+
+                            if (toys.length > 6) {
+                              return (
+                                <ExpandableSection
+                                  maxRows={3}
+                                  rowHeight={140}
+                                  expandLabel="Show all toys"
+                                  collapseLabel="Hide extra toys"
+                                >
+                                  {toysContent}
+                                </ExpandableSection>
+                              );
+                            }
+
+                            return toysContent;
+                          })()
                         )}
 
                         {/* Blog Posts Grid */}
@@ -1339,21 +1379,6 @@ export default function TerminalRepoList() {
                           </div>
                         )}
 
-                        {/* Entry Source */}
-                        <div className="text-[#666666] text-sm mb-4">
-                          Source:{" "}
-                          <a
-                            href={entry.sourceUrl}
-                            className="text-[#006400] hover:underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {entry.sourceTitle}
-                          </a>
-                          {entry.sourceDescription &&
-                            ` - ${entry.sourceDescription}`}
-                        </div>
-
                         {/* Affiliate Links Call-out for purchase sections */}
                         {(entry.type === "lenny" ||
                           entry.type === "toys") && (
@@ -1374,7 +1399,7 @@ export default function TerminalRepoList() {
                       return (
                         <ExpandableSection
                           maxRows={maxRows}
-                          rowHeight={type === "blog" ? 180 : type === "toys" ? 120 : 200}
+                          rowHeight={type === "blog" ? 180 : type === "toys" ? 140 : type === "books" ? 160 : type === "lenny" ? 220 : 200}
                           expandLabel="Click to expand"
                           collapseLabel="Click to collapse"
                         >

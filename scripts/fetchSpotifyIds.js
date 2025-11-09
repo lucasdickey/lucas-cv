@@ -195,11 +195,13 @@ async function searchPodcast(podcastName, accessToken) {
           const parsed = JSON.parse(data);
           const shows = parsed.shows?.items || [];
           if (shows.length > 0) {
+            const imageUrl = shows[0].images?.[0]?.url || null;
             resolve({
               name: podcastName,
               spotifyId: shows[0].id,
               spotifyName: shows[0].name,
               spotifyUrl: shows[0].external_urls?.spotify,
+              imageUrl: imageUrl,
             });
           } else {
             resolve({
@@ -207,6 +209,7 @@ async function searchPodcast(podcastName, accessToken) {
               spotifyId: null,
               spotifyName: null,
               spotifyUrl: null,
+              imageUrl: null,
             });
           }
         } catch (e) {
@@ -270,7 +273,8 @@ async function main() {
     console.log('export const subscribedPodcasts = [');
     results.forEach((result) => {
       const spotifyId = result.spotifyId ? `"${result.spotifyId}"` : '""';
-      console.log(`  { name: "${result.name.replace(/"/g, '\\"')}", spotifyId: ${spotifyId} },`);
+      const imageUrl = result.imageUrl ? `"${result.imageUrl}"` : 'null';
+      console.log(`  { name: "${result.name.replace(/"/g, '\\"')}", spotifyId: ${spotifyId}, imageUrl: ${imageUrl} },`);
     });
     console.log('];');
 
@@ -282,7 +286,8 @@ async function main() {
 export const subscribedPodcasts = [
 ${results.map((result) => {
   const spotifyId = result.spotifyId ? `"${result.spotifyId}"` : '""';
-  return `  { name: "${result.name.replace(/"/g, '\\"')}", spotifyId: ${spotifyId} },`;
+  const imageUrl = result.imageUrl ? `"${result.imageUrl}"` : 'null';
+  return `  { name: "${result.name.replace(/"/g, '\\"')}", spotifyId: ${spotifyId}, imageUrl: ${imageUrl} },`;
 }).join('\n')}
 ];
 `;
