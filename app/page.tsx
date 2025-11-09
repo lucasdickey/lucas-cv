@@ -1332,6 +1332,7 @@ export default function TerminalRepoList() {
               </div>
             );
           })}
+        </div>
 
       {/* Listening Section */}
       <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 md:p-6 mb-5 rounded-md shadow-sm mt-8">
