@@ -748,12 +748,12 @@ export default function TerminalRepoList() {
                   "books",
                   "lenny",
                   "toys",
-                  "media",
                   "twitter",
                   "opinion",
                 ];
                 return order.indexOf(a) - order.indexOf(b);
               })
+              .filter((type) => type !== "media")
               .map((type) => {
                 const typeInfo = getTypeInfo(type);
                 return (
@@ -776,6 +776,14 @@ export default function TerminalRepoList() {
                   </a>
                 );
               })}
+
+            {/* Podcasts link in table of contents */}
+            <a
+              href="#podcasts"
+              className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+            >
+              🎙️ Podcasts
+            </a>
           </div>
         </div>
       </div>
@@ -874,6 +882,7 @@ export default function TerminalRepoList() {
             ];
             return order.indexOf(a) - order.indexOf(b);
           })
+          .filter((type) => type !== "media")
           .map((type) => {
             const typeInfo = getTypeInfo(type);
             const typeEntries = groupedEntries[type];
@@ -1341,7 +1350,10 @@ export default function TerminalRepoList() {
         </div>
 
       {/* Listening Section */}
-      <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 md:p-6 mb-5 rounded-md shadow-sm mt-8">
+      <div
+        id="podcasts"
+        className="border border-[#cccccc] bg-[#f0f0e0] p-4 md:p-6 mb-5 rounded-md shadow-sm mt-8"
+      >
         <ListeningSection showTitle={true} showDescription={true} />
       </div>
     </div>

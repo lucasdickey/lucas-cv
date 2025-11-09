@@ -39,7 +39,7 @@ export function ListeningSection({
           <div className="flex items-center gap-3 mb-2">
             <Radio size={24} className="text-slate-700" />
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
-              Things I'm Listening To & Watching
+              Podcast Brain Food
             </h2>
           </div>
           {showDescription && (
