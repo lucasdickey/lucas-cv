@@ -1,4 +1,7 @@
+'use client';
+
 import { Book } from "../app/data/books";
+import { ExpandableSection } from "@/app/components/ExpandableSection";
 
 interface IngestionQueueProps {
   books: Book[];
@@ -6,21 +9,15 @@ interface IngestionQueueProps {
 
 export default function IngestionQueue({ books }: IngestionQueueProps) {
   const pendingBooks = books.filter((book) => book.status === "pending");
+  const MAX_ROWS = 4;
 
   if (pendingBooks.length === 0) {
     return null;
   }
 
-  return (
-    <div className="mt-6 border border-[#cccccc] rounded-lg p-4 bg-[#fafafa]">
-      <h3 className="text-[#0000ff] font-bold text-base mb-4">
-        Ingestion Queue
-      </h3>
-      <p className="text-[#666666] text-xs mb-4">
-        Books lined up to read next
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {pendingBooks.map((book, index) => (
+  const booksContent = (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {pendingBooks.map((book, index) => (
           <div
             key={index}
             className="flex gap-3 p-3 border border-[#e0e0d0] rounded bg-white hover:bg-[#f0f0e0] transition-colors"
@@ -49,6 +46,25 @@ export default function IngestionQueue({ books }: IngestionQueueProps) {
           </div>
         ))}
       </div>
+    </div>
+  );
+
+  return (
+    <div className="mt-6 border border-[#cccccc] rounded-lg p-4 bg-[#fafafa]">
+      <h3 className="text-[#0000ff] font-bold text-base mb-4">
+        Ingestion Queue
+      </h3>
+      <p className="text-[#666666] text-xs mb-4">
+        Books lined up to read next
+      </p>
+
+      {pendingBooks.length > MAX_ROWS ? (
+        <ExpandableSection maxRows={MAX_ROWS} rowHeight={100} expandLabel="Show all books">
+          {booksContent}
+        </ExpandableSection>
+      ) : (
+        booksContent
+      )}
     </div>
   );
 }

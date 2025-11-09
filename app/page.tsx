@@ -9,6 +9,7 @@ import { useViewMode } from "./contexts/view-mode-context";
 import MarketerHome from "./components/MarketerHome";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
 import { ListeningSection } from "./components/ListeningSection";
+import { ExpandableSection } from "./components/ExpandableSection";
 
 interface Entry {
   title: string;
@@ -940,7 +941,16 @@ export default function TerminalRepoList() {
 
                 {/* Entries List */}
                 <div className="bg-[#f5f5dc]">
-                  {typeEntries.map((entry, index) => {
+                  {/* Determine if this section should be expandable */}
+                  {(() => {
+                    const expandableConfig: Record<string, number> = {
+                      cv: 4,
+                      code: 6,
+                      blog: 5,
+                      toys: 4,
+                    };
+                    const maxRows = expandableConfig[type];
+                    const entriesContent = typeEntries.map((entry, index) => {
                     const isCodeEntry = entry.type === "code";
                     const codeEntryImage = isCodeEntry
                       ? (() => {
@@ -1357,7 +1367,24 @@ export default function TerminalRepoList() {
                         )}
                       </div>
                     );
-                  })}
+                  });
+
+                    // If section is expandable and has more rows than max, wrap in ExpandableSection
+                    if (maxRows && typeEntries.length > maxRows) {
+                      return (
+                        <ExpandableSection
+                          maxRows={maxRows}
+                          rowHeight={type === "blog" ? 180 : type === "toys" ? 120 : 200}
+                          expandLabel="Click to expand"
+                          collapseLabel="Click to collapse"
+                        >
+                          {entriesContent}
+                        </ExpandableSection>
+                      );
+                    }
+
+                    return entriesContent;
+                  })()}
                 </div>
               </div>
             );
