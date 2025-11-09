@@ -46,7 +46,6 @@ export default function IngestionQueue({ books }: IngestionQueueProps) {
           </div>
         ))}
       </div>
-    </div>
   );
 
   return (
