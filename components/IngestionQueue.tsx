@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Book } from "../app/data/books";
 
 interface IngestionQueueProps {
@@ -20,60 +19,32 @@ export default function IngestionQueue({ books }: IngestionQueueProps) {
       <p className="text-[#666666] text-xs mb-4">
         Books lined up to read next
       </p>
-      <div className="space-y-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {pendingBooks.map((book, index) => (
           <div
             key={index}
             className="flex gap-3 p-3 border border-[#e0e0d0] rounded bg-white hover:bg-[#f0f0e0] transition-colors"
           >
-            {/* Small book cover image */}
+            {/* Small book cover image - 50% size of reading/read books */}
             <div className="flex-shrink-0">
               <img
                 src={book.coverUrl}
                 alt={`${book.title} cover`}
-                className="w-12 h-16 object-cover rounded shadow-sm"
+                className="w-10 h-16 object-cover rounded shadow-sm"
               />
             </div>
 
-            {/* Book details */}
+            {/* Book details - left-aligned, compact */}
             <div className="flex-1 min-w-0">
-              <h4 className="font-bold text-[#333333] text-xs mb-1 line-clamp-2">
+              <a
+                href={book.amazonUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-[#0000ff] text-xs mb-1 line-clamp-2 text-left hover:underline block"
+              >
                 {book.title}
-              </h4>
-              <p className="text-[#666666] text-xs mb-2">by {book.author}</p>
-              <p className="text-[#333333] text-xs mb-2 leading-relaxed line-clamp-2">
-                {book.description}
-              </p>
-              <div className="flex items-center gap-3">
-                <a
-                  href={book.amazonUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#0000ff] text-xs hover:underline"
-                >
-                  View on Amazon
-                </a>
-                <Link
-                  href={`/books/${book.slug}`}
-                  className="text-[#0000ff] hover:underline"
-                  title="View details"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                    />
-                  </svg>
-                </Link>
-              </div>
+              </a>
+              <p className="text-[#666666] text-xs text-left">by {book.author}</p>
             </div>
           </div>
         ))}

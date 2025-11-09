@@ -494,7 +494,7 @@ export default function MarketerHome() {
         <section id="code">
           <div className="flex items-center gap-2 mb-6">
             <Code className="w-6 h-6 text-[#0052CC]" />
-            <h2 className="text-3xl font-bold text-[#172B4D]">Code Repositories</h2>
+            <h2 className="text-3xl font-bold text-[#172B4D]">Museum of Passion Projects: Code Repositories</h2>
             <span className="text-sm text-[#6B778C]">({codeEntries.length} projects)</span>
           </div>
           <p className="text-sm text-[#6B778C] mb-6">Open source tools and experiments</p>
@@ -511,11 +511,17 @@ export default function MarketerHome() {
                   const marketingImage = getCodeProjectImage(entry);
                   const imageSrc = marketingImage || getFallbackCodeProjectImage(entry);
                   return (
-                    <img
-                      src={imageSrc}
-                      alt={`${entry.title} preview`}
-                      className="w-full h-36 object-cover rounded-lg mb-4"
-                    />
+                    <div className="w-full h-36 rounded-lg mb-4 bg-[#0d1117] flex items-center justify-center overflow-hidden relative">
+                      <img
+                        src={imageSrc}
+                        alt={`${entry.title} preview`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                      <Github className="w-12 h-12 text-white absolute" />
+                    </div>
                   );
                 })()}
                 <div className="flex justify-between items-start mb-3">
@@ -601,7 +607,7 @@ export default function MarketerHome() {
                 <span className="text-sm text-[#6B778C]">({recentBooks.filter(b => b.status === "pending").length} books)</span>
               </div>
               <p className="text-sm text-[#6B778C] mb-6">Books lined up to read next</p>
-              <div className="grid grid-cols-1 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {recentBooks
                   .filter(b => b.status === "pending")
                   .map((book) => (
@@ -609,27 +615,18 @@ export default function MarketerHome() {
                     <img
                       src={book.coverUrl}
                       alt={`${book.title} cover`}
-                      className="w-16 h-24 object-cover rounded shadow-sm flex-shrink-0"
+                      className="w-10 h-16 object-cover rounded shadow-sm flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-[#172B4D] text-xs mb-1 line-clamp-2">{book.title}</h4>
-                      <p className="text-[#6B778C] text-xs mb-2">by {book.author}</p>
-                      <p className="text-[#333333] text-xs mb-2 leading-relaxed line-clamp-2">{book.description}</p>
-                      <div className="flex items-center gap-3">
-                        <a
-                          href={book.amazonUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#0052CC] text-xs hover:underline"
-                        >
-                          View on Amazon
-                        </a>
-                        <Link href={`/books/${book.slug}`} className="text-[#0052CC] hover:underline" title="View details">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                          </svg>
-                        </Link>
-                      </div>
+                      <a
+                        href={book.amazonUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-[#0052CC] text-xs mb-1 line-clamp-2 text-left hover:underline block"
+                      >
+                        {book.title}
+                      </a>
+                      <p className="text-[#6B778C] text-xs text-left">by {book.author}</p>
                     </div>
                   </div>
                 ))}

@@ -633,7 +633,7 @@ export default function TerminalRepoList() {
   const getTypeInfo = (type: string) => {
     const typeMap: Record<string, { name: string; icon: string }> = {
       cv: { name: "Professional Profile", icon: "👤" },
-      code: { name: "Code Repositories", icon: "📦" },
+      code: { name: "Museum of Passion Projects", icon: "📦" },
       // news: { name: "News Articles", icon: "📰" }, // COMMENTED OUT
       opinion: { name: "Recent Opinion Pieces", icon: "💭" },
       blog: { name: "Musings: Work & Life", icon: "📝" },
@@ -744,13 +744,13 @@ export default function TerminalRepoList() {
                 const order = [
                   "cv",
                   "code",
-                  "opinion",
                   "blog",
                   "books",
                   "lenny",
                   "toys",
                   "media",
                   "twitter",
+                  "opinion",
                 ];
                 return order.indexOf(a) - order.indexOf(b);
               })
@@ -865,12 +865,12 @@ export default function TerminalRepoList() {
             const order = [
               "cv",
               "code",
-              "opinion",
               "books",
               "lenny",
               "toys",
               "media",
               "twitter",
+              "opinion",
             ];
             return order.indexOf(a) - order.indexOf(b);
           })
@@ -888,6 +888,7 @@ export default function TerminalRepoList() {
                 <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc]">
                   <span className="text-[#8b0000] text-lg font-bold">
                     {typeInfo.icon} {typeInfo.name}
+                    {type === "code" && ": Code Repositories"}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
                     (
@@ -959,13 +960,19 @@ export default function TerminalRepoList() {
                         key={index}
                         className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200"
                       >
-                        {isCodeEntry && codeEntryImage ? (
+                        {isCodeEntry ? (
                           <div className="flex flex-col md:flex-row gap-4 items-start mb-2">
-                            <img
-                              src={codeEntryImage}
-                              alt={`${entry.title} repository preview`}
-                              className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm"
-                            />
+                            {codeEntryImage ? (
+                              <img
+                                src={codeEntryImage}
+                                alt={`${entry.title} repository preview`}
+                                className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm"
+                              />
+                            ) : (
+                              <div className="w-full max-w-sm md:max-w-[200px] h-32 rounded border border-[#cccccc] shadow-sm bg-[#0d1117] flex items-center justify-center">
+                                <Github className="w-16 h-16 text-white" />
+                              </div>
+                            )}
                             <div className="flex-1">
                               {renderEntryHeaderAndDescription()}
                             </div>
@@ -1315,7 +1322,6 @@ export default function TerminalRepoList() {
 
                         {/* Affiliate Links Call-out for purchase sections */}
                         {(entry.type === "lenny" ||
-                          entry.type === "books" ||
                           entry.type === "toys") && (
                           <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 text-sm">
                             <strong>Affiliate Links:</strong> All{" "}
