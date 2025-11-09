@@ -101,6 +101,7 @@ Early PM on Amazon's digital music business. Scaled from **$0 to $300M in 3 year
 - **Deployment**: Vercel
 - **Audio**: Custom HTML5 player with progress tracking
 - **AI Tools**: Claude AI (script), ElevenLabs (voice synthesis)
+- **Development AI**: Claude Code (primary), with occasional assistance from Jules, Gemini CLI, and Codex
 
 ---
 
@@ -141,6 +142,7 @@ This resume showcases practical AI implementation:
 2. **Voice Synthesis**: ElevenLabs cloned voice for authentic audio experience
 3. **Script Generation**: AI-optimized script for natural speech patterns
 4. **Interactive Design**: Terminal-inspired UI that reflects technical expertise
+5. **Development**: Built predominantly with Claude Code, with occasional assistance from Jules, Gemini CLI, and Codex
 
 ---
 
@@ -166,7 +168,7 @@ npm run dev
 
 ---
 
-**Built with ❤️ using Claude AI and modern web technologies**
+**Built with ❤️ using Claude Code (primary), Jules, Gemini CLI, Codex, and modern web technologies**
 
 _"Because why not make job searching a little more interesting?"_ - Lucas Dickey
 

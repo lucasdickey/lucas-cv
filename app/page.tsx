@@ -4,9 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
+import IngestionQueue from "../components/IngestionQueue";
 import { useViewMode } from "./contexts/view-mode-context";
 import MarketerHome from "./components/MarketerHome";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
+import { ListeningSection } from "./components/ListeningSection";
+import { ExpandableSection } from "./components/ExpandableSection";
 
 interface Entry {
   title: string;
@@ -631,13 +634,13 @@ export default function TerminalRepoList() {
   const getTypeInfo = (type: string) => {
     const typeMap: Record<string, { name: string; icon: string }> = {
       cv: { name: "Professional Profile", icon: "👤" },
-      code: { name: "Code Repositories", icon: "📦" },
+      code: { name: "Museum of Passion Projects", icon: "📦" },
       // news: { name: "News Articles", icon: "📰" }, // COMMENTED OUT
       opinion: { name: "Recent Opinion Pieces", icon: "💭" },
-      blog: { name: "Blog", icon: "📝" },
+      blog: { name: "Musings: Work & Life", icon: "📝" },
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
-      books: { name: "Recent Reads", icon: "📚" },
+      books: { name: "Reading, Read, Reading Soon", icon: "📚" },
       lenny: { name: "Lenny's Recommendations", icon: "📖" },
       toys: { name: "Recent Toys", icon: "🧸" },
     };
@@ -724,10 +727,6 @@ export default function TerminalRepoList() {
           </span>
         </div>
         <div className="text-[#333333] mb-1">
-          <span className="text-[#8b0000]">$</span> cd{" "}
-          <b>professional-profile</b>/{" "}
-        </div>
-        <div className="text-[#333333] mb-1">
           <span className="text-[#8b0000]">$</span> ls -la{" "}
         </div>
       </div>
@@ -736,23 +735,30 @@ export default function TerminalRepoList() {
       <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
         <div className="text-[#8b0000] font-bold mb-3">Table of Contents</div>
         <div className="text-sm">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div className="flex flex-col gap-2">
             {Object.keys(groupedEntries)
               .sort((a, b) => {
                 const order = [
                   "cv",
                   "code",
-                  "opinion",
                   "blog",
                   "books",
                   "lenny",
                   "toys",
-                  "media",
+                  "podcasts",
                   "twitter",
+                  "opinion",
                 ];
-                return order.indexOf(a) - order.indexOf(b);
+                const aIndex = order.indexOf(a);
+                const bIndex = order.indexOf(b);
+                // Handle -1 (not in order array) by putting them at the end
+                return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
               })
+              .filter((type) => type !== "media")
               .map((type) => {
+                // Skip opinion, we'll add it after podcasts
+                if (type === "opinion") return null;
+
                 const typeInfo = getTypeInfo(type);
                 return (
                   <a
@@ -774,6 +780,24 @@ export default function TerminalRepoList() {
                   </a>
                 );
               })}
+
+            {/* Opinion link in table of contents */}
+            {groupedEntries["opinion"] && (
+              <a
+                href="#opinion"
+                className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+              >
+                💭 Opinions Posted Elsewhere ({groupedEntries["opinion"].length})
+              </a>
+            )}
+
+            {/* Podcast Brain Food link in table of contents */}
+            <a
+              href="#podcasts"
+              className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+            >
+              🎙️ Podcast Brain Food
+            </a>
           </div>
         </div>
       </div>
@@ -863,15 +887,18 @@ export default function TerminalRepoList() {
             const order = [
               "cv",
               "code",
-              "opinion",
+              "blog",
               "books",
               "lenny",
               "toys",
-              "media",
               "twitter",
+              "opinion",
             ];
-            return order.indexOf(a) - order.indexOf(b);
+            const aIndex = order.indexOf(a);
+            const bIndex = order.indexOf(b);
+            return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
           })
+          .filter((type) => type !== "media")
           .map((type) => {
             const typeInfo = getTypeInfo(type);
             const typeEntries = groupedEntries[type];
@@ -886,6 +913,7 @@ export default function TerminalRepoList() {
                 <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc]">
                   <span className="text-[#8b0000] text-lg font-bold">
                     {typeInfo.icon} {typeInfo.name}
+                    {type === "code" && ": Code Repositories"}
                   </span>
                   <span className="text-[#666666] text-sm ml-2">
                     (
@@ -913,7 +941,19 @@ export default function TerminalRepoList() {
 
                 {/* Entries List */}
                 <div className="bg-[#f5f5dc]">
-                  {typeEntries.map((entry, index) => {
+                  {/* Determine if this section should be expandable */}
+                  {(() => {
+                    const expandableConfig: Record<string, number> = {
+                      cv: 4,
+                      code: 6,
+                      blog: 5,
+                      toys: 3,
+                      books: 4,
+                      lenny: 1,
+                      opinion: 2,
+                    };
+                    const maxRows = expandableConfig[type];
+                    const entriesContent = typeEntries.map((entry, index) => {
                     const isCodeEntry = entry.type === "code";
                     const codeEntryImage = isCodeEntry
                       ? (() => {
@@ -946,7 +986,7 @@ export default function TerminalRepoList() {
                           </span>
                         </div>
 
-                        <div className="text-[#333333] mb-2 leading-relaxed">
+                        <div className="text-[#333333] mb-4 leading-relaxed">
                           {entry.description}
                         </div>
                       </>
@@ -957,13 +997,19 @@ export default function TerminalRepoList() {
                         key={index}
                         className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200"
                       >
-                        {isCodeEntry && codeEntryImage ? (
+                        {isCodeEntry ? (
                           <div className="flex flex-col md:flex-row gap-4 items-start mb-2">
-                            <img
-                              src={codeEntryImage}
-                              alt={`${entry.title} repository preview`}
-                              className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm"
-                            />
+                            {codeEntryImage ? (
+                              <img
+                                src={codeEntryImage}
+                                alt={`${entry.title} repository preview`}
+                                className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm"
+                              />
+                            ) : (
+                              <div className="w-full max-w-sm md:max-w-[200px] h-32 rounded border border-[#cccccc] shadow-sm bg-[#0d1117] flex items-center justify-center">
+                                <Github className="w-16 h-16 text-white" />
+                              </div>
+                            )}
                             <div className="flex-1">
                               {renderEntryHeaderAndDescription()}
                             </div>
@@ -973,132 +1019,188 @@ export default function TerminalRepoList() {
                         )}
 
                         {entry.type === "books" && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            {recentBooks.map(
-                              (book: Book, bookIndex: number) => (
-                                <div
-                                  key={bookIndex}
-                                  className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
-                                >
-                                  <div className="flex gap-4">
-                                    <div className="flex-shrink-0">
-                                      <img
-                                        src={book.coverUrl}
-                                        alt={`${book.title} cover`}
-                                        className="w-16 h-24 object-cover rounded shadow-sm"
-                                      />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                        {book.title}
-                                      </h4>
-                                      <p className="text-[#666666] text-xs mb-2">
-                                        by {book.author}
-                                      </p>
-                                      <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                        {book.description}
-                                      </p>
-                                      <div className="flex items-center gap-4">
-                                        <a
-                                          href={book.amazonUrl}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-[#0000ff] text-xs hover:underline"
-                                        >
-                                          View on Amazon
-                                        </a>
-                                        <Link
-                                          href={`/books/${book.slug}`}
-                                          className="text-[#0000ff] hover:underline"
-                                          title="View details"
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-4 w-4"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                          >
-                                            <path
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              strokeWidth={2}
-                                              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                                            />
-                                          </svg>
-                                        </Link>
+                          (() => {
+                            const booksToShow = recentBooks.filter(
+                              (book) => book.status !== "pending"
+                            ).sort((a, b) => {
+                              if (a.status === "reading" && b.status !== "reading")
+                                return -1;
+                              if (a.status !== "reading" && b.status === "reading")
+                                return 1;
+                              return 0;
+                            });
+
+                            const booksContent = (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                {booksToShow.map(
+                                  (book: Book, bookIndex: number) => (
+                                    <div
+                                      key={bookIndex}
+                                      className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors relative"
+                                    >
+                                      {book.status === "reading" && (
+                                        <div className="absolute top-2 right-2 bg-[#ff0000] text-white text-xs font-bold px-2 py-1 rounded">
+                                          📖 Reading
+                                        </div>
+                                      )}
+                                      <div className="flex gap-4">
+                                        <div className="flex-shrink-0">
+                                          <img
+                                            src={book.coverUrl}
+                                            alt={`${book.title} cover`}
+                                            className="w-16 h-24 object-cover rounded shadow-sm"
+                                          />
+                                        </div>
+                                        <div className="flex-1 min-w-0 pr-16">
+                                          <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                            {book.title}
+                                          </h4>
+                                          <p className="text-[#666666] text-xs mb-2">
+                                            by {book.author}
+                                          </p>
+                                          <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                            {book.description}
+                                          </p>
+                                          <div className="flex items-center gap-4">
+                                            <a
+                                              href={book.amazonUrl}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-[#0000ff] text-xs hover:underline"
+                                            >
+                                              View on Amazon
+                                            </a>
+                                            <Link
+                                              href={`/books/${book.slug}`}
+                                              className="text-[#0000ff] hover:underline"
+                                              title="View details"
+                                            >
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-4 w-4"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                              >
+                                                <path
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  strokeWidth={2}
+                                                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                                />
+                                              </svg>
+                                            </Link>
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </div>
-                              )
-                            )}
-                          </div>
+                                  )
+                                )}
+                              </div>
+                            );
+
+                            return (
+                              <>
+                                {booksToShow.length > 8 ? (
+                                  <ExpandableSection
+                                    maxRows={4}
+                                    rowHeight={160}
+                                    expandLabel="Show all books"
+                                    collapseLabel="Hide extra books"
+                                  >
+                                    {booksContent}
+                                  </ExpandableSection>
+                                ) : (
+                                  booksContent
+                                )}
+                                <IngestionQueue books={recentBooks} />
+                              </>
+                            );
+                          })()
                         )}
 
                         {/* Toys Grid for Recent Toys */}
                         {entry.type === "toys" && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            {toys.map((toy, toyIndex) => (
-                              <div
-                                key={toyIndex}
-                                className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
-                              >
-                                <div className="flex gap-4">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      src={toy.imageUrl}
-                                      alt={`${toy.title} product image`}
-                                      className="w-16 h-16 object-cover rounded shadow-sm"
-                                    />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                                      {toy.title}
-                                    </h4>
-                                    <p className="text-[#333333] text-xs mb-2 leading-relaxed">
-                                      {toy.description}
-                                    </p>
-                                    {toy.comment && (
-                                      <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
-                                        &ldquo;{toy.comment}&rdquo;
-                                      </p>
-                                    )}
-                                    <div className="flex items-center gap-4">
-                                      <a
-                                        href={toy.amazonUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#0000ff] text-xs hover:underline"
-                                      >
-                                        View on Amazon
-                                      </a>
-                                      <Link
-                                        href={`/toys/${toy.slug}`}
-                                        className="text-[#0000ff] hover:underline"
-                                        title="View details"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          viewBox="0 0 24 24"
-                                          stroke="currentColor"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                                          />
-                                        </svg>
-                                      </Link>
+                          (() => {
+                            const toysContent = (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                {toys.map((toy, toyIndex) => (
+                                  <div
+                                    key={toyIndex}
+                                    className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                                  >
+                                    <div className="flex gap-4">
+                                      <div className="flex-shrink-0">
+                                        <img
+                                          src={toy.imageUrl}
+                                          alt={`${toy.title} product image`}
+                                          className="w-16 h-16 object-cover rounded shadow-sm"
+                                        />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
+                                          {toy.title}
+                                        </h4>
+                                        <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                                          {toy.description}
+                                        </p>
+                                        {toy.comment && (
+                                          <p className="text-[#666666] text-xs mb-2 italic leading-relaxed">
+                                            &ldquo;{toy.comment}&rdquo;
+                                          </p>
+                                        )}
+                                        <div className="flex items-center gap-4">
+                                          <a
+                                            href={toy.amazonUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-[#0000ff] text-xs hover:underline"
+                                          >
+                                            View on Amazon
+                                          </a>
+                                          <Link
+                                            href={`/toys/${toy.slug}`}
+                                            className="text-[#0000ff] hover:underline"
+                                            title="View details"
+                                          >
+                                            <svg
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              className="h-4 w-4"
+                                              fill="none"
+                                              viewBox="0 0 24 24"
+                                              stroke="currentColor"
+                                            >
+                                              <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                                              />
+                                            </svg>
+                                          </Link>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
+                                ))}
                               </div>
-                            ))}
-                          </div>
+                            );
+
+                            if (toys.length > 6) {
+                              return (
+                                <ExpandableSection
+                                  maxRows={3}
+                                  rowHeight={140}
+                                  expandLabel="Show all toys"
+                                  collapseLabel="Hide extra toys"
+                                >
+                                  {toysContent}
+                                </ExpandableSection>
+                              );
+                            }
+
+                            return toysContent;
+                          })()
                         )}
 
                         {/* Blog Posts Grid */}
@@ -1277,24 +1379,8 @@ export default function TerminalRepoList() {
                           </div>
                         )}
 
-                        {/* Entry Source */}
-                        <div className="text-[#666666] text-sm mb-4">
-                          Source:{" "}
-                          <a
-                            href={entry.sourceUrl}
-                            className="text-[#006400] hover:underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {entry.sourceTitle}
-                          </a>
-                          {entry.sourceDescription &&
-                            ` - ${entry.sourceDescription}`}
-                        </div>
-
                         {/* Affiliate Links Call-out for purchase sections */}
                         {(entry.type === "lenny" ||
-                          entry.type === "books" ||
                           entry.type === "toys") && (
                           <div className="bg-[#fff8dc] border border-[#daa520] rounded p-3 text-sm">
                             <strong>Affiliate Links:</strong> All{" "}
@@ -1306,11 +1392,38 @@ export default function TerminalRepoList() {
                         )}
                       </div>
                     );
-                  })}
+                  });
+
+                    // If section is expandable and has more rows than max, wrap in ExpandableSection
+                    if (maxRows && typeEntries.length > maxRows) {
+                      return (
+                        <ExpandableSection
+                          maxRows={maxRows}
+                          rowHeight={type === "blog" ? 180 : type === "toys" ? 140 : type === "books" ? 160 : type === "lenny" ? 220 : 200}
+                          expandLabel="Click to expand"
+                          collapseLabel="Click to collapse"
+                        >
+                          {entriesContent}
+                        </ExpandableSection>
+                      );
+                    }
+
+                    return entriesContent;
+                  })()}
                 </div>
               </div>
             );
           })}
+
+        {/* Listening Section */}
+        <div
+          id="podcasts"
+          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
+        >
+          <div className="bg-[#f5f5dc]">
+            <ListeningSection showTitle={true} showDescription={true} />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -494,7 +494,7 @@ export default function MarketerHome() {
         <section id="code">
           <div className="flex items-center gap-2 mb-6">
             <Code className="w-6 h-6 text-[#0052CC]" />
-            <h2 className="text-3xl font-bold text-[#172B4D]">Code Repositories</h2>
+            <h2 className="text-3xl font-bold text-[#172B4D]">Museum of Passion Projects: Code Repositories</h2>
             <span className="text-sm text-[#6B778C]">({codeEntries.length} projects)</span>
           </div>
           <p className="text-sm text-[#6B778C] mb-6">Open source tools and experiments</p>
@@ -511,11 +511,17 @@ export default function MarketerHome() {
                   const marketingImage = getCodeProjectImage(entry);
                   const imageSrc = marketingImage || getFallbackCodeProjectImage(entry);
                   return (
-                    <img
-                      src={imageSrc}
-                      alt={`${entry.title} preview`}
-                      className="w-full h-36 object-cover rounded-lg mb-4"
-                    />
+                    <div className="w-full h-36 rounded-lg mb-4 bg-[#0d1117] flex items-center justify-center overflow-hidden relative">
+                      <img
+                        src={imageSrc}
+                        alt={`${entry.title} preview`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                      <Github className="w-12 h-12 text-white absolute" />
+                    </div>
                   );
                 })()}
                 <div className="flex justify-between items-start mb-3">
@@ -538,29 +544,41 @@ export default function MarketerHome() {
           </div>
         </section>
 
-        {/* Recent Reads Section */}
+        {/* Reading, Read, Reading Soon Section */}
         <section id="books">
           <div className="flex items-center gap-2 mb-6">
             <BookOpen className="w-6 h-6 text-[#0052CC]" />
-            <h2 className="text-3xl font-bold text-[#172B4D]">Recent Reads</h2>
-            <span className="text-sm text-[#6B778C]">({recentBooks.length} books)</span>
+            <h2 className="text-3xl font-bold text-[#172B4D]">Reading, Read, Reading Soon</h2>
+            <span className="text-sm text-[#6B778C]">({recentBooks.filter(b => b.status !== "pending").length} books)</span>
           </div>
-          <p className="text-sm text-[#6B778C] mb-6">Books I&apos;ve read or re-read in the last 90 days</p>
+          <p className="text-sm text-[#6B778C] mb-6">Currently reading and recently completed reads</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentBooks.map((book) => (
-              <div key={book.slug} className="bg-[#F4F5F7] rounded-lg p-6 hover:shadow-lg transition-all border border-transparent hover:border-[#0052CC]">
+            {recentBooks
+              .filter(b => b.status !== "pending")
+              .sort((a, b) => {
+                if (a.status === "reading" && b.status !== "reading") return -1;
+                if (a.status !== "reading" && b.status === "reading") return 1;
+                return 0;
+              })
+              .map((book) => (
+              <div key={book.slug} className="bg-[#F4F5F7] rounded-lg p-6 hover:shadow-lg transition-all border border-transparent hover:border-[#0052CC] relative">
+                {book.status === "reading" && (
+                  <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    📖 Reading
+                  </div>
+                )}
                 <div className="flex gap-4 mb-4">
-                  <img 
-                    src={book.coverUrl} 
+                  <img
+                    src={book.coverUrl}
                     alt={`${book.title} cover`}
                     className="w-20 h-32 object-cover rounded shadow-sm flex-shrink-0"
                   />
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 pr-12">
                     <h3 className="font-bold text-[#172B4D] mb-1 text-sm leading-tight">{book.title}</h3>
                     <p className="text-[#6B778C] text-xs mb-2">by {book.author}</p>
                     <p className="text-[#333333] text-xs mb-3 leading-relaxed line-clamp-3">{book.description}</p>
                     <div className="flex items-center gap-4">
-                      <a 
+                      <a
                         href={book.amazonUrl}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -579,6 +597,42 @@ export default function MarketerHome() {
               </div>
             ))}
           </div>
+
+          {/* Ingestion Queue Section */}
+          {recentBooks.filter(b => b.status === "pending").length > 0 && (
+            <div className="mt-12">
+              <div className="flex items-center gap-2 mb-6">
+                <BookOpen className="w-6 h-6 text-[#6B778C]" />
+                <h3 className="text-2xl font-bold text-[#172B4D]">Ingestion Queue</h3>
+                <span className="text-sm text-[#6B778C]">({recentBooks.filter(b => b.status === "pending").length} books)</span>
+              </div>
+              <p className="text-sm text-[#6B778C] mb-6">Books lined up to read next</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {recentBooks
+                  .filter(b => b.status === "pending")
+                  .map((book) => (
+                  <div key={book.slug} className="flex gap-3 p-3 border border-[#DFE1E6] rounded bg-[#F4F5F7] hover:bg-[#EAEEF2] transition-colors">
+                    <img
+                      src={book.coverUrl}
+                      alt={`${book.title} cover`}
+                      className="w-10 h-16 object-cover rounded shadow-sm flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <a
+                        href={book.amazonUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-[#0052CC] text-xs mb-1 line-clamp-2 text-left hover:underline block"
+                      >
+                        {book.title}
+                      </a>
+                      <p className="text-[#6B778C] text-xs text-left">by {book.author}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Lenny's Recommendations Section */}
