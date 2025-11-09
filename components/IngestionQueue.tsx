@@ -54,7 +54,7 @@ export default function IngestionQueue({ books }: IngestionQueueProps) {
         Ingestion Queue
       </h3>
       <p className="text-[#666666] text-xs mb-4">
-        Books lined up to read next
+        Books lined up to read next. And yes, it's a huge list, but it's not codified in stone
       </p>
 
       {pendingBooks.length > MAX_ROWS ? (
