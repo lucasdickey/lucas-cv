@@ -726,10 +726,6 @@ export default function TerminalRepoList() {
           </span>
         </div>
         <div className="text-[#333333] mb-1">
-          <span className="text-[#8b0000]">$</span> cd{" "}
-          <b>professional-profile</b>/{" "}
-        </div>
-        <div className="text-[#333333] mb-1">
           <span className="text-[#8b0000]">$</span> ls -la{" "}
         </div>
       </div>
