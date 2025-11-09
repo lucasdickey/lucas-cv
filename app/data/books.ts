@@ -339,5 +339,213 @@ export const books: Book[] = [
     pages: "675",
     publisher: "Simon & Schuster",
     rating: ""
+  },
+
+  {
+    title: "Unworld",
+    author: "Jayson Greene",
+    description: "A deeply moving meditation on loss, grief, and the endurance of love after tragedy.",
+    coverUrl: "/images/books/unworld.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0525555775",
+    slug: "unworld-jayson-greene",
+    status: "pending",
+    detailedDescription: "In this memoir, Jayson Greene chronicles the loss of his young daughter and the journey through sorrow and renewal that follows. It's a profound exploration of how tragedy reshapes human connection and meaning.",
+    genre: "Memoir",
+    publishedYear: "2019",
+    pages: "256",
+    publisher: "Knopf",
+    rating: "4.6/5"
+  },
+
+  {
+    title: "Neuromancer",
+    author: "William Gibson",
+    description: "A cyberpunk classic that redefined science fiction and introduced the concept of cyberspace.",
+    coverUrl: "/images/books/neuromancer.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0441569595",
+    slug: "neuromancer-william-gibson",
+    status: "pending",
+    detailedDescription: "First published in 1984, Neuromancer follows a washed-up computer hacker hired for one last job in a world of artificial intelligence and corporate espionage. It coined the term 'cyberspace' and inspired generations of sci-fi creators.",
+    genre: "Science Fiction / Cyberpunk",
+    publishedYear: "1984",
+    pages: "288",
+    publisher: "Ace Books",
+    rating: "4.4/5"
+  },
+
+  {
+    title: "Axiomatic",
+    author: "Greg Egan",
+    description: "A collection of hard science fiction short stories exploring identity, morality, and consciousness.",
+    coverUrl: "/images/books/axiomatic.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1597805408",
+    slug: "axiomatic-greg-egan",
+    status: "pending",
+    detailedDescription: "Through ingenious speculative tales, Greg Egan examines the nature of self, reality, and technology. The stories explore transhumanist themes, from neural implants to the ethics of immortality.",
+    genre: "Science Fiction / Short Stories",
+    publishedYear: "1995",
+    pages: "384",
+    publisher: "Orion / Night Shade Books",
+    rating: "4.6/5"
+  },
+
+  {
+    title: "The Hidden Girl and Other Stories",
+    author: "Ken Liu",
+    description: "A speculative fiction anthology weaving technology, mythology, and human emotion.",
+    coverUrl: "/images/books/hidden-girl.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1982134036",
+    slug: "hidden-girl-ken-liu",
+    status: "pending",
+    detailedDescription: "Ken Liu's second short story collection combines Eastern and Western storytelling traditions to explore memory, identity, and the moral consequences of innovation. The title story draws from Chinese folklore and modern AI.",
+    genre: "Science Fiction / Fantasy / Short Stories",
+    publishedYear: "2020",
+    pages: "432",
+    publisher: "Saga Press",
+    rating: "4.5/5"
+  },
+
+  {
+    title: "So Late in the Day",
+    author: "Claire Keegan",
+    description: "A sharp, spare novella about relationships, regret, and the limits of empathy.",
+    coverUrl: "/images/books/so-late-in-the-day.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0802160853",
+    slug: "so-late-in-the-day-claire-keegan",
+    status: "pending",
+    detailedDescription: "Claire Keegan's writing distills human experience to its essence. This story examines a man reflecting on a failed relationship, offering a subtle critique of gender, class, and the quiet violences of everyday life.",
+    genre: "Literary Fiction / Novella",
+    publishedYear: "2023",
+    pages: "64",
+    publisher: "Grove Press",
+    rating: "4.7/5"
+  },
+
+  {
+    title: "The City & The City",
+    author: "China Miéville",
+    description: "A surreal detective story set in two overlapping cities that coexist in the same space.",
+    coverUrl: "/images/books/city-and-the-city.jpg",
+    amazonUrl: "https://www.amazon.com/dp/034549752X",
+    slug: "city-and-the-city-china-mieville",
+    status: "pending",
+    detailedDescription: "Inspector Tyador Borlú investigates a murder that transcends the boundaries between Besźel and Ul Qoma — two cities that occupy the same physical space but whose citizens are forbidden from acknowledging one another.",
+    genre: "Fantasy / Noir / Speculative Fiction",
+    publishedYear: "2009",
+    pages: "336",
+    publisher: "Del Rey",
+    rating: "4.3/5"
+  },
+
+  {
+    title: "The Man Who Saw Seconds",
+    author: "Alexander Boldizar",
+    description: "A high-octane speculative thriller about time perception, choice, and morality.",
+    coverUrl: "/images/books/man-who-saw-seconds.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1778188425",
+    slug: "man-who-saw-seconds-alexander-boldizar",
+    status: "pending",
+    detailedDescription: "A man gains the ability to see a few seconds into the future, leading to a life of chaos, pursuit, and philosophical reckoning. Boldizar combines action and satire with deep questions about free will and consequence.",
+    genre: "Science Fiction / Thriller",
+    publishedYear: "2024",
+    pages: "416",
+    publisher: "Clash Books",
+    rating: "4.5/5"
+  },
+
+  {
+    title: "The Tusks of Extinction",
+    author: "Ray Nayler",
+    description: "A climate-fiction novella blending extinction, memory, and consciousness.",
+    coverUrl: "/images/books/tusks-of-extinction.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1250895327",
+    slug: "tusks-of-extinction-ray-nayler",
+    status: "pending",
+    detailedDescription: "Ray Nayler's haunting novella explores a near-future world where resurrected mammoths inherit human memories. It's a meditation on humanity's relationship with nature and its own self-destructive impulses.",
+    genre: "Science Fiction / Climate Fiction",
+    publishedYear: "2024",
+    pages: "160",
+    publisher: "Tordotcom",
+    rating: "4.6/5"
+  },
+
+  {
+    title: "Lake of Souls",
+    author: "Ann Leckie",
+    description: "A powerful collection of stories from the Hugo- and Nebula-winning author of Ancillary Justice.",
+    coverUrl: "/images/books/lake-of-souls.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0316471104",
+    slug: "lake-of-souls-ann-leckie",
+    status: "pending",
+    detailedDescription: "Spanning Leckie's signature universes and beyond, these stories explore artificial intelligence, justice, and the human condition with wit and empathy.",
+    genre: "Science Fiction / Short Stories",
+    publishedYear: "2024",
+    pages: "352",
+    publisher: "Orbit",
+    rating: "4.7/5"
+  },
+
+  {
+    title: "A Sorceress Comes to Call",
+    author: "T. Kingfisher",
+    description: "A gothic fantasy tale of power, deception, and family secrets.",
+    coverUrl: "/images/books/sorceress-comes-to-call.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1250244086",
+    slug: "sorceress-comes-to-call-t-kingfisher",
+    status: "pending",
+    detailedDescription: "When a mysterious sorceress arrives in a quiet village, her presence unravels old traumas and buried magic. Kingfisher blends horror and humor in her signature modern fairytale style.",
+    genre: "Fantasy / Gothic / Horror",
+    publishedYear: "2024",
+    pages: "352",
+    publisher: "Tor Books",
+    rating: "4.8/5"
+  },
+
+  {
+    title: "The Left Hand of Darkness",
+    author: "Ursula K. Le Guin",
+    description: "A landmark of science fiction exploring gender, identity, and diplomacy on an alien world.",
+    coverUrl: "/images/books/left-hand-of-darkness.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0441478123",
+    slug: "left-hand-of-darkness-ursula-le-guin",
+    status: "pending",
+    detailedDescription: "Set on the icy planet Gethen, the story follows envoy Genly Ai as he seeks alliance with a society where humans are ambisexual. Le Guin's work challenges conventional gender norms and redefines science fiction.",
+    genre: "Science Fiction / Classic",
+    publishedYear: "1969",
+    pages: "320",
+    publisher: "Ace Books",
+    rating: "4.5/5"
+  },
+
+  {
+    title: "Where Is My Flying Car?",
+    author: "J. Storrs Hall",
+    description: "A provocative exploration of technological stagnation and lost futurism.",
+    coverUrl: "/images/books/where-is-my-flying-car.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1732265171",
+    slug: "where-is-my-flying-car-j-storrs-hall",
+    status: "pending",
+    detailedDescription: "Hall examines why the technological dreams of the mid-20th century—flying cars, fusion power, nanotech—never materialized, and argues that cultural and regulatory barriers stifled innovation. A manifesto for reclaiming progress.",
+    genre: "Science / Technology / Futurism",
+    publishedYear: "2021",
+    pages: "480",
+    publisher: "Stripe Press",
+    rating: "4.7/5"
+  },
+
+  {
+    title: "Adapt: Why Success Always Starts with Failure",
+    author: "Tim Harford",
+    description: "An exploration of why trial and error drives innovation, resilience, and progress.",
+    coverUrl: "/images/books/adapt.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0316184056",
+    slug: "adapt-tim-harford",
+    status: "pending",
+    detailedDescription: "Harford argues that in a complex world, success emerges from decentralized experimentation and the ability to learn from failure. Drawing from business, science, and history, he shows why adaptability beats rigid planning.",
+    genre: "Business / Psychology / Economics",
+    publishedYear: "2011",
+    pages: "304",
+    publisher: "Picador",
+    rating: "4.5/5"
   }
 ];
