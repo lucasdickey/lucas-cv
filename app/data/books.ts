@@ -409,7 +409,7 @@ export const books: Book[] = [
     title: "So Late in the Day",
     author: "Claire Keegan",
     description: "A sharp, spare novella about relationships, regret, and the limits of empathy.",
-    coverUrl: "/images/books/so-late-in-the-day.jpg",
+    coverUrl: "/images/books/so-late-in-the-day-claire-keegan.jpg",
     amazonUrl: "https://www.amazon.com/dp/0802160853",
     slug: "so-late-in-the-day-claire-keegan",
     status: "pending",
