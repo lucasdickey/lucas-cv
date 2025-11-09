@@ -8,6 +8,7 @@ import IngestionQueue from "../components/IngestionQueue";
 import { useViewMode } from "./contexts/view-mode-context";
 import MarketerHome from "./components/MarketerHome";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
+import { ListeningSection } from "./components/ListeningSection";
 
 interface Entry {
   title: string;
@@ -1331,6 +1332,10 @@ export default function TerminalRepoList() {
               </div>
             );
           })}
+
+      {/* Listening Section */}
+      <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 md:p-6 mb-5 rounded-md shadow-sm mt-8">
+        <ListeningSection showTitle={true} showDescription={true} />
       </div>
     </div>
   );
