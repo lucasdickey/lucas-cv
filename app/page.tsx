@@ -738,7 +738,7 @@ export default function TerminalRepoList() {
       <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
         <div className="text-[#8b0000] font-bold mb-3">Table of Contents</div>
         <div className="text-sm">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div className="flex flex-col gap-2">
             {Object.keys(groupedEntries)
               .sort((a, b) => {
                 const order = [
@@ -748,13 +748,20 @@ export default function TerminalRepoList() {
                   "books",
                   "lenny",
                   "toys",
+                  "podcasts",
                   "twitter",
                   "opinion",
                 ];
-                return order.indexOf(a) - order.indexOf(b);
+                const aIndex = order.indexOf(a);
+                const bIndex = order.indexOf(b);
+                // Handle -1 (not in order array) by putting them at the end
+                return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
               })
               .filter((type) => type !== "media")
               .map((type) => {
+                // Skip opinion, we'll add it after podcasts
+                if (type === "opinion") return null;
+
                 const typeInfo = getTypeInfo(type);
                 return (
                   <a
@@ -784,6 +791,16 @@ export default function TerminalRepoList() {
             >
               🎙️ Podcast Brain Food
             </a>
+
+            {/* Opinion link in table of contents */}
+            {groupedEntries["opinion"] && (
+              <a
+                href="#opinion"
+                className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+              >
+                💭 Opinion ({groupedEntries["opinion"].length})
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -873,14 +890,16 @@ export default function TerminalRepoList() {
             const order = [
               "cv",
               "code",
+              "blog",
               "books",
               "lenny",
               "toys",
-              "media",
               "twitter",
               "opinion",
             ];
-            return order.indexOf(a) - order.indexOf(b);
+            const aIndex = order.indexOf(a);
+            const bIndex = order.indexOf(b);
+            return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
           })
           .filter((type) => type !== "media")
           .map((type) => {
@@ -1347,14 +1366,16 @@ export default function TerminalRepoList() {
               </div>
             );
           })}
-        </div>
 
-      {/* Listening Section */}
-      <div
-        id="podcasts"
-        className="border border-[#cccccc] bg-[#f0f0e0] p-4 md:p-6 mb-5 rounded-md shadow-sm mt-8"
-      >
-        <ListeningSection showTitle={true} showDescription={true} />
+        {/* Listening Section */}
+        <div
+          id="podcasts"
+          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
+        >
+          <div className="bg-[#f5f5dc]">
+            <ListeningSection showTitle={true} showDescription={true} />
+          </div>
+        </div>
       </div>
     </div>
   );
