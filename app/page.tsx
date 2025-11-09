@@ -777,12 +777,12 @@ export default function TerminalRepoList() {
                 );
               })}
 
-            {/* Podcasts link in table of contents */}
+            {/* Podcast Brain Food link in table of contents */}
             <a
               href="#podcasts"
               className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
             >
-              🎙️ Podcasts
+              🎙️ Podcast Brain Food
             </a>
           </div>
         </div>
