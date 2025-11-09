@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PodcastCarousel } from './PodcastCarousel';
+import { PodcastCarouselV2 } from './PodcastCarouselV2';
 import { subscribedPodcasts } from '@/src/data/podcasts';
 import { cn } from '@/lib/utils';
 import { Radio } from 'lucide-react';
@@ -11,6 +12,7 @@ interface ListeningSectionProps {
   maxPodcasts?: number;
   showTitle?: boolean;
   showDescription?: boolean;
+  layout?: 'carousel' | 'list';
 }
 
 export function ListeningSection({
@@ -18,6 +20,7 @@ export function ListeningSection({
   maxPodcasts,
   showTitle = true,
   showDescription = true,
+  layout = 'list',
 }: ListeningSectionProps) {
   // Optionally limit the number of podcasts displayed
   const podcastsToShow = maxPodcasts
@@ -48,8 +51,12 @@ export function ListeningSection({
         </div>
       )}
 
-      {/* Podcast carousel */}
-      <PodcastCarousel podcasts={podcastsToShow} />
+      {/* Podcast carousel/list */}
+      {layout === 'carousel' ? (
+        <PodcastCarousel podcasts={podcastsToShow} />
+      ) : (
+        <PodcastCarouselV2 podcasts={podcastsToShow} />
+      )}
     </section>
   );
 }
