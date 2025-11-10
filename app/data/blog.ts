@@ -27,6 +27,41 @@ export const getPublishedPosts = (): BlogPost[] => {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "staying-close-to-metal-why-i-build",
+    title: "Staying Close to the Metal: Why I Build (and Rebuild) Everything",
+    excerpt: "Why spend personal time rebuilding functionality that already exists? Staying close to the metal—putting on every stakeholder's hat—keeps technical intuition sharp and first-principles thinking alive.",
+    content: `
+# Staying Close to the Metal: Why I Build (and Rebuild) Everything
+
+## Why do I build so much?
+
+I've been asked many times why I spend personal time on building and rebuilding functionality that exists on other platforms or that I've built in the context of other businesses. Or why I pick up completely orthogonal coding projects to anything I've done before.
+
+Why? **Staying close to the metal**, as the Atlassian design team calls it.
+
+Given that most software is just the bundling and unbundling of other software, it's a good practice to reconsider how things are done from a first principal's perspective as well as thinking about implementation in new epochs of internet time.
+
+## The Value of Solo Building
+
+When I build solo projects, I get to put on the functional hat of every stakeholder and think through their perspective. It's a very humbling and empowering exercise.
+
+Whether I'm considering the end user's experience, the developer's implementation constraints, the business owner's ROI concerns, or the designer's aesthetic choices—building alone forces me to inhabit all these perspectives simultaneously. This multi-faceted thinking keeps me sharp and prevents the tunnel vision that can come from specializing in just one role.
+
+## Continuous Reinvention
+
+The tech landscape evolves rapidly, and what worked in one era might be implemented completely differently in the next. By regularly rebuilding familiar functionality with new tools, frameworks, or approaches, I'm not just keeping my skills current—I'm actively challenging my assumptions about how things "should" be done.
+
+It's easy to get comfortable with patterns and practices that worked five years ago. But software development is iterative, and our thinking should be too.
+
+---
+
+*Thanks to [David Hoang](https://twitter.com/davidhoang) & [Charlie Sutton](https://twitter.com/charlie_l_s) for their posts exposing me to the encapsulation of this POV. Much more succinct than previous analogies I've used.*
+    `,
+    publishedDate: "2025-11-10",
+    tags: ["software-development", "learning", "first-principles", "product-strategy", "building", "maker-mindset"],
+    readTime: 2
+  },
+  {
     slug: "expanding-aperture-agentic-coding-era",
     title: "Expanding My Aperture: Learning Through Doing in the Agentic Coding Era",
     excerpt: "Exploring software development across different environments, frameworks, and modalities through the lens of agentic coding and continuous learning.",
