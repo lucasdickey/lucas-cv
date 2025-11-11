@@ -55,7 +55,7 @@ It's easy to get comfortable with patterns and practices that worked five years 
 
 ---
 
-*Thanks to [David Hoang](https://twitter.com/davidhoang) & [Charlie Sutton](https://twitter.com/charlie_l_s) for their posts exposing me to the encapsulation of this POV. Much more succinct than previous analogies I've used.*
+*Thanks to [David Hoang](https://twitter.com/davidhoang) & Charlie Sutton for their posts exposing me to the encapsulation of this POV. Much more succinct than previous analogies I've used.*
     `,
     publishedDate: "2025-11-10",
     tags: ["software-development", "learning", "first-principles", "product-strategy", "building", "maker-mindset"],
