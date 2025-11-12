@@ -1,10 +1,14 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "lucas-dickey",
+  "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    ".",
+    "apps/*"
+  ],
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build --workspaces",
     "start": "next start",
     "lint": "next lint"
   },

@@ -1,6 +1,21 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": ".next",
   "devCommand": "npm run dev",
-  "installCommand": "npm install --legacy-peer-deps"
+  "installCommand": "npm install --legacy-peer-deps",
+  "projects": {
+    "main": {
+      "name": "lucas-cv",
+      "rootDirectory": ".",
+      "outputDirectory": ".next",
+      "buildCommand": "next build",
+      "devCommand": "next dev"
+    },
+    "mcp": {
+      "name": "mcp-service",
+      "rootDirectory": "apps/mcp",
+      "outputDirectory": ".next",
+      "buildCommand": "next build",
+      "devCommand": "next dev"
+    }
+  }
 }
