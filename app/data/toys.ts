@@ -216,5 +216,21 @@ export const toys: Toy[] = [
       "Contrast Ratio": "1500:1",
       "Color": "Ash White"
     }
+  },
+  {
+    title: "10kay",
+    description: "Automated SEC Filing Analysis for Tech Companies",
+    imageUrl: "/images/toys/10kay.png",
+    amazonUrl: "https://github.com/lucasdickey/10kay",
+    slug: "10kay",
+    comment: "Strategic insights from 10-K and 10-Q filings, translated into actionable intelligence for tech professionals and operators."
+  },
+  {
+    title: "Voice Mode",
+    description: "System-wide voice dictation for Android with AI-powered transcription cleanup",
+    imageUrl: "/images/toys/voice-mode.png",
+    amazonUrl: "https://github.com/lucasdickey/voice-mode",
+    slug: "voice-mode",
+    comment: "Inspired by Wispr Flow for macOS, this app provides intelligent speech-to-text functionality across all Android apps."
   }
 ];
