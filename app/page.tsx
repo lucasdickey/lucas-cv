@@ -217,6 +217,24 @@ const entries: Entry[] = [
     sourceTitle: "GitHub Repository",
     sourceDescription: "Guided breathing exercise app - 1 star",
   },
+  {
+    title: "10kay",
+    description: "Automated SEC Filing Analysis for Tech Companies",
+    publishedDate: "2025-11-12",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/10kay",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Strategic insights from 10-K and 10-Q filings, translated into actionable intelligence for tech professionals and operators."
+  },
+  {
+    title: "Voice Mode",
+    description: "System-wide voice dictation for Android with AI-powered transcription cleanup",
+    publishedDate: "2025-11-12",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/voice-mode",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "Inspired by Wispr Flow for macOS, this app provides intelligent speech-to-text functionality across all Android apps."
+  },
 
   // News Articles - COMMENTED OUT
   // {
