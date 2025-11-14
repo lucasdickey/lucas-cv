@@ -436,11 +436,9 @@ export default function TerminalRepoList() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [asteriskIndex, setAsteriskIndex] = useState(0);
   const [thinkingIndex, setThinkingIndex] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_githubContributions, setGithubContributions] =
+  const [githubContributions, setGithubContributions] =
     useState<GitHubContributionData | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_githubContributionsError, setGithubContributionsError] =
+  const [githubContributionsError, setGithubContributionsError] =
     useState(false);
 
   const contributionColors = [
@@ -451,8 +449,7 @@ export default function TerminalRepoList() {
     "#6c4328",
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _getContributionLevel = (day: ContributionDay) => {
+  const getContributionLevel = (day: ContributionDay) => {
     if (typeof day.intensity === "number") {
       return Math.max(
         0,
@@ -879,6 +876,64 @@ export default function TerminalRepoList() {
           </span>
         </div>
       </div>
+
+      {/* GitHub Contributions Timeline */}
+      {githubContributions && !githubContributionsError && (
+        <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">
+          <div className="text-[#8b0000] font-bold mb-3">
+            GitHub Commit Timeline
+            <span className="text-[#666666] text-sm ml-2 font-normal">
+              ({githubContributions.totalContributions} contributions in the last year)
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <div className="inline-flex gap-[2px] min-w-full">
+              {githubContributions.weeks.map((week, weekIndex) => (
+                <div key={weekIndex} className="flex flex-col gap-[2px]">
+                  {week.contributionDays.map((day, dayIndex) => {
+                    const level = getContributionLevel(day);
+                    const color = contributionColors[level];
+                    return (
+                      <div
+                        key={dayIndex}
+                        className="group relative"
+                        style={{
+                          width: '12px',
+                          height: '12px',
+                          backgroundColor: color,
+                          borderRadius: '2px',
+                          border: '1px solid #cccccc',
+                        }}
+                        title={`${day.date}: ${day.contributionCount} contributions`}
+                      >
+                        <div className="hidden group-hover:block absolute z-10 bg-[#333333] text-white text-xs px-2 py-1 rounded whitespace-nowrap -top-8 left-1/2 transform -translate-x-1/2">
+                          {day.date}: {day.contributionCount} contributions
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-2 mt-3 text-xs text-[#666666]">
+            <span>Less</span>
+            {contributionColors.map((color, index) => (
+              <div
+                key={index}
+                style={{
+                  width: '12px',
+                  height: '12px',
+                  backgroundColor: color,
+                  borderRadius: '2px',
+                  border: '1px solid #cccccc',
+                }}
+              />
+            ))}
+            <span>More</span>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <div>
