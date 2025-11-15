@@ -13,6 +13,7 @@ const REPO_SLUG_BY_REPO: Record<string, string> = {
   'Prompt-Yield/VizRepoAssist': 'vizrepoassist',
   'lucasdickey/quick-screenshot-annotator': 'quick-screenshot-annotator',
   'lucasdickey/breathe-free': 'breathe-free',
+  'lucasdickey/10kay': '10kay',
 };
 
 const REPO_SLUG_BY_TITLE: Record<string, string> = {

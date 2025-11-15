@@ -38,7 +38,10 @@
       "Bash(mkdir:*)",
       "WebFetch(domain:promptyield.com)",
       "WebFetch(domain:promptyield.com)",
-      "Bash(npx vercel build:*)"
+      "Bash(npx vercel build:*)",
+      "WebFetch(domain:press.stripe.com)",
+      "WebSearch",
+      "Bash(curl:*)"
     ],
     "deny": []
   }
