@@ -2,10 +2,6 @@
   "name": "lucas-dickey",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    ".",
-    "apps/*"
-  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
