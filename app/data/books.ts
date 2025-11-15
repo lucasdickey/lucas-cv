@@ -17,6 +17,48 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "Thinking In Systems: A Primer",
+    author: "Donella H. Meadows",
+    description: "A primer on systems thinking, offering insights for problem-solving on a personal to global scale.",
+    coverUrl: "/images/books/thinking-in-systems.jpg",
+    amazonUrl: "https://www.amazon.com/Thinking-Systems-Donella-H-Meadows/dp/1603580557/",
+    slug: "thinking-in-systems",
+    status: "reading",
+    genre: "Nonfiction/Business/Science",
+    publishedYear: "2008",
+    pages: "218",
+    publisher: "Chelsea Green Publishing",
+    rating: "4.2/5"
+  },
+  {
+    title: "The Art of Doing Science and Engineering",
+    author: "Richard Hamming",
+    description: "A book by one of the great mathematicians of our age, who outlines a style of thinking by which great ideas are conceived.",
+    coverUrl: "/images/books/art-of-doing-science-and-engineering.jpg",
+    amazonUrl: "https://www.amazon.com/Art-Doing-Science-Engineering-Learning/dp/1732265178/",
+    slug: "the-art-of-doing-science-and-engineering",
+    status: "reading",
+    genre: "Science/Technology",
+    publishedYear: "2020",
+    pages: "432",
+    publisher: "Stripe Press",
+    rating: "4.9/5"
+  },
+  {
+    title: "Fifty Inventions That Shaped the Modern Economy",
+    author: "Tim Harford",
+    description: "A lively history seen through the fifty inventions that shaped it most profoundly.",
+    coverUrl: "/images/books/fifty-inventions-shaped-modern-economy.jpg",
+    amazonUrl: "https://www.amazon.com/Fifty-Inventions-Shaped-Modern-Economy/dp/0735216142/",
+    slug: "fifty-inventions-shaped-modern-economy",
+    status: "reading",
+    genre: "Economics/History",
+    publishedYear: "2017",
+    pages: "336",
+    publisher: "Riverhead Books",
+    rating: "4.5/5"
+  },
+  {
     title: "The Scaling Era: An Oral History of AI, 2019–2025",
     author: "Dwarkesh Patel and Gavin Leech",
     description: "An oral history documenting the rapid advancement of artificial intelligence",
