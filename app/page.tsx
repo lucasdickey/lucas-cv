@@ -1073,11 +1073,17 @@ export default function TerminalRepoList() {
                         {isCodeEntry ? (
                           <div className="flex flex-col md:flex-row gap-4 items-start mb-2">
                             {codeEntryImage ? (
-                              <img
-                                src={codeEntryImage}
-                                alt={`${entry.title} repository preview`}
-                                className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm"
-                              />
+                              <div className="w-full max-w-sm md:max-w-[200px] rounded border border-[#cccccc] shadow-sm bg-[#fafafa] flex items-center justify-center p-4">
+                                <img
+                                  src={codeEntryImage}
+                                  alt={`${entry.title} repository preview`}
+                                  className={`rounded border border-[#cccccc] shadow-sm ${
+                                    entry.title === "10kay"
+                                      ? "w-1/2 h-auto"
+                                      : "w-full h-auto"
+                                  }`}
+                                />
+                              </div>
                             ) : (
                               <div className="w-full max-w-sm md:max-w-[200px] h-32 rounded border border-[#cccccc] shadow-sm bg-[#0d1117] flex items-center justify-center">
                                 <Github className="w-16 h-16 text-white" />
