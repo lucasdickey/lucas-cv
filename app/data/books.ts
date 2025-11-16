@@ -484,7 +484,7 @@ export const books: Book[] = [
     author: "Alexander Boldizar",
     description: "A high-octane speculative thriller about time perception, choice, and morality.",
     coverUrl: "/images/books/man-who-saw-seconds.jpg",
-    amazonUrl: "https://www.amazon.com/dp/1778188425",
+    amazonUrl: "https://www.amazon.com/The-Man-Who-Saw-Seconds/dp/B0FHMVCC4S/",
     slug: "man-who-saw-seconds-alexander-boldizar",
     status: "pending",
     detailedDescription: "A man gains the ability to see a few seconds into the future, leading to a life of chaos, pursuit, and philosophical reckoning. Boldizar combines action and satire with deep questions about free will and consequence.",
