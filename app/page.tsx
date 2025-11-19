@@ -10,6 +10,7 @@ import MarketerHome from "./components/MarketerHome";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
 import { ListeningSection } from "./components/ListeningSection";
 import { ExpandableSection } from "./components/ExpandableSection";
+import ApebotChat from "./components/ApebotChat";
 
 interface Entry {
   title: string;
@@ -1504,6 +1505,9 @@ export default function TerminalRepoList() {
           </div>
         </div>
       </div>
+
+      {/* A-OK Shop Apebot Chat */}
+      <ApebotChat />
     </div>
   );
 }
