@@ -110,27 +110,42 @@ export async function POST(request: NextRequest) {
     console.log(`  Price ID: ${product.priceId}`);
     console.log(`  Price: $${product.price}`);
 
-    // Get origin from request headers, with fallback to environment-based URL
+    // Get origin for Stripe redirect URLs
+    // IMPORTANT: Stripe requires these URLs to be whitelisted in the Stripe dashboard
+    // Use the actual domain the user is accessing from
     let origin = request.headers.get('origin');
     const host = request.headers.get('host');
 
+    console.log(`[Checkout] Headers - origin: ${origin}, host: ${host}`);
+
     if (!origin) {
-      // Use host header to construct origin
+      // Fallback: construct from host header
       const hostname = host || 'localhost:3000';
       const protocol = hostname.includes('localhost') ? 'http' : 'https';
       origin = `${protocol}://${hostname}`;
-      console.log(`[Checkout] Origin not in headers - derived from host: ${origin}`);
+      console.log(`[Checkout] Origin header missing - derived from host: ${origin}`);
     } else {
-      console.log(`[Checkout] Origin from headers: ${origin}`);
+      console.log(`[Checkout] Using origin from headers: ${origin}`);
     }
-    console.log(`[Checkout] Host header: ${host}`);
+
+    // Stripe requires these exact URLs to be whitelisted
+    console.log(`[Checkout] Constructed URLs will use origin: ${origin}`);
+
+    // Construct redirect URLs for Stripe
+    const successUrl = `${origin}?checkout=success&session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = `${origin}?checkout=cancel`;
+
+    console.log(`[Checkout] Stripe redirect URLs:`);
+    console.log(`  Success: ${successUrl}`);
+    console.log(`  Cancel:  ${cancelUrl}`);
+    console.log(`[Checkout] ⚠️  IMPORTANT: These URLs MUST be whitelisted in Stripe dashboard`);
 
     // Create a checkout session with retry logic
     const session = await createCheckoutSessionWithRetry(
       product.priceId,
       quantity,
-      `${origin}?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
-      `${origin}?checkout=cancel`
+      successUrl,
+      cancelUrl
     );
 
     console.log(`[Checkout] Successfully created session: ${session.id}`);
