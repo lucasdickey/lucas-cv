@@ -28,12 +28,12 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkingOutProductId, setCheckingOutProductId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(`session-${Date.now()}-${Math.random().toString(36).substring(7)}`);
 
   const handleCheckout = async (product: Product) => {
-    setIsCheckingOut(true);
+    setCheckingOutProductId(product.id);
     try {
       console.log(`[Chat] Starting checkout for product:`, product);
       const response = await fetch("/api/checkout", {
@@ -75,7 +75,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
-      setIsCheckingOut(false);
+      setCheckingOutProductId(null);
     }
   };
 
@@ -255,11 +255,13 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
                                 </p>
                                 <button
                                   onClick={() => handleCheckout(product)}
-                                  disabled={isCheckingOut}
-                                  className="inline-flex items-center gap-1 bg-[#8b0000] hover:bg-[#a00000] text-white text-xs font-bold py-1 px-3 rounded transition-colors disabled:opacity-50"
+                                  disabled={checkingOutProductId === product.id}
+                                  className={`inline-flex items-center gap-1 bg-[#8b0000] hover:bg-[#a00000] text-white text-xs font-bold py-1 px-3 rounded transition-colors ${
+                                    checkingOutProductId === product.id ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#a00000]'
+                                  }`}
                                 >
                                   <ShoppingCart size={14} />
-                                  Buy Now
+                                  {checkingOutProductId === product.id ? 'Processing...' : 'Buy Now'}
                                 </button>
                               </div>
                             </div>
