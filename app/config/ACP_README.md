@@ -6,15 +6,30 @@ This directory contains the configuration and implementation for integrating wit
 
 The ACP integration enables AI-powered commerce capabilities directly within the lucas.cv website, allowing visitors to interact with the A-OK Shop's intelligent shopping assistant.
 
+**Architecture:** The implementation uses a **backend API proxy** pattern that routes all chat requests through `app/api/apebot/route.ts`. This approach:
+- ✅ Avoids CORS issues with external APIs
+- ✅ Provides a centralized request handler
+- ✅ Allows for graceful fallbacks and error handling
+- ✅ Enables easy addition of features like rate limiting and logging
+- ✅ Works seamlessly in development and production
+
 ## Components
 
 ### 1. Configuration (`acp.config.ts`)
 
 The main configuration file that defines:
-- **API Endpoint**: The Apebot API endpoint at `https://a-ok.shop/apebot`
+- **API Endpoint**: Routes through local proxy at `/api/apebot` (backend proxies to `https://a-ok.shop/apebot`)
 - **Agent Settings**: Response time, streaming, context window, and system prompts
 - **Capabilities**: Enabled commerce features (product search, orders, support, recommendations)
 - **API Helpers**: Functions for communicating with the Apebot API
+
+### 1.5 API Proxy (`app/api/apebot/route.ts`)
+
+The backend API route that:
+- Proxies requests to the actual Apebot API at `https://a-ok.shop/apebot`
+- Handles CORS issues automatically
+- Provides graceful fallback responses in development
+- Manages error handling and rate limiting
 
 ### 2. Chat Component (`../components/ApebotChat.tsx`)
 
@@ -154,9 +169,10 @@ curl -X POST https://a-ok.shop/apebot \
 
 ### API errors
 - Check the browser console for error messages
-- Verify the API endpoint is correct
-- Check if authentication is required
-- Ensure CORS is properly configured on the server
+- Verify the API endpoint is correctly set to `/api/apebot` (local proxy)
+- Check if authentication is required (set `NEXT_PUBLIC_APEBOT_API_KEY` if needed)
+- The backend proxy at `app/api/apebot/route.ts` handles CORS automatically
+- In development, the proxy provides mock fallback responses if the external API is unavailable
 
 ### Styling issues
 - Verify Tailwind CSS is properly configured
@@ -168,12 +184,27 @@ curl -X POST https://a-ok.shop/apebot \
 ```
 lucas-cv/
 ├── app/
+│   ├── api/
+│   │   └── apebot/
+│   │       └── route.ts         # Backend proxy to Apebot API
 │   ├── config/
 │   │   ├── acp.config.ts        # ACP configuration
 │   │   └── ACP_README.md        # This file
 │   └── components/
 │       └── ApebotChat.tsx       # Chat UI component
 └── .env.example                 # Environment variables template
+
+### Request Flow
+
+Browser (ApebotChat.tsx)
+   ↓
+POST /api/apebot (local proxy)
+   ↓
+app/api/apebot/route.ts (handles CORS, auth, fallbacks)
+   ↓
+POST https://a-ok.shop/apebot (external API)
+   ↓
+Response → ApebotChat.tsx
 ```
 
 ## Security Notes

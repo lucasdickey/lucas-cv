@@ -41,7 +41,8 @@ export interface ACPConfig {
 }
 
 export const acpConfig: ACPConfig = {
-  apebotEndpoint: 'https://a-ok.shop/apebot',
+  // Use local API route as proxy to avoid CORS issues
+  apebotEndpoint: '/api/apebot',
   shopUrl: 'https://a-ok.shop',
   shopName: 'A-OK Shop',
 
