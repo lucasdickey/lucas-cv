@@ -84,12 +84,18 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
         content: `🛒 Great choice! Redirecting to checkout for "${product.name}"...`,
         timestamp: Date.now(),
       };
-      setMessages((prev) => [...prev, checkoutMessage]);
+      const newMessages = [...messages, checkoutMessage];
 
-      // Redirect to Stripe checkout
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      }
+      // Save to localStorage immediately before redirecting
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(newMessages));
+      setMessages(newMessages);
+
+      // Redirect to Stripe checkout after brief delay to ensure state updates
+      setTimeout(() => {
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+        }
+      }, 100);
     } catch (error) {
       console.error("Checkout error:", error);
       const errorMessage: ChatMessage = {
@@ -97,7 +103,9 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
         content: "Sorry, there was an issue starting checkout. Please visit A-OK.shop directly to complete your purchase.",
         timestamp: Date.now(),
       };
-      setMessages((prev) => [...prev, errorMessage]);
+      const newMessages = [...messages, errorMessage];
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(newMessages));
+      setMessages(newMessages);
     } finally {
       setCheckingOutProductId(null);
     }
