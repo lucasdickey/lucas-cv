@@ -16,6 +16,9 @@ interface ApebotChatProps {
   initialOpen?: boolean;
 }
 
+const CHAT_STORAGE_KEY = 'apebot-chat-history';
+const CHAT_OPEN_STORAGE_KEY = 'apebot-chat-open';
+
 export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
   const [isOpen, setIsOpen] = useState(initialOpen);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -31,6 +34,27 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
   const [checkingOutProductId, setCheckingOutProductId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(`session-${Date.now()}-${Math.random().toString(36).substring(7)}`);
+
+  // Load chat history from localStorage on mount
+  useEffect(() => {
+    const savedMessages = localStorage.getItem(CHAT_STORAGE_KEY);
+    const savedOpenState = localStorage.getItem(CHAT_OPEN_STORAGE_KEY);
+
+    if (savedMessages) {
+      try {
+        const parsedMessages = JSON.parse(savedMessages);
+        if (Array.isArray(parsedMessages) && parsedMessages.length > 0) {
+          setMessages(parsedMessages);
+        }
+      } catch (error) {
+        console.error('Failed to load chat history:', error);
+      }
+    }
+
+    if (savedOpenState === 'true') {
+      setIsOpen(true);
+    }
+  }, []);
 
   const handleCheckout = async (product: Product) => {
     setCheckingOutProductId(product.id);
@@ -78,6 +102,16 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
       setCheckingOutProductId(null);
     }
   };
+
+  // Save chat history to localStorage whenever messages change
+  useEffect(() => {
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+  }, [messages]);
+
+  // Save chat open state to localStorage
+  useEffect(() => {
+    localStorage.setItem(CHAT_OPEN_STORAGE_KEY, isOpen.toString());
+  }, [isOpen]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
