@@ -146,10 +146,11 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 bg-[#8b0000] hover:bg-[#a00000] text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-110"
+        className="fixed bottom-6 right-6 z-50 bg-[#8b0000] hover:bg-[#a00000] text-white rounded-full px-6 py-3 shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 font-semibold text-sm"
         aria-label="Open chat with Apebot"
       >
-        <MessageSquare size={24} />
+        <MessageSquare size={18} />
+        Shop the A-OK Bot
       </button>
     );
   }
@@ -159,7 +160,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
       className={`fixed z-50 transition-all duration-300 ${
         isMinimized
           ? "bottom-6 right-6 w-80"
-          : "bottom-6 right-6 w-96 h-[600px] max-h-[80vh]"
+          : "bottom-6 right-6 w-[576px] h-[900px] max-h-[80vh]"
       }`}
     >
       {/* Chat Window */}
@@ -289,14 +290,14 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
             {/* Input Area */}
             <div className="border-t-2 border-[#cccccc] p-3 bg-[#f5f5dc]">
               <div className="flex gap-2">
-                <input
-                  type="text"
+                <textarea
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about products..."
-                  className="flex-1 bg-white border border-[#cccccc] rounded px-3 py-2 text-sm focus:outline-none focus:border-[#8b0000] font-mono text-[#333333]"
+                  className="flex-1 bg-white border border-[#cccccc] rounded px-3 py-3 text-sm focus:outline-none focus:border-[#8b0000] font-mono text-[#333333] resize-none h-20 overflow-y-auto"
                   disabled={isLoading}
+                  rows={3}
                 />
                 <button
                   onClick={handleSendMessage}
