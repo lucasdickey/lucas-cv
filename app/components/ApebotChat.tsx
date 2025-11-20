@@ -1,8 +1,16 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Send, MessageSquare, Minimize2, Maximize2 } from "lucide-react";
+import { X, Send, MessageSquare, Minimize2, Maximize2, ShoppingCart } from "lucide-react";
 import { sendToApebot, type ChatMessage, acpConfig } from "../config/acp.config";
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  url: string;
+}
 
 interface ApebotChatProps {
   initialOpen?: boolean;
@@ -20,8 +28,50 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(`session-${Date.now()}-${Math.random().toString(36).substring(7)}`);
+
+  const handleCheckout = async (product: Product) => {
+    setIsCheckingOut(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: product.id,
+          quantity: 1,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Checkout failed");
+
+      const { checkoutUrl, sessionId: stripeSessionId } = await response.json();
+
+      // Log the checkout attempt
+      const checkoutMessage: ChatMessage = {
+        role: "assistant",
+        content: `🛒 Great choice! Redirecting to checkout for "${product.name}"...`,
+        timestamp: Date.now(),
+      };
+      setMessages((prev) => [...prev, checkoutMessage]);
+
+      // Redirect to Stripe checkout
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      const errorMessage: ChatMessage = {
+        role: "assistant",
+        content: "Sorry, there was an issue starting checkout. Please visit A-OK.shop directly to complete your purchase.",
+        timestamp: Date.now(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -56,14 +106,13 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
 
       setMessages((prev) => [...prev, assistantMessage]);
 
-      // If there are product suggestions, add them as a separate message
+      // Store products in a special message format for later rendering
       if (response.products && response.products.length > 0) {
-        const productsMessage: ChatMessage = {
+        const productsMessage: ChatMessage & { products?: Product[] } = {
           role: "assistant",
-          content: `Here are some products you might like:\n\n${response.products
-            .map((p) => `• ${p.name} - $${p.price}`)
-            .join("\n")}`,
+          content: "Here are some products you might like:",
           timestamp: Date.now() + 1,
+          products: response.products,
         };
         setMessages((prev) => [...prev, productsMessage]);
       }
@@ -137,34 +186,82 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
           <>
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#fafaf0]">
-              {messages.map((msg, idx) => (
-                <div
-                  key={idx}
-                  className={`flex ${
-                    msg.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
+              {messages.map((msg: any, idx) => (
+                <div key={idx}>
                   <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      msg.role === "user"
-                        ? "bg-[#8b0000] text-white"
-                        : "bg-[#e8e8d8] text-[#333333] border border-[#cccccc]"
+                    className={`flex ${
+                      msg.role === "user" ? "justify-end" : "justify-start"
                     }`}
                   >
-                    <div className="text-sm whitespace-pre-wrap break-words">
-                      {msg.content}
-                    </div>
                     <div
-                      className={`text-xs mt-1 ${
-                        msg.role === "user" ? "text-gray-200" : "text-gray-500"
+                      className={`max-w-[85%] rounded-lg p-3 ${
+                        msg.role === "user"
+                          ? "bg-[#8b0000] text-white"
+                          : "bg-[#e8e8d8] text-[#333333] border border-[#cccccc]"
                       }`}
                     >
-                      {new Date(msg.timestamp).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      <div className="text-sm whitespace-pre-wrap break-words">
+                        {msg.content}
+                      </div>
+                      <div
+                        className={`text-xs mt-1 ${
+                          msg.role === "user" ? "text-gray-200" : "text-gray-500"
+                        }`}
+                      >
+                        {new Date(msg.timestamp).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </div>
                     </div>
                   </div>
+
+                  {/* Product Cards */}
+                  {msg.products && msg.products.length > 0 && (
+                    <div className="flex justify-start mt-3">
+                      <div className="max-w-[85%] space-y-2">
+                        {msg.products.map((product: Product) => (
+                          <div
+                            key={product.id}
+                            className="bg-white border border-[#cccccc] rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
+                          >
+                            <div className="flex gap-3">
+                              {/* Product Image */}
+                              <div className="flex-shrink-0">
+                                <img
+                                  src={product.image}
+                                  alt={product.name}
+                                  className="w-16 h-16 object-cover rounded border border-[#cccccc]"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src =
+                                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%23999' font-size='12'%3ENo image%3C/text%3E%3C/svg%3E";
+                                  }}
+                                />
+                              </div>
+
+                              {/* Product Info */}
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-bold text-[#333333] text-sm mb-1">
+                                  {product.name}
+                                </h4>
+                                <p className="text-[#8b0000] font-semibold text-sm mb-2">
+                                  ${product.price.toFixed(2)}
+                                </p>
+                                <button
+                                  onClick={() => handleCheckout(product)}
+                                  disabled={isCheckingOut}
+                                  className="inline-flex items-center gap-1 bg-[#8b0000] hover:bg-[#a00000] text-white text-xs font-bold py-1 px-3 rounded transition-colors disabled:opacity-50"
+                                >
+                                  <ShoppingCart size={14} />
+                                  Buy Now
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
               {isLoading && (

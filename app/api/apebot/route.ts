@@ -1,10 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock product database for demo mode
+// IDs must match the keys in checkout route for Stripe integration
 const mockProducts = [
-  { id: '1', name: 'Ape in a Tie Hoodie', price: 49.99, image: '/images/products/ape-tie-hoodie.jpg', url: 'https://a-ok.shop/products/ape-tie-hoodie' },
-  { id: '2', name: 'AI Doomerism T-Shirt', price: 24.99, image: '/images/products/ai-doomerism.jpg', url: 'https://a-ok.shop/products/ai-doomerism' },
-  { id: '3', name: 'Stay Optimistic Sweater', price: 59.99, image: '/images/products/optimistic-sweater.jpg', url: 'https://a-ok.shop/products/optimistic-sweater' },
+  {
+    id: 'ape-tie-hoodie',
+    name: 'Ape in a Tie Hoodie',
+    price: 49.99,
+    image: 'https://via.placeholder.com/150x150?text=Ape+Tie+Hoodie',
+    url: 'https://a-ok.shop/products/ape-tie-hoodie'
+  },
+  {
+    id: 'ai-doomerism-shirt',
+    name: 'AI Doomerism T-Shirt',
+    price: 24.99,
+    image: 'https://via.placeholder.com/150x150?text=AI+Doomerism',
+    url: 'https://a-ok.shop/products/ai-doomerism'
+  },
+  {
+    id: 'optimistic-sweater',
+    name: 'Stay Optimistic Sweater',
+    price: 59.99,
+    image: 'https://via.placeholder.com/150x150?text=Stay+Optimistic',
+    url: 'https://a-ok.shop/products/optimistic-sweater'
+  },
 ];
 
 function generateMockResponse(userMessage: string): { message: string; suggestions?: string[]; products?: any[] } {
