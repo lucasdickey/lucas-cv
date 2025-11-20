@@ -35,6 +35,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
   const handleCheckout = async (product: Product) => {
     setIsCheckingOut(true);
     try {
+      console.log(`[Chat] Starting checkout for product:`, product);
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,7 +45,12 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
         }),
       });
 
-      if (!response.ok) throw new Error("Checkout failed");
+      console.log(`[Chat] Checkout response status:`, response.status);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`[Chat] Checkout error:`, errorText);
+        throw new Error("Checkout failed");
+      }
 
       const { checkoutUrl, sessionId: stripeSessionId } = await response.json();
 
