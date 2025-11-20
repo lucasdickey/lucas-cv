@@ -208,11 +208,12 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 bg-[#8b0000] hover:bg-[#a00000] text-white rounded-full px-6 py-3 shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 font-semibold text-sm"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-[#8b0000] hover:bg-[#a00000] text-white rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 font-semibold text-xs sm:text-sm"
         aria-label="Open chat with Apebot"
       >
-        <MessageSquare size={18} />
-        Shop the A-OK Bot
+        <MessageSquare size={16} />
+        <span className="hidden sm:inline">Shop the A-OK Bot</span>
+        <span className="sm:hidden">Chat</span>
       </button>
     );
   }
@@ -221,32 +222,32 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
     <div
       className={`fixed z-50 transition-all duration-300 ${
         isMinimized
-          ? "bottom-6 right-6 w-80"
-          : "bottom-6 right-6 w-[576px] h-[900px] max-h-[80vh]"
+          ? "bottom-4 right-4 sm:bottom-6 sm:right-6 w-64 sm:w-80"
+          : "bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-32px)] sm:w-[576px] h-[calc(100vh-32px)] sm:h-[900px] max-h-[80vh]"
       }`}
     >
       {/* Chat Window */}
       <div className="bg-[#f5f5dc] border-2 border-[#8b0000] rounded-lg shadow-2xl flex flex-col h-full font-mono">
         {/* Header */}
-        <div className="bg-[#8b0000] text-white p-3 rounded-t-lg flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MessageSquare size={20} />
-            <span className="font-bold">A-OK Apebot</span>
+        <div className="bg-[#8b0000] text-white p-2 sm:p-3 rounded-t-lg flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+            <MessageSquare size={18} className="flex-shrink-0" />
+            <span className="font-bold text-sm sm:text-base truncate">A-OK Apebot</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 flex-shrink-0">
             <button
               onClick={() => setIsMinimized(!isMinimized)}
               className="hover:bg-[#a00000] p-1 rounded transition-colors"
               aria-label={isMinimized ? "Maximize" : "Minimize"}
             >
-              {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+              {isMinimized ? <Maximize2 size={14} /> : <Minimize2 size={14} />}
             </button>
             <button
               onClick={() => setIsOpen(false)}
               className="hover:bg-[#a00000] p-1 rounded transition-colors"
               aria-label="Close chat"
             >
-              <X size={16} />
+              <X size={14} />
             </button>
           </div>
         </div>
@@ -254,7 +255,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
         {!isMinimized && (
           <>
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#fafaf0]">
+            <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-2 sm:space-y-3 bg-[#fafaf0]">
               {messages.map((msg: any, idx) => (
                 <div key={idx}>
                   <div
@@ -263,13 +264,13 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
                     }`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-lg p-3 ${
+                      className={`max-w-[90%] sm:max-w-[85%] rounded-lg p-2 sm:p-3 ${
                         msg.role === "user"
                           ? "bg-[#8b0000] text-white"
                           : "bg-[#e8e8d8] text-[#333333] border border-[#cccccc]"
                       }`}
                     >
-                      <div className="text-sm whitespace-pre-wrap break-words">
+                      <div className="text-xs sm:text-sm whitespace-pre-wrap break-words">
                         {msg.content}
                       </div>
                       <div
@@ -287,20 +288,20 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
 
                   {/* Product Cards */}
                   {msg.products && msg.products.length > 0 && (
-                    <div className="flex justify-start mt-3">
-                      <div className="max-w-[85%] space-y-2">
+                    <div className="flex justify-start mt-2 sm:mt-3">
+                      <div className="max-w-[90%] sm:max-w-[85%] space-y-2">
                         {msg.products.map((product: Product) => (
                           <div
                             key={product.id}
-                            className="bg-white border border-[#cccccc] rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow"
+                            className="bg-white border border-[#cccccc] rounded-lg p-2 sm:p-3 shadow-sm hover:shadow-md transition-shadow"
                           >
-                            <div className="flex gap-3">
+                            <div className="flex gap-2 sm:gap-3">
                               {/* Product Image */}
                               <div className="flex-shrink-0">
                                 <img
                                   src={product.image}
                                   alt={product.name}
-                                  className="w-16 h-16 object-cover rounded border border-[#cccccc]"
+                                  className="w-12 sm:w-16 h-12 sm:h-16 object-cover rounded border border-[#cccccc]"
                                   onError={(e) => {
                                     (e.target as HTMLImageElement).src =
                                       "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%23999' font-size='12'%3ENo image%3C/text%3E%3C/svg%3E";
@@ -310,21 +311,21 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
 
                               {/* Product Info */}
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-[#333333] text-sm mb-1">
+                                <h4 className="font-bold text-[#333333] text-xs sm:text-sm mb-1 line-clamp-2">
                                   {product.name}
                                 </h4>
-                                <p className="text-[#8b0000] font-semibold text-sm mb-2">
+                                <p className="text-[#8b0000] font-semibold text-xs sm:text-sm mb-1 sm:mb-2">
                                   ${product.price.toFixed(2)}
                                 </p>
                                 <button
                                   onClick={() => handleCheckout(product)}
                                   disabled={checkingOutProductId === product.id}
-                                  className={`inline-flex items-center gap-1 bg-[#8b0000] hover:bg-[#a00000] text-white text-xs font-bold py-1 px-3 rounded transition-colors ${
+                                  className={`inline-flex items-center gap-1 bg-[#8b0000] hover:bg-[#a00000] text-white text-xs font-bold py-1 px-2 sm:px-3 rounded transition-colors ${
                                     checkingOutProductId === product.id ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#a00000]'
                                   }`}
                                 >
-                                  <ShoppingCart size={14} />
-                                  {checkingOutProductId === product.id ? 'Processing...' : 'Buy Now'}
+                                  <ShoppingCart size={12} className="hidden sm:inline" />
+                                  {checkingOutProductId === product.id ? 'Processing...' : 'Buy'}
                                 </button>
                               </div>
                             </div>
@@ -350,24 +351,24 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
             </div>
 
             {/* Input Area */}
-            <div className="border-t-2 border-[#cccccc] p-3 bg-[#f5f5dc]">
-              <div className="flex gap-2">
+            <div className="border-t-2 border-[#cccccc] p-2 sm:p-3 bg-[#f5f5dc]">
+              <div className="flex gap-1 sm:gap-2">
                 <textarea
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about products..."
-                  className="flex-1 bg-white border border-[#cccccc] rounded px-3 py-3 text-sm focus:outline-none focus:border-[#8b0000] font-mono text-[#333333] resize-none h-20 overflow-y-auto"
+                  className="flex-1 bg-white border border-[#cccccc] rounded px-2 sm:px-3 py-2 sm:py-3 text-xs sm:text-sm focus:outline-none focus:border-[#8b0000] font-mono text-[#333333] resize-none h-16 sm:h-20 overflow-y-auto"
                   disabled={isLoading}
                   rows={3}
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={isLoading || !inputValue.trim()}
-                  className="bg-[#8b0000] hover:bg-[#a00000] text-white p-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-[#8b0000] hover:bg-[#a00000] text-white p-1.5 sm:p-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
                   aria-label="Send message"
                 >
-                  <Send size={20} />
+                  <Send size={16} className="sm:block" />
                 </button>
               </div>
               <div className="mt-2 text-xs text-[#666666] text-center">
