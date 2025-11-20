@@ -22,6 +22,55 @@ const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 // Fallback cache: stores last successful fetch to survive rate limits
 let fallbackProductCache: StripeProduct[] | null = null;
 
+// Hardcoded fallback products for fresh deployments when API fails on first request
+const HARDCODED_FALLBACK_PRODUCTS: StripeProduct[] = [
+  {
+    id: 'prod_TPh6ltx0CMw5HD',
+    name: 'A-OK DAY 2 MONKEY HOODIE',
+    description: 'Simplified. Streamlined. Still A Little Scary.',
+    price: 75,
+    priceId: 'price_1SSriGKcMygrnU2DD0lyaXHr',
+    image: 'https://a-ok.shop/images/products/same-vibes-but-more-0.png',
+    url: 'https://a-ok.shop/products/prod_TPh6ltx0CMw5HD'
+  },
+  {
+    id: 'prod_TPh6ZlbhdYLpoI',
+    name: 'A-OK 2034 PROPHECY HOODIE',
+    description: 'Inspired by Orwell. Remixed by Apes on Keys.',
+    price: 75,
+    priceId: 'price_1SSriFKcMygrnU2DooKInnSZ',
+    image: 'https://a-ok.shop/images/products/1984-ape-0.png',
+    url: 'https://a-ok.shop/products/prod_TPh6ZlbhdYLpoI'
+  },
+  {
+    id: 'prod_TPh6gKwAV4lUqM',
+    name: 'A-OK RECURSIVE MONK HOODIE',
+    description: 'Signal Meets Silence – by Apes on Keys (A-OK)',
+    price: 75,
+    priceId: 'price_1SSriKKcMygrnU2DlOf2JYS3',
+    image: 'https://a-ok.shop/images/products/a-ok-recursive-monk-tee-0.png',
+    url: 'https://a-ok.shop/products/prod_TPh6gKwAV4lUqM'
+  },
+  {
+    id: 'prod_TPh6N8EHkrD8nx',
+    name: 'APE-OCALYPSE DRIP — DRESS FOR THE UNKNOWN',
+    description: 'The infinite typewriters got an upgrade.',
+    price: 75,
+    priceId: 'price_1SSriNKcMygrnU2DZ4hQYUR8',
+    image: 'https://a-ok.shop/images/products/ape-ocalypse-drip-dress-for-the-unknown-0.png',
+    url: 'https://a-ok.shop/products/prod_TPh6N8EHkrD8nx'
+  },
+  {
+    id: 'prod_TPh6ToxrhGbjcp',
+    name: 'Ape Logo (Embroidered)',
+    description: 'That face. Those headphones. That hat.',
+    price: 75,
+    priceId: 'price_1SSriFKcMygrnU2DvmbA4dZj',
+    image: 'https://a-ok.shop/images/products/ape-logo-embroidered-0.jpg',
+    url: 'https://a-ok.shop/products/prod_TPh6ToxrhGbjcp'
+  }
+];
+
 /**
  * Fetch all active products and their prices from Stripe
  * Optimized to reduce API calls: 2 calls instead of 39+ (1 for products, 1 for all prices)
@@ -86,15 +135,15 @@ export async function getStripeProducts(): Promise<StripeProduct[]> {
   } catch (error) {
     console.error('[Stripe] Error fetching products:', error);
 
-    // If we have fallback data, return it instead of empty array
+    // If we have fallback data from previous successful fetch, return it
     if (fallbackProductCache && fallbackProductCache.length > 0) {
       console.warn(`[Stripe] API failed, falling back to ${fallbackProductCache.length} previously cached products`);
       return fallbackProductCache;
     }
 
-    console.warn('[Stripe] No fallback products available');
-    // Return empty array only if we have no fallback
-    return [];
+    // Final fallback: use hardcoded products for fresh deployments
+    console.warn('[Stripe] Using hardcoded fallback products');
+    return HARDCODED_FALLBACK_PRODUCTS;
   }
 }
 
