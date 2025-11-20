@@ -19,12 +19,16 @@ let productCache: StripeProduct[] | null = null;
 let cacheTime = 0;
 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 
+// Fallback cache: stores last successful fetch to survive rate limits
+let fallbackProductCache: StripeProduct[] | null = null;
+
 /**
  * Fetch all active products and their prices from Stripe
  */
 export async function getStripeProducts(): Promise<StripeProduct[]> {
   // Return cached results if still fresh
   if (productCache && Date.now() - cacheTime < CACHE_DURATION) {
+    console.log('[Stripe] Returning fresh cached products');
     return productCache;
   }
 
@@ -64,10 +68,22 @@ export async function getStripeProducts(): Promise<StripeProduct[]> {
     productCache = productsWithPrices;
     cacheTime = Date.now();
 
+    // Update fallback cache with successful fetch
+    fallbackProductCache = productsWithPrices;
+    console.log(`[Stripe] Successfully fetched and cached ${productsWithPrices.length} products`);
+
     return productsWithPrices;
   } catch (error) {
-    console.error('Error fetching Stripe products:', error);
-    // Return empty array if fetch fails
+    console.error('[Stripe] Error fetching products:', error);
+
+    // If we have fallback data, return it instead of empty array
+    if (fallbackProductCache && fallbackProductCache.length > 0) {
+      console.warn(`[Stripe] API failed, falling back to ${fallbackProductCache.length} previously cached products`);
+      return fallbackProductCache;
+    }
+
+    console.warn('[Stripe] No fallback products available');
+    // Return empty array only if we have no fallback
     return [];
   }
 }
@@ -91,4 +107,16 @@ export async function getStripeProduct(productId: string): Promise<StripeProduct
 export function clearProductCache() {
   productCache = null;
   cacheTime = 0;
+  // Keep fallback cache intact for resilience
+  console.log('[Stripe] Cleared active cache but kept fallback cache');
+}
+
+/**
+ * Clear both caches (full reset)
+ */
+export function clearAllProductCaches() {
+  productCache = null;
+  cacheTime = 0;
+  fallbackProductCache = null;
+  console.log('[Stripe] Cleared all product caches');
 }
