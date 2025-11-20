@@ -5,6 +5,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Forward the request to the actual Apebot API
+    // Don't manually set content-length - let fetch calculate it
     const response = await fetch('https://a-ok.shop/apebot', {
       method: 'POST',
       headers: {
