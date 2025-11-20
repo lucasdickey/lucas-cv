@@ -14,10 +14,10 @@ export interface StripeProduct {
   url: string;
 }
 
-// Cache products for 5 minutes to avoid excessive API calls
+// Cache products for 30 minutes to avoid rate limits
 let productCache: StripeProduct[] | null = null;
 let cacheTime = 0;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 
 /**
  * Fetch all active products and their prices from Stripe
