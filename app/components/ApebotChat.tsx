@@ -19,40 +19,57 @@ interface ApebotChatProps {
 const CHAT_STORAGE_KEY = 'apebot-chat-history';
 const CHAT_OPEN_STORAGE_KEY = 'apebot-chat-open';
 
-export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
-  const [isOpen, setIsOpen] = useState(initialOpen);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
+// Initialize messages - try to load from localStorage first, fallback to welcome message
+const initializeMessages = (): ChatMessage[] => {
+  if (typeof window === 'undefined') {
+    return [{
       role: "assistant",
       content: `Welcome to ${acpConfig.shopName}! I'm your AI shopping assistant. How can I help you today?`,
       timestamp: Date.now(),
-    },
-  ]);
+    }];
+  }
+
+  try {
+    const savedMessages = localStorage.getItem(CHAT_STORAGE_KEY);
+    if (savedMessages) {
+      const parsed = JSON.parse(savedMessages);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        console.log('[Chat] Initializing with', parsed.length, 'saved messages from localStorage');
+        return parsed;
+      }
+    }
+  } catch (error) {
+    console.error('[Chat] Error loading messages during init:', error);
+  }
+
+  // Fallback to welcome message
+  return [{
+    role: "assistant",
+    content: `Welcome to ${acpConfig.shopName}! I'm your AI shopping assistant. How can I help you today?`,
+    timestamp: Date.now(),
+  }];
+};
+
+export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
+  const [isOpen, setIsOpen] = useState(initialOpen);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>(initializeMessages);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [checkingOutProductId, setCheckingOutProductId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(`session-${Date.now()}-${Math.random().toString(36).substring(7)}`);
 
-  // Load chat history from localStorage on mount
+  // Restore open state from localStorage on mount
   useEffect(() => {
-    const savedMessages = localStorage.getItem(CHAT_STORAGE_KEY);
-    const savedOpenState = localStorage.getItem(CHAT_OPEN_STORAGE_KEY);
-
-    if (savedMessages) {
-      try {
-        const parsedMessages = JSON.parse(savedMessages);
-        if (Array.isArray(parsedMessages) && parsedMessages.length > 0) {
-          setMessages(parsedMessages);
-        }
-      } catch (error) {
-        console.error('Failed to load chat history:', error);
+    try {
+      const savedOpenState = localStorage.getItem(CHAT_OPEN_STORAGE_KEY);
+      if (savedOpenState === 'true') {
+        setIsOpen(true);
+        console.log('[Chat] Chat was open, restoring open state');
       }
-    }
-
-    if (savedOpenState === 'true') {
-      setIsOpen(true);
+    } catch (error) {
+      console.error('[Chat] Failed to load open state:', error);
     }
   }, []);
 
@@ -87,12 +104,15 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
       const newMessages = [...messages, checkoutMessage];
 
       // Save to localStorage immediately before redirecting
+      console.log('[Chat] Saving', newMessages.length, 'messages to localStorage before checkout');
       localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(newMessages));
+      console.log('[Chat] Saved. Verified:', localStorage.getItem(CHAT_STORAGE_KEY) ? 'SUCCESS' : 'FAILED');
       setMessages(newMessages);
 
       // Redirect to Stripe checkout after brief delay to ensure state updates
       setTimeout(() => {
         if (checkoutUrl) {
+          console.log('[Chat] Redirecting to Stripe checkout');
           window.location.href = checkoutUrl;
         }
       }, 100);
