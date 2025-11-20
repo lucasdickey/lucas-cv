@@ -39,7 +39,7 @@ async function createCheckoutSessionWithRetry(
 
       // Only retry on transient errors
       if (attempt < maxRetries) {
-        const delayMs = Math.min(1000 * Math.pow(2, attempt - 1), 10000); // exponential backoff, max 10s
+        const delayMs = Math.min(2000 * Math.pow(2, attempt - 1), 20000); // exponential backoff, max 20s: 2s, 4s, 8s
         console.log(`[Checkout] Retrying after ${delayMs}ms...`);
         await new Promise(resolve => setTimeout(resolve, delayMs));
       }
@@ -75,7 +75,17 @@ export async function POST(request: NextRequest) {
     }
 
     console.log(`[Checkout] Creating Stripe session for ${product.name} (priceId: ${product.priceId})`);
-    const origin = request.headers.get('origin') || 'https://lucas-q8wcsvldp-lucasdickeys-projects.vercel.app';
+
+    // Get origin from request headers, with fallback to environment-based URL
+    let origin = request.headers.get('origin');
+    if (!origin) {
+      // Use host header to construct origin
+      const host = request.headers.get('host') || 'localhost:3000';
+      const protocol = host.includes('localhost') ? 'http' : 'https';
+      origin = `${protocol}://${host}`;
+    }
+
+    console.log(`[Checkout] Origin: ${origin}`);
 
     // Create a checkout session with retry logic
     const session = await createCheckoutSessionWithRetry(
@@ -93,18 +103,22 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('[Checkout] Error:', error);
 
+    // Get detailed error info
+    let errorMessage = 'Unknown error';
+    let statusCode = 500;
+
     if (error instanceof Stripe.errors.StripeError) {
-      console.error(`[Checkout] Stripe error: ${error.message} (${error.statusCode})`);
-      return NextResponse.json(
-        { error: error.message },
-        { status: error.statusCode || 500 }
-      );
+      errorMessage = error.message;
+      statusCode = error.statusCode || 500;
+      console.error(`[Checkout] Stripe error (${statusCode}): ${errorMessage}`);
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+      console.error(`[Checkout] Error: ${errorMessage}`);
     }
 
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: `Failed to create checkout session: ${errorMessage}` },
-      { status: 500 }
+      { error: errorMessage },
+      { status: statusCode }
     );
   }
 }
