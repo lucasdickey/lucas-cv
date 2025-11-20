@@ -245,7 +245,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
         <div className="bg-[#8b0000] text-white p-2 sm:p-3 rounded-t-lg flex items-center justify-between gap-2">
           <div className="flex items-center gap-1 sm:gap-2 min-w-0">
             <MessageSquare size={18} className="flex-shrink-0" />
-            <span className="font-bold text-sm sm:text-base truncate">A-OK Apebot</span>
+            <span className="font-bold text-sm sm:text-base truncate">Shop A-OK with Apebot</span>
           </div>
           <div className="flex items-center gap-1 flex-shrink-0">
             <button
