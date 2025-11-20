@@ -1,45 +1,99 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Mock product database for demo mode
+const mockProducts = [
+  { id: '1', name: 'Ape in a Tie Hoodie', price: 49.99, image: '/images/products/ape-tie-hoodie.jpg', url: 'https://a-ok.shop/products/ape-tie-hoodie' },
+  { id: '2', name: 'AI Doomerism T-Shirt', price: 24.99, image: '/images/products/ai-doomerism.jpg', url: 'https://a-ok.shop/products/ai-doomerism' },
+  { id: '3', name: 'Stay Optimistic Sweater', price: 59.99, image: '/images/products/optimistic-sweater.jpg', url: 'https://a-ok.shop/products/optimistic-sweater' },
+];
+
+function generateMockResponse(userMessage: string): { message: string; suggestions?: string[]; products?: any[] } {
+  const messageLower = userMessage.toLowerCase();
+
+  // Match keywords and generate contextual responses
+  if (messageLower.includes('hoodie') || messageLower.includes('ape') || messageLower.includes('tie')) {
+    return {
+      message: "Nice choice! 🦍 We've got the perfect piece for you - the 'Ape in a Tie' hoodie. It's got that satirical vibe that says 'I understand the assignment' without saying a word. Perfect for anyone who gets the A-OK philosophy.",
+      suggestions: ['View product', 'See other items', 'Check prices'],
+      products: [mockProducts[0], mockProducts[1]],
+    };
+  }
+
+  if (messageLower.includes('shirt') || messageLower.includes('t-shirt')) {
+    return {
+      message: "Our T-shirts are perfect for making a statement. Whether you're embracing the chaos or staying optimistic, we've got a design that speaks your language.",
+      suggestions: ['Browse T-shirts', 'See hoodies', 'New arrivals'],
+      products: [mockProducts[1]],
+    };
+  }
+
+  if (messageLower.includes('price') || messageLower.includes('cost') || messageLower.includes('how much')) {
+    return {
+      message: "Our gear is priced to match the vibe: T-shirts from $24.99, hoodies from $49.99, and premium pieces up to $59.99. Quality satire at a fair price.",
+      suggestions: ['Show me hoodies', 'Show me shirts', 'What\'s on sale?'],
+    };
+  }
+
+  if (messageLower.includes('product') || messageLower.includes('show') || messageLower.includes('browse')) {
+    return {
+      message: "Check out our collection of AI-era satire wear. From 'Ape in a Tie' hoodies to 'AI Doomerism' shirts, we've got something for everyone who appreciates dark humor and tech culture.",
+      suggestions: ['Hoodies', 'T-shirts', 'What\'s new?'],
+      products: mockProducts,
+    };
+  }
+
+  // Default response
+  return {
+    message: "I'm here to help you find the perfect A-OK gear! Ask me about hoodies, shirts, prices, or what's trending. What interests you?",
+    suggestions: ['Show me products', 'Hoodies', 'T-shirts', 'Prices'],
+  };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const userMessage = body.message || '';
 
-    // Forward the request to the actual Apebot API
-    // Don't manually set content-length - let fetch calculate it
-    const response = await fetch('https://a-ok.shop/apebot', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Forward any authorization header if present
-        ...(request.headers.get('authorization') && {
-          'Authorization': request.headers.get('authorization')!,
-        }),
-      },
-      body: JSON.stringify(body),
-    });
+    console.log(`[Apebot] User: ${userMessage}`);
 
-    // If the response isn't ok, return the error
-    if (!response.ok) {
-      console.error(`Apebot API error: ${response.status}`);
+    // For now, use mock responses in development
+    // TODO: Replace with actual API call once endpoint is fully configured
+    const isDevelopment = process.env.NODE_ENV === 'development';
 
-      // For development, return a mock response if the API is unavailable
-      if (response.status === 403 || response.status === 404) {
-        return NextResponse.json(
-          {
-            message: `I'd love to help you find "${body.message}", but I'm currently in demo mode. Try visiting A-OK.shop directly to explore our full collection!`,
-            suggestions: ['Visit A-OK.shop', 'Browse products', 'Try again'],
-          },
-          { status: 200 }
-        );
-      }
-
-      throw new Error(`Apebot API error: ${response.status}`);
+    if (isDevelopment) {
+      // Use mock response in development
+      const mockResponse = generateMockResponse(userMessage);
+      console.log(`[Apebot] Mock response generated`);
+      return NextResponse.json(mockResponse);
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    // Production: Try to call the real API
+    try {
+      const response = await fetch('https://a-ok.shop/apebot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(request.headers.get('authorization') && {
+            'Authorization': request.headers.get('authorization')!,
+          }),
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return NextResponse.json(data);
+    } catch (apiError) {
+      console.error('Real API failed, falling back to mock:', apiError);
+      // Fallback to mock if real API fails
+      const mockResponse = generateMockResponse(userMessage);
+      return NextResponse.json(mockResponse);
+    }
   } catch (error) {
-    console.error('Error in Apebot proxy:', error);
+    console.error('Error in Apebot handler:', error);
 
     return NextResponse.json(
       {
