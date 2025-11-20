@@ -1,6 +1,9 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+// Trim API key to remove any whitespace or newline characters
+const stripeApiKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+
+const stripe = new Stripe(stripeApiKey, {
   apiVersion: '2023-10-16',
 });
 
