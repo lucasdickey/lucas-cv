@@ -10,21 +10,50 @@ interface ResponseProduct {
   url: string;
 }
 
+// Helper function to parse quantity from user message
+function parseQuantity(message: string): number {
+  const quantityMap: { [key: string]: number } = {
+    'one': 1,
+    '1': 1,
+    'two': 2,
+    '2': 2,
+    'three': 3,
+    '3': 3,
+    'four': 4,
+    '4': 4,
+    'five': 5,
+    '5': 5,
+    'a couple': 2,
+    'couple': 2,
+    'few': 3,
+    'several': 5,
+  };
+
+  for (const [word, qty] of Object.entries(quantityMap)) {
+    if (message.toLowerCase().includes(word)) {
+      return qty;
+    }
+  }
+  return Infinity; // No quantity limit found
+}
+
 function generateMockResponse(
   userMessage: string,
   allProducts: ResponseProduct[]
 ): { message: string; suggestions?: string[]; products?: ResponseProduct[] } {
   const messageLower = userMessage.toLowerCase();
+  const requestedQuantity = parseQuantity(userMessage);
 
   // Match keywords and generate contextual responses
   if (messageLower.includes('hoodie') || messageLower.includes('ape') || messageLower.includes('tie')) {
     const hoodies = allProducts.filter((p) =>
       p.name.toLowerCase().includes('hoodie')
     );
+    const limitedHoodies = hoodies.slice(0, requestedQuantity);
     return {
       message: "Nice choice! 🦍 We've got some amazing hoodies with satirical designs. Perfect for anyone who gets the A-OK philosophy.",
       suggestions: ['View product', 'See other items', 'Check prices'],
-      products: hoodies.length > 0 ? hoodies : allProducts.slice(0, 2),
+      products: limitedHoodies.length > 0 ? limitedHoodies : allProducts.slice(0, Math.min(2, requestedQuantity)),
     };
   }
 
@@ -32,10 +61,11 @@ function generateMockResponse(
     const shirts = allProducts.filter((p) =>
       p.name.toLowerCase().includes('shirt') || p.name.toLowerCase().includes('t-shirt')
     );
+    const limitedShirts = shirts.slice(0, requestedQuantity);
     return {
       message: "Our T-shirts are perfect for making a statement. Whether you're embracing the chaos or staying optimistic, we've got a design that speaks your language.",
       suggestions: ['Browse T-shirts', 'See hoodies', 'New arrivals'],
-      products: shirts.length > 0 ? shirts : allProducts.slice(0, 1),
+      products: limitedShirts.length > 0 ? limitedShirts : allProducts.slice(0, Math.min(1, requestedQuantity)),
     };
   }
 
@@ -49,10 +79,11 @@ function generateMockResponse(
   }
 
   if (messageLower.includes('product') || messageLower.includes('show') || messageLower.includes('browse')) {
+    const limitedProducts = allProducts.slice(0, requestedQuantity);
     return {
       message: "Check out our collection of AI-era satire wear. We've got hoodies, shirts, and more with designs that celebrate and poke fun at tech culture.",
       suggestions: ['Hoodies', 'T-shirts', 'What\'s new?'],
-      products: allProducts,
+      products: limitedProducts.length > 0 ? limitedProducts : allProducts,
     };
   }
 
