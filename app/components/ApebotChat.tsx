@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Send, MessageSquare, Minimize2, Maximize2, ShoppingCart } from "lucide-react";
+import { X, Send, MessageSquare, Minimize2, Maximize2, ShoppingCart, Trash2 } from "lucide-react";
 import { sendToApebot, type ChatMessage, acpConfig } from "../config/acp.config";
 
 interface Product {
@@ -204,6 +204,20 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
     }
   };
 
+  const handleClearChat = () => {
+    // Clear localStorage
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+    // Reset messages to welcome message
+    const welcomeMessage: ChatMessage = {
+      role: "assistant",
+      content: `Welcome to ${acpConfig.shopName}! I'm your AI shopping assistant. How can I help you today?`,
+      timestamp: Date.now(),
+    };
+    setMessages([welcomeMessage]);
+    setInputValue("");
+    console.log('[Chat] Chat history cleared');
+  };
+
   if (!isOpen) {
     return (
       <button
@@ -212,7 +226,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
         aria-label="Open chat with Apebot"
       >
         <MessageSquare size={16} className="flex-shrink-0" />
-        <span>Shop the A-OK Bot</span>
+        <span>Shop A-OK with Apebot</span>
       </button>
     );
   }
@@ -234,6 +248,14 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
             <span className="font-bold text-sm sm:text-base truncate">A-OK Apebot</span>
           </div>
           <div className="flex items-center gap-1 flex-shrink-0">
+            <button
+              onClick={handleClearChat}
+              className="hover:bg-[#a00000] p-1 rounded transition-colors"
+              aria-label="Clear chat history"
+              title="Clear chat history"
+            >
+              <Trash2 size={14} />
+            </button>
             <button
               onClick={() => setIsMinimized(!isMinimized)}
               className="hover:bg-[#a00000] p-1 rounded transition-colors"
