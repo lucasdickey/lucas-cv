@@ -24,6 +24,7 @@ let fallbackProductCache: StripeProduct[] | null = null;
 
 /**
  * Fetch all active products and their prices from Stripe
+ * Optimized to reduce API calls: 2 calls instead of 39+ (1 for products, 1 for all prices)
  */
 export async function getStripeProducts(): Promise<StripeProduct[]> {
   // Return cached results if still fresh
@@ -33,23 +34,32 @@ export async function getStripeProducts(): Promise<StripeProduct[]> {
   }
 
   try {
-    // Fetch all active products
+    // Fetch all active products (1 API call)
     const products = await stripe.products.list({
       active: true,
       limit: 100,
     });
 
-    // For each product, get its default price
-    const productsWithPrices: StripeProduct[] = await Promise.all(
-      products.data.map(async (product) => {
-        // Get the product's prices
-        const prices = await stripe.prices.list({
-          product: product.id,
-          active: true,
-          limit: 1,
-        });
+    // Fetch all active prices at once (1 API call instead of N calls)
+    const allPrices = await stripe.prices.list({
+      active: true,
+      limit: 100,
+    });
 
-        const price = prices.data[0];
+    // Build a map of product ID to first price for fast lookup
+    const priceMap = new Map<string, typeof allPrices.data[0]>();
+    allPrices.data.forEach((price) => {
+      if (price.product && typeof price.product === 'string') {
+        if (!priceMap.has(price.product)) {
+          priceMap.set(price.product, price);
+        }
+      }
+    });
+
+    // Map products to include pricing info
+    const productsWithPrices: StripeProduct[] = products.data
+      .map((product) => {
+        const price = priceMap.get(product.id);
         const unitAmount = price?.unit_amount || 0;
 
         return {
@@ -62,7 +72,7 @@ export async function getStripeProducts(): Promise<StripeProduct[]> {
           url: `https://a-ok.shop/products/${product.id}`,
         };
       })
-    );
+      .filter((p) => p.priceId); // Only include products with prices
 
     // Cache the results
     productCache = productsWithPrices;
@@ -70,7 +80,7 @@ export async function getStripeProducts(): Promise<StripeProduct[]> {
 
     // Update fallback cache with successful fetch
     fallbackProductCache = productsWithPrices;
-    console.log(`[Stripe] Successfully fetched and cached ${productsWithPrices.length} products`);
+    console.log(`[Stripe] Successfully fetched and cached ${productsWithPrices.length} products (using optimized 2-call approach)`);
 
     return productsWithPrices;
   } catch (error) {
