@@ -74,17 +74,25 @@ export async function POST(request: NextRequest) {
     let stripeProducts: ResponseProduct[] = [];
     try {
       const products = await getStripeProducts();
-      stripeProducts = products.map((p) => ({
-        id: p.id,
-        name: p.name,
-        price: p.price,
-        image: p.image || 'https://via.placeholder.com/150x150?text=Product',
-        url: p.url,
-      }));
-      console.log(`[Apebot] Loaded ${stripeProducts.length} products from Stripe`);
+      console.log(`[Apebot] Raw Stripe products:`, products);
+
+      if (products && products.length > 0) {
+        stripeProducts = products.map((p) => ({
+          id: p.id,
+          name: p.name,
+          price: p.price,
+          image: p.image || 'https://via.placeholder.com/150x150?text=Product',
+          url: p.url,
+        }));
+        console.log(`[Apebot] Loaded ${stripeProducts.length} products from Stripe`);
+        console.log(`[Apebot] Product names:`, stripeProducts.map(p => p.name));
+      } else {
+        console.warn('[Apebot] No products returned from Stripe');
+      }
     } catch (stripeError) {
-      console.warn('[Apebot] Failed to load Stripe products:', stripeError);
-      // Will continue with empty product list
+      console.error('[Apebot] Error fetching Stripe products:', stripeError);
+      // Continue with empty list - generateMockResponse will still work
+      console.log('[Apebot] Continuing without products due to API error');
     }
 
     // For now, use mock responses (but with real Stripe products)
