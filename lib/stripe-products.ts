@@ -1,11 +1,20 @@
 import Stripe from 'stripe';
 
-// Trim API key to remove any whitespace or newline characters
-const stripeApiKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+// Lazy-initialize Stripe client to avoid build-time errors
+let stripe: Stripe | null = null;
 
-const stripe = new Stripe(stripeApiKey, {
-  apiVersion: '2023-10-16',
-});
+function getStripeClient(): Stripe {
+  if (!stripe) {
+    const stripeApiKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+    if (!stripeApiKey) {
+      throw new Error('STRIPE_SECRET_KEY not configured');
+    }
+    stripe = new Stripe(stripeApiKey, {
+      apiVersion: '2023-10-16',
+    });
+  }
+  return stripe;
+}
 
 export interface StripeProduct {
   id: string;
@@ -86,14 +95,16 @@ export async function getStripeProducts(): Promise<StripeProduct[]> {
   }
 
   try {
+    const client = getStripeClient();
+
     // Fetch all active products (1 API call)
-    const products = await stripe.products.list({
+    const products = await client.products.list({
       active: true,
       limit: 100,
     });
 
     // Fetch all active prices at once (1 API call instead of N calls)
-    const allPrices = await stripe.prices.list({
+    const allPrices = await client.prices.list({
       active: true,
       limit: 100,
     });
