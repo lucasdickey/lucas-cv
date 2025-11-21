@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { getStripeProduct } from '@/lib/stripe-products';
 
-// Trim API key to remove any whitespace or newline characters
-const stripeApiKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+// Lazy-initialize Stripe client to avoid build-time errors
+let stripe: Stripe | null = null;
 
-const stripe = new Stripe(stripeApiKey, {
-  apiVersion: '2023-10-16',
-});
+function getStripeClient(): Stripe {
+  if (!stripe) {
+    const stripeApiKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+    if (!stripeApiKey) {
+      throw new Error('STRIPE_SECRET_KEY not configured');
+    }
+    stripe = new Stripe(stripeApiKey, {
+      apiVersion: '2023-10-16',
+    });
+  }
+  return stripe;
+}
 
 // Retry logic for transient Stripe API failures
 async function createCheckoutSessionWithRetry(
@@ -27,7 +36,7 @@ async function createCheckoutSessionWithRetry(
     try {
       console.log(`[Checkout] Attempt ${attempt}/${maxRetries} - calling Stripe API...`);
 
-      const session = await stripe.checkout.sessions.create({
+      const session = await getStripeClient().checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: [
           {
