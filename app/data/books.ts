@@ -213,7 +213,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-tainted-cup.jpg",
     amazonUrl: "https://www.amazon.com/Tainted-Cup-Robert-Jackson-Bennett/dp/1984820702/",
     slug: "the-tainted-cup-robert-jackson-bennett",
-    status: "reading",
+    status: "read",
     detailedDescription:
       "In the lowland empire of Aördin, death by leviathan venom threatens the Imperial Court. When a high-ranking officer is found murdered, investigator Ana Dolabra and her magically modified aide Din must unravel a conspiracy that winds through botanical wizardry, courtly intrigue, and the looming menace of the leviathans. Bennett crafts a propulsive blend of mystery and fantasy where deduction, political maneuvering, and unforgettable characters drive the story forward.",
     genre: "Gaslamp Fantasy/Mystery",
@@ -470,7 +470,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-city-and-the-city-china-mieville.jpeg",
     amazonUrl: "https://www.amazon.com/dp/034549752X",
     slug: "city-and-the-city-china-mieville",
-    status: "pending",
+    status: "reading",
     detailedDescription: "Inspector Tyador Borlú investigates a murder that transcends the boundaries between Besźel and Ul Qoma — two cities that occupy the same physical space but whose citizens are forbidden from acknowledging one another.",
     genre: "Fantasy / Noir / Speculative Fiction",
     publishedYear: "2009",
