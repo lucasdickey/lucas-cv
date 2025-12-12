@@ -589,5 +589,21 @@ export const books: Book[] = [
     pages: "304",
     publisher: "Picador",
     rating: "4.5/5"
+  },
+
+  {
+    title: "A Culture of Growth: The Origins of the Modern Economy",
+    author: "Joel Mokyr",
+    description: "An exploration of how cultural and intellectual factors in early modern Europe laid the foundation for the Scientific Revolution and Industrial Revolution.",
+    coverUrl: "/images/books/culture-of-growth-joel-mokyr.jpg",
+    amazonUrl: "https://www.amazon.com/Culture-Growth-Origins-Schumpeter-Lectures/dp/0691180962/",
+    slug: "culture-of-growth-joel-mokyr",
+    status: "pending",
+    detailedDescription: "In this groundbreaking book, celebrated economic historian Joel Mokyr argues that a culture of growth specific to early modern Europe and the European Enlightenment laid the foundations for scientific advances and pioneering inventions. Mokyr examines the period 1500-1700 to show that a politically fragmented Europe fostered a competitive 'market for ideas' and a transnational community of thinkers known as the 'Republic of Letters' freely circulated ideas and writings. This explains how the Industrial Revolution happened in Europe but not China, despite similar levels of technology.",
+    genre: "Economics / History",
+    publishedYear: "2017",
+    pages: "403",
+    publisher: "Princeton University Press",
+    rating: "4.3/5"
   }
 ];
