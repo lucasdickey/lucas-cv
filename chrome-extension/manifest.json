@@ -1,0 +1,31 @@
+{
+  "name": "Reading Rewards",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Answer questions about your reading to unlock YouTube time.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "webNavigation",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.youtubekids.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "menu.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "popup.html", "review.html", "popup.js", "review.js" ],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
