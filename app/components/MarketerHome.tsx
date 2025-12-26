@@ -24,17 +24,6 @@ interface Entry {
 const entries: Entry[] = [
   // CV Section - Professional Background
   {
-    title: "Lucas Dickey - Senior Product Leader & Serial Founder",
-    description:
-      "20+ years as PM and product leader across all stages: Amazon (growth), acquisitions, co-founder at Fernish ($45M raised, 250+ employees), founder at DeepCast. Known for 0→1 and 1→10 execution, product-market fit hunting, and hands-on GTM. Experience from public behemoth (Amazon) to VC-backed startups to PE-owned companies.",
-    publishedDate: "2025-06-20",
-    type: "cv",
-    sourceUrl: "https://linkedin.com/in/lucasdickey",
-    sourceTitle: "Professional Profile",
-    sourceDescription:
-      "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
-  },
-  {
     title: "Stripe Atlas - Product Manager (2025-Present)",
     description:
       "Product Manager on Stripe Atlas team, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Focused on building new products and features to support founders at the earliest stages of their startup journey.",
