@@ -75,6 +75,16 @@ const entries: Entry[] = [
       "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
   },
   {
+    title: "Stripe Atlas - Product Manager (2025-Present)",
+    description:
+      "Product Manager on Stripe Atlas team, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Focused on building new products and features to support founders at the earliest stages of their startup journey.",
+    publishedDate: "2025-12-24",
+    type: "cv",
+    sourceUrl: "https://stripe.com/atlas",
+    sourceTitle: "Stripe Atlas",
+    sourceDescription: "Company formation platform - Product Manager",
+  },
+  {
     title: "DeepCast - CEO & Founder (2023-2025)",
     description:
       "Founded and led podcast intelligence platform leveraging AI for transcription, summarization, and search. Built on Claude LLM, AssemblyAI, Pinecone vector DB. CEO & CPO responsible for product strategy, fundraising, and team building in the rapidly evolving AI/audio space.",

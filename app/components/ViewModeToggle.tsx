@@ -6,6 +6,9 @@ import { Terminal, Briefcase } from 'lucide-react'
 export default function ViewModeToggle() {
   const { viewMode, toggleViewMode } = useViewMode()
 
+  // Hidden for now - keeping code intact for future use
+  return null;
+
   return (
     <button
       onClick={toggleViewMode}

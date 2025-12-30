@@ -213,7 +213,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-tainted-cup.jpg",
     amazonUrl: "https://www.amazon.com/Tainted-Cup-Robert-Jackson-Bennett/dp/1984820702/",
     slug: "the-tainted-cup-robert-jackson-bennett",
-    status: "reading",
+    status: "read",
     detailedDescription:
       "In the lowland empire of Aördin, death by leviathan venom threatens the Imperial Court. When a high-ranking officer is found murdered, investigator Ana Dolabra and her magically modified aide Din must unravel a conspiracy that winds through botanical wizardry, courtly intrigue, and the looming menace of the leviathans. Bennett crafts a propulsive blend of mystery and fantasy where deduction, political maneuvering, and unforgettable characters drive the story forward.",
     genre: "Gaslamp Fantasy/Mystery",
@@ -470,7 +470,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-city-and-the-city-china-mieville.jpeg",
     amazonUrl: "https://www.amazon.com/dp/034549752X",
     slug: "city-and-the-city-china-mieville",
-    status: "pending",
+    status: "reading",
     detailedDescription: "Inspector Tyador Borlú investigates a murder that transcends the boundaries between Besźel and Ul Qoma — two cities that occupy the same physical space but whose citizens are forbidden from acknowledging one another.",
     genre: "Fantasy / Noir / Speculative Fiction",
     publishedYear: "2009",
@@ -589,5 +589,21 @@ export const books: Book[] = [
     pages: "304",
     publisher: "Picador",
     rating: "4.5/5"
+  },
+
+  {
+    title: "A Culture of Growth: The Origins of the Modern Economy",
+    author: "Joel Mokyr",
+    description: "An exploration of how cultural and intellectual factors in early modern Europe laid the foundation for the Scientific Revolution and Industrial Revolution.",
+    coverUrl: "/images/books/culture-of-growth-joel-mokyr.jpg",
+    amazonUrl: "https://www.amazon.com/Culture-Growth-Origins-Schumpeter-Lectures/dp/0691180962/",
+    slug: "culture-of-growth-joel-mokyr",
+    status: "pending",
+    detailedDescription: "In this groundbreaking book, celebrated economic historian Joel Mokyr argues that a culture of growth specific to early modern Europe and the European Enlightenment laid the foundations for scientific advances and pioneering inventions. Mokyr examines the period 1500-1700 to show that a politically fragmented Europe fostered a competitive 'market for ideas' and a transnational community of thinkers known as the 'Republic of Letters' freely circulated ideas and writings. This explains how the Industrial Revolution happened in Europe but not China, despite similar levels of technology.",
+    genre: "Economics / History",
+    publishedYear: "2017",
+    pages: "403",
+    publisher: "Princeton University Press",
+    rating: "4.3/5"
   }
 ];
