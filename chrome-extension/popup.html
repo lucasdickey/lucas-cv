@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reading Rewards</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      width: 350px;
+      padding: 15px;
+    }
+    h1 {
+      font-size: 1.1em;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    textarea {
+      width: 95%;
+      height: 50px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 1em;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .error {
+        color: red;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Answer these questions about your reading to unlock YouTube!</h1>
+  <form id="reading-form">
+    <label for="q1">How long did you read?</label>
+    <textarea id="q1" name="q1" required></textarea>
+
+    <label for="q2">What did you read?</label>
+    <textarea id="q2" name="q2" required></textarea>
+
+    <label for="q3">Was there any key detail you think was important to the storyline?</label>
+    <textarea id="q3" name="q3" required></textarea>
+
+    <label for="q4">Name one character and tell me one detail about them.</label>
+    <textarea id="q4" name="q4" required></textarea>
+
+    <div id="error-message" class="error"></div>
+    <button type="submit">Unlock YouTube</button>
+  </form>
+  <script src="popup.js"></script>
+</body>
+</html>
