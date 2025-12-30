@@ -1,0 +1,37 @@
+===============================================
+READING REWARDS CHROME EXTENSION
+Quick Installation Guide
+===============================================
+
+WHAT YOU NEED:
+- Google Chrome browser
+- Either: reading-rewards-extension.zip (Windows/Mac/Linux)
+  OR: reading-rewards-extension.tar.gz (Mac/Linux)
+
+INSTALLATION (3 SIMPLE STEPS):
+
+1. EXTRACT THE FILE
+   - Windows: Right-click the ZIP → Extract All
+   - Mac: Double-click the ZIP or TAR.GZ (auto-extracts)
+   - Linux: tar -xzf reading-rewards-extension.tar.gz
+
+2. OPEN CHROME EXTENSIONS
+   - Open Google Chrome
+   - Type this in address bar: chrome://extensions/
+   - Toggle "Developer mode" ON (top-right)
+
+3. LOAD THE EXTENSION
+   - Click "Load unpacked"
+   - Select the "chrome-extension" folder you extracted
+   - Done! Extension is now installed
+
+HOW IT WORKS:
+- Blocks YouTube until comprehension questions answered
+- Questions: reading duration (dropdown), summary, story details, character info
+- 30-minute access timer after completion
+- All answers saved locally
+
+QUESTIONS?
+See EXTENSION_INSTALL.md for detailed troubleshooting
+
+===============================================
