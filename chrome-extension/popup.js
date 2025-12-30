@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const answers = [q1, q2, q3, q4];
 
-    // Validate that each answer contains at least one period, indicating a full sentence.
-    const allValid = answers.every(answer => answer.includes('.'));
+    // Validate that all answers are provided (not empty).
+    const allValid = answers.every(answer => answer.length > 0);
 
     if (!allValid) {
-      errorMessage.textContent = 'Please answer each question with at least one full sentence.';
+      errorMessage.textContent = 'Please answer all questions.';
       return;
     }
 

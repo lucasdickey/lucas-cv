@@ -29,6 +29,13 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
     button {
       margin-top: 20px;
       padding: 10px;
@@ -53,10 +60,24 @@
   <h1>Answer these questions about your reading to unlock YouTube!</h1>
   <form id="reading-form">
     <label for="q1">How long did you read?</label>
-    <textarea id="q1" name="q1" required></textarea>
+    <select id="q1" name="q1" required>
+      <option value="">-- Select duration --</option>
+      <option value="5 minutes">5 minutes</option>
+      <option value="10 minutes">10 minutes</option>
+      <option value="15 minutes">15 minutes</option>
+      <option value="20 minutes">20 minutes</option>
+      <option value="25 minutes">25 minutes</option>
+      <option value="30 minutes">30 minutes</option>
+      <option value="35 minutes">35 minutes</option>
+      <option value="40 minutes">40 minutes</option>
+      <option value="45 minutes">45 minutes</option>
+      <option value="50 minutes">50 minutes</option>
+      <option value="55 minutes">55 minutes</option>
+      <option value="60 minutes">60 minutes</option>
+    </select>
 
     <label for="q2">What did you read?</label>
-    <textarea id="q2" name="q2" required></textarea>
+    <textarea id="q2" name="q2" required placeholder="Summarize what you read..."></textarea>
 
     <label for="q3">Was there any key detail you think was important to the storyline?</label>
     <textarea id="q3" name="q3" required></textarea>

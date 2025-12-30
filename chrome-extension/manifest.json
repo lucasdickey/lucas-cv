@@ -17,7 +17,11 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "menu.html"
+    "default_popup": "menu.html",
+    "default_icon": "icon128.png"
+  },
+  "icons": {
+    "128": "icon128.png"
   },
   "web_accessible_resources": [
     {
