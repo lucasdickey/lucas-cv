@@ -167,7 +167,7 @@ export default function DartmathsPage() {
           <h2>Setup Game</h2>
           <div>
             <label htmlFor="num-players">Number of Players:</label>
-            <input type="number" id="num-players" min="1" max="10" defaultValue="2" />
+            <input type="number" id="num-players" min="1" max="10" defaultValue={2} />
           </div>
           <button id="start-game">Start Game</button>
           <div id="player-names"></div>
@@ -191,7 +191,7 @@ export default function DartmathsPage() {
           </div>
 
           <div id="winner-modal" className="hidden" style={{marginTop: "20px", padding: "20px", backgroundColor: "#d4edda", borderRadius: "8px", textAlign: "center"}}>
-            <h2 style={{color: "#155724", marginTop: 0}}>🎉 <span id="winner-name"></span> Wins!</h2>
+            <h2 style={{color: "#155724", marginTop: "0"}}>🎉 <span id="winner-name"></span> Wins!</h2>
             <button id="new-game">Start New Game</button>
           </div>
         </div>
