@@ -145,52 +145,6 @@ export default function DartmathsPage() {
           margin-bottom: 10px;
         }
 
-        .dart-counter {
-          text-align: center;
-          color: #666;
-          font-size: 14px;
-          margin-bottom: 10px;
-        }
-
-        .dart-multiplier-buttons {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 8px;
-          margin-top: 10px;
-        }
-
-        .dart-multiplier-buttons button {
-          padding: 8px 10px;
-          font-size: 14px;
-          background-color: #6c757d;
-        }
-
-        .dart-multiplier-buttons button:hover {
-          background-color: #5a6268;
-        }
-
-        .dart-value-display {
-          background-color: #f0f0f0;
-          padding: 10px;
-          border-radius: 6px;
-          text-align: center;
-          margin-top: 10px;
-          font-size: 16px;
-          font-weight: bold;
-        }
-
-        .dart-value-display.preview {
-          background-color: #fff3cd;
-          color: #856404;
-        }
-
-        .turn-summary {
-          background-color: #f8f9fa;
-          padding: 10px;
-          border-radius: 6px;
-          margin-top: 10px;
-          font-size: 14px;
-        }
 
         .error-message {
           background-color: #f8d7da;
@@ -225,39 +179,14 @@ export default function DartmathsPage() {
           <div id="scoreboard"></div>
 
           <div id="dart-entry">
-            <div className="dart-counter"><span id="dart-count">Dart 1</span> of 3</div>
+            <label htmlFor="score-input">Enter your score for this round:</label>
+            <input type="number" id="score-input" min="0" placeholder="Score" />
 
-            <label htmlFor="dart-segment">Dart Segment (1-20):</label>
-            <input type="number" id="dart-segment" min="1" max="20" placeholder="Segment number" />
+            <label htmlFor="is-finishing-double">
+              <input type="checkbox" id="is-finishing-double" /> This is a finishing double
+            </label>
 
-            <label>Multiplier:</label>
-            <div className="dart-multiplier-buttons">
-              <button id="btn-single" data-multiplier="1">Single (1x)</button>
-              <button id="btn-double" data-multiplier="2">Double (2x)</button>
-              <button id="btn-treble" data-multiplier="3">Treble (3x)</button>
-            </div>
-
-            <div>
-              <label htmlFor="special-score">Special Scores:</label>
-              <select id="special-score">
-                <option value="">-- Select --</option>
-                <option value="25">Bullseye (25)</option>
-                <option value="50">Double Bullseye (50)</option>
-              </select>
-            </div>
-
-            <div id="dart-value-display" className="dart-value-display hidden">Dart Value: <span id="dart-value-text">0</span></div>
-
-            <button id="confirm-dart">Confirm Dart</button>
-
-            <div id="turn-summary" className="turn-summary hidden">
-              <strong>This Turn So Far:</strong>
-              <div id="turn-darts-list"></div>
-              <div id="turn-total">Total: 0 points</div>
-            </div>
-
-            <button id="finish-turn">Finish Turn</button>
-            <button id="undo-dart">Undo Last Dart</button>
+            <button id="submit-score">Submit Score</button>
             <div id="error-message" className="error-message hidden"></div>
           </div>
 
@@ -277,17 +206,9 @@ export default function DartmathsPage() {
           const gameDiv = document.getElementById('game');
           const scoreboardDiv = document.getElementById('scoreboard');
           const turnInfoDiv = document.getElementById('turn-info');
-          const dartSegmentInput = document.getElementById('dart-segment');
-          const specialScoreSelect = document.getElementById('special-score');
-          const confirmDartButton = document.getElementById('confirm-dart');
-          const finishTurnButton = document.getElementById('finish-turn');
-          const undoDartButton = document.getElementById('undo-dart');
-          const dartCountDisplay = document.getElementById('dart-count');
-          const dartValueDisplay = document.getElementById('dart-value-display');
-          const dartValueText = document.getElementById('dart-value-text');
-          const turnSummaryDiv = document.getElementById('turn-summary');
-          const turnDartsList = document.getElementById('turn-darts-list');
-          const turnTotalDiv = document.getElementById('turn-total');
+          const scoreInput = document.getElementById('score-input');
+          const isFinishingDoubleCheckbox = document.getElementById('is-finishing-double');
+          const submitScoreButton = document.getElementById('submit-score');
           const errorMessageDiv = document.getElementById('error-message');
           const winnerModal = document.getElementById('winner-modal');
           const winnerNameSpan = document.getElementById('winner-name');
@@ -295,8 +216,6 @@ export default function DartmathsPage() {
 
           let players = [];
           let currentPlayerIndex = 0;
-          let currentTurnDarts = [];
-          let selectedMultiplier = 1;
           let gameWon = false;
 
           const STARTING_SCORE = 501;
@@ -348,103 +267,20 @@ export default function DartmathsPage() {
             setupDiv.classList.add('hidden');
             gameDiv.classList.remove('hidden');
             winnerModal.classList.add('hidden');
-            resetTurn();
+            resetForm();
             renderScoreboard();
             saveGame();
           }
 
-          function resetTurn() {
-            currentTurnDarts = [];
-            selectedMultiplier = 1;
-            dartSegmentInput.value = '';
-            specialScoreSelect.value = '';
+          function resetForm() {
+            scoreInput.value = '';
+            isFinishingDoubleCheckbox.checked = false;
             errorMessageDiv.classList.add('hidden');
-            dartValueDisplay.classList.add('hidden');
-            turnSummaryDiv.classList.add('hidden');
-            updateDartCount();
             updateTurnInfo();
           }
 
-          function updateDartCount() {
-            dartCountDisplay.textContent = \`Dart \${currentTurnDarts.length + 1}\`;
-          }
-
           function updateTurnInfo() {
-            turnInfoDiv.textContent = \`\${players[currentPlayerIndex].name}'s Turn\`;
-          }
-
-          function calculateDartValue() {
-            const specialScore = specialScoreSelect.value;
-            if (specialScore) {
-              return parseInt(specialScore);
-            }
-            const segment = parseInt(dartSegmentInput.value, 10);
-            if (isNaN(segment) || segment < 1 || segment > 20) {
-              return null;
-            }
-            return segment * selectedMultiplier;
-          }
-
-          // Multiplier button listeners
-          document.getElementById('btn-single').addEventListener('click', function() {
-            selectedMultiplier = 1;
-            updateDartPreview();
-          });
-          document.getElementById('btn-double').addEventListener('click', function() {
-            selectedMultiplier = 2;
-            updateDartPreview();
-          });
-          document.getElementById('btn-treble').addEventListener('click', function() {
-            selectedMultiplier = 3;
-            updateDartPreview();
-          });
-
-          function updateDartPreview() {
-            const value = calculateDartValue();
-            if (value !== null) {
-              dartValueText.textContent = value;
-              dartValueDisplay.classList.remove('hidden');
-            } else {
-              dartValueDisplay.classList.add('hidden');
-            }
-          }
-
-          dartSegmentInput.addEventListener('input', updateDartPreview);
-          specialScoreSelect.addEventListener('change', updateDartPreview);
-
-          confirmDartButton.addEventListener('click', () => {
-            const value = calculateDartValue();
-            if (value === null) {
-              showError('Please enter a valid dart (segment 1-20 or special score)');
-              return;
-            }
-
-            currentTurnDarts.push(value);
-            errorMessageDiv.classList.add('hidden');
-
-            if (currentTurnDarts.length < 3) {
-              // More darts in this turn
-              dartSegmentInput.value = '';
-              specialScoreSelect.value = '';
-              selectedMultiplier = 1;
-              dartValueDisplay.classList.add('hidden');
-              updateDartCount();
-              updateTurnSummary();
-            } else {
-              // Turn is complete (3 darts thrown)
-              finishTurnButton.click();
-            }
-          });
-
-          function updateTurnSummary() {
-            if (currentTurnDarts.length > 0) {
-              turnSummaryDiv.classList.remove('hidden');
-              turnDartsList.innerHTML = currentTurnDarts.map((dart, idx) => {
-                return \`<div>Dart \${idx + 1}: \${dart} points</div>\`;
-              }).join('');
-              const turnTotal = currentTurnDarts.reduce((a, b) => a + b, 0);
-              turnTotalDiv.textContent = \`Total: \${turnTotal} points\`;
-            }
+            turnInfoDiv.textContent = \`\${players[currentPlayerIndex].name}'s Turn - Remaining: \${players[currentPlayerIndex].remaining}\`;
           }
 
           function showError(message) {
@@ -452,78 +288,54 @@ export default function DartmathsPage() {
             errorMessageDiv.classList.remove('hidden');
           }
 
-          finishTurnButton.addEventListener('click', () => {
-            if (currentTurnDarts.length === 0) {
-              showError('Throw at least one dart');
+          submitScoreButton.addEventListener('click', () => {
+            const score = parseInt(scoreInput.value, 10);
+            if (isNaN(score) || score < 0) {
+              showError('Please enter a valid score (0 or higher)');
               return;
             }
 
-            const turnTotal = currentTurnDarts.reduce((a, b) => a + b, 0);
             const player = players[currentPlayerIndex];
-            const newScore = player.remaining - turnTotal;
+            const newScore = player.remaining - score;
 
+            // Bust check
             if (newScore < 0) {
-              // Bust!
               player.busted = true;
-              showError(\`BUST! \${player.name} overshot. Score remains \${player.remaining}.\`);
-              turnSummaryDiv.classList.add('hidden');
-            } else if (newScore === 0) {
-              // Must check if last dart is a double (finish rule)
-              const lastDart = currentTurnDarts[currentTurnDarts.length - 1];
-              const isLastDartDouble = isFinishingDouble(lastDart);
-
-              if (!isLastDartDouble) {
-                showError('Must finish with a DOUBLE! Try again next turn.');
-                resetTurn();
+              showError(\`BUST! \${player.name} overshot by \${Math.abs(newScore)} points. Score remains \${player.remaining}. Next turn!\`);
+              setTimeout(() => {
                 nextTurn();
-              } else {
-                // Winner!
-                player.remaining = 0;
-                player.history.push(...currentTurnDarts);
-                renderScoreboard();
-                saveGame();
-                declareWinner(player.name);
+              }, 2000);
+              return;
+            }
+
+            // Exactly 0 - check finish rule
+            if (newScore === 0) {
+              if (!isFinishingDoubleCheckbox.checked) {
+                showError('To win, your final dart must be a DOUBLE. Mark the checkbox if this round includes a finishing double.');
+                return;
               }
-            } else {
-              // Valid turn, deduct points
-              player.remaining = newScore;
-              player.busted = false;
-              player.history.push(...currentTurnDarts);
+              // Winner!
+              player.remaining = 0;
+              player.history.push(score);
               renderScoreboard();
               saveGame();
-              resetTurn();
-              nextTurn();
+              declareWinner(player.name);
+              return;
             }
-          });
 
-          function isFinishingDouble(dartValue) {
-            // A finishing double must be:
-            // 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 (segment doubles: 1-20 × 2)
-            // or 50 (double bullseye)
-            const validDoubles = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 50];
-            return validDoubles.includes(dartValue);
-          }
-
-          undoDartButton.addEventListener('click', () => {
-            if (currentTurnDarts.length > 0) {
-              currentTurnDarts.pop();
-              dartSegmentInput.value = '';
-              specialScoreSelect.value = '';
-              selectedMultiplier = 1;
-              dartValueDisplay.classList.add('hidden');
-              errorMessageDiv.classList.add('hidden');
-              updateDartCount();
-              if (currentTurnDarts.length > 0) {
-                updateTurnSummary();
-              } else {
-                turnSummaryDiv.classList.add('hidden');
-              }
-            }
+            // Valid turn
+            player.remaining = newScore;
+            player.busted = false;
+            player.history.push(score);
+            renderScoreboard();
+            saveGame();
+            resetForm();
+            nextTurn();
           });
 
           function nextTurn() {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-            resetTurn();
+            resetForm();
           }
 
           function declareWinner(playerName) {
@@ -534,7 +346,7 @@ export default function DartmathsPage() {
           }
 
           newGameButton.addEventListener('click', () => {
-            localStorage.removeItem('dartsGame');
+            localStorage.removeItem('darts501Game');
             location.reload();
           });
 
@@ -588,7 +400,7 @@ export default function DartmathsPage() {
                     const winner = players.find(p => p.remaining === 0);
                     winnerNameSpan.textContent = winner ? winner.name : 'Unknown';
                   } else {
-                    resetTurn();
+                    resetForm();
                     renderScoreboard();
                   }
                 }
