@@ -17,6 +17,20 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "All That We See or Seem",
+    author: "Julia Fine",
+    description: "A haunting novel that blurs the line between dreams and reality, exploring the nature of consciousness and identity.",
+    coverUrl: "/images/books/all-that-we-see-or-seem.jpg",
+    amazonUrl: "https://www.amazon.com/All-That-Seem-Julia-Novel/dp/1668083175/",
+    slug: "all-that-we-see-or-seem-julia-fine",
+    status: "reading",
+    genre: "Literary Fiction / Fantasy",
+    publishedYear: "2025",
+    pages: "320",
+    publisher: "Atria Books",
+    rating: "4.5/5"
+  },
+  {
     title: "Thinking In Systems: A Primer",
     author: "Donella H. Meadows",
     description: "A primer on systems thinking, offering insights for problem-solving on a personal to global scale.",
@@ -470,7 +484,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-city-and-the-city-china-mieville.jpeg",
     amazonUrl: "https://www.amazon.com/dp/034549752X",
     slug: "city-and-the-city-china-mieville",
-    status: "reading",
+    status: "read",
     detailedDescription: "Inspector Tyador Borlú investigates a murder that transcends the boundaries between Besźel and Ul Qoma — two cities that occupy the same physical space but whose citizens are forbidden from acknowledging one another.",
     genre: "Fantasy / Noir / Speculative Fiction",
     publishedYear: "2009",
