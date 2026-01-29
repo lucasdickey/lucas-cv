@@ -18,16 +18,16 @@ export interface Book {
 export const books: Book[] = [
   {
     title: "All That We See or Seem",
-    author: "Julia Fine",
-    description: "A haunting novel that blurs the line between dreams and reality, exploring the nature of consciousness and identity.",
-    coverUrl: "/images/books/all-that-we-see-or-seem.jpg",
+    author: "Ken Liu",
+    description: "A near-future techno-thriller exploring consciousness, dreams, and identity in a world where the boundaries of the mind can be hacked.",
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9781668083178-L.jpg",
     amazonUrl: "https://www.amazon.com/All-That-Seem-Julia-Novel/dp/1668083175/",
-    slug: "all-that-we-see-or-seem-julia-fine",
+    slug: "all-that-we-see-or-seem-ken-liu",
     status: "reading",
-    genre: "Literary Fiction / Fantasy",
+    genre: "Science Fiction / Techno-thriller",
     publishedYear: "2025",
-    pages: "320",
-    publisher: "Atria Books",
+    pages: "416",
+    publisher: "Saga Press",
     rating: "4.5/5"
   },
   {
