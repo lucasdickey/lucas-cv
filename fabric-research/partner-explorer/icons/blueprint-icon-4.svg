@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Blueprint style: Rounded square with circle cutout (API/integration) -->
+  <rect width="120" height="120" fill="#635BFF"/>
+
+  <!-- Construction grid -->
+  <line x1="60" y1="10" x2="60" y2="110" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+  <line x1="10" y1="60" x2="110" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+  <line x1="25" y1="25" x2="95" y2="95" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <line x1="95" y1="25" x2="25" y2="95" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+
+  <!-- Rounded rectangle -->
+  <rect x="22" y="22" width="76" height="76" rx="12" ry="12"
+        fill="none" stroke="white" stroke-width="2.5"/>
+
+  <!-- Inner circle -->
+  <circle cx="60" cy="60" r="22" fill="none" stroke="white" stroke-width="2.5"/>
+
+  <!-- Connection points (like API endpoints) -->
+  <g fill="white">
+    <circle cx="60" cy="22" r="3"/>
+    <circle cx="60" cy="98" r="3"/>
+    <circle cx="22" cy="60" r="3"/>
+    <circle cx="98" cy="60" r="3"/>
+  </g>
+
+  <!-- Corner radius annotation -->
+  <path d="M 22 34 Q 22 22 34 22" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.5"/>
+  <text x="12" y="18" fill="rgba(255,255,255,0.4)" font-size="7" font-family="system-ui">12°</text>
+</svg>

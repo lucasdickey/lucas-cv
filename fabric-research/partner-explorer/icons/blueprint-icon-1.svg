@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Blueprint style: Interlocking hexagon + circle (partnership/connection) -->
+  <rect width="120" height="120" fill="#635BFF"/>
+
+  <!-- Construction lines -->
+  <line x1="60" y1="10" x2="60" y2="110" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+  <line x1="10" y1="60" x2="110" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+  <line x1="20" y1="20" x2="100" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <line x1="100" y1="20" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+
+  <!-- Hexagon (representing network/ecosystem) -->
+  <polygon points="60,22 88,38 88,70 60,86 32,70 32,38"
+           fill="none" stroke="white" stroke-width="2.5"/>
+
+  <!-- Circle (representing partner) -->
+  <circle cx="60" cy="72" r="28" fill="none" stroke="white" stroke-width="2.5"/>
+
+  <!-- Construction marks -->
+  <circle cx="60" cy="22" r="2" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/>
+  <circle cx="88" cy="38" r="2" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/>
+  <circle cx="32" cy="38" r="2" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/>
+
+  <!-- Angle annotation -->
+  <text x="92" y="35" fill="rgba(255,255,255,0.4)" font-size="8" font-family="system-ui">60°</text>
+</svg>

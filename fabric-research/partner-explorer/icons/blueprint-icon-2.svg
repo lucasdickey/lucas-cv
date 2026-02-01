@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Blueprint style: Two overlapping circles (Venn/partnership) -->
+  <rect width="120" height="120" fill="#635BFF"/>
+
+  <!-- Construction grid -->
+  <line x1="60" y1="10" x2="60" y2="110" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+  <line x1="10" y1="60" x2="110" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+
+  <!-- Diagonal construction -->
+  <line x1="25" y1="35" x2="95" y2="35" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+  <line x1="25" y1="85" x2="95" y2="85" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+
+  <!-- Left circle (Stripe) -->
+  <circle cx="45" cy="60" r="30" fill="none" stroke="white" stroke-width="2.5"/>
+
+  <!-- Right circle (Partner) -->
+  <circle cx="75" cy="60" r="30" fill="none" stroke="white" stroke-width="2.5"/>
+
+  <!-- Center points -->
+  <g stroke="rgba(255,255,255,0.5)" stroke-width="0.75" fill="none">
+    <line x1="42" y1="60" x2="48" y2="60"/>
+    <line x1="45" y1="57" x2="45" y2="63"/>
+    <line x1="72" y1="60" x2="78" y2="60"/>
+    <line x1="75" y1="57" x2="75" y2="63"/>
+  </g>
+
+  <!-- Angle arc -->
+  <path d="M 60 60 L 60 45 A 15 15 0 0 1 72 52" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+  <text x="65" y="48" fill="rgba(255,255,255,0.4)" font-size="7" font-family="system-ui">45°</text>
+</svg>

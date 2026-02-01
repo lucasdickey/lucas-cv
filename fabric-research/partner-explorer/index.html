@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner Explorer | SaaS Provisioning CLI</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --success: #3fb950;
+      --warning: #d29922;
+      --purple: #a371f7;
+      --tier1: #a371f7;
+      --tier2: #58a6ff;
+      --tier3: #3fb950;
+      --tier4: #d29922;
+      --tier5: #8b949e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .version-info {
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .version-badge {
+      background: var(--bg-tertiary);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Quick filters */
+    .quick-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .quick-filter {
+      padding: 6px 12px;
+      font-size: 13px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quick-filter:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .quick-filter.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .quick-filter .icon {
+      font-size: 11px;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 180px;
+    }
+
+    .filter-group label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-group select {
+      padding: 8px 12px;
+      font-size: 14px;
+      background: var(--bg-tertiary);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      min-width: 180px;
+    }
+
+    .filter-group select:hover {
+      border-color: var(--accent);
+    }
+
+    .filter-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 14px;
+      background: var(--bg-tertiary);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .stats-bar .count {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .clear-filters {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .clear-filters:hover {
+      background: var(--bg-tertiary);
+      color: var(--accent-hover);
+    }
+
+    /* Table */
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      position: sticky;
+      top: 0;
+    }
+
+    th:hover {
+      background: var(--bg-tertiary);
+    }
+
+    th .sort-icon {
+      margin-left: 6px;
+      opacity: 0.4;
+      font-size: 12px;
+    }
+
+    th.sorted .sort-icon {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--bg-secondary);
+    }
+
+    /* Cell styles */
+    .partner-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .primitive-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 12px;
+      border-radius: 12px;
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 50%;
+    }
+
+    .tier-1 { background: var(--tier1); color: #fff; }
+    .tier-2 { background: var(--tier2); color: #fff; }
+    .tier-3 { background: var(--tier3); color: #fff; }
+    .tier-4 { background: var(--tier4); color: #fff; }
+    .tier-5 { background: var(--tier5); color: #fff; }
+
+    .confidence-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .confidence-very-high { background: rgba(163, 113, 247, 0.2); color: var(--tier1); }
+    .confidence-high { background: rgba(88, 166, 255, 0.2); color: var(--tier2); }
+    .confidence-medium-high { background: rgba(63, 185, 80, 0.2); color: var(--tier3); }
+    .confidence-medium { background: rgba(139, 148, 158, 0.2); color: var(--tier5); }
+
+    .bool-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+    }
+
+    .bool-yes { color: var(--success); }
+    .bool-no { color: var(--text-muted); }
+
+    .brief-cell {
+      max-width: 340px;
+      font-size: 13px;
+    }
+
+    .brief-cell ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .brief-cell li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .brief-cell li:last-child {
+      margin-bottom: 0;
+    }
+
+    .brief-cell li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    .brief-desc {
+      color: var(--text);
+    }
+
+    .brief-evidence {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .metrics-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      max-width: 160px;
+    }
+
+    /* Partner name with links */
+    .partner-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .partner-name a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .partner-name a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .x-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      color: var(--text-muted);
+      transition: color 0.15s ease;
+    }
+
+    .x-icon:hover {
+      color: #1da1f2;
+    }
+
+    .x-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* Social icons cell */
+    .social-icons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--bg-tertiary);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .social-icon:hover {
+      color: #1da1f2;
+      background: rgba(29, 161, 242, 0.15);
+    }
+
+    .social-icon svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+    }
+
+    .social-icon.founder {
+      font-weight: 600;
+      font-size: 9px;
+    }
+
+    .social-icon.devrel {
+      font-weight: 600;
+      font-size: 9px;
+    }
+
+    /* Signal badges */
+    .signal-badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .signal-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      font-size: 10px;
+      border-radius: 4px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .signal-vc { background: rgba(163, 113, 247, 0.2); color: var(--purple); }
+    .signal-analyst { background: rgba(88, 166, 255, 0.2); color: var(--accent); }
+    .signal-benchmark { background: rgba(63, 185, 80, 0.2); color: var(--success); }
+    .signal-boilerplate { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
+    .signal-xhype { background: rgba(29, 161, 242, 0.2); color: #1da1f2; }
+    .signal-new { background: rgba(255, 123, 114, 0.2); color: #ff7b72; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+    }
+
+    .empty-state h3 {
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-group select,
+      .search-box input {
+        width: 100%;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 8px 12px;
+      }
+
+      .evidence-text {
+        max-width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Partner Explorer</h1>
+      <p class="subtitle">SaaS Provisioning CLI - Supply-Side Partner Candidates</p>
+      <div class="version-info">
+        <span class="version-badge" id="dataVersion"></span>
+        <span id="partnerStats">68 partners across 23 primitives</span>
+      </div>
+    </header>
+
+    <div class="quick-filters" id="quickFilters">
+      <button class="quick-filter" data-filter="cli"><span class="icon">$</span> Has CLI</button>
+      <button class="quick-filter" data-filter="oss"><span class="icon">&lt;/&gt;</span> Open Source</button>
+      <button class="quick-filter" data-filter="tier1"><span class="icon">1</span> Tier 1 Only</button>
+      <button class="quick-filter" data-filter="noOverlap"><span class="icon">+</span> No Launch Partner Overlap</button>
+      <button class="quick-filter" data-filter="vcValidation"><span class="icon">VC</span> VC Validated</button>
+      <button class="quick-filter" data-filter="analyst"><span class="icon">G</span> Analyst Mention</button>
+      <button class="quick-filter" data-filter="benchmark"><span class="icon">★</span> Benchmark Winner</button>
+      <button class="quick-filter" data-filter="xHype"><span class="icon">𝕏</span> X Hype</button>
+      <button class="quick-filter" data-filter="isNew"><span class="icon">✦</span> New in PT3</button>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label>Primitive</label>
+        <select id="filterPrimitive">
+          <option value="">All Primitives</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Tier</label>
+        <select id="filterTier">
+          <option value="">All Tiers</option>
+          <option value="1">Tier 1 - Highest Conviction</option>
+          <option value="2">Tier 2 - Strong Conviction</option>
+          <option value="3">Tier 3 - Good Conviction</option>
+          <option value="4">Tier 4 - Emerging/Strategic</option>
+          <option value="5">Tier 5 - Strategic Additions</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Confidence</label>
+        <select id="filterConfidence">
+          <option value="">All Confidence Levels</option>
+          <option value="Very High">Very High</option>
+          <option value="High">High</option>
+          <option value="Medium-High">Medium-High</option>
+          <option value="Medium">Medium</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Features</label>
+        <select id="filterFeatures">
+          <option value="">All Partners</option>
+          <option value="cli">Has CLI</option>
+          <option value="oss">Open Source</option>
+          <option value="noOverlap">No Launch Partner Overlap</option>
+          <option value="vcValidation">VC Validated</option>
+          <option value="analyst">Analyst Mention</option>
+          <option value="benchmark">Benchmark Winner</option>
+          <option value="boilerplate">In Boilerplates</option>
+          <option value="xHype">X Hype Signal</option>
+          <option value="isNew">New in PT3</option>
+        </select>
+      </div>
+
+      <div class="filter-group search-box">
+        <label>Search</label>
+        <input type="text" id="searchInput" placeholder="Search by name, evidence, metrics...">
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <span>Showing <span class="count" id="resultCount">0</span> of <span id="totalCount">0</span> partners</span>
+      <button class="clear-filters" id="clearFilters">Clear all filters</button>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="tier" class="sorted">Tier <span class="sort-icon">▲</span></th>
+            <th data-sort="name">Name <span class="sort-icon">▲</span></th>
+            <th>Social</th>
+            <th data-sort="primitive">Primitive <span class="sort-icon">▲</span></th>
+            <th data-sort="confidence">Confidence <span class="sort-icon">▲</span></th>
+            <th>Signals</th>
+            <th data-sort="cliAvailable">CLI <span class="sort-icon">▲</span></th>
+            <th data-sort="openSource">OSS <span class="sort-icon">▲</span></th>
+            <th>Brief</th>
+            <th>Metrics</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <h3>No partners match your filters</h3>
+      <p>Try adjusting your search or filter criteria</p>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    // State
+    let currentSort = { key: 'tier', asc: true };
+    let filteredData = [...PARTNERS];
+    let quickFiltersState = {
+      cli: false,
+      oss: false,
+      tier1: false,
+      noOverlap: false,
+      vcValidation: false,
+      analyst: false,
+      benchmark: false,
+      xHype: false,
+      isNew: false
+    };
+
+    // Confidence sort order
+    const confidenceOrder = { 'Very High': 1, 'High': 2, 'Medium-High': 3, 'Medium': 4 };
+
+    // Initialize
+    function init() {
+      document.getElementById('dataVersion').textContent = DATA_VERSION;
+      document.getElementById('totalCount').textContent = PARTNERS.length;
+      document.getElementById('partnerStats').textContent = `${PARTNERS.length} partners across ${PRIMITIVES.length} primitives`;
+      populatePrimitiveFilter();
+      attachEventListeners();
+      render();
+    }
+
+    function populatePrimitiveFilter() {
+      const select = document.getElementById('filterPrimitive');
+      PRIMITIVES.forEach(primitive => {
+        const option = document.createElement('option');
+        option.value = primitive;
+        option.textContent = primitive;
+        select.appendChild(option);
+      });
+    }
+
+    function attachEventListeners() {
+      // Dropdown filters
+      document.getElementById('filterPrimitive').addEventListener('change', applyFilters);
+      document.getElementById('filterTier').addEventListener('change', applyFilters);
+      document.getElementById('filterConfidence').addEventListener('change', applyFilters);
+      document.getElementById('filterFeatures').addEventListener('change', applyFilters);
+
+      // Search (debounced)
+      let searchTimeout;
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(applyFilters, 150);
+      });
+
+      // Clear filters
+      document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+      // Quick filters
+      document.querySelectorAll('.quick-filter').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const filter = e.currentTarget.dataset.filter;
+          quickFiltersState[filter] = !quickFiltersState[filter];
+          e.currentTarget.classList.toggle('active', quickFiltersState[filter]);
+          applyFilters();
+        });
+      });
+
+      // Table header sorting
+      document.querySelectorAll('th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          const key = th.dataset.sort;
+          if (currentSort.key === key) {
+            currentSort.asc = !currentSort.asc;
+          } else {
+            currentSort = { key, asc: true };
+          }
+          updateSortIndicators();
+          render();
+        });
+      });
+    }
+
+    function updateSortIndicators() {
+      document.querySelectorAll('th[data-sort]').forEach(th => {
+        const isSorted = th.dataset.sort === currentSort.key;
+        th.classList.toggle('sorted', isSorted);
+        const icon = th.querySelector('.sort-icon');
+        if (icon) {
+          icon.textContent = currentSort.asc ? '▲' : '▼';
+        }
+      });
+    }
+
+    function applyFilters() {
+      const primitive = document.getElementById('filterPrimitive').value;
+      const tier = document.getElementById('filterTier').value;
+      const confidence = document.getElementById('filterConfidence').value;
+      const features = document.getElementById('filterFeatures').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      filteredData = PARTNERS.filter(partner => {
+        // Dropdown filters
+        if (primitive && partner.primitive !== primitive) return false;
+        if (tier && partner.tier !== parseInt(tier)) return false;
+        if (confidence && partner.confidence !== confidence) return false;
+
+        // Feature filter
+        if (features === 'cli' && !partner.cliAvailable) return false;
+        if (features === 'oss' && !partner.openSource) return false;
+        if (features === 'noOverlap' && partner.launchPartnerOverlap) return false;
+        if (features === 'vcValidation' && !partner.vcValidation) return false;
+        if (features === 'analyst' && !partner.analystMention) return false;
+        if (features === 'benchmark' && !partner.benchmarkWinner) return false;
+        if (features === 'boilerplate' && partner.boilerplateCount === 0) return false;
+        if (features === 'xHype' && !partner.xHype) return false;
+        if (features === 'isNew' && !partner.isNew) return false;
+
+        // Quick filters (AND logic)
+        if (quickFiltersState.cli && !partner.cliAvailable) return false;
+        if (quickFiltersState.oss && !partner.openSource) return false;
+        if (quickFiltersState.tier1 && partner.tier !== 1) return false;
+        if (quickFiltersState.noOverlap && partner.launchPartnerOverlap) return false;
+        if (quickFiltersState.vcValidation && !partner.vcValidation) return false;
+        if (quickFiltersState.analyst && !partner.analystMention) return false;
+        if (quickFiltersState.benchmark && !partner.benchmarkWinner) return false;
+        if (quickFiltersState.xHype && !partner.xHype) return false;
+        if (quickFiltersState.isNew && !partner.isNew) return false;
+
+        // Text search
+        if (search) {
+          const searchFields = [
+            partner.name,
+            partner.primitive,
+            partner.evidence,
+            partner.metrics,
+            partner.confidence
+          ].map(f => (f || '').toLowerCase());
+          if (!searchFields.some(field => field.includes(search))) return false;
+        }
+
+        return true;
+      });
+
+      render();
+    }
+
+    function clearFilters() {
+      document.getElementById('filterPrimitive').value = '';
+      document.getElementById('filterTier').value = '';
+      document.getElementById('filterConfidence').value = '';
+      document.getElementById('filterFeatures').value = '';
+      document.getElementById('searchInput').value = '';
+
+      // Reset quick filters
+      Object.keys(quickFiltersState).forEach(key => quickFiltersState[key] = false);
+      document.querySelectorAll('.quick-filter').forEach(btn => btn.classList.remove('active'));
+
+      filteredData = [...PARTNERS];
+      render();
+    }
+
+    function sortData(data) {
+      const sorted = [...data];
+      const { key, asc } = currentSort;
+
+      sorted.sort((a, b) => {
+        let valA = a[key];
+        let valB = b[key];
+
+        // Special handling for confidence
+        if (key === 'confidence') {
+          valA = confidenceOrder[valA] || 99;
+          valB = confidenceOrder[valB] || 99;
+        }
+
+        // Handle booleans
+        if (typeof valA === 'boolean') {
+          valA = valA ? 1 : 0;
+          valB = valB ? 1 : 0;
+        }
+
+        // Handle strings
+        if (typeof valA === 'string') {
+          valA = valA.toLowerCase();
+          valB = valB.toLowerCase();
+        }
+
+        if (valA < valB) return asc ? -1 : 1;
+        if (valA > valB) return asc ? 1 : -1;
+        return 0;
+      });
+
+      return sorted;
+    }
+
+    // X/Twitter SVG icon
+    const xSvg = `<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+
+    function renderSignalBadges(partner) {
+      const badges = [];
+      if (partner.isNew) {
+        badges.push('<span class="signal-badge signal-new">NEW</span>');
+      }
+      if (partner.vcValidation) {
+        badges.push('<span class="signal-badge signal-vc">VC</span>');
+      }
+      if (partner.analystMention) {
+        badges.push('<span class="signal-badge signal-analyst">Analyst</span>');
+      }
+      if (partner.benchmarkWinner) {
+        badges.push('<span class="signal-badge signal-benchmark">Benchmark</span>');
+      }
+      if (partner.xHype) {
+        badges.push('<span class="signal-badge signal-xhype">𝕏 Hype</span>');
+      }
+      if (partner.boilerplateCount > 0) {
+        badges.push(`<span class="signal-badge signal-boilerplate">${partner.boilerplateCount}/15</span>`);
+      }
+      return badges.length > 0 ? `<div class="signal-badges">${badges.join('')}</div>` : '<span class="bool-no">–</span>';
+    }
+
+    function renderPartnerName(partner) {
+      let html = '<div class="partner-name-cell"><span class="partner-name">';
+      if (partner.url) {
+        html += `<a href="${escapeHtml(partner.url)}" target="_blank" rel="noopener">${escapeHtml(partner.name)}</a>`;
+      } else {
+        html += escapeHtml(partner.name);
+      }
+      html += '</span>';
+      if (partner.xHandle) {
+        html += `<a href="https://x.com/${escapeHtml(partner.xHandle)}" target="_blank" rel="noopener" class="x-icon" title="@${escapeHtml(partner.xHandle)}">${xSvg}</a>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function renderSocialIcons(partner) {
+      const icons = [];
+      if (partner.founderX) {
+        icons.push(`<a href="https://x.com/${escapeHtml(partner.founderX)}" target="_blank" rel="noopener" class="social-icon founder" title="Founder: @${escapeHtml(partner.founderX)}">F</a>`);
+      }
+      if (partner.devRelX) {
+        icons.push(`<a href="https://x.com/${escapeHtml(partner.devRelX)}" target="_blank" rel="noopener" class="social-icon devrel" title="Dev Rel: @${escapeHtml(partner.devRelX)}">D</a>`);
+      }
+      return icons.length > 0 ? `<div class="social-icons">${icons.join('')}</div>` : '<span class="bool-no">–</span>';
+    }
+
+    function render() {
+      const tbody = document.getElementById('tableBody');
+      const emptyState = document.getElementById('emptyState');
+      const tableWrapper = document.querySelector('.table-wrapper');
+
+      document.getElementById('resultCount').textContent = filteredData.length;
+
+      if (filteredData.length === 0) {
+        tbody.innerHTML = '';
+        tableWrapper.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      tableWrapper.style.display = 'block';
+      emptyState.style.display = 'none';
+
+      const sortedData = sortData(filteredData);
+
+      tbody.innerHTML = sortedData.map(partner => `
+        <tr>
+          <td>
+            <span class="tier-badge tier-${partner.tier}">${partner.tier}</span>
+          </td>
+          <td>
+            ${renderPartnerName(partner)}
+          </td>
+          <td>
+            ${renderSocialIcons(partner)}
+          </td>
+          <td>
+            <span class="primitive-tag">${escapeHtml(partner.primitive)}</span>
+          </td>
+          <td>
+            <span class="confidence-badge confidence-${partner.confidence.toLowerCase().replace(' ', '-')}">${escapeHtml(partner.confidence)}</span>
+          </td>
+          <td>
+            ${renderSignalBadges(partner)}
+          </td>
+          <td>
+            <span class="bool-indicator ${partner.cliAvailable ? 'bool-yes' : 'bool-no'}">${partner.cliAvailable ? '✓' : '–'}</span>
+          </td>
+          <td>
+            <span class="bool-indicator ${partner.openSource ? 'bool-yes' : 'bool-no'}">${partner.openSource ? '✓' : '–'}</span>
+          </td>
+          <td>
+            <div class="brief-cell">
+              <ul>
+                <li><span class="brief-desc">${escapeHtml(partner.brief || '')}</span></li>
+                <li><span class="brief-evidence">${escapeHtml(partner.evidence)}</span></li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <span class="metrics-text">${escapeHtml(partner.metrics)}</span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Start
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
