@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import { ViewModeProvider } from "./contexts/view-mode-context";
 import ViewModeToggle from "./components/ViewModeToggle";
+import CRTEffect from "./components/CRTEffect";
 
 export const metadata: Metadata = {
   title: "Lucas Dickey - Product Leader & Serial Founder",
@@ -119,6 +120,7 @@ export default function RootLayout({
         <ViewModeProvider>
           <ViewModeToggle />
           {children}
+          <CRTEffect />
         </ViewModeProvider>
       </body>
       <Script

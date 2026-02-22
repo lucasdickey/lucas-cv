@@ -711,7 +711,7 @@ export default function TerminalRepoList() {
           <span className="font-bold">lucas-dickey</span> git:(master)±9 lucas
         </div>
         {/* Desktop ASCII Art */}
-        <pre className="text-[#8b0000] mb-2 text-xs leading-none hidden lg:block">
+        <pre className="text-[#8b0000] mb-2 text-xs leading-none hidden lg:block crt-glow">
           {`
 ▒▒▒        ▒▒▒  ▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒    ▒▒▒▒▒▒ 
 ▒▒▒        ▒▒▒  ▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒    ▒▒▒▒▒▒ 
@@ -725,7 +725,7 @@ export default function TerminalRepoList() {
 ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒    ▒▒▒▒▒▒   ▒▒▒  ▒▒▒   ▒▒▒▒▒▒`}
         </pre>
         {/* Tablet ASCII Art */}
-        <pre className="text-[#8b0000] mb-2 text-xs leading-none hidden md:block lg:hidden">
+        <pre className="text-[#8b0000] mb-2 text-xs leading-none hidden md:block lg:hidden crt-glow">
           {`
 ▒▒▒     ▒▒  ▒▒  ▒▒▒▒   ▒▒▒▒   ▒▒▒▒ 
 ▒▒▒     ▒▒  ▒▒  ▒▒     ▒▒▒▒   ▒▒   

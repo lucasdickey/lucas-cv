@@ -111,3 +111,10 @@ body {
   --bg-gray: #F4F5F7;
   --border-gray: #DFE1E6;
 }
+
+/* CRT phosphor glow for terminal view - subtle text glow on headings */
+@media (min-width: 768px) {
+  .crt-glow {
+    text-shadow: 0 0 2px rgba(139, 0, 0, 0.3), 0 0 8px rgba(139, 0, 0, 0.1);
+  }
+}
