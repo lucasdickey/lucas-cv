@@ -1,4 +1,6 @@
 // Types for Twitter mention data
+export type TwitterCategory = "atlas" | "stripe" | "patrickc";
+
 export interface TwitterMention {
   id: string;
   text: string;
@@ -8,6 +10,7 @@ export interface TwitterMention {
   authorProfileImageUrl: string;
   createdAt: string;
   tweetUrl: string;
+  category: TwitterCategory;
   metrics: {
     likeCount: number;
     retweetCount: number;
@@ -49,10 +52,13 @@ interface TwitterApiResponse {
 }
 
 /**
- * Fetch recent mentions of @atlas from the Twitter/X API v2.
- * Requires a Bearer token with search:recent access (Basic tier or higher).
+ * Fetch recent mentions of a query from the Twitter/X API v2.
  */
-export async function fetchTwitterMentions(sinceId?: string): Promise<{
+async function fetchRecentTweets(
+  query: string,
+  category: TwitterCategory,
+  sinceId?: string
+): Promise<{
   mentions: TwitterMention[];
   newestId?: string;
 }> {
@@ -62,7 +68,7 @@ export async function fetchTwitterMentions(sinceId?: string): Promise<{
   }
 
   const params = new URLSearchParams({
-    query: "@atlas -is:retweet",
+    query: `${query} -is:retweet`,
     "tweet.fields": "created_at,public_metrics,author_id",
     expansions: "author_id",
     "user.fields": "username,name,profile_image_url",
@@ -107,6 +113,7 @@ export async function fetchTwitterMentions(sinceId?: string): Promise<{
       authorProfileImageUrl: author?.profile_image_url ?? "",
       createdAt: tweet.created_at,
       tweetUrl: `https://x.com/${author?.username ?? "i"}/status/${tweet.id}`,
+      category,
       metrics: {
         likeCount: tweet.public_metrics.like_count,
         retweetCount: tweet.public_metrics.retweet_count,
@@ -116,6 +123,39 @@ export async function fetchTwitterMentions(sinceId?: string): Promise<{
   });
 
   return { mentions, newestId: data.meta?.newest_id };
+}
+
+/**
+ * Fetch recent mentions of @atlas, @stripe, and tweets from @patrickc.
+ */
+export async function fetchAllTwitterActivity(sinceIds: Record<TwitterCategory, string | undefined>): Promise<{
+  mentions: TwitterMention[];
+  newestIds: Record<TwitterCategory, string | undefined>;
+}> {
+  const [atlas, stripe, patrickc] = await Promise.all([
+    fetchRecentTweets("@atlas", "atlas", sinceIds.atlas),
+    fetchRecentTweets("@stripe", "stripe", sinceIds.stripe),
+    fetchRecentTweets("from:patrickc", "patrickc", sinceIds.patrickc),
+  ]);
+
+  return {
+    mentions: [...atlas.mentions, ...stripe.mentions, ...patrickc.mentions],
+    newestIds: {
+      atlas: atlas.newestId,
+      stripe: stripe.newestId,
+      patrickc: patrickc.newestId,
+    },
+  };
+}
+
+/**
+ * Backwards compatible fetch for @atlas mentions
+ */
+export async function fetchTwitterMentions(sinceId?: string): Promise<{
+  mentions: TwitterMention[];
+  newestId?: string;
+}> {
+  return fetchRecentTweets("@atlas", "atlas", sinceId);
 }
 
 // ── RSS helpers ──
@@ -133,7 +173,7 @@ export function generateRssXml(mentions: TwitterMention[]): string {
   const items = mentions
     .map(
       (m) => `    <item>
-      <title>${escapeXml(`@${m.authorUsername}: ${m.text.substring(0, 120)}${m.text.length > 120 ? "..." : ""}`)}</title>
+      <title>${escapeXml(`[${m.category}] @${m.authorUsername}: ${m.text.substring(0, 120)}${m.text.length > 120 ? "..." : ""}`)}</title>
       <link>${m.tweetUrl}</link>
       <description><![CDATA[${m.text}]]></description>
       <pubDate>${new Date(m.createdAt).toUTCString()}</pubDate>
@@ -146,9 +186,9 @@ export function generateRssXml(mentions: TwitterMention[]): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>@atlas Twitter Mentions</title>
+    <title>Stripe/Atlas Twitter Activity</title>
     <link>https://lucas.cv/twitter-monitor</link>
-    <description>Recent Twitter/X mentions of @atlas, updated every 15 minutes</description>
+    <description>Recent Twitter/X activity for @atlas, @stripe, and @patrickc</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="https://lucas.cv/api/twitter/rss" rel="self" type="application/rss+xml" />
