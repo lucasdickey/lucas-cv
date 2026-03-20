@@ -1,15 +1,14 @@
 import { kvGet } from "@/app/lib/kv";
 import Link from "next/link";
-import { TwitterMention } from "@/app/lib/twitter";
+import { TwitterMention, TwitterCategory } from "@/app/lib/twitter";
 
 export const metadata = {
-  title: "@atlas Twitter Mentions — Lucas Dickey",
+  title: "Stripe/Atlas Twitter Activity — Lucas Dickey",
   description:
-    "Live feed of @atlas mentions on Twitter/X, updated every 15 minutes.",
+    "Live feed of @atlas, @stripe mentions and @patrickc tweets, updated every 15 minutes.",
 };
 
-// Revalidate the page every 15 minutes to stay in sync with the cron
-export const revalidate = 900;
+export const dynamic = "force-dynamic";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
@@ -19,6 +18,20 @@ function formatDate(iso: string) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+function CategoryBadge({ category }: { category: TwitterCategory }) {
+  const colors: Record<TwitterCategory, string> = {
+    atlas: "bg-blue-100 text-blue-800 border-blue-200",
+    stripe: "bg-purple-100 text-purple-800 border-purple-200",
+    patrickc: "bg-green-100 text-green-800 border-green-200",
+  };
+
+  return (
+    <span className={`px-2 py-0.5 rounded text-xs font-medium border ${colors[category] || "bg-gray-100"}`}>
+      {category === "patrickc" ? "Patrick Collison" : `@${category}`}
+    </span>
+  );
 }
 
 function MentionCard({ mention }: { mention: TwitterMention }) {
@@ -35,8 +48,11 @@ function MentionCard({ mention }: { mention: TwitterMention }) {
           />
         )}
         <div>
-          <div className="font-semibold text-[#172B4D]">
-            {mention.authorName}
+          <div className="flex items-center gap-2">
+            <div className="font-semibold text-[#172B4D]">
+              {mention.authorName}
+            </div>
+            <CategoryBadge category={mention.category} />
           </div>
           <a
             href={`https://x.com/${mention.authorUsername}`}
@@ -79,12 +95,14 @@ function MentionCard({ mention }: { mention: TwitterMention }) {
 
 export default async function TwitterMonitorPage() {
   let mentions: TwitterMention[] = [];
+  let unsentCount = 0;
   let lastFetch: string | null = null;
   let kvError = false;
 
   try {
-    mentions =
-      (await kvGet<TwitterMention[]>("twitter:mentions")) ?? [];
+    mentions = (await kvGet<TwitterMention[]>("twitter:mentions")) ?? [];
+    const unsent = (await kvGet<TwitterMention[]>("twitter:unsent_mentions")) ?? [];
+    unsentCount = unsent.length;
     lastFetch = await kvGet<string>("twitter:last_fetch");
   } catch {
     kvError = true;
@@ -102,34 +120,38 @@ export default async function TwitterMonitorPage() {
             &larr; Back to home
           </Link>
           <h1 className="text-3xl font-bold text-[#172B4D] mb-2">
-            @atlas Mentions
+            Stripe & Atlas Activity
           </h1>
           <p className="text-[#6B778C]">
-            Live Twitter/X mentions of <strong>@atlas</strong>, updated every 15
-            minutes.
+            Live feed of <strong>@atlas</strong>, <strong>@stripe</strong>, and <strong>Patrick Collison</strong> activity, updated every 15 minutes.
           </p>
 
-          {/* RSS subscribe link */}
-          <a
-            href="/api/twitter/rss"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 mt-3 text-sm text-[#0052CC] hover:underline"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="currentColor"
+          <div className="mt-4 flex flex-wrap gap-4 items-center">
+            <a
+              href="/api/twitter/rss"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm text-[#0052CC] hover:underline"
             >
-              <path d="M6.18 15.64a2.18 2.18 0 1 1 0 4.36 2.18 2.18 0 0 1 0-4.36M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1" />
-            </svg>
-            Subscribe via RSS
-          </a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M6.18 15.64a2.18 2.18 0 1 1 0 4.36 2.18 2.18 0 0 1 0-4.36M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1" />
+              </svg>
+              Subscribe via RSS
+            </a>
+
+            <div className="text-xs text-[#6B778C] bg-gray-50 border border-gray-100 rounded-full px-3 py-1">
+              WhatsApp summary queue: <strong>{unsentCount}/30</strong>
+            </div>
+          </div>
 
           {lastFetch && (
-            <p className="text-xs text-[#6B778C] mt-2">
+            <p className="text-xs text-[#6B778C] mt-4">
               Last checked: {formatDate(lastFetch)}
             </p>
           )}
