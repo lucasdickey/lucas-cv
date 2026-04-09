@@ -127,6 +127,16 @@ const entries: Entry[] = [
 
   // GitHub Projects - Real Projects
   {
+    title: "pre-inc-founders-agreement",
+    description:
+      "Conversational web app that guides co-founders through the hard conversations before incorporating — equity splits, vesting, IP contributions, decision-making frameworks, and exit scenarios. Built as a prototype for Stripe Atlas, it uses AI-driven interviews so each founder can reflect independently, then exports aligned terms as YAML (Atlas-compatible), markdown, or formal documents. Because the best time to agree on the uncomfortable stuff is before there's anything to fight over.",
+    publishedDate: "2026-01-29",
+    type: "code",
+    sourceUrl: "https://github.com/lucasdickey/pre-inc-founders-agreement",
+    sourceTitle: "GitHub Repository",
+    sourceDescription: "AI-guided founder alignment tool — prototype for Stripe Atlas",
+  },
+  {
     title: "prompt-capture-mcp",
     description:
       "Lightweight system for automatic prompt logging in Claude Code using UserPromptSubmit hooks with FastAPI backend. Captures every prompt sent to Claude Code with metadata including timestamps, project context, workspace info, and model information. Features non-intrusive background operation, markdown-formatted logs, and auto-start integration.",
