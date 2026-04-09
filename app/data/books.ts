@@ -17,6 +17,33 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "The Man Who Sees in Seconds",
+    author: "Sanjay Sarma",
+    description: "An exploration of rapid cognition and the science behind split-second decision making.",
+    coverUrl: "/images/books/the-man-who-sees-in-seconds.jpg",
+    amazonUrl: "https://www.amazon.com/dp/006329396X/",
+    slug: "the-man-who-sees-in-seconds",
+    status: "reading",
+    genre: "Nonfiction / Science",
+    publishedYear: "2025",
+    pages: "320",
+    publisher: "Mariner Books"
+  },
+  {
+    title: "A Sorceress Comes to Call",
+    author: "T. Kingfisher",
+    description: "A dark retelling of the Brothers Grimm tale 'The Goose Girl,' blending horror and fairy tale in a story of mothers, daughters, and dangerous magic.",
+    coverUrl: "/images/books/a-sorceress-comes-to-call.jpg",
+    amazonUrl: "https://www.amazon.com/Sorceress-Comes-Call-T-Kingfisher/dp/1250244056/",
+    slug: "a-sorceress-comes-to-call",
+    status: "read",
+    genre: "Fantasy / Horror",
+    publishedYear: "2024",
+    pages: "352",
+    publisher: "Tor Books",
+    rating: "4.3/5"
+  },
+  {
     title: "All That We See or Seem",
     author: "Julia Fine",
     description: "A haunting novel that blurs the line between dreams and reality, exploring the nature of consciousness and identity.",
