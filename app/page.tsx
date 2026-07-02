@@ -11,6 +11,8 @@ import { getCodeProjectImage } from "./utils/codeProjectImages";
 import { ListeningSection } from "./components/ListeningSection";
 import { ExpandableSection } from "./components/ExpandableSection";
 import ApebotChat from "./components/ApebotChat";
+import FeaturedTweets from "./components/FeaturedTweets";
+import { featuredTweets } from "./data/tweets";
 
 interface Entry {
   title: string;
@@ -1514,6 +1516,27 @@ export default function TerminalRepoList() {
               </div>
             );
           })}
+
+        {/* Featured on X Section */}
+        <div
+          id="featured-tweets"
+          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
+        >
+          <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc]">
+            <span className="text-[#8b0000] text-lg font-bold">
+              🐦 Featured on X
+            </span>
+            <span className="text-[#666666] text-sm ml-2">
+              ({featuredTweets.length} posts)
+            </span>
+          </div>
+          <div className="bg-[#f5f5dc] p-4">
+            <p className="text-[#333333] mb-4 leading-relaxed">
+              Selected posts showcasing recent work and builds.
+            </p>
+            <FeaturedTweets />
+          </div>
+        </div>
 
         {/* Listening Section */}
         <div
