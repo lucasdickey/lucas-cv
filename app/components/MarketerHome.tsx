@@ -9,6 +9,8 @@ import { toys } from '../data/toys';
 import { lennyRecommendations } from '../data/lenny';
 import { getPublishedPosts } from '../data/blog';
 import { getCodeProjectImage } from '../utils/codeProjectImages';
+import { featuredTweets } from '../data/tweets';
+import FeaturedTweets from './FeaturedTweets';
 
 interface Entry {
   title: string;
@@ -562,6 +564,17 @@ export default function MarketerHome() {
               </a>
             ))}
           </div>
+        </section>
+
+        {/* Featured on X Section */}
+        <section id="featured-tweets">
+          <div className="flex items-center gap-2 mb-6">
+            <Twitter className="w-6 h-6 text-[#0052CC]" />
+            <h2 className="text-3xl font-bold text-[#172B4D]">Featured on X</h2>
+            <span className="text-sm text-[#6B778C]">({featuredTweets.length} posts)</span>
+          </div>
+          <p className="text-sm text-[#6B778C] mb-6">Selected posts showcasing recent work and builds</p>
+          <FeaturedTweets />
         </section>
 
         {/* Reading, Read, Reading Soon Section */}
