@@ -30,13 +30,54 @@ export const books: Book[] = [
     publisher: "Atria Books"
   },
   {
+    title: "The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence",
+    author: "Sebastian Mallaby",
+    description: "The inside story of Demis Hassabis and DeepMind, and the decades-long pursuit of artificial superintelligence.",
+    coverUrl: "/images/books/infinity-machine.jpg",
+    amazonUrl: "https://www.amazon.com/Infinity-Machine-Hassabis-DeepMind-Superintelligence/dp/0593831845/",
+    slug: "the-infinity-machine",
+    status: "reading",
+    genre: "Technology / Biography",
+    publishedYear: "2025",
+    pages: "480",
+    publisher: "Penguin Press"
+  },
+  {
+    title: "Taiwan Travelogue",
+    author: "Shuang-zi Yang (translated by Lin King)",
+    description: "A National Book Award-winning novel of love between two women in 1938 colonial Taiwan, told through food, language, and the layers of empire.",
+    coverUrl: "/images/books/taiwan-travelogue.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1644453150/",
+    slug: "taiwan-travelogue",
+    status: "reading",
+    genre: "Literary Fiction / Historical",
+    publishedYear: "2024",
+    pages: "320",
+    publisher: "Graywolf Press"
+  },
+  {
+    title: "Moonbound",
+    author: "Robin Sloan",
+    description: "A genre-blending novel from the author of Mr. Penumbra's 24-Hour Bookstore",
+    coverUrl: "/images/books/moonbound.jpg",
+    amazonUrl: "https://amzn.to/42p4A0S",
+    slug: "moonbound-robin-sloan",
+    status: "read",
+    detailedDescription: "From bestselling author Robin Sloan comes a mind-bending adventure that blends science fiction and fantasy in entirely new ways. Set 11,000 years in the future, Moonbound follows a young boy raised by a robotic guardian on a desolate moon. When he discovers a mysterious talking animal, he embarks on a quest across time and space that challenges everything he knows about reality, family, and the nature of intelligence itself. Sloan crafts a wildly inventive tale that spans millennia while maintaining an intimate, character-driven narrative.",
+    genre: "Science Fiction/Fantasy",
+    publishedYear: "2024",
+    pages: "272",
+    publisher: "MCD",
+    rating: "4.0/5"
+  },
+  {
     title: "The Man Who Sees in Seconds",
     author: "Sanjay Sarma",
     description: "An exploration of rapid cognition and the science behind split-second decision making.",
     coverUrl: "/images/books/the-man-who-sees-in-seconds.jpg",
     amazonUrl: "https://www.amazon.com/dp/006329396X/",
     slug: "the-man-who-sees-in-seconds",
-    status: "reading",
+    status: "read",
     genre: "Nonfiction / Science",
     publishedYear: "2025",
     pages: "320",
@@ -141,21 +182,6 @@ export const books: Book[] = [
     pages: "272",
     publisher: "MCD",
     rating: "3.9/5"
-  },
-
-  {
-    title: "Moonbound",
-    author: "Robin Sloan",
-    description: "A genre-blending novel from the author of Mr. Penumbra's 24-Hour Bookstore",
-    coverUrl: "/images/books/moonbound.jpg",
-    amazonUrl: "https://amzn.to/42p4A0S",
-    slug: "moonbound-robin-sloan",
-    detailedDescription: "From bestselling author Robin Sloan comes a mind-bending adventure that blends science fiction and fantasy in entirely new ways. Set 11,000 years in the future, Moonbound follows a young boy raised by a robotic guardian on a desolate moon. When he discovers a mysterious talking animal, he embarks on a quest across time and space that challenges everything he knows about reality, family, and the nature of intelligence itself. Sloan crafts a wildly inventive tale that spans millennia while maintaining an intimate, character-driven narrative.",
-    genre: "Science Fiction/Fantasy",
-    publishedYear: "2024",
-    pages: "272",
-    publisher: "MCD",
-    rating: "4.0/5"
   },
 
   {
