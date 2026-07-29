@@ -17,6 +17,19 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "Angel Down",
+    author: "Daniel Kraus",
+    description: "A Pulitzer Prize-winning World War I novel, told in a single unbroken sentence, about a squad of soldiers sent into no-man's-land to rescue a fallen angel.",
+    coverUrl: "/images/books/angel-down.jpg",
+    amazonUrl: "https://www.amazon.com/Angel-Down-Novel-Daniel-Kraus/dp/1668068451/",
+    slug: "angel-down",
+    status: "reading",
+    genre: "Historical Fiction / Horror",
+    publishedYear: "2025",
+    pages: "304",
+    publisher: "Atria Books"
+  },
+  {
     title: "The Man Who Sees in Seconds",
     author: "Sanjay Sarma",
     description: "An exploration of rapid cognition and the science behind split-second decision making.",
