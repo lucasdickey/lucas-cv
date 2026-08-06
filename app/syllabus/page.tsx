@@ -16,15 +16,10 @@ export default function SyllabusPage() {
   const { viewMode } = useViewMode();
   const stats = getSyllabusStats();
 
-  const readingLinks = (reading: SyllabusReading) =>
-    [
-      reading.url
-        ? { href: reading.url, label: reading.urlLabel || 'Read online' }
-        : null,
-      reading.amazonUrl
-        ? { href: reading.amazonUrl, label: 'Find on Amazon' }
-        : null,
-    ].filter(Boolean) as { href: string; label: string }[];
+  // Amazon where the reading is a book, the canonical source where it lives
+  // on the open web. Cover art and title both point here.
+  const readingHref = (reading: SyllabusReading) =>
+    reading.amazonUrl || reading.url;
 
   // Marketer view
   if (viewMode === 'marketer') {
@@ -156,15 +151,30 @@ export default function SyllabusPage() {
                         </div>
                         <div className="flex gap-4">
                           {reading.coverUrl && (
-                            <img
-                              src={reading.coverUrl}
-                              alt={`${reading.title} cover`}
-                              className="w-16 h-24 object-cover rounded shadow-sm flex-shrink-0"
-                            />
+                            <a
+                              href={readingHref(reading)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-shrink-0"
+                            >
+                              <img
+                                src={reading.coverUrl}
+                                alt={`${reading.title} cover`}
+                                className="w-20 object-cover rounded shadow-sm hover:opacity-80 transition-opacity"
+                                style={{ height: '7.5rem' }}
+                              />
+                            </a>
                           )}
                           <div className="flex-1 min-w-0 pr-20">
-                            <h4 className="font-bold text-[#172B4D] mb-1 text-sm leading-tight">
-                              {reading.title}
+                            <h4 className="font-bold mb-1 text-sm leading-tight">
+                              <a
+                                href={readingHref(reading)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#0052CC] hover:underline"
+                              >
+                                {reading.title}
+                              </a>
                             </h4>
                             <p className="text-[#6B778C] text-xs mb-2">
                               by {reading.author}
@@ -173,23 +183,10 @@ export default function SyllabusPage() {
                                 : ''}
                             </p>
                             {reading.note && (
-                              <p className="text-[#333333] text-xs mb-3 leading-relaxed">
+                              <p className="text-[#333333] text-xs leading-relaxed">
                                 {reading.note}
                               </p>
                             )}
-                            <div className="flex flex-wrap items-center gap-4">
-                              {readingLinks(reading).map((link) => (
-                                <a
-                                  key={link.href}
-                                  href={link.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-[#0052CC] text-xs hover:underline"
-                                >
-                                  {link.label}
-                                </a>
-                              ))}
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -381,17 +378,30 @@ export default function SyllabusPage() {
                   </div>
                   <div className="flex gap-4">
                     {reading.coverUrl && (
-                      <div className="flex-shrink-0">
+                      <a
+                        href={readingHref(reading)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0"
+                      >
                         <img
                           src={reading.coverUrl}
                           alt={`${reading.title} cover`}
-                          className="w-16 h-24 object-cover rounded shadow-sm"
+                          className="w-20 object-cover rounded shadow-sm hover:opacity-80 transition-opacity"
+                          style={{ height: '7.5rem' }}
                         />
-                      </div>
+                      </a>
                     )}
                     <div className="flex-1 min-w-0 pr-20">
-                      <h4 className="font-bold text-[#333333] mb-1 text-sm leading-tight">
-                        {reading.title}
+                      <h4 className="font-bold mb-1 text-sm leading-tight">
+                        <a
+                          href={readingHref(reading)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#0000ff] hover:underline"
+                        >
+                          {reading.title}
+                        </a>
                       </h4>
                       <p className="text-[#666666] text-xs mb-2">
                         by {reading.author}
@@ -400,23 +410,10 @@ export default function SyllabusPage() {
                           : ''}
                       </p>
                       {reading.note && (
-                        <p className="text-[#333333] text-xs mb-2 leading-relaxed">
+                        <p className="text-[#333333] text-xs leading-relaxed">
                           {reading.note}
                         </p>
                       )}
-                      <div className="flex flex-wrap items-center gap-4">
-                        {readingLinks(reading).map((link) => (
-                          <a
-                            key={link.href}
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#0000ff] text-xs hover:underline"
-                          >
-                            {link.label}
-                          </a>
-                        ))}
-                      </div>
                     </div>
                   </div>
                 </div>

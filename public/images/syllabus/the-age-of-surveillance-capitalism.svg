@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600" role="img" aria-label="The Age of Surveillance Capitalism by Shoshana Zuboff">
+  <defs>
+    <linearGradient id="bg-the-age-of-surveillance-capitalism" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E4433"/>
+      <stop offset="100%" stop-color="#11131A"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg-the-age-of-surveillance-capitalism)"/>
+  <rect x="0" y="0" width="10" height="600" fill="#9DD5A8" opacity="0.85"/>
+  <rect x="26" y="18" width="348" height="564" fill="none" stroke="#FFFFFF" stroke-opacity="0.16"/>
+  <line x1="40" y1="118" x2="150" y2="118" stroke="#9DD5A8" stroke-width="3"/>
+  <text x="40" y="86" font-family="ui-monospace, 'SFMono-Regular', Menlo, monospace" font-size="15" letter-spacing="2.5" fill="#9DD5A8" fill-opacity="0.95">PART III</text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="700" fill="#FFFFFF"><tspan x="40" y="218">The Age of</tspan><tspan x="40" y="269">Surveillance</tspan><tspan x="40" y="320">Capitalism</tspan></text>
+  <text font-family="Helvetica, Arial, sans-serif" font-size="19" fill="#FFFFFF" fill-opacity="0.72"><tspan x="40" y="389">Shoshana Zuboff</tspan></text>
+  <line x1="40" y1="522" x2="360" y2="522" stroke="#FFFFFF" stroke-opacity="0.18"/>
+  <text x="40" y="550" font-family="ui-monospace, 'SFMono-Regular', Menlo, monospace" font-size="13" letter-spacing="1.5" fill="#FFFFFF" fill-opacity="0.6">PART III</text>
+</svg>
