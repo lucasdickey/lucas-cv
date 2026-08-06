@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag, BookOpen, ArrowRight, TrendingUp, Briefcase, Code, MessageSquare, Film } from 'lucide-react';
 import { books as recentBooks } from '../data/books';
+import { syllabus, getSyllabusStats } from '../data/syllabus';
 import { toys } from '../data/toys';
 import { lennyRecommendations } from '../data/lenny';
 import { getPublishedPosts } from '../data/blog';
@@ -666,6 +667,58 @@ export default function MarketerHome() {
               </div>
             </div>
           )}
+        </section>
+
+        {/* AI & Civilization Syllabus Section */}
+        <section id="syllabus">
+          <div className="flex items-center gap-2 mb-6">
+            <BookOpen className="w-6 h-6 text-[#0052CC]" />
+            <h2 className="text-3xl font-bold text-[#172B4D]">AI &amp; Civilization Syllabus</h2>
+            <span className="text-sm text-[#6B778C]">({getSyllabusStats().total} readings)</span>
+          </div>
+          <p className="text-sm text-[#6B778C] mb-6">A self-directed reading program on AI as a civilizational technology, not just another software platform</p>
+
+          <blockquote className="border-l-4 border-[#0052CC] pl-4 text-lg text-[#172B4D] italic mb-6">
+            {syllabus.guidingQuestion}
+          </blockquote>
+
+          <div className="flex flex-wrap gap-2 mb-8">
+            {syllabus.lenses.map((lens) => (
+              <span key={lens} className="px-3 py-1 bg-[#DEEBFF] text-[#0052CC] text-sm font-medium rounded-md">
+                {lens}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {syllabus.parts.map((part) => (
+              <div key={part.id} className="bg-[#F4F5F7] rounded-lg p-6 hover:shadow-lg transition-all border border-transparent hover:border-[#0052CC]">
+                <div className="flex justify-between items-start gap-2 mb-2">
+                  <h3 className="font-bold text-[#172B4D] text-sm leading-tight">{part.label} — {part.title}</h3>
+                  <span className="text-[#6B778C] text-xs whitespace-nowrap">
+                    {part.readings.length} {part.readings.length === 1 ? 'reading' : 'readings'}
+                  </span>
+                </div>
+                <p className="text-[#333333] text-xs leading-relaxed">{part.summary}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-[#F4F5F7] rounded-lg p-6">
+            <div className="text-sm text-[#6B778C] mb-3">
+              {getSyllabusStats().read} read · {getSyllabusStats().reading} reading · {getSyllabusStats().pending} queued · {getSyllabusStats().total} readings across {getSyllabusStats().parts} parts
+            </div>
+            <p className="text-[#172B4D] mb-4 leading-relaxed">
+              The missing book: <span className="italic">{syllabus.missingBook.question}</span>
+            </p>
+            <Link
+              href="/syllabus"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0052CC] text-white font-medium rounded-md hover:bg-[#0065FF] transition-colors shadow-sm hover:shadow-md"
+            >
+              Read the full syllabus
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </section>
 
         {/* Lenny's Recommendations Section */}

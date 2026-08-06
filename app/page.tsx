@@ -26,6 +26,7 @@ interface Entry {
     | "media"
     | "twitter"
     | "books"
+    | "syllabus"
     | "lenny"
     | "toys"
     | "blog";
@@ -59,6 +60,7 @@ interface GitHubContributionData {
 }
 
 import { type Book, books as recentBooks } from "./data/books";
+import { syllabus, getSyllabusStats } from "./data/syllabus";
 import { toys } from "./data/toys";
 import { lennyRecommendations } from "./data/lenny";
 import { getPublishedPosts } from "./data/blog";
@@ -350,6 +352,19 @@ const entries: Entry[] = [
     type: "books",
     sourceTitle: "Personal Library",
     sourceDescription: "Recent reading list and book recommendations",
+  },
+
+  // AI & Civilization Syllabus
+  {
+    title: "",
+    description:
+      "A self-directed reading program built around a single question: if intelligence becomes abundant, inexpensive, and increasingly non-human, which theories of civilization still hold — and which must be rewritten? Seven parts spanning history, media theory, economics, institutions, AI futures, ethics, and governance.",
+    publishedDate: "2026-08-06",
+    type: "syllabus",
+    sourceUrl: "/syllabus",
+    sourceTitle: "AI & Civilization Reading Syllabus",
+    sourceDescription:
+      "Multidisciplinary reading syllabus on AI as a civilizational technology",
   },
 
   // Lenny's Recommendations
@@ -679,6 +694,7 @@ export default function TerminalRepoList() {
       media: { name: "Media", icon: "🎬" },
       twitter: { name: "Twitter Posts", icon: "🐦" },
       books: { name: "Reading, Read, Reading Soon", icon: "📚" },
+      syllabus: { name: "AI & Civilization Syllabus", icon: "🏛️" },
       lenny: { name: "Lenny's Recommendations", icon: "📖" },
       toys: { name: "Recent Toys", icon: "🧸" },
     };
@@ -781,6 +797,7 @@ export default function TerminalRepoList() {
                   "code",
                   "blog",
                   "books",
+                  "syllabus",
                   "lenny",
                   "toys",
                   "podcasts",
@@ -807,6 +824,8 @@ export default function TerminalRepoList() {
                     {typeInfo.icon} {typeInfo.name} (
                     {type === "books"
                       ? recentBooks.length
+                      : type === "syllabus"
+                      ? getSyllabusStats().total
                       : type === "lenny"
                       ? lennyRecommendations.length
                       : type === "toys"
@@ -985,6 +1004,7 @@ export default function TerminalRepoList() {
               "code",
               "blog",
               "books",
+              "syllabus",
               "lenny",
               "toys",
               "twitter",
@@ -1015,6 +1035,8 @@ export default function TerminalRepoList() {
                     (
                     {type === "books"
                       ? recentBooks.length
+                      : type === "syllabus"
+                      ? getSyllabusStats().total
                       : type === "lenny"
                       ? lennyRecommendations.length
                       : type === "toys"
@@ -1024,6 +1046,8 @@ export default function TerminalRepoList() {
                       : typeEntries.length}{" "}
                     {type === "books"
                       ? "books"
+                      : type === "syllabus"
+                      ? "readings"
                       : type === "lenny"
                       ? "books"
                       : type === "toys"
@@ -1217,6 +1241,78 @@ export default function TerminalRepoList() {
                                 )}
                                 <IngestionQueue books={recentBooks} />
                               </>
+                            );
+                          })()
+                        )}
+
+                        {entry.type === "syllabus" && (
+                          (() => {
+                            const stats = getSyllabusStats();
+
+                            return (
+                              <div className="mb-2">
+                                <div className="border-l-4 border-[#8b0000] pl-3 mb-4 text-[#333333] italic">
+                                  {syllabus.guidingQuestion}
+                                </div>
+
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                  {syllabus.lenses.map((lens) => (
+                                    <span
+                                      key={lens}
+                                      className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"
+                                    >
+                                      #{lens.toLowerCase().replace(/\s+/g, "-")}
+                                    </span>
+                                  ))}
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                  {syllabus.parts.map((part) => (
+                                    <div
+                                      key={part.id}
+                                      className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                                    >
+                                      <div className="flex justify-between items-start gap-2 mb-1">
+                                        <h4 className="font-bold text-[#333333] text-sm leading-tight">
+                                          {part.label} — {part.title}
+                                        </h4>
+                                        <span className="text-[#666666] text-xs whitespace-nowrap">
+                                          {part.readings.length}{" "}
+                                          {part.readings.length === 1
+                                            ? "reading"
+                                            : "readings"}
+                                        </span>
+                                      </div>
+                                      <p className="text-[#666666] text-xs leading-relaxed">
+                                        {part.summary}
+                                      </p>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                <div className="border border-[#cccccc] rounded-lg p-4 bg-[#fafafa]">
+                                  <div className="text-[#333333] text-xs mb-3">
+                                    <span className="text-[#666666]">
+                                      status:
+                                    </span>{" "}
+                                    {stats.read} read · {stats.reading} reading ·{" "}
+                                    {stats.pending} queued · {stats.total} total
+                                    across {stats.parts} parts
+                                  </div>
+                                  <div className="text-[#333333] text-xs mb-3 leading-relaxed">
+                                    The missing book:{" "}
+                                    <span className="italic">
+                                      {syllabus.missingBook.question}
+                                    </span>
+                                  </div>
+                                  <Link
+                                    href="/syllabus"
+                                    className="text-[#0000ff] text-sm hover:underline"
+                                  >
+                                    Read the full syllabus →
+                                  </Link>
+                                </div>
+                              </div>
                             );
                           })()
                         )}
