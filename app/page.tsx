@@ -11,6 +11,7 @@ import { getCodeProjectImage } from "./utils/codeProjectImages";
 import { ListeningSection } from "./components/ListeningSection";
 import { ExpandableSection } from "./components/ExpandableSection";
 import ApebotChat from "./components/ApebotChat";
+import SyllabusPartIcon from "./components/SyllabusPartIcon";
 import FeaturedTweets from "./components/FeaturedTweets";
 import { featuredTweets } from "./data/tweets";
 
@@ -361,7 +362,6 @@ const entries: Entry[] = [
       "A self-directed reading program built around a single question: if intelligence becomes abundant, inexpensive, and increasingly non-human, which theories of civilization still hold — and which must be rewritten? Seven parts spanning history, media theory, economics, institutions, AI futures, ethics, and governance.",
     publishedDate: "2026-08-06",
     type: "syllabus",
-    sourceUrl: "/syllabus",
     sourceTitle: "AI & Civilization Reading Syllabus",
     sourceDescription:
       "Multidisciplinary reading syllabus on AI as a civilizational technology",
@@ -1268,25 +1268,34 @@ export default function TerminalRepoList() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                                   {syllabus.parts.map((part) => (
-                                    <div
+                                    <Link
                                       key={part.id}
-                                      className="border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] transition-colors"
+                                      href={`/syllabus#${part.id}`}
+                                      className="block border border-[#cccccc] rounded-lg p-3 bg-[#fafafa] hover:bg-[#f0f0f0] hover:border-[#8b0000] transition-colors"
                                     >
-                                      <div className="flex justify-between items-start gap-2 mb-1">
-                                        <h4 className="font-bold text-[#333333] text-sm leading-tight">
-                                          {part.label} — {part.title}
-                                        </h4>
-                                        <span className="text-[#666666] text-xs whitespace-nowrap">
-                                          {part.readings.length}{" "}
-                                          {part.readings.length === 1
-                                            ? "reading"
-                                            : "readings"}
-                                        </span>
+                                      <div className="flex items-start gap-3">
+                                        <SyllabusPartIcon
+                                          partId={part.id}
+                                          className="w-7 h-7 text-[#8b0000] flex-shrink-0 mt-0.5"
+                                        />
+                                        <div className="flex-1 min-w-0">
+                                          <div className="flex justify-between items-start gap-2 mb-1">
+                                            <h4 className="font-bold text-[#0000ff] text-sm leading-tight">
+                                              {part.label} — {part.title}
+                                            </h4>
+                                            <span className="text-[#666666] text-xs whitespace-nowrap">
+                                              {part.readings.length}{" "}
+                                              {part.readings.length === 1
+                                                ? "reading"
+                                                : "readings"}
+                                            </span>
+                                          </div>
+                                          <p className="text-[#666666] text-xs leading-relaxed">
+                                            {part.summary}
+                                          </p>
+                                        </div>
                                       </div>
-                                      <p className="text-[#666666] text-xs leading-relaxed">
-                                        {part.summary}
-                                      </p>
-                                    </div>
+                                    </Link>
                                   ))}
                                 </div>
 

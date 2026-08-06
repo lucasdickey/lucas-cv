@@ -177,7 +177,7 @@ export const syllabusParts: SyllabusPart[] = [
         title: "The Square and the Tower",
         author: "Niall Ferguson",
         format: "book",
-        status: "pending",
+        status: "reading",
         coverUrl: "/images/syllabus/the-square-and-the-tower.svg",
         note: "Probably the strongest historical treatment of networks versus hierarchies.",
         amazonUrl: amazonSearch("The Square and the Tower", "Niall Ferguson"),

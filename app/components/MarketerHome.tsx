@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag, BookOpen, ArrowRight, TrendingUp, Briefcase, Code, MessageSquare, Film } from 'lucide-react';
 import { books as recentBooks } from '../data/books';
 import { syllabus, getSyllabusStats } from '../data/syllabus';
+import SyllabusPartIcon from './SyllabusPartIcon';
 import { toys } from '../data/toys';
 import { lennyRecommendations } from '../data/lenny';
 import { getPublishedPosts } from '../data/blog';
@@ -692,7 +693,12 @@ export default function MarketerHome() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {syllabus.parts.map((part) => (
-              <div key={part.id} className="bg-[#F4F5F7] rounded-lg p-6 hover:shadow-lg transition-all border border-transparent hover:border-[#0052CC]">
+              <Link
+                key={part.id}
+                href={`/syllabus#${part.id}`}
+                className="block bg-[#F4F5F7] rounded-lg p-6 hover:shadow-lg transition-all border border-transparent hover:border-[#0052CC]"
+              >
+                <SyllabusPartIcon partId={part.id} className="w-8 h-8 text-[#0052CC] mb-3" />
                 <div className="flex justify-between items-start gap-2 mb-2">
                   <h3 className="font-bold text-[#172B4D] text-sm leading-tight">{part.label} — {part.title}</h3>
                   <span className="text-[#6B778C] text-xs whitespace-nowrap">
@@ -700,7 +706,7 @@ export default function MarketerHome() {
                   </span>
                 </div>
                 <p className="text-[#333333] text-xs leading-relaxed">{part.summary}</p>
-              </div>
+              </Link>
             ))}
           </div>
 
