@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { useViewMode } from '../contexts/view-mode-context';
+import SyllabusPartIcon from '../components/SyllabusPartIcon';
 import {
   syllabus,
   syllabusParts,
@@ -127,10 +128,16 @@ export default function SyllabusPage() {
 
             <div className="space-y-10">
               {syllabusParts.map((part) => (
-                <section key={part.id} id={part.id}>
-                  <h3 className="text-xl font-bold text-[#172B4D] mb-1">
-                    {part.label} — {part.title}
-                  </h3>
+                <section key={part.id} id={part.id} className="scroll-mt-8">
+                  <div className="flex items-center gap-3 mb-1">
+                    <SyllabusPartIcon
+                      partId={part.id}
+                      className="w-7 h-7 text-[#0052CC] flex-shrink-0"
+                    />
+                    <h3 className="text-xl font-bold text-[#172B4D]">
+                      {part.label} — {part.title}
+                    </h3>
+                  </div>
                   <p className="text-sm text-[#6B778C] mb-4">{part.summary}</p>
                   <div className="grid md:grid-cols-2 gap-4">
                     {part.readings.map((reading) => (
@@ -344,16 +351,22 @@ export default function SyllabusPage() {
         <div
           key={part.id}
           id={part.id}
-          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
+          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm scroll-mt-4"
         >
-          <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc]">
-            <span className="text-[#8b0000] text-lg font-bold">
-              {part.label} — {part.title}
-            </span>
-            <span className="text-[#666666] text-sm ml-2">
-              ({part.readings.length}{' '}
-              {part.readings.length === 1 ? 'reading' : 'readings'})
-            </span>
+          <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc] flex items-center gap-3">
+            <SyllabusPartIcon
+              partId={part.id}
+              className="w-6 h-6 text-[#8b0000] flex-shrink-0"
+            />
+            <div>
+              <span className="text-[#8b0000] text-lg font-bold">
+                {part.label} — {part.title}
+              </span>
+              <span className="text-[#666666] text-sm ml-2">
+                ({part.readings.length}{' '}
+                {part.readings.length === 1 ? 'reading' : 'readings'})
+              </span>
+            </div>
           </div>
           <div className="bg-[#f5f5dc] p-4">
             <p className="text-[#666666] text-xs mb-4 leading-relaxed">
