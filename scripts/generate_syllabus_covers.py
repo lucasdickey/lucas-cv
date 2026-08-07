@@ -2,13 +2,12 @@
 """
 Generate SVG cover art for the AI & Civilization syllabus readings.
 
-Most syllabus readings have no cover image in /public/images/books/, and a few
-(essays, interview series) have no printed cover at all. This generates a
-typographic cover per reading, color-coded by syllabus part, written to
-/public/images/syllabus/<slug>.svg.
+A few syllabus readings — the essay collections and the interview series —
+have no printed cover to fetch. This generates a typographic cover for those,
+color-coded by syllabus part, written to /public/images/syllabus/<slug>.svg.
 
-Readings that already have real cover art in app/data/syllabus.ts keep it —
-this script only writes files for the slugs listed below.
+Every reading that is an actual book gets real publisher artwork instead, via
+scripts/fetch_syllabus_covers.py.
 
 Usage:
     python3 scripts/generate_syllabus_covers.py
@@ -39,45 +38,12 @@ PARTS = {
 
 # slug, part id, title, author, kind
 READINGS = [
-    ("the-clash-of-civilizations", "civilization-history",
-     "The Clash of Civilizations", "Samuel Huntington", "book"),
-    ("end-times", "civilization-history",
-     "End Times", "Peter Turchin", "book"),
-    ("understanding-media", "media-cognition",
-     "Understanding Media", "Marshall McLuhan", "book"),
-    ("the-shallows", "media-cognition",
-     "The Shallows", "Nicholas Carr", "book"),
-    ("average-is-over", "economics-institutions",
-     "Average Is Over", "Tyler Cowen", "book"),
-    ("the-age-of-surveillance-capitalism", "economics-institutions",
-     "The Age of Surveillance Capitalism", "Shoshana Zuboff", "book"),
-    ("the-second-machine-age", "economics-institutions",
-     "The Second Machine Age", "Brynjolfsson & McAfee", "book"),
-    ("machine-platform-crowd", "economics-institutions",
-     "Machine, Platform, Crowd", "Brynjolfsson & McAfee", "book"),
-    ("the-square-and-the-tower", "networks-states-power",
-     "The Square and the Tower", "Niall Ferguson", "book"),
-    ("civilization-the-west-and-the-rest", "networks-states-power",
-     "Civilization: The West and the Rest", "Niall Ferguson", "book"),
-    ("institutions-institutional-change", "networks-states-power",
-     "Institutions, Institutional Change and Economic Performance",
-     "Douglass North", "book"),
     ("ai-2027", "ai-futures",
      "AI 2027", "Daniel Kokotajlo", "essays"),
     ("dwarkesh-interviews", "ai-futures",
      "Long-form Interviews", "Dwarkesh Patel", "interviews"),
     ("situational-awareness", "ai-futures",
      "Situational Awareness", "Leopold Aschenbrenner", "essays"),
-    ("practical-ethics", "ethics-society-governance",
-     "Practical Ethics", "Peter Singer", "book"),
-    ("the-righteous-mind", "ethics-society-governance",
-     "The Righteous Mind", "Jonathan Haidt", "book"),
-    ("the-anxious-generation", "ethics-society-governance",
-     "The Anxious Generation", "Jonathan Haidt", "book"),
-    ("genesis", "ethics-society-governance",
-     "Genesis", "Kissinger, Schmidt & Mundie", "book"),
-    ("nexus", "information-civilization",
-     "Nexus", "Yuval Noah Harari", "book"),
 ]
 
 KIND_LABEL = {"book": "", "essays": "Essays", "interviews": "Interviews"}
