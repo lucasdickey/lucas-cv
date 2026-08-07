@@ -26,6 +26,7 @@ import argparse
 import json
 import os
 import re
+import ssl
 import sys
 import time
 import urllib.parse
@@ -39,9 +40,27 @@ USER_AGENT = "lucas-cv-syllabus-covers/1.0 (https://lucasdickey.com)"
 MIN_COVER_BYTES = 3000  # Open Library serves a ~800 byte blank when it has none
 
 
+def ssl_context():
+    """A verified TLS context. Framework Python on macOS ships without a usable
+    trust store, so fall back to certifi and then the system bundle."""
+    try:
+        import certifi
+
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        pass
+    for bundle in ("/etc/ssl/cert.pem", "/usr/local/etc/openssl/cert.pem"):
+        if os.path.exists(bundle):
+            return ssl.create_default_context(cafile=bundle)
+    return ssl.create_default_context()
+
+
+CONTEXT = ssl_context()
+
+
 def get(url, binary=False, timeout=30):
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=timeout) as response:
+    with urllib.request.urlopen(request, timeout=timeout, context=CONTEXT) as response:
         payload = response.read()
     return payload if binary else json.loads(payload.decode("utf-8"))
 
