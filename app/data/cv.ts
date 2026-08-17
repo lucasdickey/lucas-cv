@@ -491,7 +491,14 @@ export function groupEntriesByType(
  *
  * To restore a section, remove its type from this set.
  */
-export const ARCHIVED_ENTRY_TYPES = new Set<EntryType>(["code"]);
+export const ARCHIVED_ENTRY_TYPES = new Set<EntryType>([
+  // Superseded by "The Last 90 Days", which covers current work with live links.
+  "code",
+  // Both had gone stale. /blog still serves the posts as a standalone route;
+  // only the homepage section is archived.
+  "opinion",
+  "blog",
+]);
 
 export function isArchivedType(type: string): boolean {
   return ARCHIVED_ENTRY_TYPES.has(type as EntryType);
