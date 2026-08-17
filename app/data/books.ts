@@ -17,6 +17,34 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "The Mountain in the Sea",
+    author: "Ray Nayler",
+    description: "A near-future novel about first contact with a hyper-intelligent octopus species, and what it costs to try to talk to a mind that isn't ours.",
+    coverUrl: "/images/books/the-mountain-in-the-sea.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1250872278/",
+    slug: "the-mountain-in-the-sea",
+    status: "reading",
+    detailedDescription: "Ray Nayler's debut novel follows a marine biologist sent to a cordoned-off archipelago to study an octopus species that appears to have developed language, symbol, and culture. Braided alongside it are an AI-piloted fishing trawler crewed by trafficked labor and the first android built to house a human-equivalent mind. The result is less a thriller than a sustained argument about consciousness: how we recognize it, how badly we're equipped to communicate across it, and what we destroy while deciding whether it counts.",
+    genre: "Science Fiction / Literary",
+    publishedYear: "2022",
+    pages: "464",
+    publisher: "MCD / Farrar, Straus and Giroux"
+  },
+  {
+    title: "The Conquest of Happiness",
+    author: "Bertrand Russell",
+    description: "Russell's 1930 practical philosophy of everyday contentment—what makes people unhappy, and what actually helps.",
+    coverUrl: "/images/books/the-conquest-of-happiness.jpg",
+    amazonUrl: "https://www.amazon.com/dp/087140673X/",
+    slug: "the-conquest-of-happiness",
+    status: "reading",
+    detailedDescription: "Written for the ordinary reader rather than the academy, Russell's book splits into causes of unhappiness (competition, boredom, envy, the fear of public opinion, a fixation on sin) and causes of happiness (zest, affection, family, work, impersonal interests). His central move is outward: unhappiness tends to come from excessive self-absorption, and the cure is a widening of genuine interest in the world beyond oneself. Nearly a century later it reads as unusually direct, unsentimental self-help from a first-rank philosopher.",
+    genre: "Philosophy / Psychology",
+    publishedYear: "1930",
+    pages: "223",
+    publisher: "Liveright"
+  },
+  {
     title: "Angel Down",
     author: "Daniel Kraus",
     description: "A Pulitzer Prize-winning World War I novel, told in a single unbroken sentence, about a squad of soldiers sent into no-man's-land to rescue a fallen angel.",
