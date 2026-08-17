@@ -481,5 +481,29 @@ export function groupEntriesByType(
   return grouped;
 }
 
-/** Entries grouped once at module scope; safe to share across renders. */
-export const groupedEntries: Record<string, Entry[]> = groupEntriesByType();
+/**
+ * Sections hidden from the site while their content is reworked.
+ *
+ * Nothing is deleted: the entries stay in `entries` above and remain
+ * reachable via `groupEntriesByType(entries)`. They are simply left out of
+ * every rendered surface — the terminal view, the marketer view, and the
+ * Markdown at /cv.md — so the section can be rewritten before it goes back up.
+ *
+ * To restore a section, remove its type from this set.
+ */
+export const ARCHIVED_ENTRY_TYPES = new Set<EntryType>(["code"]);
+
+export function isArchivedType(type: string): boolean {
+  return ARCHIVED_ENTRY_TYPES.has(type as EntryType);
+}
+
+/** Every entry, including archived sections. */
+export const allGroupedEntries: Record<string, Entry[]> = groupEntriesByType();
+
+/**
+ * Entries grouped once at module scope, with archived sections removed.
+ * This is what the site and the Markdown surfaces render.
+ */
+export const groupedEntries: Record<string, Entry[]> = groupEntriesByType(
+  entries.filter((entry) => !isArchivedType(entry.type))
+);
