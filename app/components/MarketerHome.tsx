@@ -9,11 +9,12 @@ import { syllabus, getSyllabusStats } from '../data/syllabus';
 import SyllabusPartIcon from './SyllabusPartIcon';
 import { toys } from '../data/toys';
 import { lennyRecommendations } from '../data/lenny';
-import { getPublishedPosts } from '../data/blog';
 import { getCodeProjectImage } from '../utils/codeProjectImages';
 import { isArchivedType } from '../data/cv';
 import { featuredTweets } from '../data/tweets';
 import FeaturedTweets from './FeaturedTweets';
+import ShipLog from './ShipLog';
+import { getShipLogStats, WINDOW_START } from '../data/shipLog';
 
 interface Entry {
   title: string;
@@ -346,8 +347,9 @@ export default function MarketerHome() {
     );
   });
 
-  // Calculate stats
-  const blogPostsCount = getPublishedPosts().length;
+  // Calculate stats. No blog count: that section is archived, and unlike the
+  // others it was never derived from `entries` — restore it with
+  // `getPublishedPosts().length` alongside its stat tile.
   const cvEntries = groupedEntries['cv'] || [];
   const codeEntries = groupedEntries['code'] || [];
   const opinionEntries = groupedEntries['opinion'] || [];
@@ -443,17 +445,30 @@ export default function MarketerHome() {
 
         {/* Stats Section */}
         <div className="border-t border-[#DFE1E6] pt-8">
+          {/* Tiles for archived sections drop out with them, so the row stays
+              even however many types are archived at once. */}
           <div
             className={`grid grid-cols-2 gap-4 md:gap-8 ${
-              codeEntries.length > 0 ? "md:grid-cols-4" : "md:grid-cols-3"
+              [codeEntries, opinionEntries].filter((e) => e.length > 0).length +
+                3 >=
+              4
+                ? "md:grid-cols-4"
+                : "md:grid-cols-3"
             }`}
           >
             <Link
-              href="#blog"
+              href="#ship-log"
               className="group block rounded-md px-3 py-4 text-center transition-colors hover:bg-[#F4F5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]"
             >
-              <div className="text-3xl font-bold text-[#0052CC] mb-1 group-hover:underline">{blogPostsCount}</div>
-              <div className="text-sm text-[#6B778C]">Blog Posts</div>
+              <div className="text-3xl font-bold text-[#0052CC] mb-1 group-hover:underline">{getShipLogStats().commits}</div>
+              <div className="text-sm text-[#6B778C]">Commits in 90 Days</div>
+            </Link>
+            <Link
+              href="#ship-log"
+              className="group block rounded-md px-3 py-4 text-center transition-colors hover:bg-[#F4F5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]"
+            >
+              <div className="text-3xl font-bold text-[#0052CC] mb-1 group-hover:underline">{getShipLogStats().live}</div>
+              <div className="text-sm text-[#6B778C]">Live Right Now</div>
             </Link>
             <Link
               href="#cv"
@@ -471,6 +486,7 @@ export default function MarketerHome() {
               <div className="text-sm text-[#6B778C]">Code Projects</div>
             </Link>
             )}
+            {opinionEntries.length > 0 && (
             <Link
               href="#opinion"
               className="group block rounded-md px-3 py-4 text-center transition-colors hover:bg-[#F4F5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]"
@@ -478,12 +494,37 @@ export default function MarketerHome() {
               <div className="text-3xl font-bold text-[#0052CC] mb-1 group-hover:underline">{opinionEntries.length}</div>
               <div className="text-sm text-[#6B778C]">Opinion Pieces</div>
             </Link>
+            )}
           </div>
         </div>
       </div>
 
       {/* Content Sections */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 space-y-16">
+        {/* The Last 90 Days — leads the content: what's being built right now. */}
+        <section id="ship-log">
+          <div className="flex items-center gap-2 mb-6 flex-wrap">
+            <TrendingUp className="w-6 h-6 text-[#0052CC]" />
+            <h2 className="text-3xl font-bold text-[#172B4D]">The Last 90 Days</h2>
+            <span className="text-sm text-[#6B778C]">
+              ({getShipLogStats().projects} repos · {getShipLogStats().commits} commits · {getShipLogStats().live} live)
+            </span>
+          </div>
+          <p className="text-sm text-[#6B778C] mb-6 max-w-3xl">
+            Everything below had commits since{' '}
+            {new Date(WINDOW_START).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              timeZone: 'UTC',
+            })}
+            . Ranges from a legislative-analysis company to a four-way soccer game with a real
+            Android build. Where a project is publicly live and un-gated, there&apos;s a direct
+            link — go poke at it.
+          </p>
+          <ShipLog variant="marketer" />
+        </section>
+
         {/* Professional Profile / CV Section */}
         <section id="cv">
           <div className="flex items-center gap-2 mb-6">
@@ -586,7 +627,7 @@ export default function MarketerHome() {
             <span className="text-sm text-[#6B778C]">({featuredTweets.length} posts)</span>
           </div>
           <p className="text-sm text-[#6B778C] mb-6">Selected posts showcasing recent work and builds</p>
-          <FeaturedTweets />
+          <FeaturedTweets variant="marketer" />
         </section>
 
         {/* Reading, Read, Reading Soon Section */}
@@ -903,7 +944,8 @@ export default function MarketerHome() {
           </div>
         </section>
 
-        {/* Opinion Pieces Section */}
+        {/* Opinion Pieces Section — hidden while the section is archived */}
+        {opinionEntries.length > 0 && (
         <section id="opinion">
           <div className="flex items-center gap-2 mb-6">
             <MessageSquare className="w-6 h-6 text-[#0052CC]" />
@@ -939,6 +981,7 @@ export default function MarketerHome() {
             ))}
           </div>
         </section>
+        )}
       </div>
 
       {/* Social Links Footer */}

@@ -13,7 +13,9 @@ import { ExpandableSection } from "./components/ExpandableSection";
 import ApebotChat from "./components/ApebotChat";
 import SyllabusPartIcon from "./components/SyllabusPartIcon";
 import FeaturedTweets from "./components/FeaturedTweets";
+import ShipLog from "./components/ShipLog";
 import { featuredTweets } from "./data/tweets";
+import { getShipLogStats, WINDOW_START } from "./data/shipLog";
 import { type Entry, getTypeInfo, groupedEntries } from "./data/cv";
 
 type ContributionLevelString =
@@ -332,6 +334,14 @@ export default function TerminalRepoList() {
         <div className="text-[#8b0000] font-bold mb-3">Table of Contents</div>
         <div className="text-sm">
           <div className="flex flex-col gap-2">
+            {/* Ship log sits first: the trailing-90-day record is the freshest signal. */}
+            <a
+              href="#ship-log"
+              className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+            >
+              ⚡ The Last 90 Days ({getShipLogStats().projects})
+            </a>
+
             {Object.keys(groupedEntries)
               .sort((a, b) => {
                 const order = [
@@ -389,6 +399,14 @@ export default function TerminalRepoList() {
                 💭 Opinions Posted Elsewhere ({groupedEntries["opinion"].length})
               </a>
             )}
+
+            {/* Featured on X link in table of contents */}
+            <a
+              href="#featured-tweets"
+              className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
+            >
+              🐦 Featured on X ({featuredTweets.length})
+            </a>
 
             {/* Podcast Brain Food link in table of contents */}
             <a
@@ -539,6 +557,37 @@ export default function TerminalRepoList() {
 
       {/* Content */}
       <div>
+        {/* The Last 90 Days — leads the content: what's being built right now. */}
+        <div
+          id="ship-log"
+          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
+        >
+          <div className="bg-[#e8e8d0] px-4 py-3 border-b border-[#cccccc]">
+            <span className="text-[#8b0000] text-lg font-bold">
+              ⚡ The Last 90 Days
+            </span>
+            <span className="text-[#666666] text-sm ml-2">
+              ({getShipLogStats().projects} repos · {getShipLogStats().commits}{" "}
+              commits · {getShipLogStats().live} live)
+            </span>
+          </div>
+          <div className="bg-[#f5f5dc]">
+            <div className="px-4 pt-4 text-[#333333] leading-relaxed">
+              Everything below had commits since{" "}
+              {new Date(WINDOW_START).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                timeZone: "UTC",
+              })}
+              . Ranges from a legislative-analysis company to a four-way soccer
+              game with a real Android build. Where a project is publicly live
+              and un-gated, there&apos;s a direct link — go poke at it.
+            </div>
+            <ShipLog variant="terminal" />
+          </div>
+        </div>
+
         {Object.keys(groupedEntries)
           .sort((a, b) => {
             const order = [
@@ -1181,7 +1230,7 @@ export default function TerminalRepoList() {
             <p className="text-[#333333] mb-4 leading-relaxed">
               Selected posts showcasing recent work and builds.
             </p>
-            <FeaturedTweets />
+            <FeaturedTweets variant="terminal" />
           </div>
         </div>
 
