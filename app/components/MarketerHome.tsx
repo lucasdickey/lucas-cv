@@ -11,6 +11,7 @@ import { toys } from '../data/toys';
 import { lennyRecommendations } from '../data/lenny';
 import { getPublishedPosts } from '../data/blog';
 import { getCodeProjectImage } from '../utils/codeProjectImages';
+import { isArchivedType } from '../data/cv';
 import { featuredTweets } from '../data/tweets';
 import FeaturedTweets from './FeaturedTweets';
 
@@ -326,9 +327,10 @@ export default function MarketerHome() {
     });
   };
 
-  // Group entries by type
+  // Group entries by type, skipping sections archived in ../data/cv
   const groupedEntries: Record<string, Entry[]> = {};
   entries.forEach((entry) => {
+    if (isArchivedType(entry.type)) return;
     if (!groupedEntries[entry.type]) {
       groupedEntries[entry.type] = [];
     }
@@ -441,7 +443,11 @@ export default function MarketerHome() {
 
         {/* Stats Section */}
         <div className="border-t border-[#DFE1E6] pt-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          <div
+            className={`grid grid-cols-2 gap-4 md:gap-8 ${
+              codeEntries.length > 0 ? "md:grid-cols-4" : "md:grid-cols-3"
+            }`}
+          >
             <Link
               href="#blog"
               className="group block rounded-md px-3 py-4 text-center transition-colors hover:bg-[#F4F5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]"
@@ -456,6 +462,7 @@ export default function MarketerHome() {
               <div className="text-3xl font-bold text-[#0052CC] mb-1 group-hover:underline">{cvEntries.length}</div>
               <div className="text-sm text-[#6B778C]">Career Milestones</div>
             </Link>
+            {codeEntries.length > 0 && (
             <Link
               href="#code"
               className="group block rounded-md px-3 py-4 text-center transition-colors hover:bg-[#F4F5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]"
@@ -463,6 +470,7 @@ export default function MarketerHome() {
               <div className="text-3xl font-bold text-[#0052CC] mb-1 group-hover:underline">{codeEntries.length}</div>
               <div className="text-sm text-[#6B778C]">Code Projects</div>
             </Link>
+            )}
             <Link
               href="#opinion"
               className="group block rounded-md px-3 py-4 text-center transition-colors hover:bg-[#F4F5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]"
@@ -514,7 +522,8 @@ export default function MarketerHome() {
           </div>
         </section>
 
-        {/* Code Repositories Section */}
+        {/* Code Repositories Section — hidden while the section is archived */}
+        {codeEntries.length > 0 && (
         <section id="code">
           <div className="flex items-center gap-2 mb-6">
             <Code className="w-6 h-6 text-[#0052CC]" />
@@ -567,6 +576,7 @@ export default function MarketerHome() {
             ))}
           </div>
         </section>
+        )}
 
         {/* Featured on X Section */}
         <section id="featured-tweets">
