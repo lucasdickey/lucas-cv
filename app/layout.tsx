@@ -115,6 +115,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Agent-readable surfaces. Lets crawlers and LLM clients discover the
+            Markdown representations directly from the HTML. */}
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href="/cv.md"
+          title="Lucas Dickey — CV (Markdown)"
+        />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href="/llms.txt"
+          title="llms.txt"
+        />
+      </head>
       <body>
         <ViewModeProvider>
           <ViewModeToggle />
