@@ -218,6 +218,17 @@ export const syllabusParts: SyllabusPart[] = [
       "The forecasters and the frontier. Mostly published on the open web, and mostly revised faster than books can be printed.",
     readings: [
       {
+        slug: "superintelligence",
+        title: "Superintelligence: Paths, Dangers, Strategies",
+        author: "Nick Bostrom",
+        format: "book",
+        status: "reading",
+        coverUrl: "/images/books/superintelligence.jpg",
+        note: "The foundational case for why a machine intelligence explosion is hard to steer and hard to contain.",
+        amazonUrl: "https://www.amazon.com/Superintelligence-Dangers-Strategies-Nick-Bostrom/dp/0198739834",
+        orderIndex: 12.5,
+      },
+      {
         slug: "ai-2027",
         title: "AI 2027 (and What 2026 Looks Like)",
         author: "Daniel Kokotajlo",
@@ -369,6 +380,7 @@ export const syllabus = {
     "Peter Turchin",
     "Douglass North",
     "Peter Singer",
+    "Nick Bostrom",
     "Daniel Kokotajlo",
     "Dwarkesh Patel interviews",
     "Genesis",
