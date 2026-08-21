@@ -21,9 +21,9 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "out");
 
 const CROPS = {
-  square: { id: "SyllabusFilmSquare", file: "syllabus-square.mp4" },
-  vertical: { id: "SyllabusFilmVertical", file: "syllabus-vertical.mp4" },
-  wide: { id: "SyllabusFilmWide", file: "syllabus-wide.mp4" },
+  square: { id: "SyllabusFilmSquare", file: "syllabus-square-v2.mp4" },
+  vertical: { id: "SyllabusFilmVertical", file: "syllabus-vertical-v2.mp4" },
+  wide: { id: "SyllabusFilmWide", file: "syllabus-wide-v2.mp4" },
 };
 
 /**

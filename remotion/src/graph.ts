@@ -1,36 +1,31 @@
-import { syllabusParts } from "../../app/data/syllabus";
+import {
+  BOOK_H,
+  BOOK_W,
+  GRAPH_BOOKS,
+  GRAPH_PARTS,
+} from "../../app/lib/syllabusGraph";
 import { partColor } from "./theme";
 
 /**
  * The syllabus drawn as a knowledge graph: the guiding question at the centre,
  * the seven parts as supernodes on a ring around it, and every reading hung off
- * its part in a fan. All coordinates are in "design units" — a 1080x1080 square
- * centred on (0, 0) — and the camera scales them to whatever the composition is.
+ * its part in a fan.
+ *
+ * Node positions come from app/lib/syllabusGraph, the same module the
+ * interactive graph on /syllabus lays out from, so the site and the film place
+ * a book in the same spot. What lives here is what is specific to the film:
+ * when each node arrives, the dark-surface palette, and how the camera tours
+ * the parts. Coordinates are design units — a 1080x1080 square centred on
+ * (0, 0) — which the camera scales to whatever the composition is.
  */
 
-const RING_RADIUS = 340;
-/** Distance from a supernode out to the books hanging off it. */
-const BOOK_DISTANCE = 200;
-/** Degrees between adjacent books in a part's fan. */
-const BOOK_SPREAD = 28;
-/**
- * Every other book is pushed further out so neighbouring covers never touch.
- * These four constants were solved for rather than eyeballed: they are the
- * largest cover size and tightest graph for which no two axis-aligned covers
- * overlap, across all seven fans. Changing the syllabus's shape (a part gaining
- * a sixth reading, say) means re-solving them.
- */
-const BOOK_STAGGER = 140;
-
-export const BOOK_W = 96;
-export const BOOK_H = 144;
-
-const rad = (deg: number) => (deg * Math.PI) / 180;
+export { BOOK_H, BOOK_W };
 
 export interface PartNode {
   id: string;
   label: string;
   title: string;
+  summary: string;
   angle: number;
   x: number;
   y: number;
@@ -38,6 +33,7 @@ export interface PartNode {
   deep: string;
   bookCount: number;
   appearAt: number;
+  index: number;
 }
 
 export interface BookNode {
@@ -58,72 +54,67 @@ export interface BookNode {
   index: number;
 }
 
-/** Graph-local frame numbers, at 30fps. */
+/**
+ * Graph-local frame numbers, at 30fps.
+ *
+ * The fan-out is deliberately near-instant: the books arrive roughly one frame
+ * apart, so the graph assembles as a burst rather than a queue. Each cover
+ * still has its own spring, so the cascade reads over about a second even
+ * though the last book is triggered 23 frames after the first.
+ */
 export const T = {
   centerIn: 0,
-  superStart: 46,
-  superStep: 26,
-  bookStart: 214,
-  bookStep: 21,
-  wideAt: 700,
-  focusAIn: 790,
-  focusAOut: 855,
-  focusBIn: 900,
-  focusBOut: 990,
-  pullBack: 1050,
+  superStart: 34,
+  superStep: 20,
+  bookStart: 190,
+  bookStep: 1.05,
+  settleAt: 250,
+  /** The camera visits every part in turn, framed on that part's own fan. */
+  tourStart: 262,
+  tourPerPart: 90,
+  /** Frames spent travelling into a part before the hold begins. */
+  tourTravel: 26,
+  pullBack: 944,
 };
 
+export const TOUR_END = T.tourStart + GRAPH_PARTS.length * T.tourPerPart;
+
 const build = () => {
-  const parts: PartNode[] = [];
-  const books: BookNode[] = [];
-  let bookIndex = 0;
-
-  syllabusParts.forEach((part, i) => {
-    // Start at the top and go clockwise, so Part I reads first.
-    const angle = -90 + (i * 360) / syllabusParts.length;
+  const parts: PartNode[] = GRAPH_PARTS.map((part, i) => {
     const { accent, deep } = partColor(part.id);
-    const x = RING_RADIUS * Math.cos(rad(angle));
-    const y = RING_RADIUS * Math.sin(rad(angle));
-
-    parts.push({
+    return {
       id: part.id,
       label: part.label,
       title: part.title,
-      angle,
-      x,
-      y,
+      summary: part.summary,
+      angle: part.angle,
+      x: part.x,
+      y: part.y,
       accent,
       deep,
-      bookCount: part.readings.length,
+      bookCount: part.bookCount,
       appearAt: T.superStart + i * T.superStep,
-    });
-
-    const n = part.readings.length;
-    part.readings.forEach((reading, j) => {
-      const offset = (j - (n - 1) / 2) * BOOK_SPREAD;
-      const distance = BOOK_DISTANCE + (j % 2 === 1 ? BOOK_STAGGER : 0);
-      const theta = rad(angle + offset);
-
-      books.push({
-        slug: reading.slug,
-        title: reading.title,
-        author: reading.author,
-        note: reading.note,
-        coverUrl: reading.coverUrl ?? "",
-        status: reading.status,
-        partId: part.id,
-        partTitle: part.title,
-        x: x + distance * Math.cos(theta),
-        y: y + distance * Math.sin(theta),
-        parentX: x,
-        parentY: y,
-        accent,
-        appearAt: T.bookStart + bookIndex * T.bookStep,
-        index: bookIndex,
-      });
-      bookIndex += 1;
-    });
+      index: i,
+    };
   });
+
+  const books: BookNode[] = GRAPH_BOOKS.map((book) => ({
+    slug: book.slug,
+    title: book.title,
+    author: book.author,
+    note: book.note,
+    coverUrl: book.coverUrl,
+    status: book.status,
+    partId: book.partId,
+    partTitle: book.partTitle,
+    x: book.x,
+    y: book.y,
+    parentX: book.parentX,
+    parentY: book.parentY,
+    accent: partColor(book.partId).accent,
+    appearAt: T.bookStart + book.index * T.bookStep,
+    index: book.index,
+  }));
 
   return { parts, books };
 };
@@ -132,45 +123,78 @@ export const { parts: PART_NODES, books: BOOK_NODES } = build();
 
 export const bookBySlug = (slug: string) => {
   const found = BOOK_NODES.find((b) => b.slug === slug);
-  if (!found) {
-    throw new Error(`No syllabus reading with slug "${slug}"`);
-  }
+  if (!found) throw new Error(`No syllabus reading with slug "${slug}"`);
   return found;
 };
 
+/** How much of the design square the camera may fill when framing one part. */
+const FRAME_HALF_W = 470;
+/** Shorter than the width: the lower third carries the part's card. */
+const FRAME_HALF_H = 372;
+
+export interface PartFraming {
+  id: string;
+  x: number;
+  y: number;
+  scale: number;
+}
+
 /**
- * The two readings the camera dives into mid-build. Both carry a framing note
- * that lands on its own, which is what makes them worth stopping on.
+ * Where the camera sits to hold one part in frame — the centre and scale of a
+ * box drawn around that part's node and every cover hanging off it. Computed
+ * rather than hand-tuned, so a part gaining a reading reframes itself.
  */
-export const FOCUS_SLUGS = [
-  "amusing-ourselves-to-death",
-  "the-square-and-the-tower",
-];
-
-/** Frame the last book settles on the graph, plus a beat. */
-export const BUILD_ENDS =
-  T.bookStart + (BOOK_NODES.length - 1) * T.bookStep + 40;
-
-/**
- * The part whose books are landing at this frame, plus the window it holds the
- * caption for, so consecutive parts cross-fade instead of snapping over.
- */
-export const partCaptionAt = (frame: number) => {
-  const changes: { part: PartNode; at: number }[] = [];
-  PART_NODES.forEach((part) => {
-    const firstBook = BOOK_NODES.find((b) => b.partId === part.id);
-    changes.push({ part, at: Math.min(part.appearAt, firstBook?.appearAt ?? Infinity) });
-  });
-  changes.sort((a, b) => a.at - b.at);
-
-  for (let i = changes.length - 1; i >= 0; i -= 1) {
-    if (frame >= changes[i].at) {
-      return {
-        part: changes[i].part,
-        since: changes[i].at,
-        until: changes[i + 1]?.at ?? Infinity,
-      };
-    }
+export const PART_FRAMINGS: PartFraming[] = PART_NODES.map((part) => {
+  const own = BOOK_NODES.filter((b) => b.partId === part.id);
+  const xs: number[] = [part.x - 64, part.x + 64];
+  const ys: number[] = [part.y - 64, part.y + 64];
+  for (const book of own) {
+    xs.push(book.x - BOOK_W / 2, book.x + BOOK_W / 2);
+    ys.push(book.y - BOOK_H / 2, book.y + BOOK_H / 2);
   }
-  return null;
+
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const halfW = Math.max(1, (maxX - minX) / 2);
+  const halfH = Math.max(1, (maxY - minY) / 2);
+
+  return {
+    id: part.id,
+    x: (minX + maxX) / 2,
+    y: (minY + maxY) / 2,
+    scale: Math.min(2.35, Math.max(0.9, Math.min(FRAME_HALF_W / halfW, FRAME_HALF_H / halfH))),
+  };
+});
+
+/** The part the tour is on at this frame, or null outside the tour. */
+export const tourPartAt = (frame: number): PartNode | null => {
+  if (frame < T.tourStart || frame >= TOUR_END) return null;
+  const index = Math.floor((frame - T.tourStart) / T.tourPerPart);
+  return PART_NODES[index] ?? null;
+};
+
+/**
+ * 1 when a part is the subject, dropping to a floor when another part is.
+ * Eased across the segment boundary so the spotlight slides between parts
+ * rather than snapping.
+ */
+export const partSpotlight = (partId: string, frame: number): number => {
+  if (frame < T.tourStart - 12 || frame >= TOUR_END + 30) return 1;
+
+  const index = PART_NODES.findIndex((p) => p.id === partId);
+  if (index < 0) return 1;
+
+  const segmentStart = T.tourStart + index * T.tourPerPart;
+  const segmentEnd = segmentStart + T.tourPerPart;
+  const FADE = 14;
+  const FLOOR = 0.16;
+
+  if (frame >= segmentStart && frame < segmentEnd) return 1;
+
+  const distance =
+    frame < segmentStart ? segmentStart - frame : frame - segmentEnd;
+  if (distance >= FADE) return FLOOR;
+  return FLOOR + (1 - FLOOR) * (1 - distance / FADE);
 };
