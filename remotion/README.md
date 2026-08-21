@@ -40,7 +40,22 @@ node render.mjs --range 600-660 square   # a short clip, for iterating
 | `SyllabusFilmVertical`  | 1080×1920 | Reels, Stories, TikTok, Shorts      |
 | `SyllabusFilmWide`      | 1920×1080 | YouTube, landscape embeds           |
 
-`out/` is gitignored — the MP4s are build artefacts, not source.
+`out/` is gitignored — it is a build directory. The published copies live in
+`public/video/` and are committed, so they can be linked from posts:
+
+```bash
+npm run publish          # copy out/*.mp4 into public/video/
+npm run render:publish   # render all three crops, then publish them
+```
+
+Publishing is a separate step rather than rendering straight into `public/` so
+that a half-finished or experimental render never lands on the site by accident.
+
+| Crop     | URL                                |
+| -------- | ---------------------------------- |
+| Square   | `/video/syllabus-square.mp4`       |
+| Vertical | `/video/syllabus-vertical.mp4`     |
+| Wide     | `/video/syllabus-wide.mp4`         |
 
 To preview interactively (hot-reloads as you edit):
 
