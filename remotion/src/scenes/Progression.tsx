@@ -23,13 +23,17 @@ export interface Step {
 export const Progression: React.FC<{ steps: Step[] }> = ({ steps }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { unit, height } = useLayout();
+  const { unit, height, width } = useLayout();
 
   const rowGap = 116 * unit;
   const top = height / 2 - (rowGap * (steps.length - 1)) / 2;
+  // A measured column rather than the full frame, so the widescreen cut does
+  // not strand the list against the left edge.
+  const column = Math.min(width - 120 * unit, 1000 * unit);
+  const gutter = (width - column) / 2;
 
   return (
-    <AbsoluteFill style={{ padding: `0 ${92 * unit}px` }}>
+    <AbsoluteFill>
       {steps.map((step, i) => {
         const at = 14 + i * 44;
         const isLast = i === steps.length - 1;
@@ -60,8 +64,8 @@ export const Progression: React.FC<{ steps: Step[] }> = ({ steps }) => {
             style={{
               position: "absolute",
               top: top + i * rowGap,
-              left: 92 * unit,
-              right: 92 * unit,
+              left: gutter,
+              width: column,
               transform: `translateY(-50%) translateX(${(1 - enter) * -70 * unit}px)`,
               opacity: enter * (1 - recede * 0.72),
               display: "flex",

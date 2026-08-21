@@ -10,12 +10,19 @@ import { BG, INK_FAINT, MONO } from "../theme";
 export const useLayout = () => {
   const { width, height } = useVideoConfig();
   const unit = Math.min(width, height) / 1080;
+  const isTall = height / width > 1.15;
   return {
     width,
     height,
     unit,
-    isTall: height / width > 1.15,
+    isTall,
     isWide: width / height > 1.15,
+    // Lower-thirds sit above this. In the tall cut that means clearing the
+    // standing URL line, which the square and wide cuts do not carry.
+    bottomInset: isTall ? height * 0.155 : 64 * unit,
+    // The graph is width-limited, so the tall cut can afford a larger one
+    // without clipping — otherwise it floats in a mostly empty frame.
+    graphScale: isTall ? 1.12 : 1,
   };
 };
 

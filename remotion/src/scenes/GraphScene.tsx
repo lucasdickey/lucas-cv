@@ -13,7 +13,7 @@ import { INK, INK_DIM, INK_FAINT, MONO, SANS, SERIF } from "../theme";
 
 /** Card that names the reading the camera has stopped on. */
 const FocusCard: React.FC<{ slug: string; frame: number }> = ({ slug, frame }) => {
-  const { unit, height, width } = useLayout();
+  const { unit, width, bottomInset } = useLayout();
   const book = bookBySlug(slug);
   const enter = interpolate(frame, [0, 16], [0, 1], {
     extrapolateLeft: "clamp",
@@ -25,8 +25,8 @@ const FocusCard: React.FC<{ slug: string; frame: number }> = ({ slug, frame }) =
       style={{
         position: "absolute",
         left: width * 0.5,
-        top: height - 96 * unit,
-        transform: `translate(-50%, -100%) translateY(${(1 - enter) * 34 * unit}px)`,
+        bottom: bottomInset,
+        transform: `translateX(-50%) translateY(${(1 - enter) * 34 * unit}px)`,
         opacity: enter,
         width: Math.min(width * 0.86, 860 * unit),
         padding: `${26 * unit}px ${32 * unit}px`,
@@ -125,7 +125,7 @@ const PartCaption: React.FC<{ frame: number; opacity: number }> = ({
   frame,
   opacity,
 }) => {
-  const { unit, height, width } = useLayout();
+  const { unit, height, width, isTall, bottomInset } = useLayout();
   const state = partCaptionAt(frame);
   if (!state || opacity <= 0) return null;
 
@@ -145,7 +145,7 @@ const PartCaption: React.FC<{ frame: number; opacity: number }> = ({
           left: 0,
           bottom: 0,
           width,
-          height: height * 0.26,
+          height: height * (isTall ? 0.32 : 0.26),
           background:
             "linear-gradient(to top, rgba(6,8,13,0.95) 0%, rgba(6,8,13,0.7) 42%, rgba(6,8,13,0) 100%)",
           opacity,
@@ -156,7 +156,7 @@ const PartCaption: React.FC<{ frame: number; opacity: number }> = ({
           position: "absolute",
           left: 0,
           width,
-          bottom: height * 0.068,
+          bottom: bottomInset,
           textAlign: "center",
           opacity: opacity * swap,
         }}
@@ -195,7 +195,7 @@ export const GraphScene: React.FC<{ centerQuestion: string }> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const { unit, width, height } = useLayout();
+  const { unit, width, height, graphScale } = useLayout();
 
   const camera = sampleCamera(frame);
   const dimmed = focusIntensity(frame);
@@ -222,7 +222,7 @@ export const GraphScene: React.FC<{ centerQuestion: string }> = ({
           transformOrigin: "0px 0px",
           transform: [
             `translate(${width / 2}px, ${height / 2}px)`,
-            `scale(${camera.scale * unit})`,
+            `scale(${camera.scale * unit * graphScale})`,
             `translate(${-camera.x}px, ${-camera.y}px)`,
           ].join(" "),
           width: 0,
