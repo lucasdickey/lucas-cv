@@ -633,7 +633,12 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
     // A drag that never moved is a click on the background: clear selection.
-    if (drag && !drag.moved && event.target === svgRef.current) {
+    // "Background" is anything that is not a node — not specifically the <svg>
+    // itself. Decoration painted behind the graph (the stage, the edges) sits
+    // between the pointer and the root element, and testing for the root
+    // silently disabled click-away the moment that decoration was added.
+    const target = event.target as Element | null;
+    if (drag && !drag.moved && !target?.closest?.('[role="button"]')) {
       setSelection(null);
     }
   };
@@ -679,9 +684,12 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
   // the glyphs knocks the line out from behind the text instead of letting it
   // run through the words. It is the lightest stop of the vignette, so near the
   // rim the halo also lifts the label off the darker ground.
+  // The width is divided by the zoom so the knockout stays a constant thickness
+  // on screen. Left in user units it grows with the camera, and at the 2.9x a
+  // selected reading pulls it reads as lumpy white blobs around the glyphs.
   const halo = {
     stroke: palette.stageInner,
-    strokeWidth: 7,
+    strokeWidth: 7 / transform.k,
     strokeLinejoin: 'round' as const,
     paintOrder: 'stroke' as const,
   };
@@ -873,6 +881,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
               width={VIEWBOX * 6}
               height={VIEWBOX * 6}
               fill={`url(#${uid}-stage)`}
+              pointerEvents="none"
             />
 
             <g
@@ -890,6 +899,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                 strokeDasharray="2 10"
                 strokeLinecap="round"
                 opacity={0.9}
+                pointerEvents="none"
               />
 
               {/* Centre to each part */}
@@ -904,6 +914,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                   strokeWidth={selectedPart?.id === part.id ? 4.4 : 3.4}
                   strokeLinecap="round"
                   opacity={otherPart(part.id) ? 0.12 : 0.8}
+                  pointerEvents="none"
                 />
               ))}
 
@@ -919,6 +930,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                   strokeWidth={1.7}
                   strokeLinecap="round"
                   opacity={twigOpacity(book)}
+                  pointerEvents="none"
                 />
               ))}
 
