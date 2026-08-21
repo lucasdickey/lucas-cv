@@ -18,17 +18,19 @@ import { useFilmFonts } from "./theme";
 /** Scene boundaries, in frames at 30fps. 1800 frames = 60s. */
 export const FILM = {
   fps: 30,
-  duration: 1800,
+  // Lead-in plays 1.5x faster than v1: the graph and the covers are the
+  // substance, and the text was holding the viewer off them.
   hookAt: 0,
-  hookFor: 180,
-  progressionAt: 180,
-  progressionFor: 290,
-  graphAt: 470,
-  graphFor: 1330,
-  questionsAt: 1520,
-  questionsFor: 150,
-  outroAt: 1665,
-  outroFor: 135,
+  hookFor: 120,
+  progressionAt: 120,
+  progressionFor: 193,
+  graphAt: 313,
+  graphFor: 1190,
+  questionsAt: 1273,
+  questionsFor: 120,
+  outroAt: 1388,
+  outroFor: 115,
+  duration: 1503,
 };
 
 export const SyllabusFilm: React.FC = () => {

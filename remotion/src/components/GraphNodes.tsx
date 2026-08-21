@@ -24,7 +24,7 @@ export const CenterNode: React.FC<{
     config: { damping: 14, mass: 0.7, stiffness: 90 },
   });
   // The core stays bright but the text recedes once the graph is the subject.
-  const textOpacity = interpolate(frame, [10, 40, 250, 330], [0, 1, 1, 0], {
+  const textOpacity = interpolate(frame, [8, 30, 140, 180], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -92,7 +92,11 @@ export const Supernode: React.FC<{
   node: PartNode;
   frame: number;
   fps: number;
-}> = ({ node, frame, fps }) => {
+  /** 1 when this part is the subject, lower while another one is. */
+  spotlight: number;
+  /** Falls to 0 during the tour, where the card names the part instead. */
+  labelOpacity: number;
+}> = ({ node, frame, fps, spotlight, labelOpacity }) => {
   const local = frame - node.appearAt;
   const pop = spring({
     frame: local,
@@ -121,6 +125,7 @@ export const Supernode: React.FC<{
           position: "absolute",
           left: node.x,
           top: node.y,
+          opacity: spotlight,
           transform: `translate(-50%, -50%) scale(${pop})`,
           width: 116,
           height: 116,
@@ -160,7 +165,7 @@ export const Supernode: React.FC<{
           transform: "translate(-50%, -50%)",
           width: 150,
           textAlign: "center",
-          opacity: pop,
+          opacity: pop * spotlight * labelOpacity,
           fontFamily: MONO,
           fontWeight: 500,
           fontSize: 21,
@@ -178,9 +183,9 @@ export const BookCard: React.FC<{
   node: BookNode;
   frame: number;
   fps: number;
-  dimmed: number;
-  highlighted: boolean;
-}> = ({ node, frame, fps, dimmed, highlighted }) => {
+  /** 1 when this book's part is the subject, lower while another one is. */
+  spotlight: number;
+}> = ({ node, frame, fps, spotlight }) => {
   const local = frame - node.appearAt;
   if (local < -2) return null;
 
@@ -194,8 +199,8 @@ export const BookCard: React.FC<{
   const x = node.parentX + (node.x - node.parentX) * pop;
   const y = node.parentY + (node.y - node.parentY) * pop;
 
-  const focusLift = highlighted ? 1 : 0;
-  const opacity = Math.min(1, pop * 1.2) * (1 - dimmed * (highlighted ? 0 : 0.72));
+  const lit = spotlight > 0.85;
+  const opacity = Math.min(1, pop * 1.2) * spotlight;
 
   return (
     <div
@@ -203,14 +208,14 @@ export const BookCard: React.FC<{
         position: "absolute",
         left: x,
         top: y,
-        transform: `translate(-50%, -50%) scale(${0.55 + pop * 0.45 + focusLift * 0.06})`,
+        transform: `translate(-50%, -50%) scale(${0.55 + pop * 0.45})`,
         width: BOOK_W,
         height: BOOK_H,
         opacity,
         borderRadius: 5,
         overflow: "hidden",
-        boxShadow: highlighted
-          ? `0 0 0 3px ${node.accent}, 0 24px 60px rgba(0,0,0,0.72)`
+        boxShadow: lit
+          ? `0 0 0 2.5px ${node.accent}, 0 22px 54px rgba(0,0,0,0.7)`
           : `0 0 0 1.5px ${node.accent}55, 0 10px 26px rgba(0,0,0,0.55)`,
         background: "#1A1E28",
       }}
@@ -245,8 +250,8 @@ export const Edges: React.FC<{
   parts: PartNode[];
   books: BookNode[];
   frame: number;
-  dimmed: number;
-}> = ({ parts, books, frame, dimmed }) => (
+  spotlightOf: (partId: string) => number;
+}> = ({ parts, books, frame, spotlightOf }) => (
   <svg
     style={{
       position: "absolute",
@@ -270,7 +275,7 @@ export const Edges: React.FC<{
           y2={part.y * grow}
           stroke={part.accent}
           strokeWidth={2.2}
-          opacity={grow * 0.5 * (1 - dimmed * 0.6)}
+          opacity={grow * 0.5 * spotlightOf(part.id)}
         />
       );
     })}
@@ -286,7 +291,7 @@ export const Edges: React.FC<{
           y2={book.parentY + (book.y - book.parentY) * grow}
           stroke={book.accent}
           strokeWidth={1.4}
-          opacity={grow * 0.42 * (1 - dimmed * 0.6)}
+          opacity={grow * 0.42 * spotlightOf(book.partId)}
         />
       );
     })}
