@@ -2,9 +2,9 @@
  * Markdown serialization for agent-readable surfaces.
  *
  * These helpers turn the same data the site renders into plain Markdown so
- * that agents, crawlers, and LLMs can consume the CV without executing
- * JavaScript or parsing the terminal UI. Used by /cv.md, /blog.md and
- * /llms.txt.
+ * that agents, crawlers, and LLMs can consume the site without executing
+ * JavaScript or parsing the terminal UI. Used by /cv.md, /blog.md,
+ * /syllabus.md and /llms.txt.
  */
 
 import {
@@ -14,6 +14,14 @@ import {
   groupedEntries,
 } from "../data/cv";
 import { type BlogPost, getPublishedPosts } from "../data/blog";
+import {
+  getSyllabusStats,
+  syllabus,
+  syllabusParts,
+  type SyllabusReading,
+  type SyllabusStatus,
+} from "../data/syllabus";
+import { GRAPH_BOOKS, GRAPH_PARTS } from "./syllabusGraph";
 
 export const SITE_URL = "https://lucas.cv";
 
@@ -165,6 +173,159 @@ export function renderBlogIndexMarkdown(): string {
   return out.join("\n").trimEnd() + "\n";
 }
 
+/** Plain-word status, without the emoji the UI prefixes. */
+const STATUS_WORD: Record<SyllabusStatus, string> = {
+  read: "Read",
+  reading: "Reading",
+  pending: "Queued",
+};
+
+function renderReading(reading: SyllabusReading): string {
+  const lines: string[] = [`#### ${reading.title}`, ""];
+
+  const meta: string[] = [
+    `**Author:** ${reading.author}`,
+    `**Format:** ${reading.format}`,
+    `**Status:** ${STATUS_WORD[reading.status]}`,
+  ];
+  if (reading.orderIndex) {
+    meta.push(`**Suggested reading order:** #${reading.orderIndex}`);
+  }
+  const link = reading.url ?? reading.amazonUrl;
+  if (link) {
+    meta.push(`**Link:** ${link}`);
+  }
+  lines.push(meta.join("  \n"), "");
+
+  if (reading.note) {
+    lines.push(oneLine(reading.note), "");
+  }
+
+  return lines.join("\n");
+}
+
+/**
+ * The graph the /syllabus page can be browsed as, written out as an edge list.
+ *
+ * The list and graph views show the same readings, but the graph also carries
+ * structure — which part a reading hangs off, and that every part hangs off one
+ * guiding question. Serialising the edges means an agent gets that structure
+ * without inferring it from headings or running the page.
+ */
+function renderSyllabusGraph(): string {
+  const out: string[] = [
+    "## Graph structure",
+    "",
+    "The syllabus is a graph: one guiding question at the centre, seven parts",
+    "hanging off it, and every reading hanging off its part.",
+    "",
+    "Edges, as `parent -> child`:",
+    "",
+  ];
+
+  for (const part of GRAPH_PARTS) {
+    out.push(`- \`guiding-question\` -> \`${part.id}\` (${part.label} — ${part.title})`);
+  }
+  out.push("");
+  for (const book of GRAPH_BOOKS) {
+    out.push(`- \`${book.partId}\` -> \`${book.slug}\` (${book.title})`);
+  }
+  out.push("");
+
+  return out.join("\n");
+}
+
+/**
+ * The whole syllabus as Markdown: framing, every reading with its note and
+ * status, the suggested order, and the graph structure behind the graph view.
+ */
+export function renderSyllabusMarkdown(): string {
+  const stats = getSyllabusStats();
+
+  const out: string[] = [
+    `# ${syllabus.title}`,
+    "",
+    `Canonical HTML version: ${SITE_URL}/syllabus`,
+    "",
+    `> ${oneLine(syllabus.guidingQuestion)}`,
+    "",
+    oneLine(syllabus.purpose),
+    "",
+    `**Progress:** ${stats.total} readings across ${stats.parts} parts — ` +
+      `${stats.read} read, ${stats.reading} in progress, ${stats.pending} queued.`,
+    "",
+    "## Lenses",
+    "",
+    syllabus.lenses.map((lens) => `- ${lens}`).join("\n"),
+    "",
+    "## Learning goals",
+    "",
+    syllabus.learningGoals.map((goal, i) => `${i + 1}. ${oneLine(goal)}`).join("\n"),
+    "",
+    "## Central questions",
+    "",
+    syllabus.centralQuestions.map((q) => `- ${oneLine(q)}`).join("\n"),
+    "",
+    "## Readings",
+    "",
+  ];
+
+  for (const part of syllabusParts) {
+    out.push(
+      `### ${part.label} — ${part.title}`,
+      "",
+      oneLine(part.summary),
+      "",
+      ...part.readings.map(renderReading)
+    );
+  }
+
+  out.push(
+    "## Suggested reading order",
+    "",
+    syllabus.suggestedOrder.map((item, i) => `${i + 1}. ${item}`).join("\n"),
+    "",
+    "## The missing book",
+    "",
+    `The book that has not yet been written sits somewhere between ` +
+      `${formatInfluences()}. Its central question would be:`,
+    "",
+    `> ${oneLine(syllabus.missingBook.question)}`,
+    "",
+    syllabus.missingBook.progression.map((line) => `- ${line}`).join("\n"),
+    "",
+    oneLine(syllabus.missingBook.closing),
+    "",
+    renderSyllabusGraph(),
+    "## Addressing a particular view",
+    "",
+    "Every presentation of this page has a URL, so a specific one can be linked",
+    "or fetched directly rather than reached by clicking:",
+    "",
+    `- ${SITE_URL}/syllabus — the graph, the default`,
+    `- ${SITE_URL}/syllabus?view=list — the same readings as a list`,
+    `- ${SITE_URL}/syllabus?theme=marketer — the light editorial presentation`,
+    `- ${SITE_URL}/syllabus?theme=terminal — the terminal presentation`,
+    `- ${SITE_URL}/syllabus.md — this document`,
+    "",
+    "`view` and `theme` compose, e.g. `?theme=marketer&view=list`. `theme` works",
+    "on every page of the site, not just this one, and applies to the page it is",
+    "on without changing what the browser has stored. Without either parameter",
+    "the page falls back to whatever was last chosen, then to the default.",
+    ""
+  );
+
+  return out.join("\n").trimEnd() + "\n";
+}
+
+/** "A, B, and C" — the Missing Book's influences, as prose. */
+function formatInfluences(): string {
+  const influences = syllabus.missingBook.influences;
+  return `${influences.slice(0, -1).join(", ")}, and ${
+    influences[influences.length - 1]
+  }`;
+}
+
 /**
  * llms.txt index, following the convention at https://llmstxt.org — an H1,
  * a blockquote summary, then link lists pointing at the Markdown surfaces.
@@ -183,11 +344,16 @@ export function renderLlmsTxt(): string {
     "This site publishes Markdown alongside every HTML page so that agents can read it",
     "directly. Append `.md` to a blog post URL to get its source.",
     "",
+    "Pages render in one of two presentations, selectable per-request with a query",
+    "parameter: `?theme=terminal` or `?theme=marketer`. The syllabus additionally",
+    "takes `?view=graph` or `?view=list`. The content is identical either way.",
+    "",
     "## Core",
     "",
     `- [Full CV (Markdown)](${SITE_URL}/cv.md): Complete professional history, projects, writing, and public work.`,
     `- [Homepage](${SITE_URL}): Terminal-styled index of everything below.`,
     `- [Writing index (Markdown)](${SITE_URL}/blog.md): All published posts with excerpts.`,
+    `- [AI & Civilization syllabus (Markdown)](${SITE_URL}/syllabus.md): The full reading syllabus, with every reading, its status, and the graph structure behind it.`,
     "",
     "## Writing",
     "",
@@ -204,7 +370,6 @@ export function renderLlmsTxt(): string {
     "## Optional",
     "",
     `- [Reading list](${SITE_URL}/books): Books read and queued.`,
-    `- [AI & Civilization syllabus](${SITE_URL}/syllabus): Curated readings on AI and society.`,
     `- [Toys](${SITE_URL}/toys): Small interactive experiments.`,
     `- [GitHub](https://github.com/lucasdickey): Source for the projects listed in the CV.`,
     ""
