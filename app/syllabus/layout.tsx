@@ -45,6 +45,15 @@ export const metadata: Metadata = {
     site: '@lucasdickey4',
   },
 
+  // Agents are pointed at the Markdown mirror the same way /cv.md and
+  // /blog.md are surfaced in llms.txt.
+  alternates: {
+    canonical: 'https://lucas.cv/syllabus',
+    types: {
+      'text/markdown': 'https://lucas.cv/syllabus.md',
+    },
+  },
+
   robots: {
     index: true,
     follow: true,

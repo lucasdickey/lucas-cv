@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { useViewMode } from '../contexts/view-mode-context';
 import SyllabusPartIcon from '../components/SyllabusPartIcon';
+import SyllabusGraph from '../components/SyllabusGraph';
+import SyllabusViewSwitch from '../components/SyllabusViewSwitch';
 import {
   syllabus,
   syllabusParts,
@@ -126,6 +128,10 @@ export default function SyllabusPage() {
               </span>
             </div>
 
+            <SyllabusViewSwitch
+              theme="marketer"
+              graph={<SyllabusGraph theme="marketer" />}
+              list={
             <div className="space-y-10">
               {syllabusParts.map((part) => (
                 <section key={part.id} id={part.id} className="scroll-mt-8">
@@ -202,6 +208,8 @@ export default function SyllabusPage() {
                 </section>
               ))}
             </div>
+              }
+            />
           </div>
 
           {/* Suggested Reading Order */}
@@ -347,6 +355,11 @@ export default function SyllabusPage() {
       </div>
 
       {/* Reading List */}
+      <SyllabusViewSwitch
+        theme="terminal"
+        graph={<SyllabusGraph theme="terminal" />}
+        list={
+          <>
       {syllabusParts.map((part) => (
         <div
           key={part.id}
@@ -435,6 +448,9 @@ export default function SyllabusPage() {
           </div>
         </div>
       ))}
+          </>
+        }
+      />
 
       {/* Suggested Reading Order */}
       <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">

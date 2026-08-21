@@ -108,8 +108,12 @@ src/
   covers collide before rendering — the search is a short script, see the
   constants' comment.
 - **The palette** is the one `scripts/generate_syllabus_covers.py` paints
-  placeholder covers with, so a book's node colour matches its cover on the
-  syllabus page.
+  placeholder covers with, so a book's node colour in the film matches its
+  placeholder cover art. Note this is *not* the palette the interactive graph on
+  /syllabus uses: that one is built for light surfaces and is validated for
+  colour-vision deficiency (see `app/lib/syllabusGraph.ts`). Film and site share
+  the graph's *geometry*, not its colours — a dark-surface palette and a
+  light-surface one cannot be the same values.
 - **There is no audio.** Most social video autoplays muted; add a track in
   `SyllabusFilm.tsx` with Remotion's `<Audio>` if you want one, and check the
   licence before posting.
