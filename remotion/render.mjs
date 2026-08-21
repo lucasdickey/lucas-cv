@@ -128,6 +128,11 @@ for (const crop of crops) {
     crf: 21,
     // x264 defaults leave visible banding on the dark radial backdrop.
     x264Preset: "slow",
+    // Without these two, jpeg frames encode as full-range yuvj420p tagged
+    // bt470bg — PAL colorimetry on an HD file. Platforms that re-encode it
+    // shift the cover colours. bt709 limited range is what they expect.
+    pixelFormat: "yuv420p",
+    colorSpace: "bt709",
     concurrency: CONCURRENCY,
     onProgress: ({ progress }) => {
       const pct = Math.floor(progress * 100);
