@@ -44,6 +44,9 @@ READINGS = [
      "Long-form Interviews", "Dwarkesh Patel", "interviews"),
     ("situational-awareness", "ai-futures",
      "Situational Awareness", "Leopold Aschenbrenner", "essays"),
+    # Placeholder until fetch_syllabus_covers.py can reach a cover CDN.
+    ("fully-automated-luxury-communism", "economics-institutions",
+     "Fully Automated Luxury Communism", "Aaron Bastani", "book"),
 ]
 
 KIND_LABEL = {"book": "", "essays": "Essays", "interviews": "Interviews"}

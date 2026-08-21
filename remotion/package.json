@@ -1,0 +1,29 @@
+{
+  "name": "lucas-cv-remotion",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion video compositions for the AI & Civilization syllabus",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "node render.mjs",
+    "render:square": "remotion render SyllabusFilmSquare out/syllabus-square.mp4",
+    "render:vertical": "remotion render SyllabusFilmVertical out/syllabus-vertical.mp4",
+    "render:wide": "remotion render SyllabusFilmWide out/syllabus-wide.mp4",
+    "publish": "node publish.mjs",
+    "render:publish": "node render.mjs && node publish.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.515",
+    "@remotion/cli": "^4.0.515",
+    "@remotion/renderer": "^4.0.515",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "remotion": "^4.0.515"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "typescript": "^5.9.3"
+  }
+}
