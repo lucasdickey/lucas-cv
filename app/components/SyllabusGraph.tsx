@@ -97,7 +97,11 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
   const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
   const [selection, setSelection] = useState<Selection | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const dragRef = useRef<{ x: number; y: number; moved: boolean } | null>(null);
+  const shellRef = useRef<HTMLDivElement | null>(null);
+  const expandRef = useRef<HTMLButtonElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
 
   const selectedBook = useMemo(
     () =>
@@ -182,13 +186,57 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
     return () => svg.removeEventListener('wheel', onWheel);
   }, [toViewBox, zoomBy]);
 
+  // Escape peels one layer at a time: a selection first, then full screen.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setSelection(null);
+      if (event.key !== 'Escape') return;
+      if (selection) setSelection(null);
+      else if (expanded) setExpanded(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [selection, expanded]);
+
+  // While the graph is full screen it is a modal: the page behind must not
+  // scroll, focus starts inside it, Tab cycles within it, and closing hands
+  // focus back to the control that opened it.
+  useEffect(() => {
+    if (!expanded) {
+      expandRef.current?.focus();
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab' || !shellRef.current) return;
+      const items = Array.from(
+        shellRef.current.querySelectorAll<HTMLElement | SVGElement>(
+          'button, a[href], [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        (last as HTMLElement).focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        (first as HTMLElement).focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+    // Focusing the opener on collapse should not run on first mount, but the
+    // cost of it doing so is nil: the button is already where focus belongs.
+  }, [expanded]);
 
   const onPointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
     if (event.button !== 0) return;
@@ -263,24 +311,70 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
   };
 
   return (
-    <div className="w-full">
+    <div
+      ref={shellRef}
+      className={
+        expanded
+          ? 'fixed inset-0 z-[100] flex flex-col'
+          : 'w-full'
+      }
+      style={expanded ? { background: palette.surface } : undefined}
+      role={expanded ? 'dialog' : undefined}
+      aria-modal={expanded ? true : undefined}
+      aria-label={expanded ? 'Syllabus knowledge graph, full screen' : undefined}
+    >
+      {expanded ? (
+        <div
+          className="flex flex-shrink-0 items-center justify-between border-b px-4 py-3"
+          style={{ borderColor: palette.edge }}
+        >
+          <span className="text-sm font-bold" style={{ color: palette.ink }}>
+            {syllabus.title}
+          </span>
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={() => setExpanded(false)}
+            className="rounded border px-3 py-1.5 text-sm font-medium"
+            style={{
+              borderColor: palette.edge,
+              color: palette.ink,
+              background: palette.panel,
+            }}
+          >
+            Close
+          </button>
+        </div>
+      ) : null}
+
       <p id="syllabus-graph-help" className="sr-only">
         An interactive map of the syllabus. The guiding question is at the
         centre, the seven parts ring it, and each reading connects to its part.
         Move through the parts and readings with the Tab key and open one with
-        Enter. Press Escape to clear the current selection. Drag to pan and
-        scroll to zoom. The same information is available as a list — use the
-        List view button above the map — and as Markdown at /syllabus.md.
+        Enter. Drag to pan and scroll to zoom. Use the full screen button to
+        open the map at the size of the window, which is easier to read on a
+        phone. Escape clears the current selection, then leaves full screen.
+        The same information is available as a list — use the List view button
+        above the map — and as Markdown at /syllabus.md.
       </p>
 
+      <div className={expanded ? 'flex min-h-0 flex-1 flex-col landscape:flex-row' : undefined}>
       <div
-        className="relative w-full overflow-hidden rounded-lg border"
-        style={{
-          background: palette.surface,
-          borderColor: palette.edge,
-          aspectRatio: '1 / 1',
-          maxHeight: '78vh',
-        }}
+        className={
+          expanded
+            ? 'relative min-h-0 w-full flex-1 overflow-hidden'
+            : 'relative w-full overflow-hidden rounded-lg border'
+        }
+        style={
+          expanded
+            ? { background: palette.surface }
+            : {
+                background: palette.surface,
+                borderColor: palette.edge,
+                aspectRatio: '1 / 1',
+                maxHeight: '78vh',
+              }
+        }
       >
         <svg
           ref={svgRef}
@@ -480,38 +574,63 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
 
         <GraphControls
           palette={palette}
+          expanded={expanded}
+          expandRef={expandRef}
           onZoomIn={() => zoomBy(1.3)}
           onZoomOut={() => zoomBy(1 / 1.3)}
           onReset={reset}
+          onToggleExpand={() => setExpanded((open) => !open)}
         />
       </div>
 
-      <Legend
-        palette={palette}
-        selectedPartId={selectedPart?.id ?? null}
-        onSelect={selectPart}
-      />
+      {/* Full screen, the legend and details sit under the map in portrait and
+          beside it in landscape. The graph is a circle, so it is limited by the
+          shorter side of its box: stacking them in a wide window would leave
+          the map small with empty space either side of it. */}
+      <div
+        className={
+          expanded
+            ? 'max-h-[38vh] flex-shrink-0 overflow-y-auto border-t px-4 pb-4 landscape:max-h-none landscape:w-[22rem] landscape:border-l landscape:border-t-0 landscape:pt-4'
+            : undefined
+        }
+        // The height cap is a class, not an inline style, so the landscape
+        // variant can lift it — an inline style would win over the variant.
+        style={expanded ? { borderColor: palette.edge } : undefined}
+      >
+        <Legend
+          palette={palette}
+          selectedPartId={selectedPart?.id ?? null}
+          onSelect={selectPart}
+        />
 
-      <DetailPanel
-        palette={palette}
-        book={selectedBook}
-        part={selection?.kind === 'part' ? selectedPart : null}
-        onClear={() => setSelection(null)}
-      />
+        <DetailPanel
+          palette={palette}
+          book={selectedBook}
+          part={selection?.kind === 'part' ? selectedPart : null}
+          onClear={() => setSelection(null)}
+        />
+      </div>
+      </div>
     </div>
   );
 }
 
 function GraphControls({
   palette,
+  expanded,
+  expandRef,
   onZoomIn,
   onZoomOut,
   onReset,
+  onToggleExpand,
 }: {
   palette: Palette;
+  expanded: boolean;
+  expandRef: React.RefObject<HTMLButtonElement | null>;
   onZoomIn: () => void;
   onZoomOut: () => void;
   onReset: () => void;
+  onToggleExpand: () => void;
 }) {
   const style = {
     background: palette.surface,
@@ -542,10 +661,23 @@ function GraphControls({
         type="button"
         onClick={onReset}
         aria-label="Reset the view"
-        className="h-9 w-9 rounded border text-xs font-bold leading-none"
+        title="Reset the view"
+        className="h-9 w-9 rounded border text-base font-bold leading-none"
         style={style}
       >
-        ⤢
+        ↺
+      </button>
+      <button
+        ref={expandRef}
+        type="button"
+        onClick={onToggleExpand}
+        aria-label={expanded ? 'Exit full screen' : 'Open the graph full screen'}
+        aria-expanded={expanded}
+        title={expanded ? 'Exit full screen' : 'Open full screen'}
+        className="h-9 w-9 rounded border text-base font-bold leading-none"
+        style={style}
+      >
+        {expanded ? '⤡' : '⤢'}
       </button>
     </div>
   );
