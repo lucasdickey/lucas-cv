@@ -163,6 +163,16 @@ export const syllabusParts: SyllabusPart[] = [
         amazonUrl: amazonSearch("Machine Platform Crowd", "Brynjolfsson McAfee"),
         orderIndex: 8,
       },
+      {
+        slug: "fully-automated-luxury-communism",
+        title: "Fully Automated Luxury Communism",
+        author: "Aaron Bastani",
+        format: "book",
+        status: "pending",
+        coverUrl: "/images/syllabus/fully-automated-luxury-communism.svg",
+        note: "The post-scarcity argument in its strongest form, and the only reading here that treats abundant machine intelligence as a reason to replace the market rather than to model it. Read against \"What becomes scarce once intelligence is abundant?\"",
+        amazonUrl: "https://www.amazon.com/dp/1786632632",
+      },
     ],
   },
   {
