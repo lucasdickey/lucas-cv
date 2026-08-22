@@ -11,7 +11,7 @@
  * wall-clock saving when rendering all three.
  */
 import { bundle } from "@remotion/bundler";
-import { renderMedia, renderStill, selectComposition } from "@remotion/renderer";
+import { openBrowser, renderMedia, renderStill, selectComposition } from "@remotion/renderer";
 import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
@@ -102,46 +102,72 @@ if (stillFrames) {
   process.exit(0);
 }
 
-for (const crop of crops) {
-  const { id, file } = CROPS[crop];
-  const composition = await selectComposition({
-    serveUrl,
-    id,
-    browserExecutable,
-    chromiumOptions,
-  });
-  const outputLocation = path.join(OUT, file);
-  let last = -1;
+// One browser shared across all three crops, rendered concurrently. Reusing
+// the instance skips paying Chromium's ~1-2s launch cost three times, and
+// splitting the machine's frame-concurrency budget across the three renders
+// (rather than letting each claim the full budget for itself) is what makes
+// running them together a real win rather than three renders fighting over
+// the same 4 cores.
+const sharedBrowser =
+  crops.length > 1
+    ? await openBrowser("chrome", { browserExecutable, chromiumOptions })
+    : null;
+const perRenderConcurrency =
+  sharedBrowser === null
+    ? CONCURRENCY
+    : Math.max(1, Math.floor(CONCURRENCY / crops.length));
 
-  console.log(`rendering ${id} -> ${file}`);
-  await renderMedia({
-    composition,
-    serveUrl,
-    codec: "h264",
-    // renderMedia writes to `outputLocation`; `output` is renderStill's key and
-    // is silently ignored here, which looks like a successful render that
-    // produced no file.
-    outputLocation,
-    frameRange,
-    browserExecutable,
-    chromiumOptions,
-    crf: 21,
-    // x264 defaults leave visible banding on the dark radial backdrop.
-    x264Preset: "slow",
-    // Without these two, jpeg frames encode as full-range yuvj420p tagged
-    // bt470bg — PAL colorimetry on an HD file. Platforms that re-encode it
-    // shift the cover colours. bt709 limited range is what they expect.
-    pixelFormat: "yuv420p",
-    colorSpace: "bt709",
-    concurrency: CONCURRENCY,
-    onProgress: ({ progress }) => {
-      const pct = Math.floor(progress * 100);
-      if (pct >= last + 10) {
-        last = pct;
-        console.log(`  ${pct}%`);
-      }
-    },
-  });
-  const { size } = fs.statSync(outputLocation);
-  console.log(`wrote ${outputLocation} (${(size / 1024 / 1024).toFixed(1)} MB)`);
-}
+console.log(
+  sharedBrowser
+    ? `rendering ${crops.join(", ")} in parallel (concurrency ${perRenderConcurrency} each, shared browser)`
+    : `rendering ${crops.join(", ")}`
+);
+
+await Promise.all(
+  crops.map(async (crop) => {
+    const { id, file } = CROPS[crop];
+    const composition = await selectComposition({
+      serveUrl,
+      id,
+      browserExecutable,
+      chromiumOptions,
+      puppeteerInstance: sharedBrowser ?? undefined,
+    });
+    const outputLocation = path.join(OUT, file);
+    let last = -1;
+
+    await renderMedia({
+      composition,
+      serveUrl,
+      codec: "h264",
+      // renderMedia writes to `outputLocation`; `output` is renderStill's key
+      // and is silently ignored here, which looks like a successful render
+      // that produced no file.
+      outputLocation,
+      frameRange,
+      browserExecutable,
+      chromiumOptions,
+      puppeteerInstance: sharedBrowser ?? undefined,
+      crf: 21,
+      // x264 defaults leave visible banding on the dark radial backdrop.
+      x264Preset: "slow",
+      // Without these two, jpeg frames encode as full-range yuvj420p tagged
+      // bt470bg — PAL colorimetry on an HD file. Platforms that re-encode it
+      // shift the cover colours. bt709 limited range is what they expect.
+      pixelFormat: "yuv420p",
+      colorSpace: "bt709",
+      concurrency: perRenderConcurrency,
+      onProgress: ({ progress }) => {
+        const pct = Math.floor(progress * 100);
+        if (pct >= last + 20) {
+          last = pct;
+          console.log(`  [${crop}] ${pct}%`);
+        }
+      },
+    });
+    const { size } = fs.statSync(outputLocation);
+    console.log(`wrote ${outputLocation} (${(size / 1024 / 1024).toFixed(1)} MB)`);
+  })
+);
+
+if (sharedBrowser) await sharedBrowser.close({ silent: true });
