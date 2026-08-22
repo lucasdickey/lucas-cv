@@ -1,3 +1,4 @@
+import { SITE_URL } from './site';
 // Types for Twitter mention data
 export type TwitterCategory = "atlas" | "stripe" | "patrickc";
 
@@ -187,11 +188,11 @@ export function generateRssXml(mentions: TwitterMention[]): string {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stripe/Atlas Twitter Activity</title>
-    <link>https://lucas.cv/twitter-monitor</link>
+    <link>${SITE_URL}/twitter-monitor</link>
     <description>Recent Twitter/X activity for @atlas, @stripe, and @patrickc</description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="https://lucas.cv/api/twitter/rss" rel="self" type="application/rss+xml" />
+    <atom:link href="${SITE_URL}/api/twitter/rss" rel="self" type="application/rss+xml" />
 ${items}
   </channel>
 </rss>`;

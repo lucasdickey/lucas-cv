@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import TerminalLayout from '../../components/TerminalLayout';
 import { books } from '../../data/books';
 import type { Metadata } from 'next';
+import { SITE_URL } from '../../lib/site';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -16,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = `${book.title} by ${book.author} - Recent Read | Lucas Dickey`;
   const description = (book.detailedDescription || book.description || `${book.title} by ${book.author}. Recently read by Lucas Dickey.`).substring(0, 160);
-  const url = `https://lucas.cv/books/${book.slug}`;
-  const imageUrl = `https://lucas.cv${book.coverUrl}`;
+  const url = `${SITE_URL}/books/${book.slug}`;
+  const imageUrl = `${SITE_URL}${book.coverUrl}`;
 
   // Generate keywords based on book content
   const keywords = [

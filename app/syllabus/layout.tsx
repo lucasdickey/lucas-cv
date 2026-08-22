@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SITE_URL } from '../lib/site';
 
 const title = 'AI & Civilization Reading Syllabus | Lucas Dickey';
 const description =
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    url: 'https://lucas.cv/syllabus',
+    url: `${SITE_URL}/syllabus`,
     siteName: 'Lucas Dickey CV',
     images: [
       {
@@ -48,9 +49,9 @@ export const metadata: Metadata = {
   // Agents are pointed at the Markdown mirror the same way /cv.md and
   // /blog.md are surfaced in llms.txt.
   alternates: {
-    canonical: 'https://lucas.cv/syllabus',
+    canonical: `${SITE_URL}/syllabus`,
     types: {
-      'text/markdown': 'https://lucas.cv/syllabus.md',
+      'text/markdown': `${SITE_URL}/syllabus.md`,
     },
   },
 

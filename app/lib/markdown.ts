@@ -22,8 +22,9 @@ import {
   type SyllabusStatus,
 } from "../data/syllabus";
 import { GRAPH_BOOKS, GRAPH_PARTS } from "./syllabusGraph";
+import { SITE_URL } from './site';
 
-export const SITE_URL = "https://lucas.cv";
+export { SITE_URL };
 
 /** Resolves relative and anchor hrefs to absolute URLs for off-site consumers. */
 function absoluteUrl(url: string): string {

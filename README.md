@@ -13,8 +13,8 @@
 
 A terminal-style interactive resume showcasing 20+ years of product leadership experience, from Amazon to venture-backed startups.
 
-[![Live Site](https://img.shields.io/badge/🌐_Live_Site-lucas.cv-darkgreen?style=for-the-badge)](https://lucas.cv)
-[![Audio Resume](https://img.shields.io/badge/🎧_Audio_Resume-AI_Generated-blue?style=for-the-badge)](https://lucas.cv)
+[![Live Site](https://img.shields.io/badge/🌐_Live_Site-lucasdickey.com-darkgreen?style=for-the-badge)](https://www.lucasdickey.com)
+[![Audio Resume](https://img.shields.io/badge/🎧_Audio_Resume-AI_Generated-blue?style=for-the-badge)](https://www.lucasdickey.com)
 
 ---
 
@@ -122,7 +122,7 @@ Early PM on Amazon's digital music business. Scaled from **$0 to $300M in 3 year
 
 **Live URLs:**
 
-- **Primary**: [lucas.cv](https://lucas.cv)
+- **Primary**: [lucasdickey.com](https://www.lucasdickey.com)
 - **Backup**: [lucas-keo3bew19-lucasdickeys-projects.vercel.app](https://lucas-keo3bew19-lucasdickeys-projects.vercel.app)
 
 **DNS Configuration:**
