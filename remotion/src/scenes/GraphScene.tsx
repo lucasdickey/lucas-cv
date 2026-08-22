@@ -10,6 +10,7 @@ import {
   PART_NODES,
   T,
   TOUR_END,
+  partLabelOpacity,
   partSpotlight,
   tourPartAt,
   type PartNode,
@@ -185,7 +186,7 @@ export const GraphScene: React.FC<{ centerQuestion: string }> = ({
             frame={frame}
             fps={fps}
             spotlight={spotlightOf(part.id)}
-            labelOpacity={1 - tour}
+            labelOpacity={partLabelOpacity(part.appearAt, frame)}
           />
         ))}
         {BOOK_NODES.map((book) => (

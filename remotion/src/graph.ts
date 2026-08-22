@@ -69,15 +69,35 @@ export const T = {
   bookStart: 190,
   bookStep: 1.05,
   settleAt: 250,
+  /**
+   * How long a part's label stays lit after its node appears. It fades back
+   * out well before the tour, so a part is "mentioned" once as the ring
+   * forms and then goes quiet — the label's only other job is naming the
+   * part again when the tour actually visits it (via the part card).
+   */
+  labelHold: 46,
+  labelFade: 20,
   /** The camera visits every part in turn, framed on that part's own fan. */
   tourStart: 262,
-  tourPerPart: 90,
-  /** Frames spent travelling into a part before the hold begins. */
-  tourTravel: 26,
-  pullBack: 944,
+  // Under 2s per part end to end: ~0.6s travelling in, ~1.15s holding.
+  tourPerPart: 53,
+  tourTravel: 18,
 };
 
 export const TOUR_END = T.tourStart + GRAPH_PARTS.length * T.tourPerPart;
+
+/**
+ * 1 while a part's label is freshly mentioned, ramping to 0 over labelFade
+ * frames once labelHold has elapsed since the part's own node appeared.
+ * Node-local rather than global, so each part's label clock starts when that
+ * part actually appears rather than all fading on one shared timer.
+ */
+export const partLabelOpacity = (appearAt: number, frame: number): number => {
+  const since = frame - appearAt;
+  if (since < T.labelHold) return 1;
+  const t = (since - T.labelHold) / T.labelFade;
+  return Math.max(0, 1 - t);
+};
 
 const build = () => {
   const parts: PartNode[] = GRAPH_PARTS.map((part, i) => {

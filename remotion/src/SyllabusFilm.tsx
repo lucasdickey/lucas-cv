@@ -25,12 +25,14 @@ export const FILM = {
   progressionAt: 120,
   progressionFor: 193,
   graphAt: 313,
-  graphFor: 1190,
-  questionsAt: 1273,
+  // The part tour dropped from 3s/part to under 2s/part (see graph.ts), which
+  // pulls everything from here on 259 frames (8.6s) earlier than v2.0.
+  graphFor: 931,
+  questionsAt: 1014,
   questionsFor: 120,
-  outroAt: 1388,
+  outroAt: 1129,
   outroFor: 115,
-  duration: 1503,
+  duration: 1244,
 };
 
 export const SyllabusFilm: React.FC = () => {
