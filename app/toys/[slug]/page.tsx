@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import TerminalLayout from '../../components/TerminalLayout';
 import { toys } from '../../data/toys';
 import type { Metadata } from 'next';
+import { SITE_URL } from '../../lib/site';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -16,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = `${toy.title} - Recent Purchase | Lucas Dickey`;
   const description = (toy.detailedDescription || toy.description || `${toy.title}. Recently purchased by Lucas Dickey.`).substring(0, 160);
-  const url = `https://lucas.cv/toys/${toy.slug}`;
-  const imageUrl = `https://lucas.cv${toy.imageUrl}`;
+  const url = `${SITE_URL}/toys/${toy.slug}`;
+  const imageUrl = `${SITE_URL}${toy.imageUrl}`;
 
   // Generate keywords based on product content
   const keywords = [

@@ -164,7 +164,7 @@ export const shipLog: ShipLogProject[] = [
       "Surfaced public writing on the home page so the site reflects current thinking rather than only past roles.",
     ],
     repoUrl: "https://github.com/lucasdickey/lucas-cv",
-    liveUrl: "https://lucas.cv",
+    liveUrl: "https://www.lucasdickey.com",
     commits: 13,
     firstCommit: "2026-05-30",
     lastCommit: "2026-08-06",

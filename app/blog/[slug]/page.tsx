@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { blogPosts, isPostPublished } from '../../data/blog';
 import type { Metadata } from "next";
 import { notFound } from 'next/navigation';
+import { SITE_URL } from '../../lib/site';
 
 // Force dynamic rendering to check dates at request time
 export const dynamic = 'force-dynamic';
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     readTime: post.readTime.toString()
   });
   
-  const ogImageUrl = `https://lucas.cv/api/og?${ogParams.toString()}`;
+  const ogImageUrl = `${SITE_URL}/api/og?${ogParams.toString()}`;
 
   return {
     title: `${post.title} - Lucas Dickey`,
@@ -54,7 +55,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     openGraph: {
       title: `${post.title} - Lucas Dickey`,
       description: post.excerpt,
-      url: `https://lucas.cv/blog/${post.slug}`,
+      url: `${SITE_URL}/blog/${post.slug}`,
       siteName: "Lucas Dickey CV",
       images: [
         {
@@ -78,7 +79,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       creator: "@lucasdickey4",
       site: "@lucasdickey4",
     },
-    authors: [{ name: "Lucas Dickey", url: "https://lucas.cv" }],
+    authors: [{ name: "Lucas Dickey", url: SITE_URL }],
     creator: "Lucas Dickey",
     publisher: "Lucas Dickey",
     keywords: post.tags,

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { SITE_URL } from '../../lib/site';
 
 interface LennyBook {
   title: string;
@@ -433,8 +434,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = `${book.title} by ${book.author} - Lenny's Recommendation | Lucas Dickey`;
   const description = book.detailedDescription || `${book.title} by ${book.author}. Recommended by Lenny Rachitsky. ${book.lennyQuote || ''}`.substring(0, 160);
-  const url = `https://lucas.cv/lenny/${book.slug}`;
-  const imageUrl = `https://lucas.cv${book.coverUrl}`;
+  const url = `${SITE_URL}/lenny/${book.slug}`;
+  const imageUrl = `${SITE_URL}${book.coverUrl}`;
 
   // Generate keywords based on book content
   const keywords = [

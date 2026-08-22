@@ -218,7 +218,7 @@ Response → ApebotChat.tsx
 ## Resources
 
 - [A-OK Shop](https://a-ok.shop) - Main shop website
-- [lucas.cv](https://lucas.cv) - This portfolio site
+- [lucasdickey.com](https://www.lucasdickey.com) - This portfolio site
 - [GitHub Repository](https://github.com/lucas-dickey/lucas-cv) - Source code
 
 ## Support

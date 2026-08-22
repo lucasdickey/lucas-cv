@@ -3,13 +3,14 @@ import Script from "next/script";
 import "./globals.css";
 import { ViewModeProvider } from "./contexts/view-mode-context";
 import ViewModeToggle from "./components/ViewModeToggle";
+import { SITE_URL } from './lib/site';
 
 export const metadata: Metadata = {
   title: "Lucas Dickey - Product Leader & Serial Founder",
   description:
     "20+ years as PM and product leader. Co-founder at Fernish ($45M raised), Founder at DeepCast, Former Amazon MP3 PM ($0 to $300M). Expert in 0→1 and 1→10 execution.",
   generator: "Lucas Dickey",
-  metadataBase: new URL("https://lucas.cv"),
+  metadataBase: new URL(SITE_URL),
   icons: [
     { rel: "icon", url: "/favicon.ico", sizes: "any" },
     {
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     title: "Lucas Dickey - Product Leader & Serial Founder",
     description:
       "20+ years as PM and product leader. Co-founder at Fernish ($45M raised), Founder at DeepCast, Former Amazon MP3 PM ($0 to $300M). Expert in 0→1 and 1→10 execution.",
-    url: "https://lucas.cv",
+    url: SITE_URL,
     siteName: "Lucas Dickey CV",
     images: [
       {
@@ -87,7 +88,7 @@ export const metadata: Metadata = {
     google: "your-google-verification-code", // Replace with actual verification code if needed
   },
 
-  authors: [{ name: "Lucas Dickey", url: "https://lucas.cv" }],
+  authors: [{ name: "Lucas Dickey", url: SITE_URL }],
   creator: "Lucas Dickey",
   publisher: "Lucas Dickey",
 
