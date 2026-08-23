@@ -44,6 +44,10 @@ READINGS = [
      "Long-form Interviews", "Dwarkesh Patel", "interviews"),
     ("situational-awareness", "ai-futures",
      "Situational Awareness", "Leopold Aschenbrenner", "essays"),
+    ("machines-of-loving-grace", "ai-futures",
+     "Machines of Loving Grace", "Dario Amodei", "essays"),
+    ("the-adolescence-of-technology", "ai-futures",
+     "The Adolescence of Technology", "Dario Amodei", "essays"),
     # Placeholder until fetch_syllabus_covers.py can reach a cover CDN.
     ("fully-automated-luxury-communism", "economics-institutions",
      "Fully Automated Luxury Communism", "Aaron Bastani", "book"),
