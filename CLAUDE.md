@@ -10,6 +10,11 @@ This is a Next.js-based personal website and portfolio for Lucas Dickey, featuri
 - Podcast integration
 - Two distinct UI themes that can be toggled
 
+## Communication Style
+
+- Before taking an action (a tool call, an edit, a command), say briefly what you're about to do and why — a sentence, not a paragraph. Don't just report what you did after the fact once everything's finished; narrate as you go so the user can follow along or redirect early instead of reconstructing your reasoning from a final summary.
+- This applies throughout a task, not just the first step: as the plan changes or a new step starts, say so before doing it.
+
 ## Blog System
 
 ### Architecture
