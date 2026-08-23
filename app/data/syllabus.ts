@@ -258,6 +258,16 @@ export const syllabusParts: SyllabusPart[] = [
         coverUrl: "/images/syllabus/situational-awareness.svg",
         url: "https://situational-awareness.ai",
       },
+      {
+        slug: "dario-amodei-essays",
+        title: "Essays",
+        author: "Dario Amodei",
+        format: "essays",
+        status: "pending",
+        coverUrl: "/images/syllabus/dario-amodei-essays.svg",
+        note: "Machines of Loving Grace, The Urgency of Interpretability, and other essays from the frontier lab's own vantage point on what abundant intelligence could do — and what it takes to keep it aligned.",
+        url: "https://www.darioamodei.com",
+      },
     ],
   },
   {
