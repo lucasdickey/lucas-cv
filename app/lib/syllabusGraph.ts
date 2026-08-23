@@ -13,7 +13,7 @@
 
 import { syllabusParts, type SyllabusStatus } from "../data/syllabus";
 
-const RING_RADIUS = 340;
+const RING_RADIUS = 360;
 /** Distance from a supernode out to the books hanging off it. */
 const BOOK_DISTANCE = 200;
 /** Degrees between adjacent books in a part's fan. */
@@ -27,9 +27,12 @@ export const BOOK_H = 144;
 /**
  * These five constants were solved for rather than eyeballed: they are the
  * largest cover size and tightest graph for which no two axis-aligned covers
- * overlap, across all seven fans. A part gaining a sixth reading changes the
- * densest fan and means re-solving them — `assertNoOverlaps()` below is the
- * check that catches it.
+ * overlap, across all seven fans. Overlaps depend on more than any single
+ * fan's size — two adjacent parts each growing dense enough can crowd each
+ * other even without either one hitting a new maximum — so any change to a
+ * part's reading count means re-solving them. `findCoverOverlaps()` below is
+ * the check that catches it (and `SyllabusGraph.tsx` warns at runtime if it
+ * ever fires).
  */
 
 /**
