@@ -169,7 +169,7 @@ export const syllabusParts: SyllabusPart[] = [
         author: "Aaron Bastani",
         format: "book",
         status: "pending",
-        coverUrl: "/images/syllabus/fully-automated-luxury-communism.svg",
+        coverUrl: "/images/books/fully-automated-luxury-communism.jpg",
         note: "The post-scarcity argument in its strongest form, and the only reading here that treats abundant machine intelligence as a reason to replace the market rather than to model it. Read against \"What becomes scarce once intelligence is abundant?\"",
         amazonUrl: "https://www.amazon.com/dp/1786632632",
       },
@@ -217,6 +217,19 @@ export const syllabusParts: SyllabusPart[] = [
           "Douglass North"
         ),
         orderIndex: 11,
+      },
+      {
+        slug: "rise-and-fall-of-the-artificial-state",
+        title: "The Rise and Fall of the Artificial State",
+        author: "Jill Lepore",
+        format: "book",
+        status: "pending",
+        coverUrl: "/images/syllabus/rise-and-fall-of-the-artificial-state.svg",
+        note: "The pessimistic case for what AI does to states: public discourse and government function increasingly run by machinery and privately owned corporations, not by consent.",
+        amazonUrl: amazonSearch(
+          "The Rise and Fall of the Artificial State",
+          "Jill Lepore"
+        ),
       },
     ],
   },
@@ -324,6 +337,19 @@ export const syllabusParts: SyllabusPart[] = [
         coverUrl: "/images/books/genesis.jpg",
         amazonUrl: amazonSearch("Genesis", "Kissinger Schmidt Mundie"),
         orderIndex: 15,
+      },
+      {
+        slug: "deep-utopia",
+        title: "Deep Utopia: Life and Meaning in a Solved World",
+        author: "Nick Bostrom",
+        format: "book",
+        status: "pending",
+        coverUrl: "/images/syllabus/deep-utopia.svg",
+        note: "What becomes scarce once intelligence is abundant? Bostrom's answer is purpose — the philosophical counterpart to Bastani's economic case, and roughly where Machines of Loving Grace leaves off.",
+        amazonUrl: amazonSearch(
+          "Deep Utopia Life and Meaning in a Solved World",
+          "Nick Bostrom"
+        ),
       },
     ],
   },

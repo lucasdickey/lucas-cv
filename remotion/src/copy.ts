@@ -1,5 +1,5 @@
 import { getSyllabusStats, syllabus } from "../../app/data/syllabus";
-import { BOOK_NODES, PART_NODES } from "./graph";
+import { BOOK_NODES, PART_NODES, bookBySlug } from "./graph";
 import type { Step } from "./scenes/Progression";
 
 /**
@@ -60,3 +60,57 @@ export const outroStats = () => {
     { label: "Lenses", value: String(syllabus.lenses.length) },
   ];
 };
+
+/**
+ * The readings the "new additions" film highlights, most recent last so the
+ * film ends on the freshest one. There is no `dateAdded` field on a syllabus
+ * reading, so this list is curated by hand — update it when the syllabus
+ * gains its next readings worth announcing.
+ */
+export const NEW_ADDITIONS_SLUGS = [
+  "machines-of-loving-grace",
+  "the-adolescence-of-technology",
+  "deep-utopia",
+  "rise-and-fall-of-the-artificial-state",
+] as const;
+
+export interface NewAddition {
+  slug: string;
+  title: string;
+  author: string;
+  note?: string;
+  coverUrl: string;
+  partLabel: string;
+  partTitle: string;
+  accent: string;
+}
+
+/**
+ * The syllabus page's notes run a sentence or two long, written for a reader
+ * who can linger. A card in a 4-second highlight reel can't afford the full
+ * text — there is no time to reveal and then actually read all of it before
+ * the cut — so this keeps the opening clause and drops the rest at a word
+ * boundary.
+ */
+const truncate = (text: string, max: number) => {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > max * 0.6 ? lastSpace : max)}…`;
+};
+
+export const newAdditions = (): NewAddition[] =>
+  NEW_ADDITIONS_SLUGS.map((slug) => {
+    const book = bookBySlug(slug);
+    const part = PART_NODES.find((p) => p.id === book.partId);
+    return {
+      slug: book.slug,
+      title: book.title,
+      author: book.author,
+      note: book.note ? truncate(book.note, 110) : undefined,
+      coverUrl: book.coverUrl,
+      partLabel: part?.label ?? "",
+      partTitle: book.partTitle,
+      accent: book.accent,
+    };
+  });

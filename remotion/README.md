@@ -1,14 +1,24 @@
 # Syllabus film
 
-A 60-second motion graphic of the [AI & Civilization syllabus](../app/data/syllabus.ts),
+Two motion graphics of the [AI & Civilization syllabus](../app/data/syllabus.ts),
 built with [Remotion](https://remotion.dev) and rendered to MP4 for sharing on
 social networks.
 
-The film draws the syllabus as a knowledge graph: the guiding question at the
-centre, the seven parts as supernodes around it, and every reading flying in to
-attach to its part. The camera pulls back as the graph outgrows the frame, dives
-onto two readings to show what a node actually contains, then settles wide for
-the closing questions.
+**The syllabus film** (60s) draws the syllabus as a knowledge graph: the
+guiding question at the centre, the seven parts as supernodes around it, and
+every reading flying in to attach to its part. The camera pulls back as the
+graph outgrows the frame, dives onto two readings to show what a node actually
+contains, then settles wide for the closing questions.
+
+**The new-additions film** (~19s) is a shorter cut for whenever a handful of
+readings land at once: a count, then each new reading held full-bleed with its
+cover, title, author and note, then the syllabus's running totals. Which
+readings count as "new" is a hand-curated list — `NEW_ADDITIONS_SLUGS` in
+`src/copy.ts` — since a syllabus reading has no `dateAdded` field; update that
+list when the next batch is ready to announce. It shares the main film's
+palette, fonts and chrome (`src/NewAdditionsFilm.tsx`, `src/scenes/AdditionsIntro.tsx`,
+`src/scenes/AdditionCard.tsx`) but is its own composition with its own runtime,
+not a scene bolted onto `SyllabusFilm.tsx`.
 
 ## Why it lives in its own package
 
@@ -28,34 +38,42 @@ film on the next render** — there is no second copy of the data to update.
 cd remotion
 npm install
 
-npm run render                     # all three crops into out/
+npm run render                     # syllabus film, all three crops into out/
 node render.mjs square             # just one crop
+node render.mjs --film additions   # the new-additions film instead
 node render.mjs --still 700,1170   # PNGs at those frames, to check framing
 node render.mjs --range 600-660 square   # a short clip, for iterating
 ```
 
 | Composition             | Size      | Where it is for                     |
-| ----------------------- | --------- | ----------------------------------- |
+| ------------------------ | --------- | ----------------------------------- |
 | `SyllabusFilmSquare`    | 1080×1080 | X, LinkedIn, Instagram feed         |
 | `SyllabusFilmVertical`  | 1080×1920 | Reels, Stories, TikTok, Shorts      |
 | `SyllabusFilmWide`      | 1920×1080 | YouTube, landscape embeds           |
+| `NewAdditionsSquare`    | 1080×1080 | X, LinkedIn, Instagram feed         |
+| `NewAdditionsVertical`  | 1080×1920 | Reels, Stories, TikTok, Shorts      |
+| `NewAdditionsWide`      | 1920×1080 | YouTube, landscape embeds           |
 
 `out/` is gitignored — it is a build directory. The published copies live in
 `public/video/` and are committed, so they can be linked from posts:
 
 ```bash
-npm run publish          # copy out/*.mp4 into public/video/
-npm run render:publish   # render all three crops, then publish them
+npm run publish                     # copy out/*.mp4 into public/video/
+npm run render:publish              # render the syllabus film, then publish it
+npm run render:additions:publish    # same, for the new-additions film
 ```
 
 Publishing is a separate step rather than rendering straight into `public/` so
 that a half-finished or experimental render never lands on the site by accident.
 
-| Crop     | URL                                |
-| -------- | ---------------------------------- |
-| Square   | `/video/syllabus-square.mp4`       |
-| Vertical | `/video/syllabus-vertical.mp4`     |
-| Wide     | `/video/syllabus-wide.mp4`         |
+| Crop                      | URL                                           |
+| ------------------------- | ---------------------------------------------- |
+| Square                    | `/video/syllabus-square.mp4`                   |
+| Vertical                  | `/video/syllabus-vertical.mp4`                 |
+| Wide                      | `/video/syllabus-wide.mp4`                     |
+| Square (new additions)    | `/video/syllabus-new-additions-square.mp4`     |
+| Vertical (new additions)  | `/video/syllabus-new-additions-vertical.mp4`   |
+| Wide (new additions)      | `/video/syllabus-new-additions-wide.mp4`       |
 
 To preview interactively (hot-reloads as you edit):
 
@@ -87,14 +105,16 @@ python3 ../scripts/fetch_video_fonts.py
 
 ```
 src/
-  Root.tsx          the three compositions (square / vertical / wide)
-  SyllabusFilm.tsx  scene boundaries and ordering
-  graph.ts          graph layout — node positions and appearance frames
-  camera.ts         the camera path over the graph
-  copy.ts           on-screen text, derived from app/data/syllabus.ts
-  theme.ts          palette and font loading
-  scenes/           Hook, Progression, GraphScene, Questions, Outro
-  components/       graph nodes, backdrop, word-reveal, cross-fade
+  Root.tsx              all six compositions (two films × three crops)
+  SyllabusFilm.tsx      the 60s film's scene boundaries and ordering
+  NewAdditionsFilm.tsx  the new-additions film's scene boundaries and ordering
+  graph.ts              graph layout — node positions and appearance frames
+  camera.ts             the camera path over the graph
+  copy.ts               on-screen text, derived from app/data/syllabus.ts
+  theme.ts              palette and font loading
+  scenes/               Hook, Progression, GraphScene, Questions, Outro,
+                         AdditionsIntro, AdditionCard
+  components/           graph nodes, backdrop, word-reveal, cross-fade
 ```
 
 ### Editing notes
