@@ -13,11 +13,11 @@
 
 import { syllabusParts, type SyllabusStatus } from "../data/syllabus";
 
-const RING_RADIUS = 360;
+const RING_RADIUS = 405;
 /** Distance from a supernode out to the books hanging off it. */
 const BOOK_DISTANCE = 200;
 /** Degrees between adjacent books in a part's fan. */
-const BOOK_SPREAD = 28;
+const BOOK_SPREAD = 26;
 /** Every other book is pushed further out so neighbouring covers never touch. */
 const BOOK_STAGGER = 140;
 

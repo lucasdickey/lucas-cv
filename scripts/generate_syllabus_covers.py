@@ -51,6 +51,10 @@ READINGS = [
     # Placeholder until fetch_syllabus_covers.py can reach a cover CDN.
     ("fully-automated-luxury-communism", "economics-institutions",
      "Fully Automated Luxury Communism", "Aaron Bastani", "book"),
+    ("deep-utopia", "ethics-society-governance",
+     "Deep Utopia: Life and Meaning in a Solved World", "Nick Bostrom", "book"),
+    ("rise-and-fall-of-the-artificial-state", "networks-states-power",
+     "The Rise and Fall of the Artificial State", "Jill Lepore", "book"),
 ]
 
 KIND_LABEL = {"book": "", "essays": "Essays", "interviews": "Interviews"}
