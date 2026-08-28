@@ -9,8 +9,10 @@
     "render:square": "remotion render SyllabusFilmSquare out/syllabus-square.mp4",
     "render:vertical": "remotion render SyllabusFilmVertical out/syllabus-vertical.mp4",
     "render:wide": "remotion render SyllabusFilmWide out/syllabus-wide.mp4",
+    "render:additions": "node render.mjs --film additions",
     "publish": "node publish.mjs",
-    "render:publish": "node render.mjs && node publish.mjs"
+    "render:publish": "node render.mjs && node publish.mjs",
+    "render:additions:publish": "node render.mjs --film additions && node publish.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "^4.0.515",

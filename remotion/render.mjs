@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
- * Renders the syllabus film.
+ * Renders a syllabus film.
  *
  *   node render.mjs                       # all three crops to out/
  *   node render.mjs square vertical       # only the named crops
+ *   node render.mjs --film additions      # the "new additions" cut instead
  *   node render.mjs --still 900,1200      # PNGs at those frames, for checking
  *   node render.mjs --range 600-660 square  # a short clip, for iterating
  *
@@ -20,10 +21,17 @@ import { fileURLToPath } from "node:url";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "out");
 
-const CROPS = {
-  square: { id: "SyllabusFilmSquare", file: "syllabus-square-v2.mp4" },
-  vertical: { id: "SyllabusFilmVertical", file: "syllabus-vertical-v2.mp4" },
-  wide: { id: "SyllabusFilmWide", file: "syllabus-wide-v2.mp4" },
+const FILMS = {
+  syllabus: {
+    square: { id: "SyllabusFilmSquare", file: "syllabus-square-v2.mp4" },
+    vertical: { id: "SyllabusFilmVertical", file: "syllabus-vertical-v2.mp4" },
+    wide: { id: "SyllabusFilmWide", file: "syllabus-wide-v2.mp4" },
+  },
+  additions: {
+    square: { id: "NewAdditionsSquare", file: "syllabus-new-additions-square.mp4" },
+    vertical: { id: "NewAdditionsVertical", file: "syllabus-new-additions-vertical.mp4" },
+    wide: { id: "NewAdditionsWide", file: "syllabus-new-additions-wide.mp4" },
+  },
 };
 
 /**
@@ -42,6 +50,13 @@ const browserExecutable =
   BROWSER_CANDIDATES.find((p) => p && fs.existsSync(p)) ?? null;
 
 const args = process.argv.slice(2);
+const filmIndex = args.indexOf("--film");
+const filmName = filmIndex >= 0 ? args[filmIndex + 1] : "syllabus";
+const CROPS = FILMS[filmName];
+if (!CROPS) {
+  console.error(`Unknown --film "${filmName}". Options: ${Object.keys(FILMS).join(", ")}`);
+  process.exit(1);
+}
 const stillIndex = args.indexOf("--still");
 const stillFrames =
   stillIndex >= 0
