@@ -17,6 +17,20 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "Children of Time",
+    author: "Adrian Tchaikovsky",
+    description: "An Arthur C. Clarke Award-winning epic about the last humans fleeing a dying Earth and the uplifted spider civilization that evolves on the planet they hoped to claim.",
+    coverUrl: "/images/books/children-of-time.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0316452505/",
+    slug: "children-of-time-adrian-tchaikovsky",
+    status: "reading",
+    detailedDescription: "A terraforming project meant to seed a distant world with monkeys and a nanovirus to speed their evolution goes wrong, and it is spiders who inherit the gift instead. Thousands of years later, an ark ship carrying the last of humanity arrives expecting a new home. Tchaikovsky alternates between the two species across generations, building a spider society from the ground up and asking what a truly alien intelligence might value, and whether humans can share a world with it.",
+    genre: "Science Fiction",
+    publishedYear: "2015",
+    pages: "600",
+    publisher: "Orbit"
+  },
+  {
     title: "The Mountain in the Sea",
     author: "Ray Nayler",
     description: "A near-future novel about first contact with a hyper-intelligent octopus species, and what it costs to try to talk to a mind that isn't ours.",
@@ -82,6 +96,20 @@ export const books: Book[] = [
     publishedYear: "2024",
     pages: "320",
     publisher: "Graywolf Press"
+  },
+  {
+    title: "Nettle & Bone",
+    author: "T. Kingfisher",
+    description: "A Hugo Award-winning dark fairy tale about a quiet princess who sets out, with a gravewitch and a disgraced knight, to rescue her sister from a cruel prince.",
+    coverUrl: "/images/books/nettle-and-bone.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1250244005/",
+    slug: "nettle-and-bone-t-kingfisher",
+    status: "read",
+    detailedDescription: "Marra, the overlooked third princess of a small kingdom, finally admits that her sister's royal husband is a monster. To stop him she takes on a string of impossible tasks, building a dog out of bones and sewing a cloak of nettles, and gathers a mismatched company: a grumpy gravewitch, her demon-possessed chicken, a fairy godmother, and a knight with a past. Kingfisher mixes horror, warmth, and dry humor in a story about finding the nerve to act.",
+    genre: "Fantasy / Horror",
+    publishedYear: "2022",
+    pages: "256",
+    publisher: "Tor Books"
   },
   {
     title: "Moonbound",
