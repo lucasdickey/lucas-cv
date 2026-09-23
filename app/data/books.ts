@@ -31,20 +31,6 @@ export const books: Book[] = [
     publisher: "Orbit"
   },
   {
-    title: "The Mountain in the Sea",
-    author: "Ray Nayler",
-    description: "A near-future novel about first contact with a hyper-intelligent octopus species, and what it costs to try to talk to a mind that isn't ours.",
-    coverUrl: "/images/books/the-mountain-in-the-sea.jpg",
-    amazonUrl: "https://www.amazon.com/dp/1250872278/",
-    slug: "the-mountain-in-the-sea",
-    status: "reading",
-    detailedDescription: "Ray Nayler's debut novel follows a marine biologist sent to a cordoned-off archipelago to study an octopus species that appears to have developed language, symbol, and culture. Braided alongside it are an AI-piloted fishing trawler crewed by trafficked labor and the first android built to house a human-equivalent mind. The result is less a thriller than a sustained argument about consciousness: how we recognize it, how badly we're equipped to communicate across it, and what we destroy while deciding whether it counts.",
-    genre: "Science Fiction / Literary",
-    publishedYear: "2022",
-    pages: "464",
-    publisher: "MCD / Farrar, Straus and Giroux"
-  },
-  {
     title: "The Conquest of Happiness",
     author: "Bertrand Russell",
     description: "Russell's 1930 practical philosophy of everyday contentment—what makes people unhappy, and what actually helps.",
@@ -57,19 +43,6 @@ export const books: Book[] = [
     publishedYear: "1930",
     pages: "223",
     publisher: "Liveright"
-  },
-  {
-    title: "Angel Down",
-    author: "Daniel Kraus",
-    description: "A Pulitzer Prize-winning World War I novel, told in a single unbroken sentence, about a squad of soldiers sent into no-man's-land to rescue a fallen angel.",
-    coverUrl: "/images/books/angel-down.jpg",
-    amazonUrl: "https://www.amazon.com/Angel-Down-Novel-Daniel-Kraus/dp/1668068451/",
-    slug: "angel-down",
-    status: "reading",
-    genre: "Historical Fiction / Horror",
-    publishedYear: "2025",
-    pages: "304",
-    publisher: "Atria Books"
   },
   {
     title: "The Infinity Machine: Demis Hassabis, DeepMind, and the Quest for Superintelligence",
@@ -110,6 +83,33 @@ export const books: Book[] = [
     publishedYear: "2022",
     pages: "256",
     publisher: "Tor Books"
+  },
+  {
+    title: "The Mountain in the Sea",
+    author: "Ray Nayler",
+    description: "A near-future novel about first contact with a hyper-intelligent octopus species, and what it costs to try to talk to a mind that isn't ours.",
+    coverUrl: "/images/books/the-mountain-in-the-sea.jpg",
+    amazonUrl: "https://www.amazon.com/dp/1250872278/",
+    slug: "the-mountain-in-the-sea",
+    status: "read",
+    detailedDescription: "Ray Nayler's debut novel follows a marine biologist sent to a cordoned-off archipelago to study an octopus species that appears to have developed language, symbol, and culture. Braided alongside it are an AI-piloted fishing trawler crewed by trafficked labor and the first android built to house a human-equivalent mind. The result is less a thriller than a sustained argument about consciousness: how we recognize it, how badly we're equipped to communicate across it, and what we destroy while deciding whether it counts.",
+    genre: "Science Fiction / Literary",
+    publishedYear: "2022",
+    pages: "464",
+    publisher: "MCD / Farrar, Straus and Giroux"
+  },
+  {
+    title: "Angel Down",
+    author: "Daniel Kraus",
+    description: "A Pulitzer Prize-winning World War I novel, told in a single unbroken sentence, about a squad of soldiers sent into no-man's-land to rescue a fallen angel.",
+    coverUrl: "/images/books/angel-down.jpg",
+    amazonUrl: "https://www.amazon.com/Angel-Down-Novel-Daniel-Kraus/dp/1668068451/",
+    slug: "angel-down",
+    status: "read",
+    genre: "Historical Fiction / Horror",
+    publishedYear: "2025",
+    pages: "304",
+    publisher: "Atria Books"
   },
   {
     title: "Moonbound",
