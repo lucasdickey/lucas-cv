@@ -1,27 +1,34 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cabinet, orbitDistance, panGeometry, horizontalDrag, navigationMode, visibleBook } from '../public/real-books/navigation.js';
+import { cabinet, orbitDistance, panGeometry, horizontalDrag, dragView, visibleBook } from '../public/real-books/navigation.js';
 import { Mesh, BoxGeometry, MeshBasicMaterial, Raycaster, Vector3 } from '../public/real-books/assets/three.module.js';
 import { createPickTarget } from '../public/real-books/interaction.js';
 
-test('focused and zoomed views pan on both screen sizes, while the overview turns',()=>{
- assert.equal(navigationMode(1,'all'),'turn');
- assert.equal(navigationMode(1.8,'all'),'pan');
- assert.equal(navigationMode(1,'0'),'pan');
- assert.equal(navigationMode(1.8,'all',false),'turn');
+test('rotate preserves translation and changes yaw and tilt at mobile and desktop sizes at any zoom',()=>{
+ for(const [width,height] of [[390,420],[960,749]])for(const distance of [8,15,24,40]){
+  const view={mode:'turn',yaw:.1,pitch:0,x:1,y:7,dx:width*.1,dy:height*.1,width,height,distance,aspect:width/height};
+  const next=dragView(view);
+  assert.ok(next.yaw>view.yaw);assert.ok(next.pitch>view.pitch);
+  assert.equal(next.x,view.x);assert.equal(next.y,view.y);
+ }
+});
+test('pan moves both axes without resetting orientation, even when the whole shelf fits',()=>{
+ for(const distance of [8,15,24,40]){
+  const next=dragView({mode:'pan',yaw:.4,pitch:.2,x:0,y:7,dx:40,dy:40,width:390,height:420,distance,aspect:390/420});
+  assert.ok(next.x<0);assert.ok(next.y>7);
+  assert.equal(next.yaw,.4);assert.equal(next.pitch,.2);
+ }
+});
+test('drag distance scales with viewport size and pan travel remains bounded',()=>{
  for(const mode of ['pan','turn']){
   const common={start:0,distance:15,aspect:.7,mode};
   assert.equal(horizontalDrag({...common,delta:36,pixels:360}),horizontalDrag({...common,delta:120,pixels:1200}));
  }
-});
-test('panning contains the visible front plane at both edges and recenters when zoomed out',()=>{
  for(const distance of [8,12,24,40])for(const aspect of [.45,.8,1.5,2.1]){
-  const {width,limit}=panGeometry(distance,aspect);
+  const {limit}=panGeometry(distance,aspect);
   for(const delta of [-10000,10000]){
    const x=horizontalDrag({start:0,delta,pixels:390,distance,aspect,mode:'pan'});
-   if(width>=cabinet.halfWidth*2)assert.equal(Math.abs(x),0);
-   else assert.ok(Math.abs(x)+width/2<=cabinet.halfWidth+1e-9);
-   assert.ok(Math.abs(x)<=limit);
+   assert.ok(Math.abs(x)>0&&Math.abs(x)<=limit);
   }
  }
 });

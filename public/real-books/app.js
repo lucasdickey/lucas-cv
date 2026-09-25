@@ -1,14 +1,14 @@
 import * as THREE from './assets/three.module.js';
 import { books } from './books.js?v=closeups-5';
 import { createSpineCanvas } from './spine-texture.js';
-import { cabinet, orbitDistance, panGeometry, navigationMode, horizontalDrag, visibleBook } from './navigation.js?v=video-pan-1';
+import { cabinet, orbitDistance, panGeometry, dragView, visibleBook } from './navigation.js?v=controls-2';
 import { createMobileBrowser } from './mobile.js?v=mobile-1';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
 books.forEach((book,id)=>{book.id=id});
 const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true));
-let focusedRow='all',targetX=0,goalX=0;
+let focusedRow='all',navigationTool='turn',targetX=0,goalX=0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
 let covers={},pickTargets=[],occluders=[],previewed=null;
@@ -103,21 +103,20 @@ function showPreview(mesh) {
  previewed=mesh;
 }
 function panLimit(){return panGeometry(baseDistance/goalZoom,camera?.aspect||1).limit}
-function currentMode(){return navigationMode(goalZoom,focusedRow,panLimit()>0)}
+function chooseNavigation(tool){clearHover();navigationTool=tool;document.querySelectorAll('[data-navigation]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.navigation===tool)));updateHint()}
 function updateHint(){
- const pan=currentMode()==='pan';
- $('.gesture-hint').textContent=mobile.matches?`${pan?'Swipe to pan':'Swipe to turn'} · Tap a book`:`${pan?'Drag to pan':'Drag to turn'} · Scroll to zoom · Pick a spine`;
+ const pan=navigationTool==='pan';
+ $('.gesture-hint').textContent=mobile.matches?`${pan?'Drag to move':'Drag to turn & tilt'} · Tap a book`:`${pan?'Drag to move':'Drag to turn & tilt'} · Scroll to zoom`;
+ host.setAttribute('aria-label',`3D bookshelf. ${pan?'Drag to move left, right, up or down.':'Drag to turn and tilt.'} Use Rotate or Pan to change controls. Use arrow keys to adjust the view. Select a book to see its cover.`);
 }
 function setFocus(row){
  clearHover();focusedRow=row;goalX=0;
  if(row==='all'){goalY=7.05;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
- if(mobile.matches||row!=='all'){goalYaw=0;goalPitch=0}
  document.querySelectorAll('[data-shelf]').forEach(b=>{const active=b.dataset.shelf===row;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
  updateHint();
- host.setAttribute('aria-label',mobile.matches?'3D bookshelf. Swipe horizontally to explore. Tap a book, or use the searchable book list below.':'3D bookshelf. Drag to rotate, scroll to zoom. Use the book selector for keyboard access.');
  mobileBrowser.focus(row);
 }
-mobile.addEventListener('change',()=>{goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus(focusedRow)});
+mobile.addEventListener('change',()=>setFocus(focusedRow));
 setFocus('all');
 async function start(){
  try{
@@ -160,14 +159,13 @@ async function start(){
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
 host.addEventListener('pointerdown',e=>{
  if(e.button!==0||!e.isPrimary||!camera)return;
- clearHover();drag={id:e.pointerId,x:e.clientX,y:e.clientY,yaw:goalYaw,pitch:goalPitch,panX:goalX,mode:currentMode(),distance:baseDistance/goalZoom,moved:false};host.setPointerCapture(e.pointerId);
+ clearHover();drag={id:e.pointerId,x:e.clientX,y:e.clientY,yaw:goalYaw,pitch:goalPitch,panX:goalX,panY:goalY,mode:navigationTool,distance:baseDistance/goalZoom,moved:false};host.setPointerCapture(e.pointerId);
 });
 host.addEventListener('pointermove',e=>{
  updatePointer(e);
  if(drag&&drag.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>8)drag.moved=true;if(drag.moved){
-  const value=horizontalDrag({start:drag.mode==='pan'?drag.panX:drag.yaw,delta:dx,pixels:host.clientWidth,distance:drag.distance,aspect:camera.aspect,mode:drag.mode});
-  if(drag.mode==='pan')goalX=value;
-  else{goalYaw=value;if(!mobile.matches)goalPitch=Math.max(-.23,Math.min(.3,drag.pitch+dy*.002))}
+  const next=dragView({mode:drag.mode,yaw:drag.yaw,pitch:drag.pitch,x:drag.panX,y:drag.panY,dx,dy,width:host.clientWidth,height:host.clientHeight,distance:drag.distance,aspect:camera.aspect});
+  goalYaw=next.yaw;goalPitch=next.pitch;goalX=next.x;goalY=next.y;
  }}
  else if(e.pointerType!=='touch')needsPick=true;
 });
@@ -182,19 +180,20 @@ host.addEventListener('pointercancel',()=>{drag=null;clearHover()});
 host.addEventListener('pointerleave',()=>{if(!drag){clearHover();pointer.set(9,9)}});
 host.addEventListener('lostpointercapture',()=>{drag=null;clearHover()});
 window.addEventListener('blur',()=>{drag=null;clearHover()});
-function changeZoom(factor){clearHover();goalZoom=Math.max(.75,Math.min(4,goalZoom*factor));if(currentMode()==='pan'){goalYaw=0;goalPitch=0}updateHint()}
+function changeZoom(factor){clearHover();goalZoom=Math.max(.75,Math.min(4,goalZoom*factor));updateHint()}
 host.addEventListener('wheel',e=>{e.preventDefault();changeZoom(Math.exp(-e.deltaY*.0011))},{passive:false});
 host.addEventListener('keydown',e=>{
  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','Home'].includes(e.key))return;
  e.preventDefault();clearHover();
- if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(currentMode()==='pan')goalX=THREE.MathUtils.clamp(goalX+step*.45,-panLimit(),panLimit());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
- if(e.key==='ArrowUp')goalY=Math.min(12.5,goalY+.4);
- if(e.key==='ArrowDown')goalY=Math.max(1,goalY-.4);
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(navigationTool==='pan')goalX=THREE.MathUtils.clamp(goalX+step*.45,-panLimit(),panLimit());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
+ if(e.key==='ArrowUp'){if(navigationTool==='pan')goalY=Math.min(14.3,goalY+.4);else goalPitch=Math.min(.3,goalPitch+.04)}
+ if(e.key==='ArrowDown'){if(navigationTool==='pan')goalY=Math.max(0,goalY-.4);else goalPitch=Math.max(-.23,goalPitch-.04)}
  if(e.key==='+')changeZoom(zoomFactor(1.15));
  if(e.key==='-')changeZoom(zoomFactor(1/1.15));
  if(e.key==='Home')reset();
 });
-function reset(){goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
+function reset(){chooseNavigation('turn');goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
+document.querySelectorAll('[data-navigation]').forEach(button=>button.onclick=()=>chooseNavigation(button.dataset.navigation));
 $('#reset').onclick=reset;
 $('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
 $('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
