@@ -178,3 +178,9 @@ _"Because why not make job searching a little more interesting?"_ - Lucas Dickey
 EOF ~/lucas-dickey/README.md
 $ █
 ```
+
+## Physical bookshelf
+
+`/real-books` serves the standalone Three.js bookshelf from `public/real-books` through a Next.js rewrite. Both homepage reading sections link to it. The document base keeps JavaScript, catalog data, photos, and Amazon cover images under `/real-books/`, including on direct visits without a trailing slash.
+
+The source was imported from the interactive-bookshelf project at commit `852a01bb8c16fad56a7cf5a81ffcf0f2b566c48d`. Update the local files here for future changes. The catalog includes unidentified spines and editions without available cover artwork; those states have explicit fallbacks.
