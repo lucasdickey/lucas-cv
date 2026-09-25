@@ -238,13 +238,11 @@
     "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
   },
   "Microserfs": {
-    "asin": "0060391480",
-    "source": "https://openlibrary.org/works/OL14854130W",
+    "asin": "0060987049",
+    "isbn13": "9780060987046",
+    "source": "https://books.google.com/books/about/Microserfs.html?id=D1MHJu-DiJoC",
     "matchedTitle": "Microserfs",
-    "matchedAuthor": [
-      "Douglas Coupland"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "Miss Wyoming": {
     "asin": "0375407340",
@@ -1499,6 +1497,118 @@
     "isbn13": "9780061577079",
     "source": "https://discover.ajaxlibrary.ca/Record/265650",
     "matchedTitle": "The Poisonwood Bible",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Overstory": {
+    "asin": "039335668X",
+    "isbn13": "9780393356687",
+    "source": "https://wwnorton.co.uk/books/9780393635522-the-overstory/formats",
+    "matchedTitle": "The Overstory",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Keeper of Lost Causes": {
+    "asin": "0452297907",
+    "isbn13": "9780452297906",
+    "source": "https://catalog.wake.gov/Record/620869",
+    "matchedTitle": "The Keeper of Lost Causes",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Bloody Chamber": {
+    "asin": "0143107615",
+    "isbn13": "9780143107613",
+    "source": "https://www.penguinrandomhouse.com/books/308852/the-bloody-chamber-by-angela-carter-introduction-by-kelly-link/9780143107613/",
+    "matchedTitle": "The Bloody Chamber",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Small Things Like These": {
+    "asin": "0802158749",
+    "isbn13": "9780802158741",
+    "source": "https://ingramacademic.com/products/small-things-like-these-oprahs-book-club-9780802158741",
+    "matchedTitle": "Small Things Like These",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Flying Blind": {
+    "asin": "0964115174",
+    "isbn13": "9780964115170",
+    "source": "https://www.allbookstores.com/Flying-Blind-Poems-Sun-Moon/9780964115170",
+    "matchedTitle": "Flying Blind",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Hobbit": {
+    "asin": "0345339681",
+    "isbn13": "9780345339683",
+    "source": "https://www.penguinrandomhouse.com/books/179206/the-hobbit-by-jrr-tolkien/",
+    "matchedTitle": "The Hobbit",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Handmaid's Tale": {
+    "asin": "038549081X",
+    "isbn13": "9780385490818",
+    "source": "https://penguinrandomhousesecondaryeducation.com/book/?isbn=9780385490818",
+    "matchedTitle": "The Handmaid's Tale",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "One Flew Over the Cuckoo's Nest": {
+    "asin": "0451163966",
+    "isbn13": "9780451163967",
+    "source": "https://assets.penguinrandomhouse.com/book-resumes/KeseyKen_OneFlewOverThe_20240719.pdf",
+    "matchedTitle": "One Flew Over the Cuckoo's Nest",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Less Than Zero": {
+    "asin": "0679781498",
+    "isbn13": "9780679781493",
+    "source": "https://www.penguinrandomhouse.com/books/46021/less-than-zero-by-bret-easton-ellis/",
+    "matchedTitle": "Less Than Zero",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "A Christmas Carol": {
+    "asin": "0486268659",
+    "isbn13": "9780486268651",
+    "source": "https://store.doverpublications.com/products/9780486268651",
+    "matchedTitle": "A Christmas Carol",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "A Long Way Down": {
+    "asin": "1594633568",
+    "isbn13": "9781594633560",
+    "source": "https://www.penguinrandomhouse.com/books/291523/a-long-way-down-by-nick-hornby/",
+    "matchedTitle": "A Long Way Down",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "About a Boy": {
+    "asin": "1573227331",
+    "isbn13": "9781573227339",
+    "source": "https://penguinrandomhouselibrary.com/book/?isbn=9781573227339",
+    "matchedTitle": "About a Boy",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Parade": {
+    "asin": "0525564675",
+    "isbn13": "9780525564676",
+    "source": "https://www.penguinrandomhouse.com/books/597561/the-parade-by-dave-eggers/",
+    "matchedTitle": "The Parade",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Hey Nostradamus!": {
+    "asin": "1582344159",
+    "isbn13": "9781582344157",
+    "source": "https://www.vitalsource.com/products/hey-nostradamus-douglas-coupland-v9781596917545",
+    "matchedTitle": "Hey Nostradamus!",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Ghost Wall": {
+    "asin": "1250234956",
+    "isbn13": "9781250234957",
+    "source": "https://academic.macmillan.com/academictrade/9781250234957/ghostwall/",
+    "matchedTitle": "Ghost Wall",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Generation A": {
+    "asin": "1439157022",
+    "isbn13": "9781439157022",
+    "source": "https://www.simonandschuster.com/books/Generation-A/Douglas-Coupland/9781439157022",
+    "matchedTitle": "Generation A",
     "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   }
 }

@@ -72,7 +72,7 @@ test('third batch product matches use valid print ISBNs and include full-cover a
 
 
 test('fourth batch recovers the narrow Emissary spine and corrects the second shelf',()=>{
- const cubbies=closeupCubbies.filter(c=>c.source.startsWith('shelf-1-')||['shelf-2-cubby-1','shelf-2-cubby-2','shelf-2-cubby-3'].includes(c.source));
+ const cubbies=closeupCubbies.filter(c=>['shelf-1-cubbies-1-2','shelf-1-cubbies-3-4'].includes(c.source)||['shelf-2-cubby-1','shelf-2-cubby-2','shelf-2-cubby-3'].includes(c.source));
  assert.equal(cubbies.length,7);
  assert.equal(cubbies.reduce((n,c)=>n+c.books.length,0),44);
  assert.deepEqual(books.filter(b=>b.row===0&&b.rect[0]<214).map(b=>b.title),['Drown','The Emissary','This Is How You Lose Her','All Fours','L.A. Confidential']);
@@ -80,13 +80,36 @@ test('fourth batch recovers the narrow Emissary spine and corrects the second sh
  assert.equal(books.find(b=>b.title==='The Poisonwood Bible').author,'Barbara Kingsolver');
  assert.ok(!books.some(b=>b.title==='The Lathe of Heaven'));
  assert.ok(!books.some(b=>b.row===1&&b.unidentified));
- assert.equal(books.filter(b=>!b.nonBook).length,188);
- assert.equal(books.filter(b=>b.unidentified).length,9);
 });
 test('fourth batch matches and repaired editions have valid print ISBNs and full covers',()=>{
  const links=JSON.parse(fs.readFileSync(new URL('../public/real-books/links.json',import.meta.url)));
  const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
  for(const title of ["The Emissary", "L.A. Confidential", "The Man Who Saw Seconds", "Ubik", "The Sirens of Titan", "The Summer Without Men", "The Remains of the Day", "The Canterbury Tales", "East of Eden", "Tomorrow, and Tomorrow, and Tomorrow", "The City & the City", "Sourdough", "So Late in the Day", "The Poisonwood Bible", "The Big Nowhere", "White Jazz", "Do Androids Dream of Electric Sheep?"]){
+  const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);
+  assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);
+  assert.equal([...entry.isbn13].reduce((sum,c,i)=>sum+Number(c)*(i%2?3:1),0)%10,0,title);
+  assert.ok(covers[entry.asin],title);assert.ok(fs.statSync(new URL('../public/real-books/'+covers[entry.asin].path,import.meta.url)).size>1000,title);
+ }
+});
+
+
+test('fifth batch identifies the complete top row while preserving real duplicate copies',()=>{
+ const cubbies=closeupCubbies.filter(c=>['shelf-1-cubbies-5-6','shelf-1-cubbies-7-8'].includes(c.source));
+ assert.equal(cubbies.length,4);
+ assert.equal(cubbies.reduce((n,c)=>n+c.books.length,0),27);
+ assert.equal(books.filter(b=>b.title==='About a Boy').length,2);
+ assert.equal(books.filter(b=>b.title==='Brave New World').length,2);
+ assert.equal(books.find(b=>b.title==='Flying Blind').author,'Sharon Bryan');
+ assert.equal(books.find(b=>b.title==='Generation A').author,'Douglas Coupland');
+ assert.ok(!books.some(b=>b.row===0&&b.unidentified));
+ for(const title of ['The Circle','The Naked and the Dead','Jitterbug Perfume','The Three Stigmata of Palmer Eldritch','One Hundred Years of Solitude','The Buried Giant','Nineteen Eighty-Four'])assert.ok(!books.some(b=>b.title===title),title);
+ assert.equal(books.filter(b=>!b.nonBook).length,191);
+ assert.deepEqual(books.filter(b=>b.unidentified).map(b=>[b.title,b.row]),[['Unidentified spine 39',3]]);
+});
+test('fifth batch product editions have valid print ISBNs and full local covers',()=>{
+ const links=JSON.parse(fs.readFileSync(new URL('../public/real-books/links.json',import.meta.url)));
+ const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
+ for(const title of ["The Overstory", "The Keeper of Lost Causes", "The Bloody Chamber", "Small Things Like These", "Flying Blind", "The Hobbit", "The Handmaid's Tale", "One Flew Over the Cuckoo's Nest", "Less Than Zero", "A Christmas Carol", "A Long Way Down", "About a Boy", "The Parade", "Hey Nostradamus!", "Ghost Wall", "Generation A", "Microserfs"]){
   const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);
   assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);
   assert.equal([...entry.isbn13].reduce((sum,c,i)=>sum+Number(c)*(i%2?3:1),0)%10,0,title);
