@@ -2,6 +2,85 @@
 // Layout rectangles stay in the original full-shelf coordinate system.
 export const closeupCubbies = [
  {
+  row: 1, from: 680, to: 960, source: "shelf-2-cubby-3",
+  books: [
+   ["Lake of Souls","Ann Leckie",[682,548,23,207],[[223,194],[310,193],[370,823],[279,827]]],
+   ["The Left Hand of Darkness","Ursula K. Le Guin",[706,551,19,204],[[340,204],[391,204],[430,811],[376,815]]],
+   ["The Hidden Girl and Other Stories","Ken Liu",[726,532,27,223],[[399,129],[482,127],[515,822],[437,824]]],
+   ["The Adventures of Amina al-Sirafi","Shannon Chakraborty",[755,552,30,203],[[504,221],[590,220],[604,815],[524,815]]],
+   ["The Paper Menagerie and Other Stories","Ken Liu",[787,549,28,206],[[610,195],[696,197],[694,819],[615,819]]],
+   ["Axiomatic","Greg Egan",[816,529,22,226],[[714,123],[772,123],[756,821],[704,822]]]
+  ]
+ },
+ {
+  row: 1, from: 380, to: 680, source: "shelf-2-cubby-2",
+  books: [
+   ["Katabasis","R. F. Kuang",[502,532,40,223],[[548,102],[679,102],[682,819],[574,817]]],
+   ["Unworld","Jayson Greene",[543,525,24,230],[[693,72],[758,73],[754,822],[690,825]]],
+   ["Neuromancer","William Gibson",[568,555,21,200],[[773,203],[827,204],[811,815],[763,815]]],
+   ["So Late in the Day","Claire Keegan",[590,573,15,182],[[840,259],[888,260],[860,822],[821,819]]],
+   ["The Poisonwood Bible","Barbara Kingsolver",[606,560,34,195],[[918,214],[1014,214],[974,822],[887,821]]],
+   ["Orbital","Samantha Harvey",[641,573,20,182],[[1027,282],[1076,283],[1032,829],[990,824]]]
+  ]
+ },
+ {
+  row: 1, from: 80, to: 380, source: "shelf-2-cubby-1",
+  books: [
+   ["The Immortalists","Chloe Benjamin",[99,569,30,186],[[190,159],[271,160],[337,820],[251,825]]],
+   ["Stories of Your Life and Others","Ted Chiang",[130,568,32,187],[[302,207],[381,208],[423,803],[351,807]]],
+   ["The Golem of Brooklyn","Adam Mansbach",[163,569,22,186],[[398,181],[457,182],[493,803],[433,806]]],
+   ["Exhalation","Ted Chiang",[186,553,33,202],[[475,127],[565,128],[603,814],[519,818]]],
+   ["Tomorrow, and Tomorrow, and Tomorrow","Gabrielle Zevin",[220,574,22,181],[[590,178],[679,179],[688,819],[617,818]]],
+   ["The City & the City","China Miéville",[243,563,26,192],[[709,149],[770,150],[765,827],[697,827]]],
+   ["Sourdough","Robin Sloan",[270,561,21,194],[[782,152],[838,153],[820,815],[778,818]]],
+   ["Circe","Madeline Miller",[292,562,26,193],[[857,152],[952,154],[912,813],[832,815]]],
+   ["The Song of Achilles","Madeline Miller",[319,568,25,187],[[965,176],[1042,177],[1008,815],[926,815]]],
+   ["The Tainted Cup","Robert Jackson Bennett",[345,564,17,191],[[1089,145],[1163,144],[1090,815],[1021,815]]]
+  ]
+ },
+ {
+  row: 0, from: 60, to: 214, source: "shelf-1-cubbies-1-2",
+  books: [
+   ["Drown","Junot Díaz",[69,191,25,202],[[163,22],[226,31],[221,802],[153,801]]],
+   ["The Emissary","Yoko Tawada",[95,193,10,200],[[242,23],[274,29],[266,801],[228,801]]],
+   ["This Is How You Lose Her","Junot Díaz",[106,194,24,199],[[287,34],[341,36],[342,794],[276,798]]],
+   ["All Fours","Miranda July",[131,194,37,199],[[377,36],[454,38],[452,799],[372,800]]],
+   ["L.A. Confidential","James Ellroy",[173,198,32,195],[[527,44],[635,48],[628,795],[516,796]]]
+  ]
+ },
+ {
+  row: 0, from: 214, to: 370, source: "shelf-1-cubbies-1-2",
+  books: [
+   ["The Man Who Saw Seconds","Alexander Boldizar",[216,194,31,199],[[728,0],[797,0],[777,792],[705,791]]],
+   ["The Big Nowhere","James Ellroy",[251,191,27,202],[[810,53],[888,54],[878,794],[786,796]]],
+   ["White Jazz","James Ellroy",[280,197,26,196],[[907,127],[966,130],[948,790],[885,791]]],
+   ["Perfidia","James Ellroy",[307,218,29,175],[[977,130],[1071,128],[1055,782],[958,784]]],
+   ["The Black Dahlia","James Ellroy",[338,192,21,201],[[1111,65],[1186,67],[1174,796],[1091,796]]]
+  ]
+ },
+ {
+  row: 0, from: 375, to: 520, source: "shelf-1-cubbies-3-4",
+  books: [
+   ["Flowers for Algernon","Daniel Keyes",[380,194,24,199],[[208,75],[280,78],[298,777],[212,778]]],
+   ["Catch-22","Joseph Heller",[406,186,29,207],[[300,47],[391,48],[393,772],[305,773]]],
+   ["Do Androids Dream of Electric Sheep?","Philip K. Dick",[437,207,16,186],[[411,95],[451,96],[453,766],[407,770]]],
+   ["Ubik","Philip K. Dick",[455,201,18,192],[[464,93],[505,93],[508,765],[463,767]]],
+   ["Annihilation","Jeff VanderMeer",[475,215,14,178],[[521,122],[560,122],[567,774],[518,773]]],
+   ["A Sorceress Comes to Call","T. Kingfisher",[491,187,22,206],[[583,45],[651,43],[653,781],[577,779]]]
+  ]
+ },
+ {
+  row: 0, from: 520, to: 665, source: "shelf-1-cubbies-3-4",
+  books: [
+   ["The Sirens of Titan","Kurt Vonnegut",[531,194,19,199],[[730,81],[778,81],[768,775],[720,775]]],
+   ["The Summer Without Men","Siri Hustvedt",[552,190,16,203],[[814,70],[839,70],[831,767],[791,769]]],
+   ["The Remains of the Day","Kazuo Ishiguro",[570,195,14,198],[[864,89],[904,92],[895,768],[843,768]]],
+   ["The Vegetarian","Han Kang",[586,196,18,197],[[921,91],[970,93],[962,772],[908,771]]],
+   ["The Canterbury Tales","Geoffrey Chaucer",[606,217,16,176],[[1005,163],[1048,164],[1052,783],[984,777]]],
+   ["East of Eden","John Steinbeck",[624,196,27,197],[[1080,101],[1162,98],[1170,786],[1060,783]]]
+  ]
+ },
+ {
   row: 2, from: 70, to: 380, source: 'shelf-3-cubby-1',
   books: [
    ["Moonglow","Michael Chabon",[83,210,54,237],[[190,105],[300,108],[339,799],[243,794]]],
