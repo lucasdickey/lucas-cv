@@ -1,5 +1,5 @@
 import * as THREE from './assets/three.module.js';
-import { books } from './books.js?v=closeups-1';
+import { books } from './books.js?v=closeups-2';
 import { createSpineCanvas } from './spine-texture.js';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');

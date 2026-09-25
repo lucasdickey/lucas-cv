@@ -1,4 +1,4 @@
-import { applyCloseups } from './closeups.js';
+import { applyCloseups } from './closeups.js?v=2';
 // Coordinates reference the user's photographs. Unreadable spines remain visible.
 export const books=[];
 let unknown=0;

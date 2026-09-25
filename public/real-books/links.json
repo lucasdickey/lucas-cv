@@ -1247,5 +1247,82 @@
     "source": "https://clubs.scholastic.com/i-survived-the-black-death%2C-1348/9781338891805-rco-us.html",
     "matchedTitle": "I Survived the Black Death, 1348",
     "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "The Early Ayn Rand": {
+    "asin": "045121465X",
+    "isbn13": "9780451214652",
+    "source": "https://www.penguinrandomhouse.com/books/324889/the-early-ayn-rand-by-ayn-rand/",
+    "matchedTitle": "The Early Ayn Rand",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Future of an Illusion": {
+    "asin": "0393008312",
+    "isbn13": "9780393008319",
+    "source": "https://wwnorton.co.uk/books/9780393008319-the-future-of-an-illusion",
+    "matchedTitle": "The Future of an Illusion",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Jules Verne: The Man Who Invented the Future": {
+    "asin": "0590023799",
+    "isbn13": "9780590023795",
+    "source": "https://www.abebooks.com/9780590023795/Jules-Verne-Man-Who-Invented-0590023799/plp",
+    "matchedTitle": "Jules Verne: The Man Who Invented the Future",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Unbearable Lightness of Being": {
+    "asin": "0060932139",
+    "isbn13": "9780060932138",
+    "source": "https://books.google.com/books/about/The_Unbearable_Lightness_of_Being.html?id=PnjN3-pYkH4C",
+    "matchedTitle": "The Unbearable Lightness of Being",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Letter Opener": {
+    "asin": "0002008947",
+    "isbn13": "9780002008945",
+    "source": "https://www.vitalsource.com/products/the-letter-opener-kyo-maclear-v9781443403238",
+    "matchedTitle": "The Letter Opener",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Ministry of Time": {
+    "asin": "1668045141",
+    "isbn13": "9781668045145",
+    "source": "https://www.simonandschuster.com/books/The-Ministry-of-Time/Kaliane-Bradley/9781668045145",
+    "matchedTitle": "The Ministry of Time",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Abolition of Man": {
+    "asin": "0060652942",
+    "isbn13": "9780060652944",
+    "source": "https://store.ligonier.org/abolition-of-man-paperback",
+    "matchedTitle": "The Abolition of Man",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Night Watchman": {
+    "asin": "0062671189",
+    "isbn13": "9780062671189",
+    "source": "https://books.google.com/books/about/The_Night_Watchman.html?id=iGJb0QEACAAJ",
+    "matchedTitle": "The Night Watchman",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Peacock's Tales: The Alchemical Writings of Claudia Pavonis": {
+    "asin": "1484874641",
+    "isbn13": "9781484874646",
+    "source": "https://www.allbookstores.com/The-Peacock-Tales-The-Alchemical/9781484874646",
+    "matchedTitle": "The Peacock's Tales: The Alchemical Writings of Claudia Pavonis",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Fleishman Is in Trouble": {
+    "asin": "0525510893",
+    "isbn13": "9780525510895",
+    "source": "https://www.penguinrandomhouse.com/books/573460/fleishman-is-in-trouble-by-taffy-brodesser-akner/",
+    "matchedTitle": "Fleishman Is in Trouble",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "In the Light of What We Know": {
+    "asin": "1250062373",
+    "isbn13": "9781250062376",
+    "source": "https://us.macmillan.com/books/9781250062376/inthelightofwhatweknow/",
+    "matchedTitle": "In the Light of What We Know",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   }
 }
