@@ -14,8 +14,9 @@ import ApebotChat from "./components/ApebotChat";
 import SyllabusPartIcon from "./components/SyllabusPartIcon";
 import FeaturedTweets from "./components/FeaturedTweets";
 import ShipLog from "./components/ShipLog";
+import BookshelfPreview from "./components/BookshelfPreview";
 import { featuredTweets } from "./data/tweets";
-import { getShipLogStats, WINDOW_START } from "./data/shipLog";
+import { getShipLogStats, WINDOW_LABEL } from "./data/shipLog";
 import { type Entry, getTypeInfo, groupedEntries } from "./data/cv";
 
 type ContributionLevelString =
@@ -573,16 +574,8 @@ export default function TerminalRepoList() {
           </div>
           <div className="bg-[#f5f5dc]">
             <div className="px-4 pt-4 text-[#333333] leading-relaxed">
-              Everything below had commits since{" "}
-              {new Date(WINDOW_START).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                timeZone: "UTC",
-              })}
-              . Ranges from a legislative-analysis company to a four-way soccer
-              game with a real Android build. Where a project is publicly live
-              and un-gated, there&apos;s a direct link — go poke at it.
+              Public work from {WINDOW_LABEL}. Explore the live projects or browse the public source.
+              Commit counts include merges and automated updates on each repository’s default branch.
             </div>
             <ShipLog variant="terminal" />
           </div>
@@ -818,11 +811,7 @@ export default function TerminalRepoList() {
 
                             return (
                               <>
-                                <p className="mb-4 text-sm">
-                                  <a href="/real-books" className="text-[#0000ff] hover:underline">
-                                    Browse my physical bookshelf in 3D →
-                                  </a>
-                                </p>
+                                <BookshelfPreview />
                                 {booksToShow.length > 8 ? (
                                   <ExpandableSection
                                     maxRows={4}

@@ -233,7 +233,7 @@ export default function ShipLog({
     <ExpandableSection
       maxRows={3}
       rowHeight={280}
-      expandLabel="Show all 12 projects"
+      expandLabel={`Show all ${shipLog.length} projects`}
       collapseLabel="Collapse"
     >
       {shipLog.map((project) => (
