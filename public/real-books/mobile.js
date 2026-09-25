@@ -1,3 +1,5 @@
+import { bookMatches } from './search.js?v=search-1';
+
 // One book-detail view moves into a native dialog on phones, retaining its
 // cover-loading state while the dialog provides focus trapping and dismissal.
 export function createMobileBrowser(books, onSelect, onDismiss) {
@@ -11,7 +13,7 @@ export function createMobileBrowser(books, onSelect, onDismiss) {
  function render(){
   if(!mobile.matches)return;
   const query=search.value.trim().toLocaleLowerCase();
-  const matches=books.filter(b=>!b.nonBook&&(row==='all'||b.row===Number(row))&&`${b.title} ${b.author}`.toLocaleLowerCase().includes(query));
+  const matches=books.filter(b=>(row==='all'||b.row===Number(row))&&bookMatches(b,query));
   document.querySelector('#library-title').textContent=row==='all'?'Browse the books':`Shelf ${Number(row)+1}`;
   document.querySelector('#library-count').textContent=`${matches.length} ${matches.length===1?'book':'books'}`;
   list.replaceChildren();
