@@ -2,6 +2,72 @@
 // Layout rectangles stay in the original full-shelf coordinate system.
 export const closeupCubbies = [
  {
+  row: 3, from: 680, to: 980, source: 'shelf-4-cubby-3',
+  books: [
+   ["1984","George Orwell",[680,279,25,232],[[197,251],[288,249],[342,887],[277,888]]],
+   ["The Early Ayn Rand","Ayn Rand",[706,315,25,196],[[283,349],[363,331],[430,890],[359,892]]],
+   ["The Future of an Illusion","Sigmund Freud",[732,313,20,198],[[391,334],[450,329],[488,884],[444,892]],{"unidentified":false}],
+   ["The Wild Robot","Peter Brown",[753,282,30,229],[[459,282],[534,279],[557,877],[491,883]]],
+   ["Jules Verne: The Man Who Invented the Future","Franz Born",[784,326,13,185],[[545,389],[582,387],[591,876],[565,879]]],
+   ["The Unbearable Lightness of Being","Milan Kundera",[798,277,25,234],[[582,245],[660,242],[660,885],[598,886]]],
+   ["The Letter Opener","Kyo Maclear",[824,277,24,234],[[668,240],[752,238],[736,887],[670,888]]],
+   ["The Smell of Breath","Conor McMillen",[849,274,22,237],[[758,232],[820,232],[784,882],[741,885]]],
+   ["The Ministry of Time","Kaliane Bradley",[872,260,29,251],[[841,198],[915,196],[867,858],[797,858]]],
+   ["The Abolition of Man","C. S. Lewis",[902,277,12,234],[[924,234],[963,232],[908,854],[883,854]]],
+   ["Kockroach","Tyler Knox",[915,278,23,233],[[971,229],[1043,229],[977,852],[915,852]]],
+   ["Slade House","David Mitchell",[939,291,26,220],[[1047,277],[1138,276],[1060,873],[991,874]]],
+   ["Heather, the Totality","Matthew Weiner",[966,253,15,258],[[1160,180],[1205,179],[1108,870],[1071,871]]],
+  ]
+ },
+ {
+  row: 4, from: 390, to: 680, source: 'shelf-5-cubby-2',
+  books: [
+   ["The Savage Detectives","Roberto Bolaño",[395,653,51,197],[[201,198],[330,198],[390,828],[288,835]]],
+   ["Normal People","Sally Rooney",[447,653,22,197],[[332,228],[387,226],[439,807],[398,809]]],
+   ["Stories of Your Life and Others","Ted Chiang",[470,653,25,197],[[392,226],[465,225],[503,834],[445,836]]],
+   ["Nettle & Bone","T. Kingfisher",[496,644,25,206],[[492,199],[553,199],[585,815],[534,824]]],
+   ["The Night Watchman","Louise Erdrich",[522,653,27,197],[[567,225],[655,224],[665,810],[590,810]]],
+   ["A Brief History of Seven Killings","Marlon James",[550,643,42,207],[[668,198],[813,197],[791,833],[683,834]]],
+   ["Educated","Tara Westover",[593,604,27,246],[[838,75],[938,75],[883,837],[811,841]]],
+   ["Amsterdam","Ian McEwan",[621,650,15,200],[[940,216],[999,215],[946,836],[900,842]]],
+   ["Manhattan Beach","Jennifer Egan",[637,609,27,241],[[1012,88],[1115,88],[1040,820],[956,832]]],
+   ["The Peacock's Tales: The Alchemical Writings of Claudia Pavonis","Marty Leeds",[665,622,13,228],[[1123,115],[1180,115],[1081,823],[1047,825]]],
+  ]
+ },
+ {
+  row: 3, from: 350, to: 680, source: 'shelf-4-cubby-2',
+  books: [
+   ["Horse","Geraldine Brooks",[363,248,47,263],[[333,122],[461,126],[481,844],[376,850]]],
+   ["Little Fires Everywhere","Celeste Ng",[411,249,41,262],[[470,128],[567,134],[570,832],[495,838]]],
+  ]
+ },
+ {
+  row: 4, from: 50, to: 390, source: 'shelf-5-cubby-1',
+  books: [
+   ["Shantaram","Gregory David Roberts",[85,647,66,203],[[262,215],[441,217],[469,850],[325,864]]],
+   ["The Lincoln Highway","Amor Towles",[152,647,57,203],[[454,233],[571,233],[579,844],[482,842]]],
+   ["Freedom","Jonathan Franzen",[211,647,59,203],[[609,230],[747,230],[715,810],[613,815]]],
+   ["Purity","Jonathan Franzen",[272,647,65,203],[[767,232],[912,233],[855,819],[758,815]]],
+   ["Where the Crawdads Sing","Delia Owens",[339,647,35,203],[[1053,234],[1139,237],[1042,875],[977,866]]],
+  ]
+ },
+ {
+  row: 3, from: 40, to: 350, source: 'shelf-4-cubby-1',
+  books: [
+   ["Fleishman Is in Trouble","Taffy Brodesser-Akner",[45,251,39,260],[[340,197],[441,205],[448,790],[374,791]]],
+   ["Clockers","Richard Price",[85,283,45,228],[[445,289],[517,287],[518,795],[459,795]]],
+   ["The Mountain in the Sea","Ray Nayler",[131,251,195,32],[[527,201],[1100,215],[1090,301],[525,284]],{"horizontal":true}],
+   ["The State of the Art","Iain M. Banks",[131,285,195,23],[[548,298],[1067,315],[1063,350],[547,335]],{"horizontal":true}],
+   ["Use of Weapons","Iain M. Banks",[131,309,195,23],[[548,341],[1063,355],[1055,413],[548,401]],{"horizontal":true}],
+   ["Excession","Iain M. Banks",[131,334,195,24],[[548,410],[1050,426],[1044,488],[545,467]],{"horizontal":true}],
+   ["The Player of Games","Iain M. Banks",[131,359,195,27],[[546,473],[1042,495],[1037,548],[545,532]],{"horizontal":true}],
+   ["Consider Phlebas","Iain M. Banks",[131,389,195,35],[[543,538],[1035,555],[1028,625],[541,600]],{"horizontal":true}],
+   ["In the Light of What We Know","Zia Haider Rahman",[131,426,195,26],[[539,609],[1038,635],[1034,678],[537,660]],{"horizontal":true}],
+   ["The Last Samurai","Helen DeWitt",[131,454,195,30],[[548,670],[1032,689],[1027,748],[549,741]],{"horizontal":true}],
+   ["The Imperfectionists","Tom Rachman",[131,486,195,29],[[551,750],[1036,765],[1031,799],[552,787]],{"horizontal":true}],
+  ]
+ },
+ {
   row: 4, from: 680, to: 980, source: 'shelf-5-cubby-3',
   books: [
    ['The Rise and Fall of Great Powers','Tom Rachman',[684,628,38,222],[[218,247],[347,244],[412,909],[322,905]]],

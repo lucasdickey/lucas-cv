@@ -31,3 +31,22 @@ test('every newly identified book has a sourced, valid ISBN and unknowns have no
  }
  for(const book of books.filter(b=>b.unidentified))assert.equal(book.asin,undefined);
 });
+
+test('second close-up batch replaces reflections and mistaken titles without removing real duplicate copies',()=>{
+ const cubbies=closeupCubbies.filter(c=>['shelf-4-cubby-1','shelf-4-cubby-2','shelf-4-cubby-3','shelf-5-cubby-1','shelf-5-cubby-2'].includes(c.source));
+ assert.equal(cubbies.reduce((n,c)=>n+c.books.length,0),41);
+ assert.ok(cubbies.every(c=>c.books.every(b=>!b[4]?.unidentified)));
+ assert.equal(books.filter(b=>b.row===3&&b.rect[0]>=350&&b.rect[0]<680).length,2);
+ assert.equal(books.filter(b=>b.row===3&&b.horizontal&&b.rect[0]<350).length,9);
+ assert.ok(!books.some(b=>['The Man in the High Castle',"The Hitchhiker's Guide to the Galaxy",'Unidentified spine 44'].includes(b.title)));
+ assert.equal(books.filter(b=>b.title==='Stories of Your Life and Others').length,2);
+ assert.equal(books.find(b=>b.title==='The Future of an Illusion').author,'Sigmund Freud');
+ assert.equal(books.find(b=>b.title.startsWith("The Peacock's Tales")).author,'Marty Leeds');
+});
+
+test('new close-up matches have valid ISBNs and available covers point to real assets',()=>{
+ const links=JSON.parse(fs.readFileSync(new URL('../public/real-books/links.json',import.meta.url)));
+ const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
+ const titles=['The Early Ayn Rand','The Future of an Illusion','Jules Verne: The Man Who Invented the Future','The Unbearable Lightness of Being','The Letter Opener','The Ministry of Time','The Abolition of Man','The Night Watchman',"The Peacock's Tales: The Alchemical Writings of Claudia Pavonis",'Fleishman Is in Trouble','In the Light of What We Know'];
+ for(const title of titles){const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);const art=covers[entry.asin];if(art)assert.ok(fs.statSync(new URL('../public/real-books/'+art.path,import.meta.url)).size>1000,title);}
+});
