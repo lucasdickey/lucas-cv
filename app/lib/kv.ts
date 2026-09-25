@@ -51,3 +51,7 @@ export async function kvSet(key: string, value: unknown): Promise<void> {
   const serialized = typeof value === "string" ? value : JSON.stringify(value);
   await kvCommand(["SET", key, serialized]);
 }
+
+export async function kvDel(key: string): Promise<void> {
+  await kvCommand(["DEL", key]);
+}
