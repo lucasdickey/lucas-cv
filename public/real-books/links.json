@@ -33,22 +33,18 @@
     "source": "https://openlibrary.org/works/OL37827700W"
   },
   "The Big Nowhere": {
-    "asin": "1407075330",
-    "source": "https://openlibrary.org/works/OL553811W",
+    "asin": "0446674370",
+    "isbn13": "9780446674379",
+    "source": "https://www.allbookstores.com/The-Big-Nowhere-James-Ellroy/9780446674379",
     "matchedTitle": "The Big Nowhere",
-    "matchedAuthor": [
-      "James Ellroy"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "White Jazz": {
-    "asin": "0712634126",
-    "source": "https://openlibrary.org/works/OL553839W",
+    "asin": "0375727361",
+    "isbn13": "9780375727368",
+    "source": "https://www.penguinrandomhouse.com/books/46230/white-jazz-by-james-ellroy/",
     "matchedTitle": "White Jazz",
-    "matchedAuthor": [
-      "James Ellroy"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "Perfidia": {
     "asin": "0099537753",
@@ -85,13 +81,11 @@
     "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
   },
   "Do Androids Dream of Electric Sheep?": {
-    "asin": "0194792226",
-    "source": "https://openlibrary.org/works/OL2172356W",
+    "asin": "0345404475",
+    "isbn13": "9780345404473",
+    "source": "https://catalog.wake.gov/Record/208643",
     "matchedTitle": "Do Androids Dream of Electric Sheep?",
-    "matchedAuthor": [
-      "Philip K. Dick"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "Annihilation": {
     "asin": "0374537151",
@@ -1407,6 +1401,104 @@
     "isbn13": "9780060652951",
     "source": "https://books.google.com/books/about/The_Great_Divorce.html?id=rRDStUlFPooC",
     "matchedTitle": "The Great Divorce",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Emissary": {
+    "asin": "0811227626",
+    "isbn13": "9780811227629",
+    "source": "https://www.ndbooks.com/book/the-emissary/",
+    "matchedTitle": "The Emissary",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "L.A. Confidential": {
+    "asin": "0446674249",
+    "isbn13": "9780446674249",
+    "source": "https://www.allbookstores.com/Confidential-Ellroy-James/9780446674249",
+    "matchedTitle": "L.A. Confidential",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Man Who Saw Seconds": {
+    "asin": "1960988077",
+    "isbn13": "9781960988072",
+    "source": "https://www.publishersweekly.com/9781960988072",
+    "matchedTitle": "The Man Who Saw Seconds",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Ubik": {
+    "asin": "0547572298",
+    "isbn13": "9780547572291",
+    "source": "https://openlibrary.org/books/OL25115776M/Ubik",
+    "matchedTitle": "Ubik",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Sirens of Titan": {
+    "asin": "0385333498",
+    "isbn13": "9780385333498",
+    "source": "https://www.penguinrandomhouse.com/books/184346/the-sirens-of-titan-by-kurt-vonnegut/",
+    "matchedTitle": "The Sirens of Titan",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Summer Without Men": {
+    "asin": "0312570600",
+    "isbn13": "9780312570606",
+    "source": "https://academic.macmillan.com/academictrade/9780312570606/thesummerwithoutmen/",
+    "matchedTitle": "The Summer Without Men",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Remains of the Day": {
+    "asin": "0679731725",
+    "isbn13": "9780679731726",
+    "source": "https://penguinrandomhousehighereducation.com/book/?isbn=9780679731726",
+    "matchedTitle": "The Remains of the Day",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Canterbury Tales": {
+    "asin": "0451416783",
+    "isbn13": "9780451416780",
+    "source": "https://www.penguinrandomhouse.com/books/295138/the-canterbury-tales-by-geoffrey-chaucer/",
+    "matchedTitle": "The Canterbury Tales",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "East of Eden": {
+    "asin": "0143129481",
+    "isbn13": "9780143129486",
+    "source": "https://www.penguinrandomhouse.com/books/541274/east-of-eden-by-john-steinbeck/",
+    "matchedTitle": "East of Eden",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Tomorrow, and Tomorrow, and Tomorrow": {
+    "asin": "0593466497",
+    "isbn13": "9780593466490",
+    "source": "https://www.readinggroupguides.com/printpdf/reviews/tomorrow-and-tomorrow-and-tomorrow",
+    "matchedTitle": "Tomorrow, and Tomorrow, and Tomorrow",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The City & the City": {
+    "asin": "034549752X",
+    "isbn13": "9780345497529",
+    "source": "https://openlibrary.org/books/OL24091785M/The_City_The_City",
+    "matchedTitle": "The City & the City",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Sourdough": {
+    "asin": "0374203105",
+    "isbn13": "9780374203108",
+    "source": "https://us.macmillan.com/books/9780374203108/sourdough/",
+    "matchedTitle": "Sourdough",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "So Late in the Day": {
+    "asin": "0802160859",
+    "isbn13": "9780802160850",
+    "source": "https://groveatlantic.com/book/so-late-in-the-day/",
+    "matchedTitle": "So Late in the Day",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Poisonwood Bible": {
+    "asin": "0061577073",
+    "isbn13": "9780061577079",
+    "source": "https://discover.ajaxlibrary.ca/Record/265650",
+    "matchedTitle": "The Poisonwood Bible",
     "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   }
 }

@@ -56,8 +56,6 @@ test('third batch keeps photographed duplicate copies and excludes the notebook 
  assert.equal(cubbies.reduce((n,c)=>n+c.books.length,0),48);
  for(const title of ['Klara and the Sun','Flowers for Algernon','1984'])assert.equal(books.filter(b=>b.title===title).length,2,title);
  const notebook=books.find(b=>b.title==='Spiral notebook');assert.equal(notebook.nonBook,true);assert.equal(notebook.unidentified,false);assert.equal(notebook.asin,undefined);
- assert.equal(books.filter(b=>!b.nonBook).length,187);
- assert.equal(books.filter(b=>b.unidentified).length,21);
  assert.equal(books.find(b=>b.title==='The Man in the High Castle').row,1);
  for(const title of ['Ghostways',"Foreskin's Lament",'2666','Lincoln in the Bardo'])assert.ok(!books.some(b=>b.title===title),title);
 });
@@ -65,6 +63,30 @@ test('third batch product matches use valid print ISBNs and include full-cover a
  const links=JSON.parse(fs.readFileSync(new URL('../public/real-books/links.json',import.meta.url)));
  const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
  for(const title of ['The Last Days of Night','A Hundred Thousand Worlds','The Expanding Circle','Cloud Cuckoo Land','When You Are Engulfed in Flames','Barrel Fever','The Informers','The Rules of Attraction','Men and Cartoons','Tell-All',"It Lasts Forever and Then It's Over",'Brave New World','The Great Divorce','Klara and the Sun','Flowers for Algernon','1984']){
+  const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);
+  assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);
+  assert.equal([...entry.isbn13].reduce((sum,c,i)=>sum+Number(c)*(i%2?3:1),0)%10,0,title);
+  assert.ok(covers[entry.asin],title);assert.ok(fs.statSync(new URL('../public/real-books/'+covers[entry.asin].path,import.meta.url)).size>1000,title);
+ }
+});
+
+
+test('fourth batch recovers the narrow Emissary spine and corrects the second shelf',()=>{
+ const cubbies=closeupCubbies.filter(c=>c.source.startsWith('shelf-1-')||['shelf-2-cubby-1','shelf-2-cubby-2','shelf-2-cubby-3'].includes(c.source));
+ assert.equal(cubbies.length,7);
+ assert.equal(cubbies.reduce((n,c)=>n+c.books.length,0),44);
+ assert.deepEqual(books.filter(b=>b.row===0&&b.rect[0]<214).map(b=>b.title),['Drown','The Emissary','This Is How You Lose Her','All Fours','L.A. Confidential']);
+ assert.equal(books.find(b=>b.title==='So Late in the Day').author,'Claire Keegan');
+ assert.equal(books.find(b=>b.title==='The Poisonwood Bible').author,'Barbara Kingsolver');
+ assert.ok(!books.some(b=>b.title==='The Lathe of Heaven'));
+ assert.ok(!books.some(b=>b.row===1&&b.unidentified));
+ assert.equal(books.filter(b=>!b.nonBook).length,188);
+ assert.equal(books.filter(b=>b.unidentified).length,9);
+});
+test('fourth batch matches and repaired editions have valid print ISBNs and full covers',()=>{
+ const links=JSON.parse(fs.readFileSync(new URL('../public/real-books/links.json',import.meta.url)));
+ const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
+ for(const title of ["The Emissary", "L.A. Confidential", "The Man Who Saw Seconds", "Ubik", "The Sirens of Titan", "The Summer Without Men", "The Remains of the Day", "The Canterbury Tales", "East of Eden", "Tomorrow, and Tomorrow, and Tomorrow", "The City & the City", "Sourdough", "So Late in the Day", "The Poisonwood Bible", "The Big Nowhere", "White Jazz", "Do Androids Dream of Electric Sheep?"]){
   const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);
   assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);
   assert.equal([...entry.isbn13].reduce((sum,c,i)=>sum+Number(c)*(i%2?3:1),0)%10,0,title);
