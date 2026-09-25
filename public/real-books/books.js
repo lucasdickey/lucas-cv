@@ -1,3 +1,4 @@
+import { applyCloseups } from './closeups.js';
 // Coordinates reference the user's photographs. Unreadable spines remain visible.
 export const books=[];
 let unknown=0;
@@ -198,6 +199,7 @@ const stack=[
 [486,503,'The Imperfectionists','Tom Rachman'],
 [505,517,'','']];
 stack.forEach(([y,bottom,title,author])=>books.push({row:3,rect:[131,y,195,bottom-y],title:title||`Unidentified spine ${++unknown}`,author,horizontal:true,unidentified:!title}));
+applyCloseups(books);
 books.sort((a,b)=>a.row-b.row||a.rect[0]-b.rect[0]||a.rect[1]-b.rect[1]);
 const known={Drown:['1573226068','https://www.penguinrandomhouse.com/books/348293/drown-by-junot-diaz/'],Katabasis:['0063021471','https://www.publishersweekly.com/9780063021471'],Neuromancer:['0143111604','https://slickdeals.net/f/20017425-prime-11-36-neuromancer-penguin-galaxy-hardcover-at-amazon'],'All Fours':['0593190262','https://openlibrary.org/works/OL37827700W']};
 for(const b of books)if(known[b.title]){b.asin=known[b.title][0];b.source=known[b.title][1]}

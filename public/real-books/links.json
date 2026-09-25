@@ -1184,5 +1184,68 @@
     "asin": "0811226646",
     "source": "https://openlibrary.org/works/OL20842596W",
     "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+  },
+  "Gentlemen of the Road": {
+    "asin": "0345502078",
+    "isbn13": "9780345502070",
+    "source": "https://www.penguinrandomhouse.com/books/25710/gentlemen-of-the-road-by-michael-chabon/",
+    "matchedTitle": "Gentlemen of the Road",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "A Model World and Other Stories": {
+    "asin": "0060790601",
+    "isbn13": "9780060790608",
+    "source": "https://b0f646cfbd7462424f7a-f9758a43fb7c33cc8adda0fd36101899.ssl.cf2.rackcdn.com/reading-guides/RG-9780060790608.pdf",
+    "matchedTitle": "A Model World and Other Stories",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "The Curse of Bigness": {
+    "asin": "0999745468",
+    "isbn13": "9780999745465",
+    "source": "https://globalreports.columbia.edu/books/the-curse-of-bigness",
+    "matchedTitle": "The Curse of Bigness",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "Werewolves in Their Youth": {
+    "asin": "0312254385",
+    "isbn13": "9780312254384",
+    "source": "https://us.macmillan.com/books/9780312254384/werewolvesintheiryouth/",
+    "matchedTitle": "Werewolves in Their Youth",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "Night Watch": {
+    "asin": "0451493338",
+    "isbn13": "9780451493330",
+    "source": "https://penguinrandomhousehighereducation.com/book/?isbn=9780451493330",
+    "matchedTitle": "Night Watch",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "Life After God": {
+    "asin": "0671874349",
+    "isbn13": "9780671874346",
+    "source": "https://www.simonandschuster.com/books/Life-After-God/Douglas-Coupland/9780671874346",
+    "matchedTitle": "Life After God",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "Bobby Fischer Teaches Chess": {
+    "asin": "0553263153",
+    "isbn13": "9780553263152",
+    "source": "https://www.penguinrandomhouse.com/books/49784/bobby-fischer-teaches-chess-by-bobby-fischer/",
+    "matchedTitle": "Bobby Fischer Teaches Chess",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "Preacher: Book One": {
+    "asin": "1401240453",
+    "isbn13": "9781401240455",
+    "source": "https://www.penguinrandomhouse.com/books/46665/preacher-book-one-by-garth-ennis/",
+    "matchedTitle": "Preacher: Book One",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
+  },
+  "I Survived the Black Death, 1348": {
+    "asin": "1338891804",
+    "isbn13": "9781338891805",
+    "source": "https://clubs.scholastic.com/i-survived-the-black-death%2C-1348/9781338891805-rco-us.html",
+    "matchedTitle": "I Survived the Black Death, 1348",
+    "linkBasis": "Print ISBN verified against publisher; Amazon edition availability may vary"
   }
 }

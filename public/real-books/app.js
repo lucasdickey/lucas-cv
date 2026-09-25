@@ -1,5 +1,6 @@
 import * as THREE from './assets/three.module.js';
-import { books } from './books.js';
+import { books } from './books.js?v=closeups-1';
+import { createSpineCanvas } from './spine-texture.js';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
 const sourceFiles=['top','top','middle','bottom','bottom'];
@@ -16,7 +17,7 @@ function box(w,h,d,x,y,z,material,parent=root){const mesh=new THREE.Mesh(new THR
 function cropMaterial(name,rect){const tex=sources[name].texture;const material=new THREE.MeshStandardMaterial({map:tex,roughness:.87});material.userData.crop=rect;return material}
 function applyCrop(geometry,rect,name,frontOnly=true){const uv=geometry.attributes.uv;const image=sources[name].image;const [x,y,w,h]=rect;for(let i=frontOnly?16:0;i<(frontOnly?20:uv.count);i++){const u=uv.getX(i),v=uv.getY(i);uv.setXY(i,(x+u*w)/image.width,1-(y+(1-v)*h)/image.height)}uv.needsUpdate=true}
 function photoBox(w,h,d,x,y,z,name,rect,side){const m=cropMaterial(name,rect);const mesh=box(w,h,d,x,y,z,[side,side,mat('#ddd7bb'),side,m,side]);applyCrop(mesh.geometry,rect,name);return mesh}
-function sampleColor(name,r){const c=sources[name].canvas.getContext('2d').getImageData(Math.min(r[0]+Math.floor(r[2]/2),1279),Math.min(r[1]+Math.floor(r[3]/2),963),1,1).data;return new THREE.Color(`rgb(${c[0]},${c[1]},${c[2]})`)}
+function sampleColor(name,r){const c=sources[name].canvas.getContext('2d').getImageData(Math.min(r[0]+Math.floor(r[2]/2),sources[name].canvas.width-1),Math.min(r[1]+Math.floor(r[3]/2),sources[name].canvas.height-1),1,1).data;return new THREE.Color(`rgb(${c[0]},${c[1]},${c[2]})`)}
 function addShelf(){
  const frame=mat('#241c17'),wood=mat('#4b2319'),gold=mat('#998157',{metalness:.55,roughness:.5});
  box(10.35,13.2,.16,0,6.65,-.75,wood);box(.2,13.3,1.7,-5.2,6.65,0,frame);box(.2,13.3,1.7,5.2,6.65,0,frame);box(10.6,.2,1.85,0,13.3,0,frame);
@@ -29,9 +30,11 @@ function addShelf(){
  for(let j of [-1,1]){photoBox(5.02,.59,.25,j*2.58,.3,.96,'full',j===-1?[199,1182,272,46]:[485,1184,274,40],mat('#785727'));for(let k of [-.95,.95]){const knob=new THREE.Mesh(new THREE.SphereGeometry(.065,12,10),gold);knob.position.set(j*2.58+k,.33,1.15);root.add(knob)}}
  box(10.55,.16,1.75,0,-.1,0,frame);for(let x of [-5.1,5.1])box(.22,.45,1.6,x,-.31,0,frame);
 }
-function addBooks(){books.forEach((b,i)=>{b.id=i;const name=sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);const x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
+function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);const x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
  if(b.horizontal){h=r[3]/250*1.98;y=yBase[b.row]+(515-r[1]-r[3]/2)/250*1.98}
- const depth=1.1+(i%5)*.04,side=mat(sampleColor(name,r));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,.20,name,r,side);mesh.userData.book=b;mesh.userData.restZ=.20;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
+ if(b.elevation!==undefined)y=yBase[b.row]+b.elevation+h/2;
+ const textureRect=b.textureRect||r;
+ const depth=1.1+(i%5)*.04,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,.20,name,textureRect,side);mesh.userData.book=b;mesh.userData.restZ=.20;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  });$('#book-count').textContent=books.length;
  const select=$('#book-select');for(let row=0;row<5;row++){const group=document.createElement('optgroup');group.label=`Shelf ${row+1}`;books.filter(b=>b.row===row).forEach(b=>{const o=document.createElement('option');o.value=b.id;o.textContent=b.title+(b.author?' — '+b.author:'');group.append(o)});select.append(group)}
 }
@@ -75,9 +78,9 @@ function pick() {
 }
 function showPreview(mesh) {
  if(previewed===mesh)return;
- const book=mesh.userData.book,r=book.rect,preview=$('#spine-preview'),canvas=$('#preview-spine');
+ const book=mesh.userData.book,r=book.textureRect||book.rect,preview=$('#spine-preview'),canvas=$('#preview-spine');
  canvas.width=r[2]*3;canvas.height=r[3]*3;
- canvas.getContext('2d').drawImage(sources[sourceFiles[book.row]].image,...r,0,0,canvas.width,canvas.height);
+ canvas.getContext('2d').drawImage(sources[book.textureSource||sourceFiles[book.row]].image,...r,0,0,canvas.width,canvas.height);
  canvas.style.height=book.horizontal?'auto':`${Math.min(340,host.clientHeight*.55)}px`;
  canvas.style.width=book.horizontal?'260px':'auto';
  $('#preview-title').textContent=book.title;
@@ -95,7 +98,13 @@ async function start(){
  covers=coverData;for(const b of books)if(!b.unidentified&&links[b.title])Object.assign(b,links[b.title]);
  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.append(renderer.domElement);
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.1,150);root=new THREE.Group();scene.add(root);
- for(const name of ['top','middle','bottom','full']){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
+ for(const name of new Set(['top','middle','bottom','full',...books.filter(b=>b.spine).map(b=>b.spine.source)])){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
+ for(const [i,book] of books.entries())if(book.spine){
+  const canvas=createSpineCanvas(sources[book.spine.source],book.spine.quad),texture=new THREE.CanvasTexture(canvas);
+  texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
+  book.textureSource=`spine-${i}`;book.textureRect=[0,0,canvas.width,canvas.height];
+  sources[book.textureSource]={image:canvas,canvas,texture};
+ }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
  const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();addBooks();decor();displayBook(books.find(b=>b.title==='Katabasis')||books[0]);$('#loading').hidden=true;
  const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(24,17/camera.aspect)};new ResizeObserver(resize).observe(host);resize();
