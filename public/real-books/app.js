@@ -2,22 +2,24 @@ import * as THREE from './assets/three.module.js';
 import { books } from './books.js?v=closeups-5';
 import { createSpineCanvas } from './spine-texture.js';
 import { cabinet, orbitDistance, panGeometry, dragView, visibleBook } from './navigation.js?v=controls-2';
-import { createMobileBrowser } from './mobile.js?v=mobile-1';
+import { createMobileBrowser } from './mobile.js?v=reveal-1';
+import { BookReveal } from './book-reveal.js?v=reveal-1';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
 books.forEach((book,id)=>{book.id=id});
-const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true));
+const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook);
 let focusedRow='all',navigationTool='turn',targetX=0,goalX=0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
-let covers={},pickTargets=[],occluders=[],previewed=null;
+let covers={},pickTargets=[],occluders=[];
 const dwell=new HoverDwell(),mouse={x:0,y:0};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const yBase=[10.7,8.25,5.8,3.35,.9], photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
 let renderer,scene,camera,root,bookMeshes=[],selected=null,hovered=null,drag=null,pointer=new THREE.Vector2(9,9),needsPick=false;
 let yaw=mobile.matches?0:.13,pitch=mobile.matches?0:.015,goalYaw=yaw,goalPitch=pitch,zoom=1,targetY=7.05,goalY=7.05,goalZoom=1,baseDistance=24;
 const raycaster=new THREE.Raycaster(), clock=new THREE.Clock();
+const reveal=new BookReveal({host,detail:$('#book-detail'),dialog:$('#book-dialog'),getCamera:()=>camera,reduced,onReturned:()=>{mobileBrowser.close();resetDetail()}});
 const mat=(color,extra={})=>new THREE.MeshStandardMaterial({color,roughness:.8,...extra});
 function box(w,h,d,x,y,z,material,parent=root){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh}
 function cropMaterial(name,rect){const tex=sources[name].texture;const material=new THREE.MeshStandardMaterial({map:tex,roughness:.87});material.userData.crop=rect;return material}
@@ -58,7 +60,8 @@ function decor(){
 }
 function displayBook(book,open=false) {
  if (!book) return;
- if(open)mobileBrowser.open();
+ if(open){mobileBrowser.open();if(!mobile.matches)$('aside').scrollTop=0}
+ if(open){clearHover();reveal.open(bookMeshes.find(m=>m.userData.book===book),book,covers[book.asin]);$('#return-book').hidden=false}
  if (selected === book) return;
  selected=book;
  const cover=$('#book-cover'),fallback=$('#cover-fallback'),art=book.nonBook?null:covers[book.asin];
@@ -78,29 +81,16 @@ function displayBook(book,open=false) {
  $('#link-note').textContent=book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?'Amazon cover artwork. The edition may differ from the copy on this shelf.':'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
  $('#book-select').value=book.id;
 }
-function clearHover(){hovered=null;needsPick=false;dwell.clear();hidePreview();host.style.cursor=drag?'grabbing':'grab'}
-function hidePreview(){if(!previewed)return;$('#spine-preview').hidden=true;previewed=null}
+function resetDetail(){if(document.activeElement===$('#return-book'))host.focus({preventScroll:true});selected=null;$('#return-book').hidden=true;$('#book-cover').hidden=true;$('#cover-fallback').hidden=false;$('#cover-fallback').textContent='Choose a book to take it off the shelf.';$('#book-title').textContent='Every spine has a story.';$('#book-author').textContent='';$('#shelf-label').textContent='FROM THE SHELF';$('#amazon-link').hidden=true;$('#link-note').textContent='Pause over a spine to pull it forward. Pick a book to see its cover.';$('#book-select').value=''}
+function closeBook(immediate=false){clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}
+$('#return-book').onclick=()=>closeBook();
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#book-dialog').open&&!$('#photo-dialog').open)closeBook()});
+function clearHover(){hovered=null;needsPick=false;dwell.clear();host.style.cursor=drag?'grabbing':'grab'}
 function pick() {
  raycaster.setFromCamera(pointer,camera);
  hovered=visibleBook(raycaster,pickTargets,occluders);
  host.style.cursor=hovered?'pointer':drag?'grabbing':'grab';
  dwell.update(hovered,performance.now(),mouse.x,mouse.y);
- if(previewed!==hovered)hidePreview();
-}
-function showPreview(mesh) {
- if(previewed===mesh)return;
- const book=mesh.userData.book,r=book.textureRect||book.rect,preview=$('#spine-preview'),canvas=$('#preview-spine');
- canvas.width=r[2]*3;canvas.height=r[3]*3;
- canvas.getContext('2d').drawImage(sources[book.textureSource||sourceFiles[book.row]].image,...r,0,0,canvas.width,canvas.height);
- canvas.style.height=book.horizontal?'auto':`${Math.min(340,host.clientHeight*.55)}px`;
- canvas.style.width=book.horizontal?'260px':'auto';
- $('#preview-title').textContent=book.title;
- preview.hidden=false;
- const width=preview.offsetWidth,height=preview.offsetHeight;
- const left=mouse.x+24+width<host.clientWidth?mouse.x+24:mouse.x-width-24;
- preview.style.left=`${Math.max(10,Math.min(host.clientWidth-width-10,left))}px`;
- preview.style.top=`${Math.max(10,Math.min(host.clientHeight-height-75,mouse.y-height/2))}px`;
- previewed=mesh;
 }
 function panLimit(){return panGeometry(baseDistance/goalZoom,camera?.aspect||1).limit}
 function chooseNavigation(tool){clearHover();navigationTool=tool;document.querySelectorAll('[data-navigation]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.navigation===tool)));updateHint()}
@@ -145,13 +135,14 @@ async function start(){
   camera.position.set(targetX+Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,Math.cos(yaw)*d);camera.lookAt(targetX,targetY,0);camera.updateMatrixWorld();
   if(needsPick&&!drag){pick();needsPick=false}
   const magnified=hovered&&dwell.ready(performance.now());
-  if(magnified)showPreview(hovered);else hidePreview();
   for(const m of bookMeshes){
-   const active=m===hovered,z=m.userData.restZ+(active?(magnified?.52:.16):0),scale=active&&magnified?1.10:1;
+   if(reveal.owns(m))continue;
+   const active=m===hovered,z=m.userData.restZ+(active&&magnified?.42:0),scale=1;
    m.position.z+=(z-m.position.z)*s;
    if(m.scale.x!==scale)m.scale.setScalar(m.scale.x+(scale-m.scale.x)*s);
    m.material[4].emissive.setHex(active?0x443620:0);m.material[4].emissiveIntensity=.16;
   }
+  reveal.update(dt);
   renderer.render(scene,camera);
  }frame();
  }catch(e){$('#loading').innerHTML='3D is unavailable here. Use the book selector to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src='./assets/full.jpg';img.alt='Original bookshelf';img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length;if(!$('#book-select').options.length||$('#book-select').options.length===1){books.forEach((b,i)=>{b.id=i;const o=new Option(b.title,i);$('#book-select').add(o)})}}
@@ -198,7 +189,7 @@ $('#reset').onclick=reset;
 $('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
 $('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
 document.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>setFocus(b.dataset.shelf));
-$('#book-select').onchange=e=>{if(e.target.value==='')return;const b=books[Number(e.target.value)];displayBook(b,true);setFocus(String(b.row))};
+$('#book-select').onchange=e=>{if(e.target.value==='')return;const b=books[Number(e.target.value)];displayBook(b,true)};
 $('#photo-open').onclick=()=>$('#photo-dialog').showModal();
 $('.photo-close').onclick=()=>$('#photo-dialog').close();
 $('#photo-dialog').onclick=e=>{if(e.target===$('#photo-dialog'))$('#photo-dialog').close()};

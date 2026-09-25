@@ -1,6 +1,6 @@
 // One book-detail view moves into a native dialog on phones, retaining its
 // cover-loading state while the dialog provides focus trapping and dismissal.
-export function createMobileBrowser(books, onSelect) {
+export function createMobileBrowser(books, onSelect, onDismiss) {
  const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)'),dialog=document.querySelector('#book-dialog');
  const detail=document.querySelector('#book-detail'),anchor=document.createComment('book detail');
  detail.before(anchor);
@@ -32,12 +32,14 @@ export function createMobileBrowser(books, onSelect) {
  }
  function restore(){if(dialog.open)return;anchor.after(detail);document.body.classList.remove('book-sheet-open')}
  dialog.addEventListener('close',restore);
- document.querySelector('#book-close').onclick=()=>dialog.close();
- dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});
+ dialog.addEventListener('cancel',e=>{e.preventDefault();onDismiss()});
+ document.querySelector('#book-close').onclick=()=>onDismiss();
+ dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)onDismiss()}});
  search.addEventListener('input',()=>{limit=24;render()});
  more.onclick=()=>{limit+=24;render();list.children[Math.min(limit-24,list.children.length-1)]?.focus()};
- mobile.addEventListener('change',()=>{if(!mobile.matches&&dialog.open){dialog.close();restore()}render()});
+ mobile.addEventListener('change',()=>{onDismiss(true);if(dialog.open)dialog.close();render()});
  return {
+  close(){if(dialog.open)dialog.close()},
   render(covers){artwork=covers;render()},
   focus(nextRow){row=nextRow;limit=24;render()},
   open(){if(!mobile.matches)return;document.querySelector('#mobile-book-slot').append(detail);if(!dialog.open){document.body.classList.add('book-sheet-open');dialog.showModal()}dialog.scrollTop=0},
