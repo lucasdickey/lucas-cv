@@ -69,3 +69,18 @@ body.book-sheet-open{overflow:hidden}
 #book-dialog.reveal-running #return-book{visibility:hidden}
 
 #book-detail.book-in-transit #amazon-link{visibility:hidden}
+
+/* Desktop title search sits at the top of the panel; suggestions float over the details below. */
+aside .picker{padding:0 0 22px;margin:18px 0 22px;border-top:0;border-bottom:1px solid var(--line)}
+.search-box{position:relative}
+#desktop-search{width:100%;background:#111e18;border:1px solid #ffffff30;border-radius:2px;color:var(--ink);padding:10px 12px;font:14px 'DM Sans',sans-serif}
+#desktop-search::placeholder{color:#8d9889}
+#desktop-search:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#desktop-results{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:5;box-shadow:0 18px 40px #0009;list-style:none;margin:0;padding:4px;max-height:min(420px,52svh);overflow-y:auto;background:#111e18;border:1px solid #ffffff25;border-radius:2px}
+.result-row{display:grid;grid-template-columns:30px minmax(0,1fr);align-items:center;gap:12px;padding:8px;border-radius:2px;cursor:pointer}
+.result-row[aria-selected="true"]{background:#ffffff14}
+.result-row strong{display:block;font-size:14px;line-height:1.3;font-weight:500;overflow-wrap:anywhere}
+.result-row small{display:block;font-size:12px;color:var(--muted);line-height:1.35;margin-top:3px}
+.result-row .list-cover{width:30px;height:44px;background:#354237;border:1px solid #ffffff15;border-radius:2px;overflow:hidden}
+.result-row .list-cover img{width:100%;height:100%;object-fit:contain}
+#desktop-results .empty-books{font-size:13px;color:var(--muted);padding:10px 8px;margin:0}

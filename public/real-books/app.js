@@ -2,13 +2,15 @@ import * as THREE from './assets/three.module.js';
 import { books } from './books.js?v=closeups-5';
 import { createSpineCanvas } from './spine-texture.js';
 import { cabinet, orbitDistance, panGeometry, dragView, visibleBook } from './navigation.js?v=controls-2';
-import { createMobileBrowser } from './mobile.js?v=reveal-1';
+import { createMobileBrowser } from './mobile.js?v=search-1';
+import { createDesktopSearch } from './search.js?v=search-1';
 import { BookReveal } from './book-reveal.js?v=reveal-1';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
 books.forEach((book,id)=>{book.id=id});
 const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook);
+const desktopSearch=createDesktopSearch(books,book=>displayBook(book,true));
 let focusedRow='all',navigationTool='turn',targetX=0,goalX=0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
@@ -47,7 +49,6 @@ function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sou
  const textureRect=b.textureRect||r;
  const depth=b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65),restZ=.8-depth/2,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  });$('#book-count').textContent=books.filter(b=>!b.nonBook).length;
- const select=$('#book-select');for(let row=0;row<5;row++){const group=document.createElement('optgroup');group.label=`Shelf ${row+1}`;books.filter(b=>b.row===row).forEach(b=>{const o=document.createElement('option');o.value=b.id;o.textContent=b.title+(b.author?' — '+b.author:'');group.append(o)});select.append(group)}
 }
 function decor(){
  const pot=new THREE.Mesh(new THREE.CylinderGeometry(.58,.44,.60,28),mat('#a89d71'));pot.position.set(-4,13.71,0);pot.castShadow=true;root.add(pot);
@@ -79,9 +80,8 @@ function displayBook(book,open=false) {
  link.href=book.asin?`https://www.amazon.com/dp/${book.asin}`:`https://www.amazon.com/s?k=${encodeURIComponent(book.title+' '+book.author)}`;
  link.innerHTML=book.asin?'View on Amazon <span>↗</span>':'Find on Amazon <span>↗</span>';
  $('#link-note').textContent=book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?'Amazon cover artwork. The edition may differ from the copy on this shelf.':'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
- $('#book-select').value=book.id;
 }
-function resetDetail(){if(document.activeElement===$('#return-book'))host.focus({preventScroll:true});selected=null;$('#return-book').hidden=true;$('#book-cover').hidden=true;$('#cover-fallback').hidden=false;$('#cover-fallback').textContent='Choose a book to take it off the shelf.';$('#book-title').textContent='Every spine has a story.';$('#book-author').textContent='';$('#shelf-label').textContent='FROM THE SHELF';$('#amazon-link').hidden=true;$('#link-note').textContent='Pause over a spine to pull it forward. Pick a book to see its cover.';$('#book-select').value=''}
+function resetDetail(){if(document.activeElement===$('#return-book'))host.focus({preventScroll:true});selected=null;$('#return-book').hidden=true;$('#book-cover').hidden=true;$('#cover-fallback').hidden=false;$('#cover-fallback').textContent='Choose a book to take it off the shelf.';$('#book-title').textContent='Every spine has a story.';$('#book-author').textContent='';$('#shelf-label').textContent='FROM THE SHELF';$('#amazon-link').hidden=true;$('#link-note').textContent='Pause over a spine to pull it forward. Pick a book to see its cover.'}
 function closeBook(immediate=false){clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}
 $('#return-book').onclick=()=>closeBook();
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#book-dialog').open&&!$('#photo-dialog').open)closeBook()});
@@ -112,7 +112,7 @@ async function start(){
  try{
  const [coverData,links]=await Promise.all(['covers','links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
  covers=coverData;for(const b of books)if(!b.unidentified&&!b.nonBook&&links[b.title])Object.assign(b,links[b.title]);
- mobileBrowser.render(covers);
+ mobileBrowser.render(covers);desktopSearch.render(covers);
  if(selected){const book=selected;selected=null;displayBook(book)}
  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.append(renderer.domElement);
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.1,150);root=new THREE.Group();scene.add(root);
@@ -145,7 +145,7 @@ async function start(){
   reveal.update(dt);
   renderer.render(scene,camera);
  }frame();
- }catch(e){$('#loading').innerHTML='3D is unavailable here. Use the book selector to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src='./assets/full.jpg';img.alt='Original bookshelf';img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length;if(!$('#book-select').options.length||$('#book-select').options.length===1){books.forEach((b,i)=>{b.id=i;const o=new Option(b.title,i);$('#book-select').add(o)})}}
+ }catch(e){$('#loading').innerHTML='3D is unavailable here. Search for a book to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src='./assets/full.jpg';img.alt='Original bookshelf';img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length}
 }
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
 host.addEventListener('pointerdown',e=>{
@@ -189,7 +189,6 @@ $('#reset').onclick=reset;
 $('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
 $('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
 document.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>setFocus(b.dataset.shelf));
-$('#book-select').onchange=e=>{if(e.target.value==='')return;const b=books[Number(e.target.value)];displayBook(b,true)};
 $('#photo-open').onclick=()=>$('#photo-dialog').showModal();
 $('.photo-close').onclick=()=>$('#photo-dialog').close();
 $('#photo-dialog').onclick=e=>{if(e.target===$('#photo-dialog'))$('#photo-dialog').close()};
