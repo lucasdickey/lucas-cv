@@ -818,6 +818,11 @@ export default function TerminalRepoList() {
 
                             return (
                               <>
+                                <p className="mb-4 text-sm">
+                                  <a href="/real-books" className="text-[#0000ff] hover:underline">
+                                    Browse my physical bookshelf in 3D →
+                                  </a>
+                                </p>
                                 {booksToShow.length > 8 ? (
                                   <ExpandableSection
                                     maxRows={4}

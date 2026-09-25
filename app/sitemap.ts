@@ -3,7 +3,7 @@ import { getPublishedPosts } from "./data/blog";
 import { SITE_URL } from "./lib/markdown";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/blog", "/books", "/syllabus", "/toys"].map(
+  const staticRoutes = ["", "/blog", "/books", "/real-books", "/syllabus", "/toys"].map(
     (path) => ({
       url: `${SITE_URL}${path}`,
       changeFrequency: "weekly" as const,

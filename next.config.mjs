@@ -11,6 +11,8 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      // Keep the standalone WebGL experience and its styles isolated.
+      { source: "/real-books", destination: "/real-books/index.html" },
       // Agent-readable Markdown for each post. Route segments can't carry a
       // file extension, so `/blog/my-post.md` is rewritten to the handler.
       {
