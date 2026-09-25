@@ -1,0 +1,54 @@
+{
+  "sourceVideo": "PXL_20260925_024322766.TS.mp4~2.mp4",
+  "sampleCount": 60,
+  "sampling": "Even timestamps across 0\u201314.485467 seconds, nearest decoded video frame; display rotation applied",
+  "surfaces": [
+    {
+      "file": "right-side.jpg",
+      "sample": 1,
+      "sourceQuadTLTRBRBL": [
+        [
+          584,
+          200
+        ],
+        [
+          804,
+          242
+        ],
+        [
+          727,
+          1380
+        ],
+        [
+          548,
+          1460
+        ]
+      ],
+      "use": "Rectified wood surface sample, not a metric reconstruction"
+    },
+    {
+      "file": "left-side.jpg",
+      "sample": 27,
+      "sourceQuadTLTRBRBL": [
+        [
+          80,
+          250
+        ],
+        [
+          253,
+          275
+        ],
+        [
+          178,
+          1455
+        ],
+        [
+          34,
+          1550
+        ]
+      ],
+      "use": "Rectified wood surface sample, not a metric reconstruction"
+    }
+  ],
+  "geometryNotes": "Side views show continuous dark outer panels and recessed books. Cabinet depth is visually estimated at about one fifth of its width; no physical measurement was supplied."
+}
