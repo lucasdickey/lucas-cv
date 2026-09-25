@@ -2,6 +2,53 @@
 // Layout rectangles stay in the original full-shelf coordinate system.
 export const closeupCubbies = [
  {
+  row: 0, from: 670, to: 825, source: "shelf-1-cubbies-5-6",
+  books: [
+   ["The Overstory","Richard Powers",[679,191,23,202],[[193,138],[282,141],[289,817],[191,817]]],
+   ["The Keeper of Lost Causes","Jussi Adler-Olsen",[703,197,22,196],[[303,163],[365,165],[372,815],[297,815]]],
+   ["The Bloody Chamber","Angela Carter",[726,187,13,206],[[383,134],[413,139],[413,813],[381,813]]],
+   ["Small Things Like These","Claire Keegan",[741,208,13,185],[[425,204],[467,206],[464,816],[421,815]]],
+   ["The Sense of an Ending","Julian Barnes",[755,194,17,199],[[480,157],[514,157],[514,819],[476,819]]],
+   ["Flying Blind","Sharon Bryan",[774,177,8,216],[[526,79],[549,82],[550,818],[525,818]]],
+   ["The Hobbit","J. R. R. Tolkien",[784,219,25,174],[[557,240],[618,242],[620,839],[559,840]]]
+  ]
+ },
+ {
+  row: 0, from: 825, to: 960, source: "shelf-1-cubbies-5-6",
+  books: [
+   ["The Handmaid's Tale","Margaret Atwood",[827,196,21,197],[[677,178],[726,180],[729,819],[678,819]]],
+   ["Never Let Me Go","Kazuo Ishiguro",[849,192,18,201],[[750,160],[792,161],[795,819],[749,819]]],
+   ["Klara and the Sun","Kazuo Ishiguro",[868,194,19,199],[[808,171],[854,172],[855,814],[806,814]]],
+   ["One Flew Over the Cuckoo's Nest","Ken Kesey",[888,218,15,175],[[877,253],[922,255],[934,819],[881,819]]],
+   ["Less Than Zero","Bret Easton Ellis",[904,191,15,202],[[941,154],[976,154],[981,826],[939,823]]],
+   ["A Christmas Carol","Charles Dickens",[920,201,9,192],[[988,190],[1019,191],[1028,830],[991,827]]],
+   ["A Long Way Down","Nick Hornby",[930,186,25,207],[[1048,142],[1108,145],[1114,834],[1035,835]]]
+  ]
+ },
+ {
+  row: 0, from: 960, to: 1100, source: "shelf-1-cubbies-7-8",
+  books: [
+   ["About a Boy","Nick Hornby",[967,193,23,200],[[224,144],[289,146],[282,865],[213,868]]],
+   ["About a Boy","Nick Hornby",[991,198,24,195],[[314,157],[371,159],[370,847],[306,850]]],
+   ["The Parade","Dave Eggers",[1016,206,20,187],[[402,191],[468,192],[463,843],[391,843]]],
+   ["Hey Nostradamus!","Douglas Coupland",[1037,194,20,199],[[480,151],[526,151],[522,841],[472,841]]],
+   ["Ghost Wall","Sarah Moss",[1058,237,13,156],[[546,301],[576,302],[564,840],[538,841]]],
+   ["Brave New World","Aldous Huxley",[1072,198,18,195],[[588,169],[641,170],[637,846],[583,846]]],
+   ["Animal Farm","George Orwell",[1091,198,10,195],[[657,170],[678,171],[673,846],[647,846]]]
+  ]
+ },
+ {
+  row: 0, from: 1100, to: 1240, source: "shelf-1-cubbies-7-8",
+  books: [
+   ["Generation A","Douglas Coupland",[1107,189,25,204],[[757,149],[812,151],[811,846],[753,846]]],
+   ["Eleanor Rigby","Douglas Coupland",[1133,193,18,200],[[834,157],[877,158],[871,841],[823,842]]],
+   ["The Gum Thief","Douglas Coupland",[1152,194,20,199],[[890,159],[939,160],[937,839],[882,840]]],
+   ["Generation X","Douglas Coupland",[1173,171,17,222],[[978,89],[1001,89],[1000,846],[948,844]]],
+   ["Microserfs","Douglas Coupland",[1191,198,26,195],[[1018,174],[1097,174],[1095,849],[1007,848]]],
+   ["Miss Wyoming","Douglas Coupland",[1218,198,18,195],[[1117,174],[1168,175],[1164,852],[1108,850]]]
+  ]
+ },
+ {
   row: 1, from: 680, to: 960, source: "shelf-2-cubby-3",
   books: [
    ["Lake of Souls","Ann Leckie",[682,548,23,207],[[223,194],[310,193],[370,823],[279,827]]],
