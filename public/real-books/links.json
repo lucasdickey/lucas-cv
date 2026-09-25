@@ -1,13 +1,10 @@
 {
   "1984": {
-    "asin": "0582777313",
-    "source": "https://openlibrary.org/works/OL11326416W",
-    "matchedTitle": "1984 (adaptation)",
-    "matchedAuthor": [
-      "Michael Dean",
-      "George Orwell"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "asin": "0451524934",
+    "isbn13": "9780451524935",
+    "source": "https://www.penguinrandomhouse.com/books/326569/1984-by-george-orwell-with-a-foreword-by-thomas-pynchon/9780451524935/",
+    "matchedTitle": "1984",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "2666": {
     "asin": "0330479814",
@@ -72,13 +69,11 @@
     "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
   },
   "Flowers for Algernon": {
-    "asin": "0553169041",
-    "source": "https://openlibrary.org/works/OL515754W",
+    "asin": "0156030306",
+    "isbn13": "9780156030304",
+    "source": "https://www.vitalsource.com/products/flowers-for-algernon-daniel-keyes-v9780547539638",
     "matchedTitle": "Flowers for Algernon",
-    "matchedAuthor": [
-      "Daniel Keyes"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "Catch-22": {
     "asin": "0060890096",
@@ -154,13 +149,11 @@
     "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
   },
   "Klara and the Sun": {
-    "asin": "0593318188",
-    "source": "https://openlibrary.org/works/OL20883297W",
+    "asin": "059331817X",
+    "isbn13": "9780593318171",
+    "source": "https://www.penguinrandomhouseretail.com/book/?isbn=9780593318171",
     "matchedTitle": "Klara and the Sun",
-    "matchedAuthor": [
-      "Kazuo Ishiguro"
-    ],
-    "linkBasis": "ISBN-10 catalog match; Amazon availability unverified"
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   },
   "One Hundred Years of Solitude": {
     "asin": "014103243X",
@@ -1323,6 +1316,97 @@
     "isbn13": "9781250062376",
     "source": "https://us.macmillan.com/books/9781250062376/inthelightofwhatweknow/",
     "matchedTitle": "In the Light of What We Know",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Last Days of Night": {
+    "asin": "0812988922",
+    "isbn13": "9780812988925",
+    "source": "https://www.penguinrandomhouse.com/books/532572/the-last-days-of-night-by-graham-moore/",
+    "matchedTitle": "The Last Days of Night",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "A Hundred Thousand Worlds": {
+    "asin": "0399562230",
+    "isbn13": "9780399562235",
+    "source": "https://www.penguinrandomhouse.com/books/534751/a-hundred-thousand-worlds-by-bob-proehl/",
+    "matchedTitle": "A Hundred Thousand Worlds",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Expanding Circle": {
+    "asin": "0691150699",
+    "isbn13": "9780691150697",
+    "source": "https://assets.press.princeton.edu/catalogs/phil11.pdf",
+    "matchedTitle": "The Expanding Circle",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Cloud Cuckoo Land": {
+    "asin": "1982168447",
+    "isbn13": "9781982168445",
+    "source": "https://www.simonandschuster.com/books/Cloud-Cuckoo-Land/Anthony-Doerr/9781982168445",
+    "matchedTitle": "Cloud Cuckoo Land",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "When You Are Engulfed in Flames": {
+    "asin": "0316024597",
+    "isbn13": "9780316024594",
+    "source": "https://www.hachettebookgroup.com/titles/david-sedaris/when-you-are-engulfed-in-flames/9780316024594/",
+    "matchedTitle": "When You Are Engulfed in Flames",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Barrel Fever": {
+    "asin": "0316779423",
+    "isbn13": "9780316779425",
+    "source": "https://www.hachettebookgroup.com/titles/david-sedaris/barrel-fever/9780316779425/",
+    "matchedTitle": "Barrel Fever",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Informers": {
+    "asin": "0679743243",
+    "isbn13": "9780679743248",
+    "source": "https://www.penguinrandomhouse.com/books/46025/the-informers-by-bret-easton-ellis/",
+    "matchedTitle": "The Informers",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Rules of Attraction": {
+    "asin": "067978148X",
+    "isbn13": "9780679781486",
+    "source": "https://www.penguinrandomhouse.com/books/46027/the-rules-of-attraction-by-bret-easton-ellis/9780307756459/",
+    "matchedTitle": "The Rules of Attraction",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Men and Cartoons": {
+    "asin": "1400076803",
+    "isbn13": "9781400076802",
+    "source": "https://www.allbookstores.com/Men-Cartoons-Stories-Jonathan-Lethem/9781400076802",
+    "matchedTitle": "Men and Cartoons",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Tell-All": {
+    "asin": "0385526350",
+    "isbn13": "9780385526357",
+    "source": "https://www.publishersweekly.com/9780385526357",
+    "matchedTitle": "Tell-All",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "It Lasts Forever and Then It's Over": {
+    "asin": "0811237850",
+    "isbn13": "9780811237857",
+    "source": "https://www.ndbooks.com/book/it-lasts-forever-and-then-it-s-over/",
+    "matchedTitle": "It Lasts Forever and Then It's Over",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "Brave New World": {
+    "asin": "0060850523",
+    "isbn13": "9780060850524",
+    "source": "https://www.readinggroupguides.com/printpdf/reviews/brave-new-world-0",
+    "matchedTitle": "Brave New World",
+    "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
+  },
+  "The Great Divorce": {
+    "asin": "0060652950",
+    "isbn13": "9780060652951",
+    "source": "https://books.google.com/books/about/The_Great_Divorce.html?id=rRDStUlFPooC",
+    "matchedTitle": "The Great Divorce",
     "linkBasis": "Print ISBN verified against publisher or bibliographic catalog; Amazon edition availability may vary"
   }
 }
