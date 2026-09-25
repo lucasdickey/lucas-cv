@@ -1,8 +1,13 @@
 import * as THREE from './assets/three.module.js';
 import { books } from './books.js?v=closeups-5';
 import { createSpineCanvas } from './spine-texture.js';
+import { createMobileBrowser } from './mobile.js?v=mobile-1';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
+const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
+books.forEach((book,id)=>{book.id=id});
+const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true));
+let focusedRow='all',targetX=0,goalX=0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
 let covers={},pickTargets=[],previewed=null;
@@ -10,7 +15,7 @@ const dwell=new HoverDwell(),mouse={x:0,y:0};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const yBase=[10.7,8.25,5.8,3.35,.9], photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
 let renderer,scene,camera,root,bookMeshes=[],selected=null,hovered=null,drag=null,pointer=new THREE.Vector2(9,9),needsPick=false;
-let yaw=.13,pitch=.015,zoom=1,targetY=7.05,goalY=7.05,goalZoom=1,baseDistance=24;
+let yaw=mobile.matches?0:.13,pitch=mobile.matches?0:.015,goalYaw=yaw,goalPitch=pitch,zoom=1,targetY=7.05,goalY=7.05,goalZoom=1,baseDistance=24;
 const raycaster=new THREE.Raycaster(), clock=new THREE.Clock();
 const mat=(color,extra={})=>new THREE.MeshStandardMaterial({color,roughness:.8,...extra});
 function box(w,h,d,x,y,z,material,parent=root){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh}
@@ -47,8 +52,10 @@ function decor(){
  const wire=mat('#181918',{metalness:.65});for(let y of [3.5,3.7,3.9,4.1,4.3]){const ring=new THREE.Mesh(new THREE.TorusGeometry(.48+(y-3.5)*.17,.014,6,40),wire);ring.rotation.x=Math.PI/2;ring.position.set(-1.32,y,.2);root.add(ring)}for(let k=0;k<14;k++){let a=k/14*Math.PI*2;const line=new THREE.Mesh(new THREE.CylinderGeometry(.014,.014,.9,5),wire);line.position.set(-1.32+Math.cos(a)*.56,3.9,.2+Math.sin(a)*.56);root.add(line)}const stone=new THREE.Mesh(new THREE.IcosahedronGeometry(.34,0),mat('#b87647'));stone.position.set(-1.32,3.62,.2);root.add(stone);
  const car=box(.55,.13,.25,3.8,3.52,.65,mat('#dddeda'));box(.28,.11,.22,3.78,3.63,.65,mat('#8b9999'));for(let x of [3.64,3.98])for(let z of [.49,.79]){const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.065,.065,.03,12),mat('#111511'));wheel.rotation.x=Math.PI/2;wheel.position.set(x,3.46,z);root.add(wheel)}
 }
-function displayBook(book) {
- if (!book || selected === book) return;
+function displayBook(book,open=false) {
+ if (!book) return;
+ if(open)mobileBrowser.open();
+ if (selected === book) return;
  selected=book;
  const cover=$('#book-cover'),fallback=$('#cover-fallback'),art=book.nonBook?null:covers[book.asin];
  cover.hidden=true;
@@ -91,11 +98,24 @@ function showPreview(mesh) {
  preview.style.top=`${Math.max(10,Math.min(host.clientHeight-height-75,mouse.y-height/2))}px`;
  previewed=mesh;
 }
-function setFocus(row){clearHover();if(row==='all'){goalY=7.05;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}document.querySelectorAll('[data-shelf]').forEach(b=>b.classList.toggle('active',b.dataset.shelf===row))}
+function panLimit(){return Math.max(0,5.3-baseDistance/goalZoom*Math.tan(THREE.MathUtils.degToRad(19))*(camera?.aspect||1))}
+function setFocus(row){
+ clearHover();focusedRow=row;goalX=0;
+ if(row==='all'){goalY=7.05;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
+ if(mobile.matches){goalYaw=0;goalPitch=0}
+ document.querySelectorAll('[data-shelf]').forEach(b=>{const active=b.dataset.shelf===row;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ $('.gesture-hint').textContent=mobile.matches?(row==='all'?'Swipe to turn · Tap a book':'Swipe to explore · Tap a book'):'Drag to turn · Scroll to explore · Pick a spine';
+ host.setAttribute('aria-label',mobile.matches?'3D bookshelf. Swipe horizontally to explore. Tap a book, or use the searchable book list below.':'3D bookshelf. Drag to rotate, scroll to zoom. Use the book selector for keyboard access.');
+ mobileBrowser.focus(row);
+}
+mobile.addEventListener('change',()=>{goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus(focusedRow)});
+setFocus('all');
 async function start(){
  try{
  const [coverData,links]=await Promise.all(['covers','links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
  covers=coverData;for(const b of books)if(!b.unidentified&&!b.nonBook&&links[b.title])Object.assign(b,links[b.title]);
+ mobileBrowser.render(covers);
+ if(selected){const book=selected;selected=null;displayBook(book)}
  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.append(renderer.domElement);
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.1,150);root=new THREE.Group();scene.add(root);
  for(const name of new Set(['top','middle','bottom','full',...books.filter(b=>b.spine).map(b=>b.spine.source)])){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
@@ -106,14 +126,15 @@ async function start(){
   sources[book.textureSource]={image:canvas,canvas,texture};
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();addBooks();decor();displayBook(books.find(b=>b.title==='Katabasis')||books[0]);$('#loading').hidden=true;
- const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(24,17/camera.aspect)};new ResizeObserver(resize).observe(host);resize();
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();addBooks();decor();if(!selected)displayBook(books.find(b=>b.title==='Katabasis')||books[0]);$('#loading').hidden=true;
+ const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(24,(mobile.matches?16.5:17)/camera.aspect)};new ResizeObserver(resize).observe(host);resize();
  function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),.05),s=reduced?1:1-Math.exp(-dt*8.8);
-  zoom+=(goalZoom-zoom)*s;targetY+=(goalY-targetY)*s;
+  goalX=THREE.MathUtils.clamp(goalX,-panLimit(),panLimit());
+  zoom+=(goalZoom-zoom)*s;targetY+=(goalY-targetY)*s;targetX+=(goalX-targetX)*s;yaw+=(goalYaw-yaw)*s;pitch+=(goalPitch-pitch)*s;
   const d=baseDistance/zoom;
-  camera.position.set(Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,Math.cos(yaw)*d);camera.lookAt(0,targetY,0);camera.updateMatrixWorld();
+  camera.position.set(targetX+Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,Math.cos(yaw)*d);camera.lookAt(targetX,targetY,0);camera.updateMatrixWorld();
   if(needsPick&&!drag){pick();needsPick=false}
   const magnified=hovered&&dwell.ready(performance.now());
   if(magnified)showPreview(hovered);else hidePreview();
@@ -129,17 +150,21 @@ async function start(){
 }
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
 host.addEventListener('pointerdown',e=>{
- if(e.button!==0)return;
- clearHover();drag={x:e.clientX,y:e.clientY,yaw,pitch,moved:false};host.setPointerCapture(e.pointerId);
+ if(e.button!==0||!e.isPrimary||!camera)return;
+ clearHover();drag={id:e.pointerId,x:e.clientX,y:e.clientY,yaw:goalYaw,pitch:goalPitch,panX:goalX,moved:false};host.setPointerCapture(e.pointerId);
 });
 host.addEventListener('pointermove',e=>{
  updatePointer(e);
- if(drag){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>5)drag.moved=true;if(drag.moved){yaw=Math.max(-.7,Math.min(.7,drag.yaw+dx*.004));pitch=Math.max(-.23,Math.min(.3,drag.pitch+dy*.002))}}
+ if(drag&&drag.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>8)drag.moved=true;if(drag.moved){
+  if(mobile.matches&&focusedRow!=='all')goalX=THREE.MathUtils.clamp(drag.panX-dx/host.clientWidth*(baseDistance/goalZoom)*2*Math.tan(THREE.MathUtils.degToRad(19))*camera.aspect,-panLimit(),panLimit());
+  else{goalYaw=Math.max(-.7,Math.min(.7,drag.yaw+dx*.004));if(!mobile.matches)goalPitch=Math.max(-.23,Math.min(.3,drag.pitch+dy*.002))}
+ }}
  else if(e.pointerType!=='touch')needsPick=true;
 });
 host.addEventListener('pointerup',e=>{
+ if(drag&&drag.id!==e.pointerId)return;
  const click=drag&&!drag.moved;drag=null;
- if(click&&camera){updatePointer(e);pick();if(hovered)displayBook(hovered.userData.book)}
+ if(click&&camera){updatePointer(e);pick();if(hovered)displayBook(hovered.userData.book,true)}
  if(host.hasPointerCapture(e.pointerId))host.releasePointerCapture(e.pointerId);
  clearHover();
 });
@@ -152,20 +177,20 @@ host.addEventListener('wheel',e=>{e.preventDefault();changeZoom(Math.exp(-e.delt
 host.addEventListener('keydown',e=>{
  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','Home'].includes(e.key))return;
  e.preventDefault();clearHover();
- if(e.key==='ArrowLeft')yaw=Math.max(-.7,yaw-.05);
- if(e.key==='ArrowRight')yaw=Math.min(.7,yaw+.05);
+ if(e.key==='ArrowLeft')goalYaw=Math.max(-.7,goalYaw-.05);
+ if(e.key==='ArrowRight')goalYaw=Math.min(.7,goalYaw+.05);
  if(e.key==='ArrowUp')goalY=Math.min(12.5,goalY+.4);
  if(e.key==='ArrowDown')goalY=Math.max(1,goalY-.4);
  if(e.key==='+')changeZoom(zoomFactor(1.15));
  if(e.key==='-')changeZoom(zoomFactor(1/1.15));
  if(e.key==='Home')reset();
 });
-function reset(){yaw=.13;pitch=.015;setFocus('all')}
+function reset(){goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
 $('#reset').onclick=reset;
 $('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
 $('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
 document.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>setFocus(b.dataset.shelf));
-$('#book-select').onchange=e=>{if(e.target.value==='')return;const b=books[Number(e.target.value)];displayBook(b);setFocus(String(b.row))};
+$('#book-select').onchange=e=>{if(e.target.value==='')return;const b=books[Number(e.target.value)];displayBook(b,true);setFocus(String(b.row))};
 $('#photo-open').onclick=()=>$('#photo-dialog').showModal();
 $('.photo-close').onclick=()=>$('#photo-dialog').close();
 $('#photo-dialog').onclick=e=>{if(e.target===$('#photo-dialog'))$('#photo-dialog').close()};
