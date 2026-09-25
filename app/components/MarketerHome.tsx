@@ -326,6 +326,7 @@ export default function MarketerHome() {
       year: "numeric",
       month: "short",
       day: "numeric",
+      timeZone: "UTC",
     });
   };
 
