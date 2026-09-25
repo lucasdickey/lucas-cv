@@ -245,6 +245,7 @@ export default function TerminalRepoList() {
       year: "numeric",
       month: "short",
       day: "numeric",
+      timeZone: "UTC",
     });
   };
 
@@ -1025,6 +1026,7 @@ export default function TerminalRepoList() {
                                           year: "numeric",
                                           month: "short",
                                           day: "numeric",
+                                          timeZone: "UTC",
                                         })}
                                       </span>
                                       <span>{post.readTime} min read</span>
