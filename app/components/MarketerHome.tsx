@@ -14,7 +14,8 @@ import { isArchivedType } from '../data/cv';
 import { featuredTweets } from '../data/tweets';
 import FeaturedTweets from './FeaturedTweets';
 import ShipLog from './ShipLog';
-import { getShipLogStats, WINDOW_START } from '../data/shipLog';
+import BookshelfPreview from './BookshelfPreview';
+import { getShipLogStats, WINDOW_LABEL } from '../data/shipLog';
 
 interface Entry {
   title: string;
@@ -511,16 +512,8 @@ export default function MarketerHome() {
             </span>
           </div>
           <p className="text-sm text-[#6B778C] mb-6 max-w-3xl">
-            Everything below had commits since{' '}
-            {new Date(WINDOW_START).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              timeZone: 'UTC',
-            })}
-            . Ranges from a legislative-analysis company to a four-way soccer game with a real
-            Android build. Where a project is publicly live and un-gated, there&apos;s a direct
-            link — go poke at it.
+            Public work from {WINDOW_LABEL}. Explore the live projects or browse the public source.
+            Commit counts include merges and automated updates on each repository’s default branch.
           </p>
           <ShipLog variant="marketer" />
         </section>
@@ -638,9 +631,7 @@ export default function MarketerHome() {
             <span className="text-sm text-[#6B778C]">({recentBooks.filter(b => b.status !== "pending").length} books)</span>
           </div>
           <p className="text-sm text-[#6B778C] mb-3">Currently reading and recently completed reads</p>
-          <a href="/real-books" className="inline-block text-sm font-medium text-[#0052CC] hover:underline mb-6">
-            Browse my physical bookshelf in 3D →
-          </a>
+          <BookshelfPreview />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recentBooks
               .filter(b => b.status !== "pending")

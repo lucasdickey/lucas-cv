@@ -1,24 +1,22 @@
 /**
- * The Last 90 Days — a rolling record of active build work.
+ * A curated 90-day snapshot of projects with public source or a verified public
+ * product surface. Private repositories never receive a source link; projects
+ * with neither a public repository nor an accessible product are excluded.
  *
- * Every project here had commits in the trailing 90-day window. Counts and date
- * ranges come from `git log --all` across every branch, not just the default
- * one, so work parked on a feature branch still counts.
- *
- * `liveUrl` is only set for deployments that are publicly reachable with no
- * auth wall. Anything gated (or personal enough that a public link is the wrong
- * call) is described but not linked.
- *
- * `repoUrl` is only set where the GitHub repo is actually public — several of
- * these are private, and a "Source" link that 404s is worse than no link.
- * Verify with `gh repo view <owner>/<repo> --json visibility` before adding one.
- *
- * To refresh: re-run the audit, update `WINDOW_*` below, and adjust each
- * project's `commits` / `firstCommit` / `lastCommit`.
+ * Refreshed 2026-09-24 against GitHub and Vercel. Counts now use the GitHub
+ * commits API on each default branch, including merges and automated commits,
+ * rather than local feature branches. Dates use America/Los_Angeles.
+ * See docs/ship-log-audit-2026-09-24.md for public sources and refresh procedure.
  */
 
-export const WINDOW_START = "2026-05-19";
-export const WINDOW_END = "2026-08-17";
+export const WINDOW_START = "2026-06-27";
+export const WINDOW_END = "2026-09-24";
+
+export const WINDOW_LABEL = `${new Date(WINDOW_START).toLocaleDateString("en-US", {
+  month: "long", day: "numeric", timeZone: "UTC",
+})} – ${new Date(WINDOW_END).toLocaleDateString("en-US", {
+  month: "long", day: "numeric", year: "numeric", timeZone: "UTC",
+})}`;
 
 export interface ShipLogLink {
   label: string;
@@ -48,229 +46,182 @@ export interface ShipLogProject {
 
 export const shipLog: ShipLogProject[] = [
   {
-    name: "one-off",
-    tagline: "A dozen ideas, built and left standing",
-    summary:
-      "Built a permanent home for small, self-contained web experiments so that finished ideas get published and kept rather than thrown away — it now runs everything from an agent-payable commerce demo to an interactive Go tutorial.",
-    bullets: [
-      "Ran a full user-research study on how founders want to work with AI agents — participants choose a survey or a conversational interview, and the choice itself is a research signal. Participant identity is stored in a separate database that fails closed, so who someone is never sits next to what they said.",
-      "Used the site as a proving ground for machine-payable commerce and MCP: an end-to-end Machine Payments Protocol talk with a live agent buying real goods, an embedded branded identity-collection widget delivered inside an MCP tool result, and a crowdsourced long-read service that prints and mails what wins — paid agent-to-agent.",
-      "Shipped a long tail of standalone builds — a phone-first Go tutorial, a self-improving ASCII-art gallery, a 450-character crossword generator, a 3D industrial-design lab, an Android room-presence tracker, and a co-writing IDE that checks whether an AI draft still sounds like the person who wrote it.",
+    "name": "Piñata",
+    "tagline": "Website feedback, pinned to the exact spot",
+    "summary": "Built a way to capture a public website, mark up the parts that need attention, and share a single feedback link with its founder.",
+    "bullets": [
+      "Capture desktop and mobile pages, then place pins, boxes, circles, and arrows on the screenshot.",
+      "Keep replies and resolution history next to the thing being discussed. Editing requires sign-in; the product example and walkthrough are public.",
+      "Published a ten-chapter walkthrough that explains the full capture, annotate, share, and reply flow."
     ],
-    // Repo is private; the deployments are the public surface.
-    liveUrl: "https://one-off.dev",
-    extraLinks: [
-      { label: "MPP demo", url: "https://one-off.dev/mpp-demo" },
-      { label: "Learn Go", url: "https://one-off.dev/learn-go" },
-      { label: "Pika-Cross", url: "https://one-off.dev/pika-cross" },
-      { label: "Design Lab", url: "https://one-off.dev/design-lab" },
-      { label: "ASCII Evolve", url: "https://one-off.dev/ascii-evolve" },
-      { label: "Slowpost", url: "https://one-off.dev/slowpost" },
-      { label: "Atlas MCP", url: "https://one-off.dev/atlas-mcp" },
-      { label: "gen-siggy", url: "https://one-off.dev/gen-siggy" },
+    "repoUrl": "https://github.com/lucasdickey/pinata",
+    "liveUrl": "https://yourpinata.dev",
+    "extraLinks": [
+      {
+        "label": "Watch the walkthrough",
+        "url": "https://yourpinata.dev/walkthrough"
+      }
     ],
-    commits: 229,
-    firstCommit: "2026-06-13",
-    lastCommit: "2026-08-17",
-    tags: ["mcp", "agentic-commerce", "user-research", "next.js"],
+    "commits": 122,
+    "firstCommit": "2026-09-04",
+    "lastCommit": "2026-09-23",
+    "tags": [
+      "feedback",
+      "open-source",
+      "next.js"
+    ]
   },
   {
-    name: "Downstream",
-    tagline: "A company built in the open, thesis to daily artifact",
-    summary:
-      "Founded a legislative consequence-modeling company — what a law actually does after it passes — and wrote down the entire founding, from thesis to brand to working software, under version control from day one.",
-    bullets: [
-      "Wrote the thesis before the code: a founding memo, an upper-bound analysis, a ten-rung build ladder, competitive assessments, and a 206-entry lexicon of the terms of art in American lawmaking — each entry noting what a claim gets wrong if the term is misread.",
-      "Turned the plan into a running pipeline: a daily Federal Register issue that publishes itself as a site, an immutable hash-chained archive, and an MCP server that serves dated snapshots, so any claim can be checked against the exact source that existed when it was made.",
-      "Made correctness the actual product — claims over a newly enacted housing act were audited line by line against enrolled text, and the overclaims, miscounts, and one snapshot-discipline breach that turned up were corrected in public and logged, rather than quietly fixed.",
+    "name": "lucasdickey.com",
+    "tagline": "A reading list you can walk into",
+    "summary": "Turned photos and video of my real bookshelf into an interactive 3D collection, with individual books you can pull out and inspect.",
+    "bullets": [
+      "Matched book spines from close-up photographs and linked identified titles to Amazon.",
+      "Added a spine-to-cover animation: the selected book leaves its shelf, turns toward you, and returns when you close it.",
+      "Built a phone-friendly shelf browser with touch controls, search, and a book detail sheet, alongside the site’s reading lists and syllabi."
     ],
-    // Repo is private. Strategy docs and essays are deliberately unpublished —
-    // only link surfaces that are actually live.
-    liveUrl: "https://seedownstream.com",
-    extraLinks: [
-      { label: "The daily issue", url: "https://www.downstream.sh/daily/" },
-      { label: "Quotes", url: "https://www.downstream.sh/quotes/" },
-      { label: "Gov-graph", url: "https://www.downstream.sh/gov-graph" },
-      { label: "Styleguide", url: "https://www.downstream.sh/styleguide/" },
-      { label: "MCP server", url: "https://mcp.downstream.sh" },
-    ],
-    commits: 204,
-    firstCommit: "2026-08-01",
-    lastCommit: "2026-08-15",
-    tags: ["founding", "civic-tech", "mcp", "data-provenance"],
+    "repoUrl": "https://github.com/lucasdickey/lucas-cv",
+    "liveUrl": "https://www.lucasdickey.com/real-books",
+    "commits": 35,
+    "firstCommit": "2026-07-01",
+    "lastCommit": "2026-09-24",
+    "tags": [
+      "3d",
+      "books",
+      "next.js"
+    ]
   },
   {
-    name: "Cross Cross Footy",
-    tagline: "Four-way soccer, tuned by measurement",
-    summary:
-      "Took a four-team, one-arena soccer game from design docs to a playable web build and an installable Android APK, letting playtest telemetry rather than argument settle the rules.",
-    bullets: [
-      "Separated the ruleset from the evidence for it, so that when measurement contradicted the design — as it did for the anti-stall detector, goal attribution, and which lever actually controls scoring — the reversal and its reasoning got written down instead of being lost with the session.",
-      "Carried the prototype onto real devices with touch controls and frame-rate-independent simulation, because a game tuned only on a laptop tells you very little about the phone it will actually be played on.",
-      "Restructured the repo so each project owns its own tooling and docs, making room for the next build without the last one bleeding into it.",
+    "name": "one-off",
+    "tagline": "Small experiments that become public things",
+    "summary": "Kept publishing standalone experiments, with recent additions spanning daily comics, code-drawn family comic strips, and an Android utility.",
+    "bullets": [
+      "Zingers turns an AI/tech story into five candidate three-panel strips, scores them, and leaves the final choice to me.",
+      "Knuckle Butts turns things the kids said into comic strips drawn by code, with a permanent page for each strip.",
+      "Published YouTube Block, a sideloaded Android app that blocks YouTube on one phone, with setup instructions and an APK download."
     ],
-    // Repo is private.
-    liveUrl: "https://2dads2dudes.dev/footy",
-    extraLinks: [
-      { label: "Android APK", url: "https://2dads2dudes.dev/cross-cross-footy/apk/" },
+    "liveUrl": "https://zingers.dev",
+    "extraLinks": [
+      {
+        "label": "Knuckle Butts",
+        "url": "https://knucklebutts.com"
+      },
+      {
+        "label": "YouTube Block",
+        "url": "https://one-off.dev/youtube-block"
+      }
     ],
-    commits: 44,
-    firstCommit: "2026-07-27",
-    lastCommit: "2026-08-16",
-    tags: ["games", "android", "telemetry", "canvas"],
+    "commits": 133,
+    "firstCommit": "2026-07-01",
+    "lastCommit": "2026-09-24",
+    "tags": [
+      "comics",
+      "generative-art",
+      "android"
+    ]
   },
   {
-    name: "exit-model",
-    tagline: "Startup exit outcomes, modeled honestly",
-    summary:
-      "Built a cap-table and waterfall tool that shows founders, investors, and employees what they each actually walk away with under different exits — then rebuilt the math from scratch after finding it wrong.",
-    bullets: [
-      "Corrected SAFE conversion, priced-round issuance, the liquidation waterfall, and vesting together rather than patching them one at a time, since a cap-table tool that is subtly wrong is worse than no tool at all.",
-      "Grew it from a calculator into a product: per-persona value-over-time charts, rules-based advice, worked examples, term-sheet extraction from uploaded documents, and sharing you can revoke.",
-      "Cleaned up its own security posture by removing live credentials that had been committed into documentation and setup scripts, and moved the deployment somewhere the secrets are managed properly.",
+    "name": "Downstream",
+    "tagline": "A daily record of what government did",
+    "summary": "Built a public Federal Register reading surface that keeps each day’s source material available, so readers and agents can check a claim against a dated record.",
+    "bullets": [
+      "Publish daily issues with documents grouped by agency and the dates they set.",
+      "Show ten business days of coverage, including missing captures, so gaps are visible rather than mistaken for inactivity.",
+      "Offer dated permalinks and a Markdown version alongside the readable daily issue."
     ],
-    // Repo is private.
-    liveUrl: "https://exit-model.vercel.app",
-    commits: 31,
-    firstCommit: "2026-05-19",
-    lastCommit: "2026-07-31",
-    tags: ["fintech", "cap-tables", "next.js"],
+    "liveUrl": "https://www.downstream.sh/daily/",
+    "commits": 430,
+    "firstCommit": "2026-08-01",
+    "lastCommit": "2026-09-24",
+    "tags": [
+      "civic-tech",
+      "data-provenance",
+      "publishing"
+    ]
   },
   {
-    name: "atlas-mcp-proto",
-    tagline: "Can an agent walk a founder through incorporation?",
-    summary:
-      "Prototyped an answer to a single strategic question — whether an agent-driven MCP conversation can carry a founder through company formation while holding context, collecting structured data, and handing off to a browser only where a browser is genuinely the right surface.",
-    bullets: [
-      "Built the full conversational flow end to end, from 'I want to start an AI company' through name validation, founder and equity structure, and a generated formation package, with everything mocked so the interaction could be judged on its own merits.",
-      "Made the prototype legible to other people — a tool inspector, a presentation rendered from the live codebase, and an annotated walkthrough built around real transcript excerpts — because a strategic prototype only pays off if the org can see what it learned.",
-      "Hardened it enough to survive being demoed, moving to a hosted database, fixing silent production failures, and making the whole thing work on a phone.",
+    "name": "A-OK Shop",
+    "tagline": "A working storefront, with room to experiment",
+    "summary": "Extended the Apes on Keys merch store with interactive design concepts and fixes to the buying flow.",
+    "bullets": [
+      "Built multiple storefront directions around the actual catalog and shopping bag, so the designs can be tried as working experiences.",
+      "Fixed checkout for print-on-demand tees and hoodies, and aligned the size and color choices with what can be purchased.",
+      "Added paid-order notifications and corrected the order data sent by checkout webhooks."
     ],
-    // Repo is private.
-    liveUrl: "https://atlas-mcp-proto.vercel.app",
-    commits: 21,
-    firstCommit: "2026-06-09",
-    lastCommit: "2026-06-15",
-    tags: ["mcp", "agents", "prototype", "stripe-atlas"],
+    "repoUrl": "https://github.com/lucasdickey/a-ok-shop",
+    "liveUrl": "https://a-ok-shop.vercel.app",
+    "commits": 12,
+    "firstCommit": "2026-07-25",
+    "lastCommit": "2026-09-23",
+    "tags": [
+      "e-commerce",
+      "stripe",
+      "design"
+    ]
   },
   {
-    name: "lucas.cv",
-    tagline: "The interactive resume, still growing",
-    summary:
-      "Kept extending this terminal-styled personal site past the resume itself, into the reading, syllabi, and public writing that show what the work is actually informed by.",
-    bullets: [
-      "Added an AI & Civilization syllabus with its own page, real publisher cover art for every reading, and links back to source, turning a list of titles into something someone could actually follow.",
-      "Kept the reading list honest — new titles added, ordering revised, finished books marked as read.",
-      "Surfaced public writing on the home page so the site reflects current thinking rather than only past roles.",
+    "name": "Breathe Free",
+    "tagline": "Breathing guidance that keeps time",
+    "summary": "Refined the open-source breathing app so its visual cues and audio follow the same breathing cycle.",
+    "bullets": [
+      "Fixed timing and animation bugs in the breathing sequence.",
+      "Added procedural clouds and synchronized the audio cues with the exercise.",
+      "Updated the app’s framework and runtime to repair its deployment build. The public source is available below."
     ],
-    repoUrl: "https://github.com/lucasdickey/lucas-cv",
-    liveUrl: "https://www.lucasdickey.com",
-    commits: 13,
-    firstCommit: "2026-05-30",
-    lastCommit: "2026-08-06",
-    tags: ["personal-site", "next.js"],
+    "repoUrl": "https://github.com/lucasdickey/breathe-free",
+    "commits": 5,
+    "firstCommit": "2026-08-19",
+    "lastCommit": "2026-08-20",
+    "tags": [
+      "open-source",
+      "animation",
+      "audio"
+    ]
   },
   {
-    name: "a-ok-shop",
-    tagline: "A storefront that sells to people and to software",
-    summary:
-      "Reworked the Apes on Keys storefront around the phone, where the shopping actually happens, and then opened it to buyers that aren't people at all.",
-    bullets: [
-      "Overhauled the mobile experience with a sticky add-to-cart and a full design pass, on the reasoning that a storefront optimized for desktop is optimized for the minority of its traffic.",
-      "Opened the store to machine buyers with an order-status endpoint and a deliberately cheap machine-payable item, so agent-to-agent settlement could be tested live and for real rather than only in a sandbox.",
-      "Hardened the money path so that a failed order is visible instead of silent.",
+    "name": "Cross Cross Footy",
+    "tagline": "Four teams, one pitch, a phone in your hands",
+    "summary": "Took a four-way soccer game onto the web and Android, then kept tuning the rules and touch layout through playtesting.",
+    "bullets": [
+      "Built a playable browser version and a downloadable Android build.",
+      "Adjusted goal attribution and the anti-stall behavior based on measured play.",
+      "Improved the landscape layout and placed scores directly on the pitch, flashing when they change."
     ],
-    repoUrl: "https://github.com/lucasdickey/a-ok-shop",
-    liveUrl: "https://a-ok.shop",
-    commits: 9,
-    firstCommit: "2026-05-25",
-    lastCommit: "2026-07-25",
-    tags: ["e-commerce", "agentic-commerce", "shopify"],
+    "liveUrl": "https://2dads2dudes.dev/footy",
+    "extraLinks": [
+      {
+        "label": "Android APK",
+        "url": "https://2dads2dudes.dev/cross-cross-footy/apk/"
+      }
+    ],
+    "commits": 46,
+    "firstCommit": "2026-07-26",
+    "lastCommit": "2026-08-18",
+    "tags": [
+      "games",
+      "android",
+      "canvas"
+    ]
   },
   {
-    name: "simple-survey",
-    tagline: "The survey engine, generalized for anyone",
-    summary:
-      "Extracted the survey platform built for the research study and finished it as a standalone template, so the next person running a study doesn't rebuild the same thing.",
-    bullets: [
-      "Made surveys data rather than code — question sets are typed config and conditional logic is declarative, so a new study is a new file, not a new branch of logic.",
-      "Made every external provider optional, so the app builds and runs before any credentials exist and someone can clone it and immediately see it work.",
-      "Wrote for two audiences at once: a README for humans and a rules file for coding agents, stating the invariants that must not be 'fixed' — PII separation fails closed, and participant text is data, never instructions.",
+    "name": "simple-survey",
+    "tagline": "A reusable starting point for research surveys",
+    "summary": "Published the survey platform as a standalone, configuration-driven template for the next study.",
+    "bullets": [
+      "Define question sets and conditional paths in typed configuration.",
+      "Keep external providers optional so the project can run before credentials are added.",
+      "Document the privacy boundaries and separate participant identity from responses."
     ],
-    repoUrl: "https://github.com/lucasdickey/simple-survey",
-    liveUrl: "https://simple-survey.vercel.app",
-    commits: 4,
-    firstCommit: "2026-07-02",
-    lastCommit: "2026-07-25",
-    tags: ["template", "open-source", "next.js"],
-  },
-  {
-    name: "pre-inc-founders-agreement",
-    tagline: "The hard conversations, before there's anything to fight over",
-    summary:
-      "Extended this founder-alignment tool so an agent can run the interview, on the view that the conversation about equity, vesting, IP, and exit terms should meet founders wherever they already are.",
-    bullets: [
-      "Added an incorporation MCP server as a Delaware C-Corp proof of concept, making the tool callable by an agent rather than only by a person in a browser.",
-      "Brought the agent-facing surface in line with the spec, including structured output and proper handling of the sensitive fields no chat transcript should hold.",
-      "Documented the tool surface and its composite flow so the design could be reviewed by others without anyone having to run it.",
-    ],
-    repoUrl: "https://github.com/lucasdickey/pre-inc-founders-agreement",
-    liveUrl: "https://pre-inc.vercel.app",
-    commits: 4,
-    firstCommit: "2026-05-30",
-    lastCommit: "2026-06-10",
-    tags: ["mcp", "founders", "stripe-atlas"],
-  },
-  {
-    name: "print-mail-service",
-    tagline: "Physical mail, ordered by software",
-    summary:
-      "Made an existing print-and-mail service callable by agents, so a piece of physical mail can be discovered, priced, paid for, and sent without a human in the loop.",
-    bullets: [
-      "Added discovery and payment-gated endpoints so an agent can find the service, learn what it costs, pay, and place an order end to end.",
-      "Fixed a units bug in the charge amount that would have mispriced every agent-initiated order.",
-      "Consolidated the existing codebase — removing orphaned flows and centralizing service clients — before layering the agent path on top, rather than building new surface over a shaky base.",
-    ],
-    repoUrl: "https://github.com/lucasdickey/print-mail-service",
-    liveUrl: "https://print-mail-service.vercel.app",
-    commits: 4,
-    firstCommit: "2026-05-25",
-    lastCommit: "2026-05-30",
-    tags: ["agentic-commerce", "payments", "lob"],
-  },
-  {
-    name: "10kay",
-    tagline: "SEC filing analysis you can trust to re-run",
-    summary:
-      "Spent the window making this automated 10-K and 10-Q analysis pipeline trustworthy rather than adding to it, on the principle that an unreliable data pipeline produces confident nonsense.",
-    bullets: [
-      "Introduced a real data-access layer so every write is idempotent, making a re-run of any pipeline phase safe instead of duplicative.",
-      "Tracked down silent data loss — a logger that was committing its callers' in-flight work, and batch loops that kept reusing an aborted transaction so one bad row quietly dropped every row after it.",
-      "Made the AI output survivable by repairing and recording truncated responses, after finding that the longest and most valuable analyses were being cut off mid-response and discarded whole.",
-    ],
-    repoUrl: "https://github.com/lucasdickey/10kay",
-    liveUrl: "https://10kay.vercel.app",
-    commits: 1,
-    firstCommit: "2026-07-25",
-    lastCommit: "2026-07-25",
-    tags: ["data-pipeline", "sec-filings", "python"],
-  },
-  {
-    name: "back-at-ya",
-    tagline: "A dormant project, briefly revisited",
-    summary:
-      "Added a small feature to a parked scheduled-SMS project — kept here because an honest activity log includes the quiet months too.",
-    bullets: [
-      "Added a click-to-zoom image gallery.",
-      "Left on a working branch rather than merged, since the project isn't active.",
-      "No other work in the window; the last substantive push was in January 2026.",
-    ],
-    // Repo is private; nothing deployed.
-    commits: 1,
-    firstCommit: "2026-06-07",
-    lastCommit: "2026-06-07",
-    tags: ["dormant"],
-  },
+    "repoUrl": "https://github.com/lucasdickey/simple-survey",
+    "commits": 2,
+    "firstCommit": "2026-07-02",
+    "lastCommit": "2026-07-02",
+    "tags": [
+      "template",
+      "open-source",
+      "next.js"
+    ]
+  }
 ];
 
 export function getShipLogStats() {
