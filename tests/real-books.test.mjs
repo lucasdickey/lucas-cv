@@ -38,7 +38,7 @@ test('second close-up batch replaces reflections and mistaken titles without rem
  assert.ok(cubbies.every(c=>c.books.every(b=>!b[4]?.unidentified)));
  assert.equal(books.filter(b=>b.row===3&&b.rect[0]>=350&&b.rect[0]<680).length,2);
  assert.equal(books.filter(b=>b.row===3&&b.horizontal&&b.rect[0]<350).length,9);
- assert.ok(!books.some(b=>['The Man in the High Castle',"The Hitchhiker's Guide to the Galaxy",'Unidentified spine 44'].includes(b.title)));
+ assert.ok(!books.some(b=>b.row===3&&['The Man in the High Castle',"The Hitchhiker's Guide to the Galaxy",'Unidentified spine 44'].includes(b.title)));
  assert.equal(books.filter(b=>b.title==='Stories of Your Life and Others').length,2);
  assert.equal(books.find(b=>b.title==='The Future of an Illusion').author,'Sigmund Freud');
  assert.equal(books.find(b=>b.title.startsWith("The Peacock's Tales")).author,'Marty Leeds');
@@ -49,4 +49,25 @@ test('new close-up matches have valid ISBNs and available covers point to real a
  const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
  const titles=['The Early Ayn Rand','The Future of an Illusion','Jules Verne: The Man Who Invented the Future','The Unbearable Lightness of Being','The Letter Opener','The Ministry of Time','The Abolition of Man','The Night Watchman',"The Peacock's Tales: The Alchemical Writings of Claudia Pavonis",'Fleishman Is in Trouble','In the Light of What We Know'];
  for(const title of titles){const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);const art=covers[entry.asin];if(art)assert.ok(fs.statSync(new URL('../public/real-books/'+art.path,import.meta.url)).size>1000,title);}
+});
+
+test('third batch keeps photographed duplicate copies and excludes the notebook from book totals',()=>{
+ const cubbies=closeupCubbies.filter(c=>c.source.startsWith('shelf-3-')||c.source==='shelf-2-cubby-4');
+ assert.equal(cubbies.reduce((n,c)=>n+c.books.length,0),48);
+ for(const title of ['Klara and the Sun','Flowers for Algernon','1984'])assert.equal(books.filter(b=>b.title===title).length,2,title);
+ const notebook=books.find(b=>b.title==='Spiral notebook');assert.equal(notebook.nonBook,true);assert.equal(notebook.unidentified,false);assert.equal(notebook.asin,undefined);
+ assert.equal(books.filter(b=>!b.nonBook).length,187);
+ assert.equal(books.filter(b=>b.unidentified).length,21);
+ assert.equal(books.find(b=>b.title==='The Man in the High Castle').row,1);
+ for(const title of ['Ghostways',"Foreskin's Lament",'2666','Lincoln in the Bardo'])assert.ok(!books.some(b=>b.title===title),title);
+});
+test('third batch product matches use valid print ISBNs and include full-cover assets',()=>{
+ const links=JSON.parse(fs.readFileSync(new URL('../public/real-books/links.json',import.meta.url)));
+ const covers=JSON.parse(fs.readFileSync(new URL('../public/real-books/covers.json',import.meta.url)));
+ for(const title of ['The Last Days of Night','A Hundred Thousand Worlds','The Expanding Circle','Cloud Cuckoo Land','When You Are Engulfed in Flames','Barrel Fever','The Informers','The Rules of Attraction','Men and Cartoons','Tell-All',"It Lasts Forever and Then It's Over",'Brave New World','The Great Divorce','Klara and the Sun','Flowers for Algernon','1984']){
+  const entry=links[title];assert.ok(entry.source.startsWith('https://'),title);
+  assert.equal([...entry.asin].reduce((sum,c,i)=>sum+(10-i)*(c==='X'?10:Number(c)),0)%11,0,title);
+  assert.equal([...entry.isbn13].reduce((sum,c,i)=>sum+Number(c)*(i%2?3:1),0)%10,0,title);
+  assert.ok(covers[entry.asin],title);assert.ok(fs.statSync(new URL('../public/real-books/'+covers[entry.asin].path,import.meta.url)).size>1000,title);
+ }
 });
