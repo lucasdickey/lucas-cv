@@ -98,6 +98,7 @@ function showPreview(mesh) {
  preview.style.top=`${Math.max(10,Math.min(host.clientHeight-height-75,mouse.y-height/2))}px`;
  previewed=mesh;
 }
+function panLimit(){return Math.max(0,5.3-baseDistance/goalZoom*Math.tan(THREE.MathUtils.degToRad(19))*(camera?.aspect||1))}
 function setFocus(row){
  clearHover();focusedRow=row;goalX=0;
  if(row==='all'){goalY=7.05;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
@@ -130,6 +131,7 @@ async function start(){
  function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),.05),s=reduced?1:1-Math.exp(-dt*8.8);
+  goalX=THREE.MathUtils.clamp(goalX,-panLimit(),panLimit());
   zoom+=(goalZoom-zoom)*s;targetY+=(goalY-targetY)*s;targetX+=(goalX-targetX)*s;yaw+=(goalYaw-yaw)*s;pitch+=(goalPitch-pitch)*s;
   const d=baseDistance/zoom;
   camera.position.set(targetX+Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,Math.cos(yaw)*d);camera.lookAt(targetX,targetY,0);camera.updateMatrixWorld();
@@ -154,7 +156,7 @@ host.addEventListener('pointerdown',e=>{
 host.addEventListener('pointermove',e=>{
  updatePointer(e);
  if(drag&&drag.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>8)drag.moved=true;if(drag.moved){
-  if(mobile.matches&&focusedRow!=='all')goalX=Math.max(-4.4,Math.min(4.4,drag.panX-dx/host.clientWidth*(baseDistance/goalZoom)*2*Math.tan(THREE.MathUtils.degToRad(19))*camera.aspect));
+  if(mobile.matches&&focusedRow!=='all')goalX=THREE.MathUtils.clamp(drag.panX-dx/host.clientWidth*(baseDistance/goalZoom)*2*Math.tan(THREE.MathUtils.degToRad(19))*camera.aspect,-panLimit(),panLimit());
   else{goalYaw=Math.max(-.7,Math.min(.7,drag.yaw+dx*.004));if(!mobile.matches)goalPitch=Math.max(-.23,Math.min(.3,drag.pitch+dy*.002))}
  }}
  else if(e.pointerType!=='touch')needsPick=true;
