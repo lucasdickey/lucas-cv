@@ -574,7 +574,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/the-hidden-girl-ken-liu.jpg",
     amazonUrl: "https://www.amazon.com/dp/1982134036",
     slug: "hidden-girl-ken-liu",
-    status: "pending",
+    status: "read",
     detailedDescription: "Ken Liu's second short story collection combines Eastern and Western storytelling traditions to explore memory, identity, and the moral consequences of innovation. The title story draws from Chinese folklore and modern AI.",
     genre: "Science Fiction / Fantasy / Short Stories",
     publishedYear: "2020",
@@ -590,7 +590,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/so-late-in-the-day-claire-keegan.jpg",
     amazonUrl: "https://www.amazon.com/dp/0802160853",
     slug: "so-late-in-the-day-claire-keegan",
-    status: "pending",
+    status: "read",
     detailedDescription: "Claire Keegan's writing distills human experience to its essence. This story examines a man reflecting on a failed relationship, offering a subtle critique of gender, class, and the quiet violences of everyday life.",
     genre: "Literary Fiction / Novella",
     publishedYear: "2023",
@@ -622,7 +622,7 @@ export const books: Book[] = [
     coverUrl: "/images/books/man-who-saw-seconds.jpg",
     amazonUrl: "https://www.amazon.com/The-Man-Who-Saw-Seconds/dp/B0FHMVCC4S/",
     slug: "man-who-saw-seconds-alexander-boldizar",
-    status: "pending",
+    status: "read",
     detailedDescription: "A man gains the ability to see a few seconds into the future, leading to a life of chaos, pursuit, and philosophical reckoning. Boldizar combines action and satire with deep questions about free will and consequence.",
     genre: "Science Fiction / Thriller",
     publishedYear: "2024",
@@ -741,5 +741,528 @@ export const books: Book[] = [
     pages: "403",
     publisher: "Princeton University Press",
     rating: "4.3/5"
+  }
+,
+  {
+    "title": "L.A. Confidential",
+    "author": "James Ellroy",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0446674249.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0446674249/",
+    "slug": "l-a-confidential-james-ellroy",
+    "status": "read"
+  },
+  {
+    "title": "Perfidia",
+    "author": "James Ellroy",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0099537753.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0099537753/",
+    "slug": "perfidia-james-ellroy",
+    "status": "read"
+  },
+  {
+    "title": "Flowers for Algernon",
+    "author": "Daniel Keyes",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0156030306.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0156030306/",
+    "slug": "flowers-for-algernon-daniel-keyes",
+    "status": "read"
+  },
+  {
+    "title": "The Remains of the Day",
+    "author": "Kazuo Ishiguro",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0679731725.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0679731725/",
+    "slug": "the-remains-of-the-day-kazuo-ishiguro",
+    "status": "read"
+  },
+  {
+    "title": "Small Things Like These",
+    "author": "Claire Keegan",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0802158749.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0802158749/",
+    "slug": "small-things-like-these-claire-keegan",
+    "status": "read"
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J. R. R. Tolkien",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0345339681.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0345339681/",
+    "slug": "the-hobbit-j-r-r-tolkien",
+    "status": "read"
+  },
+  {
+    "title": "Klara and the Sun",
+    "author": "Kazuo Ishiguro",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/059331817X.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/059331817X/",
+    "slug": "klara-and-the-sun-kazuo-ishiguro",
+    "status": "read"
+  },
+  {
+    "title": "One Flew Over the Cuckoo's Nest",
+    "author": "Ken Kesey",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0451163966.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0451163966/",
+    "slug": "one-flew-over-the-cuckoo-s-nest-ken-kesey",
+    "status": "read"
+  },
+  {
+    "title": "A Christmas Carol",
+    "author": "Charles Dickens",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0486268659.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0486268659/",
+    "slug": "a-christmas-carol-charles-dickens",
+    "status": "read"
+  },
+  {
+    "title": "About a Boy",
+    "author": "Nick Hornby",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1573227331.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1573227331/",
+    "slug": "about-a-boy-nick-hornby",
+    "status": "read"
+  },
+  {
+    "title": "The Parade",
+    "author": "Dave Eggers",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0525564675.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0525564675/",
+    "slug": "the-parade-dave-eggers",
+    "status": "read"
+  },
+  {
+    "title": "Hey Nostradamus!",
+    "author": "Douglas Coupland",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1582344159.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1582344159/",
+    "slug": "hey-nostradamus-douglas-coupland",
+    "status": "read"
+  },
+  {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0060850523.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0060850523/",
+    "slug": "brave-new-world-aldous-huxley",
+    "status": "read"
+  },
+  {
+    "title": "Generation A",
+    "author": "Douglas Coupland",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1439157022.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1439157022/",
+    "slug": "generation-a-douglas-coupland",
+    "status": "read"
+  },
+  {
+    "title": "Eleanor Rigby",
+    "author": "Douglas Coupland",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1582346437.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1582346437/",
+    "slug": "eleanor-rigby-douglas-coupland",
+    "status": "read"
+  },
+  {
+    "title": "The Gum Thief",
+    "author": "Douglas Coupland",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/159691520X.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/159691520X/",
+    "slug": "the-gum-thief-douglas-coupland",
+    "status": "read"
+  },
+  {
+    "title": "Generation X",
+    "author": "Douglas Coupland",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/031205436X.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/031205436X/",
+    "slug": "generation-x-douglas-coupland",
+    "status": "read"
+  },
+  {
+    "title": "Microserfs",
+    "author": "Douglas Coupland",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0060987049.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0060987049/",
+    "slug": "microserfs-douglas-coupland",
+    "status": "read"
+  },
+  {
+    "title": "The Immortalists",
+    "author": "Chloe Benjamin",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1472244990.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1472244990/",
+    "slug": "the-immortalists-chloe-benjamin",
+    "status": "read"
+  },
+  {
+    "title": "Stories of Your Life and Others",
+    "author": "Ted Chiang",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1405041021.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1405041021/",
+    "slug": "stories-of-your-life-and-others-ted-chiang",
+    "status": "read"
+  },
+  {
+    "title": "The Golem of Brooklyn",
+    "author": "Adam Mansbach",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/059372982X.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/059372982X/",
+    "slug": "the-golem-of-brooklyn-adam-mansbach",
+    "status": "read"
+  },
+  {
+    "title": "Circe",
+    "author": "Madeline Miller",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1408890046.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1408890046/",
+    "slug": "circe-madeline-miller",
+    "status": "read"
+  },
+  {
+    "title": "The Song of Achilles",
+    "author": "Madeline Miller",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0062060619.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0062060619/",
+    "slug": "the-song-of-achilles-madeline-miller",
+    "status": "read"
+  },
+  {
+    "title": "The Paper Menagerie and Other Stories",
+    "author": "Ken Liu",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1784975680.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1784975680/",
+    "slug": "the-paper-menagerie-and-other-stories-ken-liu",
+    "status": "read"
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0451524934.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0451524934/",
+    "slug": "1984-george-orwell",
+    "status": "read"
+  },
+  {
+    "title": "Stardust",
+    "author": "Neil Gaiman",
+    "description": "",
+    "coverUrl": "/real-books/read-placeholder.svg",
+    "amazonUrl": "https://www.amazon.com/dp/0606192689/",
+    "slug": "stardust-neil-gaiman",
+    "status": "read"
+  },
+  {
+    "title": "Lord of the Flies",
+    "author": "William Golding",
+    "description": "",
+    "coverUrl": "/real-books/read-placeholder.svg",
+    "amazonUrl": "https://www.amazon.com/dp/0571069509/",
+    "slug": "lord-of-the-flies-william-golding",
+    "status": "read"
+  },
+  {
+    "title": "Moonglow",
+    "author": "Michael Chabon",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0008189862.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0008189862/",
+    "slug": "moonglow-michael-chabon",
+    "status": "read"
+  },
+  {
+    "title": "Demon Copperhead",
+    "author": "Barbara Kingsolver",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0063267462.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0063267462/",
+    "slug": "demon-copperhead-barbara-kingsolver",
+    "status": "read"
+  },
+  {
+    "title": "The Girl on the Train",
+    "author": "Paula Hawkins",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1594634955.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1594634955/",
+    "slug": "the-girl-on-the-train-paula-hawkins",
+    "status": "read"
+  },
+  {
+    "title": "The Underground Railroad",
+    "author": "Colson Whitehead",
+    "description": "",
+    "coverUrl": "/real-books/read-placeholder.svg",
+    "amazonUrl": "https://www.amazon.com/dp/0708898416/",
+    "slug": "the-underground-railroad-colson-whitehead",
+    "status": "read"
+  },
+  {
+    "title": "Underground Airlines",
+    "author": "Ben H. Winters",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1780894309.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1780894309/",
+    "slug": "underground-airlines-ben-h-winters",
+    "status": "read"
+  },
+  {
+    "title": "Heroes of the Frontier",
+    "author": "Dave Eggers",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1524711047.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1524711047/",
+    "slug": "heroes-of-the-frontier-dave-eggers",
+    "status": "read"
+  },
+  {
+    "title": "Foster",
+    "author": "Claire Keegan",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0571392598.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0571392598/",
+    "slug": "foster-claire-keegan",
+    "status": "read"
+  },
+  {
+    "title": "The Expanding Circle",
+    "author": "Peter Singer",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0691150699.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0691150699/",
+    "slug": "the-expanding-circle-peter-singer",
+    "status": "read"
+  },
+  {
+    "title": "Cloud Cuckoo Land",
+    "author": "Anthony Doerr",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1982168447.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1982168447/",
+    "slug": "cloud-cuckoo-land-anthony-doerr",
+    "status": "read"
+  },
+  {
+    "title": "What Is the What",
+    "author": "Dave Eggers",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1602832625.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1602832625/",
+    "slug": "what-is-the-what-dave-eggers",
+    "status": "read"
+  },
+  {
+    "title": "Chronic City",
+    "author": "Jonathan Lethem",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0385532156.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0385532156/",
+    "slug": "chronic-city-jonathan-lethem",
+    "status": "read"
+  },
+  {
+    "title": "Fleishman Is in Trouble",
+    "author": "Taffy Brodesser-Akner",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0525510893.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0525510893/",
+    "slug": "fleishman-is-in-trouble-taffy-brodesser-akner",
+    "status": "read"
+  },
+  {
+    "title": "Clockers",
+    "author": "Richard Price",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0395537614.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0395537614/",
+    "slug": "clockers-richard-price",
+    "status": "read"
+  },
+  {
+    "title": "In the Light of What We Know",
+    "author": "Zia Haider Rahman",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1250062373.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1250062373/",
+    "slug": "in-the-light-of-what-we-know-zia-haider-rahman",
+    "status": "read"
+  },
+  {
+    "title": "The Imperfectionists",
+    "author": "Tom Rachman",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0385343663.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0385343663/",
+    "slug": "the-imperfectionists-tom-rachman",
+    "status": "read"
+  },
+  {
+    "title": "The Early Ayn Rand",
+    "author": "Ayn Rand",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/045121465X.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/045121465X/",
+    "slug": "the-early-ayn-rand-ayn-rand",
+    "status": "read"
+  },
+  {
+    "title": "The Unbearable Lightness of Being",
+    "author": "Milan Kundera",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0060932139.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0060932139/",
+    "slug": "the-unbearable-lightness-of-being-milan-kundera",
+    "status": "read"
+  },
+  {
+    "title": "The Smell of Breath",
+    "author": "Conor McMillen",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1698447205.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1698447205/",
+    "slug": "the-smell-of-breath-conor-mcmillen",
+    "status": "read"
+  },
+  {
+    "title": "The Ministry of Time",
+    "author": "Kaliane Bradley",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1668045141.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1668045141/",
+    "slug": "the-ministry-of-time-kaliane-bradley",
+    "status": "read"
+  },
+  {
+    "title": "Heather, the Totality",
+    "author": "Matthew Weiner",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0316435325.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0316435325/",
+    "slug": "heather-the-totality-matthew-weiner",
+    "status": "read"
+  },
+  {
+    "title": "The Lincoln Highway",
+    "author": "Amor Towles",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1786332523.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1786332523/",
+    "slug": "the-lincoln-highway-amor-towles",
+    "status": "read"
+  },
+  {
+    "title": "Freedom",
+    "author": "Jonathan Franzen",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0312576463.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0312576463/",
+    "slug": "freedom-jonathan-franzen",
+    "status": "read"
+  },
+  {
+    "title": "Where the Crawdads Sing",
+    "author": "Delia Owens",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1984827618.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1984827618/",
+    "slug": "where-the-crawdads-sing-delia-owens",
+    "status": "read"
+  },
+  {
+    "title": "Normal People",
+    "author": "Sally Rooney",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0571334652.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0571334652/",
+    "slug": "normal-people-sally-rooney",
+    "status": "read"
+  },
+  {
+    "title": "The Night Watchman",
+    "author": "Louise Erdrich",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0062671189.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0062671189/",
+    "slug": "the-night-watchman-louise-erdrich",
+    "status": "read"
+  },
+  {
+    "title": "The Rise and Fall of Great Powers",
+    "author": "Tom Rachman",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0812982398.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0812982398/",
+    "slug": "the-rise-and-fall-of-great-powers-tom-rachman",
+    "status": "read"
+  },
+  {
+    "title": "All Involved",
+    "author": "Ryan Gattis",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0062418904.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0062418904/",
+    "slug": "all-involved-ryan-gattis",
+    "status": "read"
+  },
+  {
+    "title": "Wonder Boys",
+    "author": "Michael Chabon",
+    "description": "",
+    "coverUrl": "/real-books/read-placeholder.svg",
+    "amazonUrl": "https://www.amazon.com/dp/1857023617/",
+    "slug": "wonder-boys-michael-chabon",
+    "status": "read"
+  },
+  {
+    "title": "The Russian Debutante's Handbook",
+    "author": "Gary Shteyngart",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/1573229881.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/1573229881/",
+    "slug": "the-russian-debutante-s-handbook-gary-shteyngart",
+    "status": "read"
+  },
+  {
+    "title": "The Curse of Bigness",
+    "author": "Tim Wu",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0999745468.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0999745468/",
+    "slug": "the-curse-of-bigness-tim-wu",
+    "status": "read"
+  },
+  {
+    "title": "Night Watch",
+    "author": "Jayne Anne Phillips",
+    "description": "",
+    "coverUrl": "/real-books/assets/covers/0451493338.jpg",
+    "amazonUrl": "https://www.amazon.com/dp/0451493338/",
+    "slug": "night-watch-jayne-anne-phillips",
+    "status": "read"
   }
 ];
