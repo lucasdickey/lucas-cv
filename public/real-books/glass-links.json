@@ -1,0 +1,207 @@
+{
+  "The Economic Structure of Corporate Law": {
+    "asin": "067423538X",
+    "isbn13": "9780674235380",
+    "source": "https://openlibrary.org/search.json?title=The+Economic+Structure+of+Corporate+Law&author=Frank+H.+Easterbrook&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "We the Corporations": {
+    "asin": "0871407124",
+    "isbn13": "9780871407122",
+    "source": "https://openlibrary.org/search.json?title=We+the+Corporations&author=Adam+Winkler&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Tangled Tree": {
+    "asin": "1476776636",
+    "isbn13": "9781476776637",
+    "source": "https://openlibrary.org/search.json?title=The+Tangled+Tree&author=David+Quammen&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "Dancing in the Streets": {
+    "asin": "0805057242",
+    "isbn13": "9780805057249",
+    "source": "https://openlibrary.org/isbn/9780805057249"
+  },
+  "Behave": {
+    "asin": "1594205078",
+    "isbn13": "9781594205071",
+    "source": "app/data/books.ts"
+  },
+  "Making Sense": {
+    "asin": "0062857797",
+    "isbn13": "9780062857798",
+    "source": "https://openlibrary.org/search.json?title=Making+Sense&author=Sam+Harris&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "Gödel, Escher, Bach": {
+    "asin": "0465026567",
+    "isbn13": "9780465026562",
+    "source": "https://openlibrary.org/search.json?title=G%C3%B6del%2C+Escher%2C+Bach&author=Douglas+R.+Hofstadter&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "Einstein": {
+    "asin": "0743264738",
+    "isbn13": "9780743264730",
+    "source": "https://openlibrary.org/search.json?title=Einstein&author=Walter+Isaacson&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Monocle Guide to Better Living": {
+    "asin": "3899554906",
+    "isbn13": "9783899554908",
+    "source": "https://obnb.uk/p16462355-the-monocle-guide-to-better-living"
+  },
+  "Scaling People": {
+    "asin": "1953953212",
+    "isbn13": "9781953953216",
+    "source": "https://www.stripe.press/"
+  },
+  "Prescription for Nutritional Healing: A-to-Z Guide to Supplements": {
+    "asin": "1583331433",
+    "isbn13": "9781583331439",
+    "source": "https://openlibrary.org/search.json?title=Prescription+for+Nutritional+Healing%3A+A-to-Z+Guide+to+Supplements&author=Phyllis+A.+Balch&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "On Tyranny": {
+    "asin": "0804190119",
+    "isbn13": "9780804190114",
+    "source": "https://openlibrary.org/search.json?title=On+Tyranny&author=Timothy+Snyder&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "Fully Automated Luxury Communism": {
+    "asin": "1786632624",
+    "isbn13": "9781786632623",
+    "source": "https://openlibrary.org/search.json?title=Fully+Automated+Luxury+Communism&author=Aaron+Bastani&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Anxious Generation": {
+    "asin": "0593655036",
+    "isbn13": "9780593655030",
+    "source": "https://openlibrary.org/isbn/9780593655030"
+  },
+  "The Last Lecture": {
+    "asin": "1401323251",
+    "isbn13": "9781401323257",
+    "source": "https://openlibrary.org/isbn/9781401323257"
+  },
+  "Get Together": {
+    "asin": "1732265194",
+    "isbn13": "9781732265196",
+    "source": "https://www.stripe.press/"
+  },
+  "The Almanack of Naval Ravikant": {
+    "asin": "1544514220",
+    "isbn13": "9781544514222",
+    "source": "https://openlibrary.org/search.json?title=The+Almanack+of+Naval+Ravikant&author=Eric+Jorgenson&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Coddling of the American Mind": {
+    "asin": "0735224897",
+    "isbn13": "9780735224896",
+    "source": "https://openlibrary.org/search.json?title=The+Coddling+of+the+American+Mind&author=Greg+Lukianoff&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "This Life": {
+    "asin": "1101873736",
+    "isbn13": "9781101873731",
+    "source": "https://openlibrary.org/search.json?title=This+Life&author=Martin+H%C3%A4gglund&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Infinity Machine": {
+    "asin": "0593831845",
+    "isbn13": "9780593831847",
+    "source": "app/data/books.ts"
+  },
+  "Superintelligence": {
+    "asin": "0199678111",
+    "isbn13": "9780199678112",
+    "source": "https://openlibrary.org/isbn/9780199678112"
+  },
+  "Deep Utopia": {
+    "asin": "1646871642",
+    "isbn13": "9781646871643",
+    "source": "https://openlibrary.org/search.json?title=Deep+Utopia&author=Nick+Bostrom&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Rise and Fall of the Artificial State": {
+    "asin": "0241836557",
+    "isbn13": "9780241836552",
+    "source": "https://www.penguin.co.uk/books/483176/the-rise-and-fall-of-the-artificial-state-by-lepore-jill/9780241836552"
+  },
+  "The Origins of Efficiency": {
+    "asin": "1953953522",
+    "isbn13": "9781953953520",
+    "source": "https://www.stripe.press/"
+  },
+  "Pieces of the Action": {
+    "asin": "1953953204",
+    "isbn13": "9781953953209",
+    "source": "https://www.stripe.press/"
+  },
+  "HBR Guide to Finance Basics for Managers": {
+    "asin": "1422187306",
+    "isbn13": "9781422187302",
+    "source": "https://openlibrary.org/search.json?title=HBR+Guide+to+Finance+Basics+for+Managers&author=Harvard+Business+Review&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Te of Piglet": {
+    "asin": "0140230165",
+    "isbn13": "9780140230161",
+    "source": "https://openlibrary.org/search.json?title=The+Te+of+Piglet&author=Benjamin+Hoff&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Tao of Pooh": {
+    "asin": "0525244581",
+    "isbn13": "9780525244585",
+    "source": "https://openlibrary.org/isbn/9780525244585"
+  },
+  "Scientific Freedom: The Elixir of Civilization": {
+    "asin": "0578675919",
+    "isbn13": "9780578675916",
+    "source": "https://www.stripe.press/"
+  },
+  "On Liberty": {
+    "asin": "0486421309",
+    "isbn13": "9780486421308",
+    "source": "https://obnb.uk/p8079423-on-liberty"
+  },
+  "The Little Prince — Deluxe Pop-Up Book": {
+    "asin": "0544656490",
+    "isbn13": "9780544656499",
+    "source": "https://www.target.com/p/-/A-50108206"
+  },
+  "The Problems of Philosophy": {
+    "asin": "1609425057",
+    "isbn13": "9781609425050",
+    "source": "https://www.univ.ox.ac.uk/book/the-problems-of-philosophy/"
+  },
+  "Prescription for Nutritional Healing": {
+    "asin": "1583330836",
+    "isbn13": "9781583330838",
+    "source": "https://openlibrary.org/search.json?title=Prescription+for+Nutritional+Healing&author=Phyllis+A.+Balch&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Mind-Gut Connection": {
+    "asin": "0062376586",
+    "isbn13": "9780062376589",
+    "source": "https://openlibrary.org/search.json?title=The+Mind-Gut+Connection&author=Emeran+Mayer&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Visual Display of Quantitative Information": {
+    "asin": "0961392142",
+    "isbn13": "9780961392147",
+    "source": "https://openlibrary.org/search.json?title=The+Visual+Display+of+Quantitative+Information&author=Edward+R.+Tufte&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "A Culture of Growth": {
+    "asin": "0691168881",
+    "isbn13": "9780691168883",
+    "source": "https://openlibrary.org/search.json?title=A+Culture+of+Growth&author=Joel+Mokyr&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Worldly Philosophers": {
+    "asin": "068486214X",
+    "isbn13": "9780684862149",
+    "source": "https://openlibrary.org/search.json?title=The+Worldly+Philosophers&author=Robert+L.+Heilbroner&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "The Big, Fun Kids Cookbook": {
+    "asin": "1950785041",
+    "isbn13": "9781950785049",
+    "source": "https://openlibrary.org/search.json?title=The+Big%2C+Fun+Kids+Cookbook&author=Food+Network+Magazine&limit=1&fields=key%2Ctitle%2Cauthor_name%2Cisbn&language=eng"
+  },
+  "Madeline": {
+    "asin": "0670785407",
+    "isbn13": "9780670785407",
+    "source": "https://www.publishersweekly.com/pw/by-topic/new-titles/childrens-announcements/article/61146-spring-2014-children-s-announcements-m-r.html"
+  },
+  "Poor Charlie’s Almanack": {
+    "asin": "1953953239",
+    "isbn13": "9781953953230",
+    "source": "https://www.stripe.press/"
+  },
+  "Boom": {
+    "asin": "1953953476",
+    "isbn13": "9781953953476",
+    "source": "https://www.stripe.press/"
+  }
+}
