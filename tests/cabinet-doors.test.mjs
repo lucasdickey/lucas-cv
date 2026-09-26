@@ -26,3 +26,25 @@ test('door motion is independent of frame rate and honours reduced motion',()=>{
  reduced.setOpen(false);assert.equal(reduced.angle,0);assert.equal(reduced.browseable,false);
  reduced.setOpen(true);assert.equal(reduced.angle,Math.PI/2);assert.equal(reduced.browseable,true);
 });
+
+test('painted door frames are opaque depth-writing meshes and glass stays inside the openings',async()=>{
+ const {addGlassCabinet}=await import('../public/real-books/glass-cabinet.js');
+ const THREE=await import('../public/real-books/assets/three.module.js');
+ const root=new THREE.Group(),mat=(color,options={})=>new THREE.MeshStandardMaterial({color,...options});
+ const box=(w,h,d,x,y,z,material,parent=root)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);parent.add(m);return m};
+ const doors=addGlassCabinet({box,mat,root});
+ assert.equal(doors.frames.length,16);
+ for(const frame of doors.frames){assert.equal(frame.material.transparent,false);assert.equal(frame.material.opacity,1);assert.equal(frame.material.depthWrite,true);assert.equal(frame.material.depthTest,true)}
+ root.updateMatrixWorld(true);
+ for(const hinge of doors.hinges){
+  const panes=hinge.children.filter(o=>o.material?.transparent);assert.equal(panes.length,8);
+  for(const pane of panes){
+   assert.ok(pane.material.opacity<1);assert.equal(pane.material.depthWrite,false);
+   const glassBounds=new THREE.Box3().setFromObject(pane).expandByScalar(-.001);
+   for(const frame of doors.frames)assert.equal(glassBounds.intersectsBox(new THREE.Box3().setFromObject(frame)),false);
+  }
+  const frame=hinge.children[0],point=frame.getWorldPosition(new THREE.Vector3());
+  const ray=new THREE.Raycaster(new THREE.Vector3(point.x,point.y,10),new THREE.Vector3(0,0,-1));
+  assert.equal(ray.intersectObject(hinge,true)[0].object,frame);
+ }
+});

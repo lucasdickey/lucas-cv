@@ -2,8 +2,9 @@ import * as THREE from './assets/three.module.js';
 import {selectBookcase} from './bookcases.js';
 import {addGlassCabinet,addGlassDecor,addCupShelf} from './glass-cabinet.js';
 const bookcase=selectBookcase(location.search),books=bookcase.books;
+import {CanvasGestures,canvasTapAction} from './canvas-gestures.js';
 import { createSpineCanvas } from './spine-texture.js';
-import { cabinet, orbitDistance, panGeometry, dragView, visibleBook } from './navigation.js?v=controls-2';
+import { cabinet, orbitDistance, panGeometry, visibleBook } from './navigation.js?v=controls-2';
 import { createMobileBrowser } from './mobile.js?v=search-1';
 import { createDesktopSearch } from './search.js?v=search-1';
 import { BookReveal } from './book-reveal.js?v=reveal-1';
@@ -25,14 +26,14 @@ $('.mobile-intro h1').textContent=bookcase.id==='glass'?'The glass bookcase.':'T
 books.forEach((book,id)=>{book.id=id});
 const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook);
 const desktopSearch=createDesktopSearch(books,book=>displayBook(book,true));
-let focusedRow='all',navigationTool='turn',targetX=bookcase.centerX||0,goalX=bookcase.centerX||0;
+let focusedRow='all',targetX=bookcase.centerX||0,goalX=bookcase.centerX||0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
 let covers={},pickTargets=[],occluders=[],cabinetDoors;
-const dwell=new HoverDwell(),mouse={x:0,y:0};
+const gestures=new CanvasGestures(),dwell=new HoverDwell(),mouse={x:0,y:0};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const yBase=bookcase.yBase, photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
-let renderer,scene,camera,root,bookMeshes=[],selected=null,hovered=null,drag=null,pointer=new THREE.Vector2(9,9),needsPick=false;
+let renderer,scene,camera,root,bookMeshes=[],selected=null,hovered=null,pointer=new THREE.Vector2(9,9),needsPick=false;
 let yaw=mobile.matches?0:.13,pitch=mobile.matches?0:.015,goalYaw=yaw,goalPitch=pitch,zoom=1,targetY=bookcase.centerY,goalY=bookcase.centerY,goalZoom=1,baseDistance=24;
 const raycaster=new THREE.Raycaster(), clock=new THREE.Clock();
 const reveal=new BookReveal({host,detail:$('#book-detail'),dialog:$('#book-dialog'),getCamera:()=>camera,reduced,onReturned:()=>{mobileBrowser.close();resetDetail()}});
@@ -102,19 +103,19 @@ function resetDetail(){if(document.activeElement===$('#return-book'))host.focus(
 function closeBook(immediate=false){clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}
 $('#return-book').onclick=()=>closeBook();
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#book-dialog').open&&!$('#photo-dialog').open)closeBook()});
-function clearHover(){hovered=null;needsPick=false;dwell.clear();host.style.cursor=drag?'grabbing':'grab'}
+function clearHover(){hovered=null;needsPick=false;dwell.clear();host.style.cursor=gestures.active?'grabbing':'grab'}
 function pick() {
  raycaster.setFromCamera(pointer,camera);
  hovered=cabinetDoors&&!cabinetDoors.browseable?null:visibleBook(raycaster,pickTargets,occluders);
- host.style.cursor=hovered?'pointer':drag?'grabbing':'grab';
+ host.style.cursor=hovered?'pointer':gestures.active?'grabbing':'grab';
  dwell.update(hovered,performance.now(),mouse.x,mouse.y);
 }
 function panLimit(){return panGeometry(baseDistance/goalZoom,camera?.aspect||1).limit}
-function chooseNavigation(tool){clearHover();navigationTool=tool;document.querySelectorAll('[data-navigation]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.navigation===tool)));updateHint()}
 function updateHint(){
- const pan=navigationTool==='pan';
- $('.gesture-hint').textContent=mobile.matches?`${pan?'Drag to move':'Drag to turn & tilt'} · Tap a book`:`${pan?'Drag to move':'Drag to turn & tilt'} · Scroll to zoom`;
- host.setAttribute('aria-label',`3D bookshelf. ${pan?'Drag to move left, right, up or down.':'Drag to turn and tilt.'} Use Rotate or Pan to change controls. Use arrow keys to adjust the view. Select a book to see its cover.`);
+ const doorHint=cabinetDoors?(cabinetDoors.open?'Tap outside the cabinet to close doors.':'Tap the doors to open.') : '';
+ $('.gesture-hint').textContent=mobile.matches?'1 finger: rotate · 2 fingers: pan · Pinch: zoom':'Drag: rotate · Shift-drag: pan · Scroll: zoom';
+ $('.door-hint').textContent=doorHint;
+ host.setAttribute('aria-label',`3D bookshelf. One finger or drag rotates and tilts; two fingers or Shift-drag pans; pinch or scroll zooms; tap selects a book. ${doorHint} Arrow keys rotate, Shift-arrow keys pan, plus and minus zoom, Home resets.${cabinetDoors?' Enter opens doors; Escape closes them.':''}`);
 }
 function setFocus(row){
  clearHover();focusedRow=row;goalX=row==='all'?(bookcase.centerX||0):0;
@@ -142,7 +143,7 @@ async function start(){
   sources[book.textureSource]={image:canvas,canvas,texture};
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children,...(cabinetDoors?.frames||[])];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
  const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();setFocus(focusedRow);
  function frame(){
   requestAnimationFrame(frame);
@@ -151,7 +152,7 @@ async function start(){
   zoom+=(goalZoom-zoom)*s;targetY+=(goalY-targetY)*s;targetX+=(goalX-targetX)*s;yaw+=(goalYaw-yaw)*s;pitch+=(goalPitch-pitch)*s;
   const d=orbitDistance(baseDistance/zoom,yaw);
   camera.position.set(targetX+Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,Math.cos(yaw)*d);camera.lookAt(targetX,targetY,0);camera.updateMatrixWorld();
-  if(needsPick&&!drag){pick();needsPick=false}
+  if(needsPick&&!gestures.active){pick();needsPick=false}
   const magnified=hovered&&dwell.ready(performance.now());
   for(const m of bookMeshes){
    if(reveal.owns(m))continue;
@@ -167,54 +168,60 @@ async function start(){
  }catch(e){$('#loading').innerHTML='3D is unavailable here. Search for a book to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src=`./assets/${bookcase.photo}.jpg`;img.alt=bookcase.name;img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length}
 }
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
+function gestureView(){return {yaw:goalYaw,pitch:goalPitch,x:goalX,y:goalY,zoom:goalZoom,width:host.clientWidth,height:host.clientHeight,distance:baseDistance/goalZoom,aspect:camera.aspect}}
+function applyGesture(next){if(!next)return;goalYaw=next.yaw;goalPitch=next.pitch;goalX=next.x;goalY=next.y;goalZoom=next.zoom}
+function tapCanvas(e){
+ updatePointer(e);root.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);
+ const hit=raycaster.intersectObject(root,true)[0];
+ pick();
+ const action=canvasTapAction({doorHit:!!hit?.object.userData.cabinetDoor,shelfHit:!!hit,book:hovered,canBrowse:!cabinetDoors||cabinetDoors.browseable});
+ if(action==='open')setDoorsOpen(true);
+ if(action==='book')displayBook(hovered.userData.book,true);
+ if(action==='close'&&cabinetDoors){closeBook(true);setDoorsOpen(false)}
+}
 host.addEventListener('pointerdown',e=>{
- if(e.button!==0||!e.isPrimary||!camera)return;
- clearHover();drag={id:e.pointerId,x:e.clientX,y:e.clientY,yaw:goalYaw,pitch:goalPitch,panX:goalX,panY:goalY,mode:navigationTool,distance:baseDistance/goalZoom,moved:false};host.setPointerCapture(e.pointerId);
+ if(!camera||!root||e.pointerType!=='touch'&&e.button!==0)return;
+ e.preventDefault();host.focus({preventScroll:true});clearHover();
+ gestures.down(e.pointerId,e.clientX,e.clientY,gestureView(),e.shiftKey);
+ host.setPointerCapture(e.pointerId);host.style.cursor='grabbing';
 });
 host.addEventListener('pointermove',e=>{
  updatePointer(e);
- if(drag&&drag.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>8)drag.moved=true;if(drag.moved){
-  const next=dragView({mode:drag.mode,yaw:drag.yaw,pitch:drag.pitch,x:drag.panX,y:drag.panY,dx,dy,width:host.clientWidth,height:host.clientHeight,distance:drag.distance,aspect:camera.aspect});
-  goalYaw=next.yaw;goalPitch=next.pitch;goalX=next.x;goalY=next.y;
- }}
- else if(e.pointerType!=='touch')needsPick=true;
+ if(gestures.points.has(e.pointerId)){e.preventDefault();applyGesture(gestures.move(e.pointerId,e.clientX,e.clientY))}
+ else if(e.pointerType!=='touch'&&!gestures.active)needsPick=true;
 });
 host.addEventListener('pointerup',e=>{
- if(drag&&drag.id!==e.pointerId)return;
- const click=drag&&!drag.moved;drag=null;
- if(click&&camera){updatePointer(e);pick();if(hovered)displayBook(hovered.userData.book,true)}
+ if(!gestures.points.has(e.pointerId))return;
+ applyGesture(gestures.move(e.pointerId,e.clientX,e.clientY));
+ const tap=gestures.up(e.pointerId,gestureView());
+ if(tap)tapCanvas(e);
  if(host.hasPointerCapture(e.pointerId))host.releasePointerCapture(e.pointerId);
  clearHover();
 });
-host.addEventListener('pointercancel',()=>{drag=null;clearHover()});
-host.addEventListener('pointerleave',()=>{if(!drag){clearHover();pointer.set(9,9)}});
-host.addEventListener('lostpointercapture',()=>{drag=null;clearHover()});
-window.addEventListener('blur',()=>{drag=null;clearHover()});
+function cancelGestures(){const ids=[...gestures.points.keys()];gestures.cancel();for(const id of ids)if(host.hasPointerCapture(id))host.releasePointerCapture(id);clearHover()}
+host.addEventListener('pointercancel',cancelGestures);
+host.addEventListener('pointerleave',()=>{if(!gestures.active){clearHover();pointer.set(9,9)}});
+host.addEventListener('lostpointercapture',e=>{if(gestures.points.has(e.pointerId))cancelGestures()});
+window.addEventListener('blur',cancelGestures);
 function changeZoom(factor){clearHover();goalZoom=Math.max(.75,Math.min(4,goalZoom*factor));updateHint()}
-host.addEventListener('wheel',e=>{e.preventDefault();changeZoom(Math.exp(-e.deltaY*.0011))},{passive:false});
+host.addEventListener('wheel',e=>{e.preventDefault();changeZoom(Math.exp(-e.deltaY*(e.ctrlKey?.01:.0011)))},{passive:false});
 host.addEventListener('keydown',e=>{
- if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','Home'].includes(e.key))return;
+ if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','Home','Enter','Escape'].includes(e.key))return;
  e.preventDefault();clearHover();
- if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(navigationTool==='pan')goalX=THREE.MathUtils.clamp(goalX+step*.45,-panLimit(),panLimit());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
- if(e.key==='ArrowUp'){if(navigationTool==='pan')goalY=Math.min(14.3,goalY+.4);else goalPitch=Math.min(.3,goalPitch+.04)}
- if(e.key==='ArrowDown'){if(navigationTool==='pan')goalY=Math.max(0,goalY-.4);else goalPitch=Math.max(-.23,goalPitch-.04)}
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(e.shiftKey)goalX=THREE.MathUtils.clamp(goalX+step*.45,-panLimit(),panLimit());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
+ if(e.key==='ArrowUp'){if(e.shiftKey)goalY=Math.min(14.3,goalY+.4);else goalPitch=Math.min(.3,goalPitch+.04)}
+ if(e.key==='ArrowDown'){if(e.shiftKey)goalY=Math.max(0,goalY-.4);else goalPitch=Math.max(-.23,goalPitch-.04)}
  if(e.key==='+')changeZoom(zoomFactor(1.15));
  if(e.key==='-')changeZoom(zoomFactor(1/1.15));
  if(e.key==='Home')reset();
+ if(e.key==='Enter')setDoorsOpen(true);
+ if(e.key==='Escape')setDoorsOpen(false);
 });
-function reset(){chooseNavigation('turn');goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
-document.querySelectorAll('[data-navigation]').forEach(button=>button.onclick=()=>chooseNavigation(button.dataset.navigation));
-$('#reset').onclick=reset;
-const doorsButton=$('#cabinet-doors');doorsButton.hidden=bookcase.id!=='glass';
+function reset(){goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
 function setDoorsOpen(open){
  if(!cabinetDoors)return;
- clearHover();cabinetDoors.setOpen(open);
- doorsButton.textContent=open?'Close doors':'Open doors';
- doorsButton.setAttribute('aria-expanded',String(open));
+ clearHover();cabinetDoors.setOpen(open);updateHint();
 }
-doorsButton.onclick=()=>{closeBook(true);setDoorsOpen(!cabinetDoors.open)};
-$('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
-$('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
 document.querySelectorAll('[data-shelf-view]').forEach(select=>select.onchange=()=>setFocus(select.value));
 $('#photo-open').onclick=()=>$('#photo-dialog').showModal();
 $('.photo-close').onclick=()=>$('#photo-dialog').close();
