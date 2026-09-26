@@ -2,7 +2,7 @@ import * as THREE from './assets/three.module.js';
 
 // Reversible, frame-rate-independent hinges. Reduced motion changes state instantly.
 export class CabinetDoors {
- constructor(hinges,reduced=false){this.hinges=hinges;this.reduced=reduced;this.open=true;this.angle=Math.PI/2;this.apply()}
+ constructor(hinges,reduced=false){this.hinges=hinges;this.reduced=reduced;this.open=false;this.angle=0;this.apply()}
  setOpen(open){this.open=open;if(this.reduced){this.angle=open?Math.PI/2:0;this.apply()}}
  update(dt){const target=this.open?Math.PI/2:0;this.angle+=(target-this.angle)*(1-Math.exp(-Math.max(0,dt)*7));if(Math.abs(target-this.angle)<.001)this.angle=target;this.apply()}
  apply(){this.hinges.forEach((hinge,i)=>{hinge.rotation.y=(i===0?-1:1)*this.angle})}
