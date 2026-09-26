@@ -11,10 +11,10 @@ import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
 document.querySelectorAll('[data-case]').forEach(link=>{if(link.dataset.case===bookcase.id)link.setAttribute('aria-current','page')});
-for(const nav of document.querySelectorAll('#shelves,#mobile-shelves')){
+for(const nav of document.querySelectorAll('[data-shelf-view]')){
  nav.replaceChildren();
  for(const row of ['all',...Array.from({length:bookcase.rows},(_,i)=>String(i))]){
-  const button=document.createElement('button');button.dataset.shelf=row;button.textContent=row==='all'?'All':String(Number(row)+1).padStart(2,'0');nav.append(button);
+  const option=document.createElement('option');option.value=row;option.textContent=row==='all'?'All shelves':`Shelf ${Number(row)+1}${row==='0'?' · Top':Number(row)===bookcase.rows-1?' · Bottom':''}`;nav.append(option);
  }
 }
 document.querySelectorAll('[data-shelf-count]').forEach(el=>el.textContent=bookcase.rows);
@@ -119,7 +119,8 @@ function updateHint(){
 function setFocus(row){
  clearHover();focusedRow=row;goalX=row==='all'?(bookcase.centerX||0):0;
  if(row==='all'){goalY=bookcase.centerY;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
- document.querySelectorAll('[data-shelf]').forEach(b=>{const active=b.dataset.shelf===row;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ document.querySelectorAll('[data-shelf-view]').forEach(select=>{select.value=row});
+ if(row!=='all')setDoorsOpen(true);
  updateHint();
  mobileBrowser.focus(row);
 }
@@ -142,7 +143,7 @@ async function start(){
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
  const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
- const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();
+ const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();setFocus(focusedRow);
  function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),.05),s=reduced?1:1-Math.exp(-dt*8.8);
@@ -214,7 +215,7 @@ function setDoorsOpen(open){
 doorsButton.onclick=()=>{closeBook(true);setDoorsOpen(!cabinetDoors.open)};
 $('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
 $('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
-document.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>setFocus(b.dataset.shelf));
+document.querySelectorAll('[data-shelf-view]').forEach(select=>select.onchange=()=>setFocus(select.value));
 $('#photo-open').onclick=()=>$('#photo-dialog').showModal();
 $('.photo-close').onclick=()=>$('#photo-dialog').close();
 $('#photo-dialog').onclick=e=>{if(e.target===$('#photo-dialog'))$('#photo-dialog').close()};
