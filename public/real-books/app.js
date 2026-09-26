@@ -12,7 +12,8 @@ import { BookReveal } from './book-reveal.js?v=drawer-1';
 import { createPickTarget, updatePickTarget, HoverDwell, zoomFactor } from './interaction.js?v=drawer-1';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
-document.querySelectorAll('[data-case]').forEach(link=>{if(link.dataset.case===bookcase.id)link.setAttribute('aria-current','page')});
+$('#bookcase-select').value=bookcase.id;
+$('#bookcase-select').addEventListener('change',e=>{location.href=e.target.value==='wood'?'/real-books':`/real-books?case=${encodeURIComponent(e.target.value)}`});
 for(const nav of document.querySelectorAll('[data-shelf-view]')){
  nav.replaceChildren();
  for(const row of ['all',...Array.from({length:bookcase.rows},(_,i)=>String(i))]){
@@ -143,7 +144,6 @@ function panRange(){return panBounds(baseDistance/goalZoom,camera?.aspect||1,boo
 function updateHint(){
  const doorHint=storage?(bookcase.id==='drawer'?(storage.open?'Tap outside the cabinet to close the drawer.':'Tap the drawer to open.'):(storage.open?'Tap outside the cabinet to close doors.':'Tap the doors to open.')) : '';
  $('.gesture-hint').textContent=mobile.matches?'1 finger: rotate · 2 fingers: pan · Pinch: zoom':'Drag: rotate · Shift-drag: pan · Scroll: zoom';
- $('.door-hint').textContent=doorHint;
  host.setAttribute('aria-label',`3D bookshelf. One finger or drag rotates and tilts; two fingers or Shift-drag pans; pinch or scroll zooms; tap selects a book. ${doorHint} Arrow keys rotate, Shift-arrow keys pan, plus and minus zoom, Home resets.${storage?' Enter opens; Escape closes.':''}`);
 }
 function setFocus(row){
