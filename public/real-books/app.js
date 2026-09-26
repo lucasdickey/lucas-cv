@@ -1,41 +1,45 @@
 import * as THREE from './assets/three.module.js';
-import {selectBookcase} from './bookcases.js';
+import {selectBookcase} from './bookcases.js?v=drawer-1';
 import {addGlassCabinet,addGlassDecor,addCupShelf} from './glass-cabinet.js';
+import {addBookDrawer} from './book-drawer.js';
 const bookcase=selectBookcase(location.search),books=bookcase.books;
-import {CanvasGestures,canvasTapAction} from './canvas-gestures.js';
+import {CanvasGestures,canvasTapAction} from './canvas-gestures.js?v=drawer-1';
 import { createSpineCanvas } from './spine-texture.js';
-import { cabinet, orbitDistance, panGeometry, visibleBook } from './navigation.js?v=controls-2';
-import { createMobileBrowser } from './mobile.js?v=search-1';
+import { cabinet, orbitDistance, panBounds, visibleBook } from './navigation.js?v=drawer-1';
+import { createMobileBrowser } from './mobile.js?v=drawer-1';
 import { createDesktopSearch } from './search.js?v=search-1';
-import { BookReveal } from './book-reveal.js?v=reveal-1';
-import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
+import { BookReveal } from './book-reveal.js?v=drawer-1';
+import { createPickTarget, updatePickTarget, HoverDwell, zoomFactor } from './interaction.js?v=drawer-1';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
 document.querySelectorAll('[data-case]').forEach(link=>{if(link.dataset.case===bookcase.id)link.setAttribute('aria-current','page')});
 for(const nav of document.querySelectorAll('[data-shelf-view]')){
  nav.replaceChildren();
  for(const row of ['all',...Array.from({length:bookcase.rows},(_,i)=>String(i))]){
-  const option=document.createElement('option');option.value=row;option.textContent=row==='all'?'All shelves':`Shelf ${Number(row)+1}${row==='0'?' · Top':Number(row)===bookcase.rows-1?' · Bottom':''}`;nav.append(option);
+  const option=document.createElement('option');option.value=row;option.textContent=row==='all'?(bookcase.id==='drawer'?'Whole cabinet':'All shelves'):bookcase.views?.[Number(row)]||`Shelf ${Number(row)+1}${row==='0'?' · Top':Number(row)===bookcase.rows-1?' · Bottom':''}`;nav.append(option);
  }
 }
-document.querySelectorAll('[data-shelf-count]').forEach(el=>el.textContent=bookcase.rows);
+document.querySelectorAll('[data-shelf-count]').forEach(el=>el.textContent=bookcase.id==='drawer'?1:bookcase.rows);
 $('#photo-dialog img').src=`./assets/${bookcase.photo}.jpg`;$('#photo-dialog img').alt=bookcase.name;
 $('#photo-dialog p').textContent=bookcase.name;
 $('.scene-heading .eyebrow').textContent=bookcase.name.toUpperCase();
-$('.mobile-intro h1').textContent=bookcase.id==='glass'?'The glass bookcase.':'The wooden bookcase.';
+$('.mobile-intro h1').textContent=`${bookcase.name}.`;
+if(bookcase.id==='drawer')document.querySelectorAll('[data-shelf-unit]').forEach(el=>el.textContent='drawer');
 books.forEach((book,id)=>{book.id=id});
-const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook);
+const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook,bookcase.views);
 const desktopSearch=createDesktopSearch(books,book=>displayBook(book,true));
 let focusedRow='all',targetX=bookcase.centerX||0,goalX=bookcase.centerX||0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
-let covers={},pickTargets=[],occluders=[],cabinetDoors;
+let covers={},pickTargets=[],occluders=[],storage;
 const gestures=new CanvasGestures(),dwell=new HoverDwell(),mouse={x:0,y:0};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const yBase=bookcase.yBase, photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
+let targetZ=0,goalZ=0,pendingBook=null;
 let renderer,scene,camera,root,bookMeshes=[],selected=null,hovered=null,pointer=new THREE.Vector2(9,9),needsPick=false;
 let yaw=mobile.matches?0:.13,pitch=mobile.matches?0:.015,goalYaw=yaw,goalPitch=pitch,zoom=1,targetY=bookcase.centerY,goalY=bookcase.centerY,goalZoom=1,baseDistance=24;
 const raycaster=new THREE.Raycaster(), clock=new THREE.Clock();
+const hoverDestination=new THREE.Vector3();
 const reveal=new BookReveal({host,detail:$('#book-detail'),dialog:$('#book-dialog'),getCamera:()=>camera,reduced,onReturned:()=>{mobileBrowser.close();resetDetail()}});
 const mat=(color,extra={})=>new THREE.MeshStandardMaterial({color,roughness:.8,...extra});
 function box(w,h,d,x,y,z,material,parent=root){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh}
@@ -44,7 +48,12 @@ function applyCrop(geometry,rect,name,frontOnly=true){const uv=geometry.attribut
 function photoBox(w,h,d,x,y,z,name,rect,side){const m=cropMaterial(name,rect);const mesh=box(w,h,d,x,y,z,[side,side,mat('#ddd7bb'),side,m,side]);applyCrop(mesh.geometry,rect,name);return mesh}
 function sampleColor(name,r){const c=sources[name].canvas.getContext('2d').getImageData(Math.min(r[0]+Math.floor(r[2]/2),sources[name].canvas.width-1),Math.min(r[1]+Math.floor(r[3]/2),sources[name].canvas.height-1),1,1).data;return new THREE.Color(`rgb(${c[0]},${c[1]},${c[2]})`)}
 function addShelf(){
- if(bookcase.id==='glass'){cabinetDoors=addGlassCabinet({box,mat,root,reduced});return}
+ if(bookcase.id==='drawer'){
+  const canvas=createSpineCanvas(sources['drawer/closed'],[[2,260],[934,250],[1034,356],[2,364]]),counterTexture=new THREE.CanvasTexture(canvas);
+  counterTexture.colorSpace=THREE.SRGBColorSpace;
+  storage=addBookDrawer({box,mat,root,reduced,counterTexture});return;
+ }
+ if(bookcase.id==='glass'){storage=addGlassCabinet({box,mat,root,reduced});return}
  const frame=mat('#241c17'),wood=mat('#4b2319'),leftSide=mat('#ffffff',{map:sources['surfaces/left-side'].texture}),rightSide=mat('#ffffff',{map:sources['surfaces/right-side'].texture}),gold=mat('#998157',{metalness:.55,roughness:.5});
  box(10.35,13.2,.16,0,6.65,cabinet.back,wood);
  box(.2,13.3,cabinet.depth,-5.2,6.65,-.04,[frame,leftSide,frame,frame,frame,frame]);
@@ -59,7 +68,7 @@ function addShelf(){
  for(let j of [-1,1]){photoBox(5.02,.59,.25,j*2.58,.3,.96,'full',j===-1?[199,1182,272,46]:[485,1184,274,40],mat('#785727'));for(let k of [-.95,.95]){const knob=new THREE.Mesh(new THREE.SphereGeometry(.065,12,10),gold);knob.position.set(j*2.58+k,.33,1.15);root.add(knob)}}
  box(10.55,.16,cabinet.depth,0,-.1,-.04,frame);for(let x of [-5.1,5.1])box(.22,.45,1.6,x,-.31,0,frame);
 }
-function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);let x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
+function addBooks(){if(bookcase.id==='drawer'){addDrawerBooks();return}books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);let x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
  if(b.horizontal){h=r[3]/250*1.98;y=yBase[b.row]+(515-r[1]-r[3]/2)/250*1.98}
  if(b.elevation!==undefined)y=yBase[b.row]+b.elevation+h/2;
  if(b.layout){({x,y,width:w,height:h}=b.layout)}
@@ -67,7 +76,24 @@ function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sou
  const depth=b.layout?.depth||(b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65)),restZ=.8-depth/2,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  });$('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
+function addDrawerBooks(){
+ for(const book of books){
+  const {x,y,z,width,height,depth}=book.layout,name=book.textureSource,rect=book.textureRect;
+  const mesh=photoBox(width,height,depth,x,y,z,name,rect,mat(sampleColor(name,rect)));
+  storage.contents.add(mesh);mesh.rotation.x=-Math.PI/2;
+  mesh.userData={book,restZ:z,restPosition:mesh.position.clone(),pullAxis:new THREE.Vector3(0,1,0),pullDistance:depth+1.6};
+  if(book.coverFace===4&&covers[book.asin]){
+   const texture=new THREE.TextureLoader().load(covers[book.asin].path);texture.colorSpace=THREE.SRGBColorSpace;
+   mesh.material[4].map=texture;mesh.material[4].needsUpdate=true;
+  }
+  // Cream page edges are visible along the vertical front of the upright row.
+  mesh.material[3]=mat('#e3dfcf');
+  bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
+ }
+ $('#book-count').textContent=books.length;
+}
 function decor(){
+ if(bookcase.id==='drawer')return;
  if(bookcase.id==='glass'){addGlassDecor({box,mat,root});addCupShelf({box,mat,root});return}
  const pot=new THREE.Mesh(new THREE.CylinderGeometry(.58,.44,.60,28),mat('#a89d71'));pot.position.set(-4,13.71,0);pot.castShadow=true;root.add(pot);
  const stemMat=mat('#497035'),leafMat=mat('#648a36',{side:THREE.DoubleSide});
@@ -79,7 +105,8 @@ function decor(){
 }
 function displayBook(book,open=false) {
  if (!book) return;
- if(open){setDoorsOpen(true);mobileBrowser.open();if(!mobile.matches)$('aside').scrollTop=0}
+ if(open&&bookcase.id==='drawer'&&storage&&!storage.browseable){pendingBook=book;setStorageOpen(true);return}
+ if(open){pendingBook=null;setStorageOpen(true);mobileBrowser.open();if(!mobile.matches)$('aside').scrollTop=0}
  if(open){clearHover();reveal.open(bookMeshes.find(m=>m.userData.book===book),book,covers[book.asin]);$('#return-book').hidden=false}
  if (selected === book) return;
  selected=book;
@@ -91,7 +118,7 @@ function displayBook(book,open=false) {
  cover.onerror=()=>{if(selected!==book)return;cover.hidden=true;fallback.hidden=false;fallback.textContent='Cover artwork unavailable for this edition.'};
  cover.alt=`${book.title} — full cover from Amazon`;
  if(art)cover.src=art.path;else cover.removeAttribute('src');
- $('#shelf-label').textContent=`SHELF ${String(book.row+1).padStart(2,'0')} / THE COLLECTION`;
+ $('#shelf-label').textContent=bookcase.id==='drawer'?'THE BOOK DRAWER / THE COLLECTION':`SHELF ${String(book.row+1).padStart(2,'0')} / THE COLLECTION`;
  $('#book-title').textContent=book.title;
  $('#book-author').textContent=book.nonBook?'From the physical shelf':book.author||'Title not fully legible in the photograph';
  const link=$('#amazon-link');link.hidden=!!(book.unidentified||book.nonBook);
@@ -100,28 +127,29 @@ function displayBook(book,open=false) {
  $('#link-note').textContent=book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?'Amazon cover artwork. The edition may differ from the copy on this shelf.':'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
 }
 function resetDetail(){if(document.activeElement===$('#return-book'))host.focus({preventScroll:true});selected=null;$('#return-book').hidden=true;$('#book-cover').hidden=true;$('#cover-fallback').hidden=false;$('#cover-fallback').textContent='Choose a book to take it off the shelf.';$('#book-title').textContent='Every spine has a story.';$('#book-author').textContent='';$('#shelf-label').textContent='FROM THE SHELF';$('#amazon-link').hidden=true;$('#link-note').textContent='Pause over a spine to pull it forward. Pick a book to see its cover.'}
-function closeBook(immediate=false){clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}
+function closeBook(immediate=false){pendingBook=null;clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}
 $('#return-book').onclick=()=>closeBook();
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#book-dialog').open&&!$('#photo-dialog').open)closeBook()});
 function clearHover(){hovered=null;needsPick=false;dwell.clear();host.style.cursor=gestures.active?'grabbing':'grab'}
 function pick() {
+ if(bookcase.id==='drawer')pickTargets.forEach(updatePickTarget);
  raycaster.setFromCamera(pointer,camera);
- hovered=cabinetDoors&&!cabinetDoors.browseable?null:visibleBook(raycaster,pickTargets,occluders);
+ hovered=storage&&!storage.browseable?null:visibleBook(raycaster,pickTargets,occluders);
  host.style.cursor=hovered?'pointer':gestures.active?'grabbing':'grab';
  dwell.update(hovered,performance.now(),mouse.x,mouse.y);
 }
-function panLimit(){return panGeometry(baseDistance/goalZoom,camera?.aspect||1).limit}
+function panRange(){return panBounds(baseDistance/goalZoom,camera?.aspect||1,bookcase.panRange)}
 function updateHint(){
- const doorHint=cabinetDoors?(cabinetDoors.open?'Tap outside the cabinet to close doors.':'Tap the doors to open.') : '';
+ const doorHint=storage?(bookcase.id==='drawer'?(storage.open?'Tap outside the cabinet to close the drawer.':'Tap the drawer to open.'):(storage.open?'Tap outside the cabinet to close doors.':'Tap the doors to open.')) : '';
  $('.gesture-hint').textContent=mobile.matches?'1 finger: rotate · 2 fingers: pan · Pinch: zoom':'Drag: rotate · Shift-drag: pan · Scroll: zoom';
  $('.door-hint').textContent=doorHint;
- host.setAttribute('aria-label',`3D bookshelf. One finger or drag rotates and tilts; two fingers or Shift-drag pans; pinch or scroll zooms; tap selects a book. ${doorHint} Arrow keys rotate, Shift-arrow keys pan, plus and minus zoom, Home resets.${cabinetDoors?' Enter opens doors; Escape closes them.':''}`);
+ host.setAttribute('aria-label',`3D bookshelf. One finger or drag rotates and tilts; two fingers or Shift-drag pans; pinch or scroll zooms; tap selects a book. ${doorHint} Arrow keys rotate, Shift-arrow keys pan, plus and minus zoom, Home resets.${storage?' Enter opens; Escape closes.':''}`);
 }
 function setFocus(row){
  clearHover();focusedRow=row;goalX=row==='all'?(bookcase.centerX||0):0;
  if(row==='all'){goalY=bookcase.centerY;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
  document.querySelectorAll('[data-shelf-view]').forEach(select=>{select.value=row});
- if(row!=='all')setDoorsOpen(true);
+ if(bookcase.id==='drawer'){setStorageOpen(row!=='all');if(row!=='all'){goalX=row==='0'?2.3:2.8;goalY=row==='0'?5.1:4.4;goalZ=row==='0'?3.6:5.3;goalZoom=row==='0'?1.9:1.7;goalPitch=row==='0'?1.1:1.35}}else if(row!=='all')setStorageOpen(true);
  updateHint();
  mobileBrowser.focus(row);
 }
@@ -129,7 +157,7 @@ mobile.addEventListener('change',()=>setFocus(focusedRow));
 setFocus('all');
 async function start(){
  try{
- const [coverData,links]=await Promise.all(['covers',bookcase.id==='glass'?'glass-links':'links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
+ const [coverData,links]=await Promise.all([bookcase.id==='drawer'?'drawer-covers':'covers',bookcase.id==='drawer'?'drawer-links':bookcase.id==='glass'?'glass-links':'links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
  covers=coverData;for(const b of books)if(!b.unidentified&&!b.nonBook&&links[b.title])Object.assign(b,links[b.title]);
  mobileBrowser.render(covers);desktopSearch.render(covers);
  if(selected){const book=selected;selected=null;displayBook(book)}
@@ -143,41 +171,42 @@ async function start(){
   sources[book.textureSource]={image:canvas,canvas,texture};
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children,...(cabinetDoors?.frames||[])];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[];root.traverse(object=>{if(object.isMesh)occluders.push(object)});addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='drawer'?'Taiwan Travelogue':bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
  const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();setFocus(focusedRow);
  function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),.05),s=reduced?1:1-Math.exp(-dt*8.8);
-  goalX=THREE.MathUtils.clamp(goalX,-panLimit(),panLimit());
-  zoom+=(goalZoom-zoom)*s;targetY+=(goalY-targetY)*s;targetX+=(goalX-targetX)*s;yaw+=(goalYaw-yaw)*s;pitch+=(goalPitch-pitch)*s;
+  goalX=THREE.MathUtils.clamp(goalX,...panRange());
+  targetZ+=(goalZ-targetZ)*s;zoom+=(goalZoom-zoom)*s;targetY+=(goalY-targetY)*s;targetX+=(goalX-targetX)*s;yaw+=(goalYaw-yaw)*s;pitch+=(goalPitch-pitch)*s;
   const d=orbitDistance(baseDistance/zoom,yaw);
-  camera.position.set(targetX+Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,Math.cos(yaw)*d);camera.lookAt(targetX,targetY,0);camera.updateMatrixWorld();
+  camera.position.set(targetX+Math.sin(yaw)*d,targetY+Math.sin(pitch)*d,targetZ+Math.cos(yaw)*d*(bookcase.id==='drawer'?Math.cos(pitch):1));camera.lookAt(targetX,targetY,targetZ);camera.updateMatrixWorld();
   if(needsPick&&!gestures.active){pick();needsPick=false}
   const magnified=hovered&&dwell.ready(performance.now());
   for(const m of bookMeshes){
    if(reveal.owns(m))continue;
    const active=m===hovered,z=m.userData.restZ+(active&&magnified?.42:0),scale=1;
-   m.position.z+=(z-m.position.z)*s;
+   if(m.userData.restPosition){hoverDestination.copy(m.userData.restPosition).addScaledVector(m.userData.pullAxis,active&&magnified?.42:0);m.position.lerp(hoverDestination,s)}else m.position.z+=(z-m.position.z)*s;
    if(m.scale.x!==scale)m.scale.setScalar(m.scale.x+(scale-m.scale.x)*s);
    m.material[4].emissive.setHex(active?0x443620:0);m.material[4].emissiveIntensity=.16;
   }
-  cabinetDoors?.update(dt);
+  storage?.update(dt);
+  if(pendingBook&&storage?.browseable&&Math.abs(pitch-goalPitch)<.03){const book=pendingBook;pendingBook=null;displayBook(book,true)}
   reveal.update(dt);
   renderer.render(scene,camera);
  }frame();
  }catch(e){$('#loading').innerHTML='3D is unavailable here. Search for a book to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src=`./assets/${bookcase.photo}.jpg`;img.alt=bookcase.name;img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length}
 }
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
-function gestureView(){return {yaw:goalYaw,pitch:goalPitch,x:goalX,y:goalY,zoom:goalZoom,width:host.clientWidth,height:host.clientHeight,distance:baseDistance/goalZoom,aspect:camera.aspect}}
+function gestureView(){return {yaw:goalYaw,pitch:goalPitch,x:goalX,y:goalY,zoom:goalZoom,width:host.clientWidth,height:host.clientHeight,distance:baseDistance/goalZoom,aspect:camera.aspect,panRange:bookcase.panRange,maxPitch:bookcase.maxPitch||.3}}
 function applyGesture(next){if(!next)return;goalYaw=next.yaw;goalPitch=next.pitch;goalX=next.x;goalY=next.y;goalZoom=next.zoom}
 function tapCanvas(e){
  updatePointer(e);root.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);
  const hit=raycaster.intersectObject(root,true)[0];
  pick();
- const action=canvasTapAction({doorHit:!!hit?.object.userData.cabinetDoor,shelfHit:!!hit,book:hovered,canBrowse:!cabinetDoors||cabinetDoors.browseable});
- if(action==='open')setDoorsOpen(true);
+ const action=canvasTapAction({doorHit:!!(hit?.object.userData.cabinetDoor||hit?.object.userData.bookDrawer),shelfHit:!!hit,book:hovered,canBrowse:!storage||storage.browseable});
+ if(action==='open')setStorageOpen(true);
  if(action==='book')displayBook(hovered.userData.book,true);
- if(action==='close'&&cabinetDoors){closeBook(true);setDoorsOpen(false)}
+ if(action==='close'&&storage){closeBook(true);setStorageOpen(false)}
 }
 host.addEventListener('pointerdown',e=>{
  if(!camera||!root||e.pointerType!=='touch'&&e.button!==0)return;
@@ -208,19 +237,23 @@ host.addEventListener('wheel',e=>{e.preventDefault();changeZoom(Math.exp(-e.delt
 host.addEventListener('keydown',e=>{
  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','Home','Enter','Escape'].includes(e.key))return;
  e.preventDefault();clearHover();
- if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(e.shiftKey)goalX=THREE.MathUtils.clamp(goalX+step*.45,-panLimit(),panLimit());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
- if(e.key==='ArrowUp'){if(e.shiftKey)goalY=Math.min(14.3,goalY+.4);else goalPitch=Math.min(.3,goalPitch+.04)}
+ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(e.shiftKey)goalX=THREE.MathUtils.clamp(goalX+step*.45,...panRange());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
+ if(e.key==='ArrowUp'){if(e.shiftKey)goalY=Math.min(14.3,goalY+.4);else goalPitch=Math.min(bookcase.maxPitch||.3,goalPitch+.04)}
  if(e.key==='ArrowDown'){if(e.shiftKey)goalY=Math.max(0,goalY-.4);else goalPitch=Math.max(-.23,goalPitch-.04)}
  if(e.key==='+')changeZoom(zoomFactor(1.15));
  if(e.key==='-')changeZoom(zoomFactor(1/1.15));
  if(e.key==='Home')reset();
- if(e.key==='Enter')setDoorsOpen(true);
- if(e.key==='Escape')setDoorsOpen(false);
+ if(e.key==='Enter')setStorageOpen(true);
+ if(e.key==='Escape'){closeBook(bookcase.id==='drawer');setStorageOpen(false)}
 });
 function reset(){goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
-function setDoorsOpen(open){
- if(!cabinetDoors)return;
- clearHover();cabinetDoors.setOpen(open);updateHint();
+function setStorageOpen(open){
+ if(!storage)return;
+ const changed=storage.open!==open;
+ if(!open)pendingBook=null;
+ clearHover();storage.setOpen(open);
+ if(bookcase.id==='drawer'&&changed){if(!open)closeBook(true);goalYaw=open?.08:(mobile.matches?0:.13);goalPitch=open?1.1:.08;goalX=open?2.3:0;goalY=open?5.0:bookcase.centerY;goalZ=open?3.6:0;goalZoom=open?1.35:1}
+ updateHint();
 }
 document.querySelectorAll('[data-shelf-view]').forEach(select=>select.onchange=()=>setFocus(select.value));
 $('#photo-open').onclick=()=>$('#photo-dialog').showModal();

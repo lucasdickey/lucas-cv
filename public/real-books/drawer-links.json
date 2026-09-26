@@ -1,0 +1,155 @@
+{
+  "A Light in the Attic": {
+    "asin": "0061905852",
+    "isbn13": "9780061905858",
+    "source": "https://openlibrary.org/books/OL25349608M",
+    "matchedAuthor": "Shel Silverstein",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "L’enfant, la taupe, le renard et le cheval": {
+    "isbn13": "9791037501271",
+    "source": "https://arenes.fr/livre/l-enfant-la-taupe-le-renard-et-le-cheval/",
+    "matchedAuthor": "Charlie Mackesy",
+    "linkBasis": "Publisher ISBN-13 confirmed; this 979-prefix ISBN has no ISBN-10 conversion. Use title-and-author search."
+  },
+  "The Scaling Era: An Oral History of AI, 2019–2025": {
+    "asin": "1953953557",
+    "isbn13": "9781953953551",
+    "source": "https://press.stripe.com/",
+    "matchedAuthor": "Dwarkesh Patel with Gavin Leech",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "The Glass Castle": {
+    "asin": "074324754X",
+    "isbn13": "9780743247542",
+    "source": "https://openlibrary.org/books/OL7928299M",
+    "matchedAuthor": "Jeannette Walls",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "I Who Have Never Known Men": {
+    "asin": "1945492600",
+    "isbn13": "9781945492600",
+    "source": "https://www.transitbooks.org/books/iwhohaveneverknownmen",
+    "matchedAuthor": "Jacqueline Harpman",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "The Pig That Wants to Be Eaten": {
+    "asin": "0452287448",
+    "isbn13": "9780452287440",
+    "source": "https://openlibrary.org/books/OL7591187M",
+    "matchedAuthor": "Julian Baggini",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Plato and a Platypus Walk into a Bar…": {
+    "asin": "0143113879",
+    "isbn13": "9780143113874",
+    "source": "https://openlibrary.org/books/OL10099974M",
+    "matchedAuthor": "Thomas Cathcart and Daniel Klein",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Foundation": {
+    "asin": "0553293354",
+    "isbn13": "9780553293357",
+    "source": "https://penguinrandomhousehighereducation.com/book/?isbn=9780553293357",
+    "matchedAuthor": "Isaac Asimov",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Fifty Things That Made the Modern Economy": {
+    "asin": "0349142637",
+    "isbn13": "9780349142630",
+    "source": "https://openlibrary.org/books/OL34645209M",
+    "matchedAuthor": "Tim Harford",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Taiwan Travelogue": {
+    "asin": "1644453150",
+    "isbn13": "9781644453155",
+    "source": "app/data/books.ts",
+    "matchedAuthor": "Yang Shuang-zi",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Never Let Me Go": {
+    "asin": "1400078776",
+    "isbn13": "9781400078776",
+    "source": "https://penguinrandomhousehighereducation.com/book/?isbn=9781400078776",
+    "matchedAuthor": "Kazuo Ishiguro",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "In the Distance": {
+    "asin": "1566894883",
+    "isbn13": "9781566894883",
+    "source": "https://openlibrary.org/books/OL26934144M",
+    "matchedAuthor": "Hernan Diaz",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Waking Up": {
+    "asin": "1451636024",
+    "isbn13": "9781451636024",
+    "source": "https://openlibrary.org/books/OL32164562M",
+    "matchedAuthor": "Sam Harris",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "The Righteous Mind": {
+    "asin": "0307455777",
+    "isbn13": "9780307455772",
+    "source": "https://openlibrary.org/books/OL26085851M",
+    "matchedAuthor": "Jonathan Haidt",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "The Conquest of Happiness": {
+    "asin": "087140673X",
+    "isbn13": "9780871406736",
+    "source": "app/data/books.ts",
+    "matchedAuthor": "Bertrand Russell",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "The Square and the Tower": {
+    "asin": "0141984813",
+    "isbn13": "9780141984810",
+    "source": "https://openlibrary.org/books/OL28688044M",
+    "matchedAuthor": "Niall Ferguson",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Amusing Ourselves to Death": {
+    "asin": "014303653X",
+    "isbn13": "9780143036531",
+    "source": "https://openlibrary.org/books/OL7361579M",
+    "matchedAuthor": "Neil Postman",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Motherless Brooklyn / The Fortress of Solitude": {
+    "asin": "1101908483",
+    "isbn13": "9781101908488",
+    "source": "https://www.penguinrandomhouse.com/books/753214/motherless-brooklyn-the-fortress-of-solitude-by-jonathan-lethem/",
+    "matchedAuthor": "Jonathan Lethem",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "The Tusks of Extinction": {
+    "asin": "1250855527",
+    "isbn13": "9781250855527",
+    "source": "https://us.macmillan.com/books/9781250855527/thetusksofextinction/",
+    "matchedAuthor": "Ray Nayler",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Wolf Hall": {
+    "asin": "0312429983",
+    "isbn13": "9780312429980",
+    "source": "https://openlibrary.org/books/OL24350387M",
+    "matchedAuthor": "Hilary Mantel",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Bedtime in the Southwest": {
+    "asin": "0873588711",
+    "isbn13": "9780873588713",
+    "source": "https://www.simonandschuster.com/books/Bedtime-in-the-Southwest/Mona-Hodgson/9780873588713",
+    "matchedAuthor": "Mona Hodgson; illustrated by Renee Graef",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  },
+  "Homicidal Psycho Jungle Cat": {
+    "asin": "0836217691",
+    "isbn13": "9780836217698",
+    "source": "https://openlibrary.org/books/OL1127967M",
+    "matchedAuthor": "Bill Watterson",
+    "linkBasis": "Print-edition ISBN catalog match; Amazon availability unverified"
+  }
+}

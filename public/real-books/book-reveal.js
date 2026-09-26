@@ -52,9 +52,10 @@ export class BookReveal {
  open(source,book,art){
   this.clear();
   if(!source)return;
-  const rest=source.position.clone();rest.z=source.userData.restZ;
-  const pull=source.geometry.parameters.depth+.35,motion=new RevealMotion(this.reduced,(source.position.z-rest.z)/pull);
-  const record={source,book,motion,rest,pull};
+  const rest=source.userData.restPosition?.clone()||source.position.clone();if(!source.userData.restPosition)rest.z=source.userData.restZ;
+  const axis=source.userData.pullAxis||new THREE.Vector3(0,0,1);
+  const pull=source.userData.pullDistance||source.geometry.parameters.depth+.35,motion=new RevealMotion(this.reduced,source.position.clone().sub(rest).dot(axis)/pull);
+  const record={source,book,motion,rest,pull,axis};
   this.active=record;
   this.detail.classList.add('book-in-transit');
   const r=this.host.getBoundingClientRect(),camera=this.getCamera();
@@ -68,7 +69,7 @@ export class BookReveal {
    const materials=source.material.map(m=>m.clone());
    materials.forEach(m=>{m.emissive?.setHex(0)});
    record.materials=materials;record.texture=fallbackCover(book);
-   const face=book.horizontal?2:0;
+   const face=book.coverFace??(book.horizontal?2:0);
    materials[face].dispose();
    materials[face]=new THREE.MeshStandardMaterial({map:record.texture,roughness:.72});
    record.pages=pageEdges();
@@ -107,7 +108,7 @@ export class BookReveal {
   this.detail.classList.toggle('book-returning',motion.direction<0);
   this.dialog.classList.toggle('reveal-running',motion.progress<.88||motion.direction<0);
   this.host.classList.toggle('book-selected',motion.progress>.3);
-  source.scale.setScalar(1);source.position.copy(rest);source.position.z+=pull*record.pull;
+  source.scale.setScalar(1);source.position.copy(rest).addScaledVector(record.axis,pull*record.pull);
   source.visible=motion.progress<=.3;
   if(!record.clone)return;
   const canvas=this.renderer.domElement;
@@ -128,13 +129,15 @@ export class BookReveal {
   const direction=center.sub(this.camera.position).normalize();
   const forward=new THREE.Vector3(0,0,-1).applyQuaternion(this.camera.quaternion);
   const destination=this.camera.position.clone().addScaledVector(direction,distance/direction.dot(forward));
-  const start=rest.clone();start.z+=record.pull;
+  const start=rest.clone().addScaledVector(record.axis,record.pull);
+  source.parent?.localToWorld(start);
   record.clone.position.lerpVectors(start,destination,fly);
-  const turn=new THREE.Quaternion().setFromEuler(new THREE.Euler(record.book.horizontal?Math.PI/2:0,record.book.horizontal?0:-Math.PI/2,0));
+  const faceUp=record.book.coverFace===4;
+  const turn=new THREE.Quaternion().setFromEuler(new THREE.Euler(record.book.horizontal?Math.PI/2:0,faceUp||record.book.horizontal?0:-Math.PI/2,0));
   const orientation=this.camera.quaternion.clone().multiply(turn);
-  record.clone.quaternion.copy(source.quaternion).slerp(orientation,fly);
+  source.getWorldQuaternion(record.clone.quaternion);record.clone.quaternion.slerp(orientation,fly);
   const {width,height,depth}=source.geometry.parameters;
-  const size=record.book.horizontal?new THREE.Vector3(end.width/pixelsPerUnit/width,1,end.height/pixelsPerUnit/depth):new THREE.Vector3(1,end.height/pixelsPerUnit/height,end.width/pixelsPerUnit/depth);
+  const size=faceUp?new THREE.Vector3(end.width/pixelsPerUnit/width,end.height/pixelsPerUnit/height,1):record.book.horizontal?new THREE.Vector3(end.width/pixelsPerUnit/width,1,end.height/pixelsPerUnit/depth):new THREE.Vector3(1,end.height/pixelsPerUnit/height,end.width/pixelsPerUnit/depth);
   record.clone.scale.lerpVectors(new THREE.Vector3(1,1,1),size,fly);
   this.renderer.render(this.scene,this.camera);
  }
