@@ -38,16 +38,23 @@ export function addGlassCabinet({box,mat,root,reduced=false}){
   const foil=new THREE.Mesh(new THREE.CylinderGeometry(.125,.125,.33,16),mat(row%2?'#ccb980':'#d8ddd2'));foil.position.y=1.09;bottle.add(foil);
  }
  // Each door has two columns and four rows of glass, as in the closed reference.
- const hinges=[];
+ const hinges=[],frames=[];
+ const paint=mat('#777e8c',{transparent:false,opacity:1,depthWrite:true,depthTest:true,roughness:.72});
  for(const side of [-1,1]){
   const hinge=new THREE.Group();hinge.position.set(side*5.2,0,1.6);root.add(hinge);hinges.push(hinge);
   const direction=-side,w=5.15,h=11.3;
-  for(const x of [0,w/2,w])box(.16,h,.17,direction*x,5.7,0,gray,hinge);
-  for(const y of [.13,2.95,5.77,8.59,11.35])box(w,.17,.17,direction*w/2,y,0,gray,hinge);
-  const pane=box(w-.16,h-.18,.025,direction*w/2,5.7,-.02,glass,hinge);pane.castShadow=false;
+  const rails=[.13,2.95,5.77,8.59,11.35],frameWidth=.25;
+  for(const x of [0,w/2,w])frames.push(box(frameWidth,h,.24,direction*x,5.7,0,paint,hinge));
+  for(const y of rails)frames.push(box(w,frameWidth,.24,direction*w/2,y,0,paint,hinge));
+  // Separate inset panes never cover the painted rails or their depth buffer.
+  for(let col=0;col<2;col++)for(let row=0;row<4;row++){
+   const pane=box(w/2-frameWidth,rails[row+1]-rails[row]-frameWidth,.025,direction*(col+.5)*w/2,(rails[row]+rails[row+1])/2,-.04,glass,hinge);
+   pane.castShadow=false;
+  }
   const knob=new THREE.Mesh(new THREE.SphereGeometry(.105,16,12),mat('#b8a370',{metalness:.8,roughness:.3}));knob.position.set(direction*(w-.3),1.0,.19);hinge.add(knob);
+  hinge.traverse(object=>{object.userData.cabinetDoor=true});
  }
- return new CabinetDoors(hinges,reduced);
+ const doors=new CabinetDoors(hinges,reduced);doors.frames=frames;return doors;
 }
 
 // Open ceramic vessels keep the lower compartment recognisable from every angle.

@@ -14,6 +14,14 @@ Verification: catalog/quad/layout/ISBN tests; existing navigation, reveal, title
 
 The follow-up batch adds `upper-left.jpg` (1000017014), `cabinet-open.jpg` (1000017015), `cabinet-angle.jpg` (1000017016), `cabinet-wide.jpg` (1000017017), and `cabinet-closed.jpg` (1000017019). The first ten upper-row spines now use the sharper upper-left photograph. The original-photo dialog shows the full open cabinet.
 
-Both book rows are raised three world units to make room for the photographed cup compartment. The cabinet includes approximate mug, coffee canister, wine rack, bottle, and door geometry. Doors default closed; the Close/Open doors control reverses smoothly from the current angle, honours reduced motion, and blocks spine picking while closed or insufficiently open. Search selection opens the doors automatically. The camera's initial centre and framing include the asymmetric wine rack on desktop and mobile.
+Both book rows are raised three world units to make room for the photographed cup compartment. The cabinet includes approximate mug, coffee canister, wine rack, bottle, and door geometry. Doors default closed; tapping a door opens it, and tapping empty canvas outside the cabinet closes it, reversing smoothly from the current angle, honours reduced motion, and blocks spine picking while closed or insufficiently open. Search selection opens the doors automatically. The camera's initial centre and framing include the asymmetric wine rack on desktop and mobile.
 
 Additional verification covers reversible/frame-rate-independent hinges and reduced motion, desktop search selecting Adapt from closed doors, mobile full-cabinet framing, book cards, and navigation.
+
+## Canvas gestures
+
+Both cabinets use one-finger rotation, two-finger pan with simultaneous pinch zoom, and tap-to-select. Pointer-count changes rebase the gesture, cancellation releases captures, and a multi-touch gesture never becomes a book/door tap. Touch gestures belong to the canvas; the surrounding page remains scrollable. Desktop equivalents are drag, Shift-drag, scroll/pinch, and keyboard arrows (Shift for pan), +/- and Home. Enter/Escape open/close the kitchen doors. View dropdowns remain available.
+
+Painted door frames use opaque, depth-writing material. Eight separate panes per door fit between the rails; glass no longer spans the entire frame. Door frames also occlude book picking.
+
+Verification includes multi-touch gesture state tests, pinch limits and cancellation, ray-hit tap decisions, opaque frame and inset-pane geometry, and browser checks of door tapping, empty-canvas closing, rotation and book cards. Multi-touch has automated coverage; physical-device multi-touch was not available in the browser test tools.
