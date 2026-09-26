@@ -79,3 +79,21 @@ test('drawer open and row presets survive frame clamping and share keyboard and 
  run('setFocus("1");gestures.down(1,100,100,gestureView(),true);applyGesture(gestures.move(1,-10000,100));frame()');
  assert.equal(run('goalX'),3.5);
 });
+
+test('Summit notebook reveals the newsletter link and ordinary books restore their retail action',()=>{
+ const {run}=app('drawer');
+ run('storage.browseable=true;displayBook(books.find(b=>b.easterEgg),true)');
+ assert.equal(run('reveal.opens.at(-1).title'),'Presented by Stripe');
+ assert.equal(run("$('#book-title').textContent"),'Lenny’s Summit notebook');
+ assert.equal(run("$('#shelf-label').textContent"),'YOU FOUND AN EASTER EGG');
+ assert.equal(run("$('#amazon-link').href"),'https://www.lennysnewsletter.com/subscribe');
+ assert.equal(run("$('#amazon-link').hidden"),false);
+ assert.match(run("$('#amazon-link').textContent"),/Subscribe to Lenny’s Newsletter/);
+ assert.match(run("$('#link-note').textContent"),/pages are empty/);
+ run("displayBook({...books[0],asin:'0060256672'},true)");
+ assert.equal(run("$('#amazon-link').href"),'https://www.amazon.com/dp/0060256672');
+ assert.match(run("$('#amazon-link').innerHTML"),/View on Amazon/);
+ assert.doesNotMatch(run("$('#shelf-label').textContent"),/EASTER EGG/);
+ run("displayBook({title:'Notebook',nonBook:true,row:0},true)");
+ assert.equal(run("$('#amazon-link').hidden"),true);
+});

@@ -22,12 +22,13 @@ test('drawer gestures preserve overhead pitch while other shelves keep existing 
  assert.equal(dragView(view).pitch,.3);
  assert.ok(dragView({...view,maxPitch:1.15}).pitch>.85);
 });
-test('catalog preserves photographed order and the unidentified Stripe volume',()=>{
+test('catalog preserves photographed order and identifies the Summit notebook',()=>{
  assert.deepEqual(selectBookcase('?case=drawer').books,drawerBooks);
  assert.equal(drawerBooks.length,23);assert.equal(drawerBooks[0].title,'A Light in the Attic');
  assert.equal(drawerBooks[21].title,'Bedtime in the Southwest');
  assert.equal(drawerBooks[22].coverFace,4);
- const unknown=drawerBooks.filter(b=>b.unidentified);assert.equal(unknown.length,1);assert.equal(unknown[0].author,'');
+ const notebooks=drawerBooks.filter(b=>b.nonBook);assert.equal(notebooks.length,1);assert.equal(notebooks[0].title,'Presented by Stripe');
+ assert.equal(drawerBooks.filter(b=>!b.nonBook).length,22);assert.ok(drawerBooks.every(b=>!b.unidentified));
  for(const book of drawerBooks){assert.ok(Math.abs(book.layout.x)+book.layout.width/2<2.45);assert.ok(book.layout.z-book.layout.height/2>-2.02);assert.ok(book.layout.z+book.layout.height/2<2.02)}
 });
 test('drawer print matches and cover assets have provenance; no invented unknown match',()=>{
@@ -35,7 +36,7 @@ test('drawer print matches and cover assets have provenance; no invented unknown
  const links=JSON.parse(fs.readFileSync(new URL('drawer-links.json',base))),covers=JSON.parse(fs.readFileSync(new URL('drawer-covers.json',base)));
  for(const b of drawerBooks){
   assert.ok(fs.existsSync(new URL(`assets/${b.spine.source}.jpg`,base)));
-  if(b.unidentified){assert.equal(links[b.title],undefined);continue}
+  if(b.nonBook){assert.equal(links[b.title],undefined);continue}
   const record=links[b.title];assert.ok(record,b.title);assert.ok(record.source.startsWith('https://')||fs.existsSync(new URL(`../${record.source}`,import.meta.url)));
   assert.equal([...record.isbn13].reduce((sum,n,i)=>sum+Number(n)*(i%2?3:1),0)%10,0,b.title);
   if(record.isbn13.startsWith('979'))assert.equal(record.asin,undefined);

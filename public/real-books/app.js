@@ -1,13 +1,13 @@
 import * as THREE from './assets/three.module.js';
-import {selectBookcase} from './bookcases.js?v=drawer-photos-2';
+import {selectBookcase} from './bookcases.js?v=lenny-notebook-1';
 import {addGlassCabinet,addGlassDecor,addCupShelf} from './glass-cabinet.js';
 import {addBookDrawer} from './book-drawer.js';
 const bookcase=selectBookcase(location.search),books=bookcase.books;
 import {CanvasGestures,canvasTapAction} from './canvas-gestures.js?v=drawer-1';
 import { createSpineCanvas } from './spine-texture.js';
 import { cabinet, orbitDistance, panBounds, visibleBook } from './navigation.js?v=drawer-1';
-import { createMobileBrowser } from './mobile.js?v=drawer-1';
-import { createDesktopSearch } from './search.js?v=search-1';
+import { createMobileBrowser } from './mobile.js?v=lenny-notebook-1';
+import { createDesktopSearch } from './search.js?v=lenny-notebook-1';
 import { BookReveal } from './book-reveal.js?v=drawer-1';
 import { createPickTarget, updatePickTarget, HoverDwell, zoomFactor } from './interaction.js?v=drawer-1';
 const $=s=>document.querySelector(s), host=$('#scene');
@@ -90,7 +90,7 @@ function addDrawerBooks(){
   mesh.material[3]=mat('#e3dfcf');
   bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  }
- $('#book-count').textContent=books.length;
+ $('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
 function decor(){
  if(bookcase.id==='drawer')return;
@@ -110,21 +110,22 @@ function displayBook(book,open=false) {
  if(open){clearHover();reveal.open(bookMeshes.find(m=>m.userData.book===book),book,covers[book.asin]);$('#return-book').hidden=false}
  if (selected === book) return;
  selected=book;
- const cover=$('#book-cover'),fallback=$('#cover-fallback'),art=book.nonBook?null:covers[book.asin];
+ const cover=$('#book-cover'),fallback=$('#cover-fallback'),art=book.nonBook?null:covers[book.asin],egg=book.easterEgg;
  cover.hidden=true;
  fallback.hidden=false;
- fallback.textContent=book.nonBook?'Personal notebook':art?'Loading cover…':book.unidentified?'Choose an identified book to see its cover.':'Cover artwork unavailable for this edition.';
+ fallback.textContent=egg?egg.message:book.nonBook?'Personal notebook':art?'Loading cover…':book.unidentified?'Choose an identified book to see its cover.':'Cover artwork unavailable for this edition.';
  cover.onload=()=>{if(selected!==book)return;cover.hidden=false;fallback.hidden=true};
  cover.onerror=()=>{if(selected!==book)return;cover.hidden=true;fallback.hidden=false;fallback.textContent='Cover artwork unavailable for this edition.'};
  cover.alt=`${book.title} — full cover from Amazon`;
  if(art)cover.src=art.path;else cover.removeAttribute('src');
- $('#shelf-label').textContent=bookcase.id==='drawer'?'THE BOOK DRAWER / THE COLLECTION':`SHELF ${String(book.row+1).padStart(2,'0')} / THE COLLECTION`;
- $('#book-title').textContent=book.title;
- $('#book-author').textContent=book.nonBook?'From the physical shelf':book.author||'Title not fully legible in the photograph';
- const link=$('#amazon-link');link.hidden=!!(book.unidentified||book.nonBook);
- link.href=book.asin?`https://www.amazon.com/dp/${book.asin}`:`https://www.amazon.com/s?k=${encodeURIComponent(book.title+' '+book.author)}`;
+ $('#shelf-label').textContent=egg?'YOU FOUND AN EASTER EGG':bookcase.id==='drawer'?'THE BOOK DRAWER / THE COLLECTION':`SHELF ${String(book.row+1).padStart(2,'0')} / THE COLLECTION`;
+ $('#book-title').textContent=egg?egg.title:book.title;
+ $('#book-author').textContent=egg?book.title:book.nonBook?'From the physical shelf':book.author||'Title not fully legible in the photograph';
+ const link=$('#amazon-link');link.hidden=!egg&&!!(book.unidentified||book.nonBook);
+ link.href=egg?egg.url:book.asin?`https://www.amazon.com/dp/${book.asin}`:`https://www.amazon.com/s?k=${encodeURIComponent(book.title+' '+book.author)}`;
  link.innerHTML=book.asin?'View on Amazon <span>↗</span>':'Find on Amazon <span>↗</span>';
- $('#link-note').textContent=book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?'Amazon cover artwork. The edition may differ from the copy on this shelf.':'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
+ if(egg)link.textContent=egg.label+' ↗';
+ $('#link-note').textContent=egg?egg.description:book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?'Amazon cover artwork. The edition may differ from the copy on this shelf.':'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
 }
 function resetDetail(){if(document.activeElement===$('#return-book'))host.focus({preventScroll:true});selected=null;$('#return-book').hidden=true;$('#book-cover').hidden=true;$('#cover-fallback').hidden=false;$('#cover-fallback').textContent='Choose a book to take it off the shelf.';$('#book-title').textContent='Every spine has a story.';$('#book-author').textContent='';$('#shelf-label').textContent='FROM THE SHELF';$('#amazon-link').hidden=true;$('#link-note').textContent='Pause over a spine to pull it forward. Pick a book to see its cover.'}
 function closeBook(immediate=false){pendingBook=null;clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}

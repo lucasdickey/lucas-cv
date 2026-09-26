@@ -1,4 +1,4 @@
-import { bookMatches } from './search.js?v=search-1';
+import { bookMatches } from './search.js?v=lenny-notebook-1';
 
 // One book-detail view moves into a native dialog on phones, retaining its
 // cover-loading state while the dialog provides focus trapping and dismissal.
@@ -15,7 +15,8 @@ export function createMobileBrowser(books, onSelect, onDismiss, rowLabels) {
   const query=search.value.trim().toLocaleLowerCase();
   const matches=books.filter(b=>(row==='all'||b.row===Number(row))&&bookMatches(b,query));
   document.querySelector('#library-title').textContent=row==='all'?'Browse the books':rowLabels?.[Number(row)]||`Shelf ${Number(row)+1}`;
-  document.querySelector('#library-count').textContent=`${matches.length} ${matches.length===1?'book':'books'}`;
+  const count=matches.filter(b=>!b.nonBook).length,notebooks=matches.length-count;
+  document.querySelector('#library-count').textContent=`${count} ${count===1?'book':'books'}${notebooks?` · ${notebooks} ${notebooks===1?'notebook':'notebooks'}`:''}`;
   list.replaceChildren();
   for(const book of matches.slice(0,limit)){
    const button=document.createElement('button');button.className='book-row';
