@@ -7,12 +7,12 @@ function add(title,author,row,left,right,top,bottom,source,quad,extra={}) {
   layout:{x:((left+right)/2/1240-.5)*10.1,y:(row===0?4.55:.7)+height/2,width,height},
   spine:{source:`glass/${source}`,quad:quad||[[left,top],[right,top],[right,bottom],[left,bottom]]},...extra});
 }
-// Top shelf: the wide photograph retains the leftmost titles.
+// Top shelf: the additional close-up resolves Adapt and the leftmost spines.
 const top=[
  ['The Economic Structure of Corporate Law','Frank H. Easterbrook and Daniel R. Fischel',42,77,74],
  ['HBR Guide to Finance Basics for Managers','Harvard Business Review',78,110,84],
  ['We the Corporations','Adam Winkler',112,150,111],
- ['Unidentified white spine','',151,195,115],
+ ['Adapt: Why Success Always Starts with Failure','Tim Harford',151,195,115],
  ['The Tangled Tree','David Quammen',196,235,86],
  ['Dancing in the Streets','Barbara Ehrenreich',236,279,122],
  ['Behave','Robert Sapolsky',280,345,137],
@@ -37,7 +37,19 @@ const topQuads=[
  [[1024,146],[1085,149],[1081,858],[1010,856]],
  [[1093,148],[1172,148],[1159,856],[1085,851]],
 ];
-top.forEach(([title,author,l,r,t],i)=>add(title,author,0,l,r,t,414,i>=7?'top':'full',i>=7?topQuads[i-7]:null,i===3?{unidentified:true}:{}));
+const upperLeftQuads=[
+ [[148,42],[209,47],[207,746],[145,744]],
+ [[216,65],[260,94],[258,749],[217,749]],
+ [[266,125],[353,125],[346,752],[264,750]],
+ [[362,129],[430,132],[432,755],[360,752]],
+ [[446,67],[527,68],[522,759],[440,758]],
+ [[547,148],[611,151],[602,766],[534,760]],
+ [[619,171],[739,174],[724,766],[612,763]],
+ [[756,58],[858,55],[839,772],[732,767]],
+ [[881,52],[1010,54],[1004,770],[855,772]],
+ [[1033,33],[1167,24],[1160,776],[1017,772]],
+];
+top.forEach(([title,author,l,r,t],i)=>add(title,author,0,l,r,t,414,i<10?'upper-left':'top',i<10?upperLeftQuads[i]:topQuads[i-7]));
 add('Student’s Dictionary','',0,990,1235,333,385,'full',[[1008,328],[1239,328],[1241,379],[1007,380]],{horizontal:true,unidentified:true});
 // Lower upright books. Layout comes from the overview; textures from close-ups.
 const lower=[
@@ -84,4 +96,6 @@ stack.forEach(([title,author,height,quad])=>{
  add(title,author,1,873,1235,0,40,'stack',quad,{horizontal:true,layout:{x:3.5,y:.7+elevation+height/2,width:3.1,height,depth:1.5}});
  elevation+=height+.018;
 });
+// The full cabinet photographs reveal the cup compartment below both book rows.
+for(const book of books)book.layout.y+=3;
 export {books as glassBooks};
