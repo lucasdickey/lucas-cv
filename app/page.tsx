@@ -49,6 +49,7 @@ import { toys } from "./data/toys";
 import { lennyRecommendations } from "./data/lenny";
 import { getPublishedPosts } from "./data/blog";
 
+const codingToolVariants = ["Claude Code", "Codex", "Droid", "Warp", "Cursor"];
 const asteriskVariants = ["*", "✻", "∗", "※", "❄", "✢"];
 const thinkingVariants = [
   "cogitating",
@@ -91,6 +92,7 @@ export default function TerminalRepoList() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [asteriskIndex, setAsteriskIndex] = useState(0);
   const [thinkingIndex, setThinkingIndex] = useState(0);
+  const [codingToolIndex, setCodingToolIndex] = useState(0);
   const [githubContributions, setGithubContributions] =
     useState<GitHubContributionData | null>(null);
   const [githubContributionsError, setGithubContributionsError] =
@@ -179,6 +181,15 @@ export default function TerminalRepoList() {
     }, 1000);
 
     return () => clearInterval(animationInterval);
+  }, []);
+
+  useEffect(() => {
+    // Cycle through coding tools in order every 2s
+    const toolInterval = setInterval(() => {
+      setCodingToolIndex((i) => (i + 1) % codingToolVariants.length);
+    }, 2000);
+
+    return () => clearInterval(toolInterval);
   }, []);
 
   useEffect(() => {
@@ -318,12 +329,13 @@ export default function TerminalRepoList() {
         </pre>
         <div className="text-[#333333] mb-1 text-xs md:text-sm">
           <span className="hidden sm:inline">
-            Vibe coded by Lucas with his colleague Claude Code -- flattering
+            Vibe coded by Lucas with his colleague{" "}
+            {codingToolVariants[codingToolIndex]} -- flattering
             hallucinations, &apos;{asteriskVariants[asteriskIndex]}{" "}
             {thinkingVariants[thinkingIndex]}&apos;, and all!
           </span>
           <span className="inline sm:hidden">
-            Vibe coded by Lucas with Claude Code
+            Vibe coded by Lucas with {codingToolVariants[codingToolIndex]}
           </span>
         </div>
         <div className="text-[#333333] mb-1">
