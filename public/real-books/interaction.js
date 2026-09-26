@@ -5,10 +5,17 @@ export function createPickTarget(mesh) {
  const target = new Mesh(mesh.geometry, mesh.material);
  mesh.updateWorldMatrix(true, false);
  target.matrixAutoUpdate = false;
- target.matrix.copy(mesh.matrixWorld);
- target.updateMatrixWorld(true);
  target.userData.bookMesh = mesh;
+ target.userData.restMatrix = mesh.matrix.clone();
+ updatePickTarget(target);
  return target;
+}
+export function updatePickTarget(target) {
+ const parent=target.userData.bookMesh.parent;
+ parent?.updateWorldMatrix(true,false);
+ if(parent)target.matrix.multiplyMatrices(parent.matrixWorld,target.userData.restMatrix);
+ else target.matrix.copy(target.userData.restMatrix);
+ target.updateMatrixWorld(true);
 }
 
 export class HoverDwell {

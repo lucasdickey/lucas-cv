@@ -7,19 +7,23 @@ export function panGeometry(distance,aspect,fov=38){
  const width=2*Math.max(.1,distance-cabinet.front)*Math.tan(fov*Math.PI/360)*aspect;
  return {width,limit:Math.max(1.5,cabinet.halfWidth-width/2)};
 }
-export function horizontalDrag({start,delta,pixels,distance,aspect,mode}){
+export function panBounds(distance,aspect,panRange){
+ if(panRange)return panRange;
+ const {limit}=panGeometry(distance,aspect);return [-limit,limit];
+}
+export function horizontalDrag({start,delta,pixels,distance,aspect,mode,panRange}){
  if(mode==='turn')return clamp(start+delta/Math.max(1,pixels)*1.9,-cabinet.maxYaw,cabinet.maxYaw);
- const {width,limit}=panGeometry(distance,aspect);
- return clamp(start-delta/Math.max(1,pixels)*width,-limit,limit);
+ const {width}=panGeometry(distance,aspect);
+ return clamp(start-delta/Math.max(1,pixels)*width,...panBounds(distance,aspect,panRange));
 }
 // The chosen tool controls both axes and never changes with zoom or screen size.
-export function dragView({mode,yaw,pitch,x,y,dx,dy,width,height,distance,aspect}){
- const horizontal=horizontalDrag({start:mode==='pan'?x:yaw,delta:dx,pixels:width,distance,aspect,mode});
+export function dragView({mode,yaw,pitch,x,y,dx,dy,width,height,distance,aspect,panRange,maxPitch=.3}){
+ const horizontal=horizontalDrag({start:mode==='pan'?x:yaw,delta:dx,pixels:width,distance,aspect,mode,panRange});
  if(mode==='pan'){
   const verticalSpan=panGeometry(distance,aspect).width/aspect;
   return {yaw,pitch,x:horizontal,y:clamp(y+dy/Math.max(1,height)*verticalSpan,0,14.3)};
  }
- return {yaw:horizontal,pitch:clamp(pitch+dy/Math.max(1,height)*1.2,-.23,.3),x,y};
+ return {yaw:horizontal,pitch:clamp(pitch+dy/Math.max(1,height)*1.2,-.23,maxPitch),x,y};
 }
 export function visibleBook(raycaster,targets,occluders){
  // At oblique angles, cabinet sides and dividers must block books behind them.

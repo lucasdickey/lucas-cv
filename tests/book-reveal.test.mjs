@@ -88,3 +88,22 @@ test('offscreen source skips flight while part of the host remains visible',asyn
   reveal.close();reveal.update(0);assert.equal(source.position.z,0);assert.equal(source.visible,true);
  }finally{globalThis.innerHeight=previousHeight;globalThis.innerWidth=previousWidth}
 });
+
+test('drawer selection lifts on its extraction axis and returns to the moving parent',async()=>{
+ const {BookReveal}=await import('../public/real-books/book-reveal.js');
+ const {Mesh,Group,Vector3,BoxGeometry,PerspectiveCamera,MeshBasicMaterial}=await import('../public/real-books/assets/three.module.js');
+ const classes={add(){},remove(){},toggle(){}},camera=new PerspectiveCamera(38,1,.1,100);
+ camera.position.z=24;camera.updateMatrixWorld();
+ const host={classList:classes,getBoundingClientRect:()=>({left:0,top:0,width:500,height:500})};
+ const reveal=new BookReveal({host,detail:{classList:classes},dialog:{classList:classes},getCamera:()=>camera,onReturned(){},reduced:true});
+ const tray=new Group(),source=new Mesh(new BoxGeometry(.2,2,1),new MeshBasicMaterial());
+ tray.position.z=4.2;tray.add(source);source.position.set(.3,.5,-.8);source.rotation.x=-Math.PI/2;
+ source.userData.restPosition=source.position.clone();source.userData.pullAxis=new Vector3(0,1,0);source.userData.pullDistance=2;
+ const h=globalThis.innerHeight,w=globalThis.innerWidth;globalThis.innerHeight=800;globalThis.innerWidth=800;
+ try{
+  source.position.y+=.42;reveal.open(source,{title:'Drawer book'});reveal.update(0);
+  assert.equal(source.position.y,2.5);assert.equal(source.position.z,-.8);
+  reveal.close();reveal.update(0);assert.equal(source.position.y,.5);assert.equal(source.position.z,-.8);
+  assert.ok(Math.abs(source.getWorldPosition(new Vector3()).z-3.4)<1e-10);
+ }finally{globalThis.innerHeight=h;globalThis.innerWidth=w}
+});
