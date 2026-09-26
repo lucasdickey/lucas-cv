@@ -1,5 +1,7 @@
 import * as THREE from './assets/three.module.js';
-import { books } from './books.js?v=closeups-5';
+import {selectBookcase} from './bookcases.js';
+import {addGlassCabinet,addGlassDecor} from './glass-cabinet.js';
+const bookcase=selectBookcase(location.search),books=bookcase.books;
 import { createSpineCanvas } from './spine-texture.js';
 import { cabinet, orbitDistance, panGeometry, dragView, visibleBook } from './navigation.js?v=controls-2';
 import { createMobileBrowser } from './mobile.js?v=search-1';
@@ -8,6 +10,18 @@ import { BookReveal } from './book-reveal.js?v=reveal-1';
 import { createPickTarget, HoverDwell, zoomFactor } from './interaction.js';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
+document.querySelectorAll('[data-case]').forEach(link=>{if(link.dataset.case===bookcase.id)link.setAttribute('aria-current','page')});
+for(const nav of document.querySelectorAll('#shelves,#mobile-shelves')){
+ nav.replaceChildren();
+ for(const row of ['all',...Array.from({length:bookcase.rows},(_,i)=>String(i))]){
+  const button=document.createElement('button');button.dataset.shelf=row;button.textContent=row==='all'?'All':String(Number(row)+1).padStart(2,'0');nav.append(button);
+ }
+}
+document.querySelectorAll('[data-shelf-count]').forEach(el=>el.textContent=bookcase.rows);
+$('#photo-dialog img').src=`./assets/${bookcase.photo}.jpg`;$('#photo-dialog img').alt=bookcase.name;
+$('#photo-dialog p').textContent=bookcase.name;
+$('.scene-heading .eyebrow').textContent=bookcase.name.toUpperCase();
+$('.mobile-intro h1').textContent=bookcase.id==='glass'?'The glass bookcase.':'The wooden bookcase.';
 books.forEach((book,id)=>{book.id=id});
 const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook);
 const desktopSearch=createDesktopSearch(books,book=>displayBook(book,true));
@@ -17,9 +31,9 @@ const sources={};
 let covers={},pickTargets=[],occluders=[];
 const dwell=new HoverDwell(),mouse={x:0,y:0};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const yBase=[10.7,8.25,5.8,3.35,.9], photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
+const yBase=bookcase.yBase, photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
 let renderer,scene,camera,root,bookMeshes=[],selected=null,hovered=null,drag=null,pointer=new THREE.Vector2(9,9),needsPick=false;
-let yaw=mobile.matches?0:.13,pitch=mobile.matches?0:.015,goalYaw=yaw,goalPitch=pitch,zoom=1,targetY=7.05,goalY=7.05,goalZoom=1,baseDistance=24;
+let yaw=mobile.matches?0:.13,pitch=mobile.matches?0:.015,goalYaw=yaw,goalPitch=pitch,zoom=1,targetY=bookcase.centerY,goalY=bookcase.centerY,goalZoom=1,baseDistance=24;
 const raycaster=new THREE.Raycaster(), clock=new THREE.Clock();
 const reveal=new BookReveal({host,detail:$('#book-detail'),dialog:$('#book-dialog'),getCamera:()=>camera,reduced,onReturned:()=>{mobileBrowser.close();resetDetail()}});
 const mat=(color,extra={})=>new THREE.MeshStandardMaterial({color,roughness:.8,...extra});
@@ -29,6 +43,7 @@ function applyCrop(geometry,rect,name,frontOnly=true){const uv=geometry.attribut
 function photoBox(w,h,d,x,y,z,name,rect,side){const m=cropMaterial(name,rect);const mesh=box(w,h,d,x,y,z,[side,side,mat('#ddd7bb'),side,m,side]);applyCrop(mesh.geometry,rect,name);return mesh}
 function sampleColor(name,r){const c=sources[name].canvas.getContext('2d').getImageData(Math.min(r[0]+Math.floor(r[2]/2),sources[name].canvas.width-1),Math.min(r[1]+Math.floor(r[3]/2),sources[name].canvas.height-1),1,1).data;return new THREE.Color(`rgb(${c[0]},${c[1]},${c[2]})`)}
 function addShelf(){
+ if(bookcase.id==='glass')return addGlassCabinet({box,mat,root});
  const frame=mat('#241c17'),wood=mat('#4b2319'),leftSide=mat('#ffffff',{map:sources['surfaces/left-side'].texture}),rightSide=mat('#ffffff',{map:sources['surfaces/right-side'].texture}),gold=mat('#998157',{metalness:.55,roughness:.5});
  box(10.35,13.2,.16,0,6.65,cabinet.back,wood);
  box(.2,13.3,cabinet.depth,-5.2,6.65,-.04,[frame,leftSide,frame,frame,frame,frame]);
@@ -43,14 +58,16 @@ function addShelf(){
  for(let j of [-1,1]){photoBox(5.02,.59,.25,j*2.58,.3,.96,'full',j===-1?[199,1182,272,46]:[485,1184,274,40],mat('#785727'));for(let k of [-.95,.95]){const knob=new THREE.Mesh(new THREE.SphereGeometry(.065,12,10),gold);knob.position.set(j*2.58+k,.33,1.15);root.add(knob)}}
  box(10.55,.16,cabinet.depth,0,-.1,-.04,frame);for(let x of [-5.1,5.1])box(.22,.45,1.6,x,-.31,0,frame);
 }
-function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);const x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
+function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);let x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
  if(b.horizontal){h=r[3]/250*1.98;y=yBase[b.row]+(515-r[1]-r[3]/2)/250*1.98}
  if(b.elevation!==undefined)y=yBase[b.row]+b.elevation+h/2;
+ if(b.layout){({x,y,width:w,height:h}=b.layout)}
  const textureRect=b.textureRect||r;
- const depth=b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65),restZ=.8-depth/2,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
+ const depth=b.layout?.depth||(b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65)),restZ=.8-depth/2,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  });$('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
 function decor(){
+ if(bookcase.id==='glass')return addGlassDecor({box,mat,root});
  const pot=new THREE.Mesh(new THREE.CylinderGeometry(.58,.44,.60,28),mat('#a89d71'));pot.position.set(-4,13.71,0);pot.castShadow=true;root.add(pot);
  const stemMat=mat('#497035'),leafMat=mat('#648a36',{side:THREE.DoubleSide});
  for(let k=0;k<13;k++){const points=[];const a=k*2.4,L=1.1+(k%4)*.27;for(let j=0;j<=12;j++){const t=j/12;points.push(new THREE.Vector3(-4+Math.cos(a)*L*t,14+Math.sin(t*2.8)*.72-t*t*(k%3===0?1.5:.22),Math.sin(a)*L*t))}const curve=new THREE.CatmullRomCurve3(points);const stem=new THREE.Mesh(new THREE.TubeGeometry(curve,18,.012,4,false),stemMat);root.add(stem);for(let j=1;j<12;j++){const t=j/12,p=curve.getPoint(t);for(let s of [-1,1]){const leaf=new THREE.Mesh(new THREE.SphereGeometry(1,8,4),leafMat);leaf.scale.set(.10*(1-t*.5),.025,.26*(1-t*.65));leaf.position.copy(p);leaf.position.x+=s*.1;leaf.rotation.y=a+s*.7;leaf.rotation.z=s*.4;root.add(leaf)}}}
@@ -101,7 +118,7 @@ function updateHint(){
 }
 function setFocus(row){
  clearHover();focusedRow=row;goalX=0;
- if(row==='all'){goalY=7.05;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
+ if(row==='all'){goalY=bookcase.centerY;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
  document.querySelectorAll('[data-shelf]').forEach(b=>{const active=b.dataset.shelf===row;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
  updateHint();
  mobileBrowser.focus(row);
@@ -110,13 +127,13 @@ mobile.addEventListener('change',()=>setFocus(focusedRow));
 setFocus('all');
 async function start(){
  try{
- const [coverData,links]=await Promise.all(['covers','links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
+ const [coverData,links]=await Promise.all(['covers',bookcase.id==='glass'?'glass-links':'links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
  covers=coverData;for(const b of books)if(!b.unidentified&&!b.nonBook&&links[b.title])Object.assign(b,links[b.title]);
  mobileBrowser.render(covers);desktopSearch.render(covers);
  if(selected){const book=selected;selected=null;displayBook(book)}
  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.append(renderer.domElement);
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.1,150);root=new THREE.Group();scene.add(root);
- for(const name of new Set(['top','middle','bottom','full','surfaces/left-side','surfaces/right-side',...books.filter(b=>b.spine).map(b=>b.spine.source)])){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
+ for(const name of new Set([...bookcase.assets,...books.filter(b=>b.spine).map(b=>b.spine.source)])){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
  for(const [i,book] of books.entries())if(book.spine){
   const canvas=createSpineCanvas(sources[book.spine.source],book.spine.quad),texture=new THREE.CanvasTexture(canvas);
   texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
@@ -124,8 +141,8 @@ async function start(){
   sources[book.textureSource]={image:canvas,canvas,texture};
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title==='Katabasis')||books[0]);$('#loading').hidden=true;
- const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(24,(mobile.matches?16.5:17)/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
+ const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(mobile.matches?16.5:17)/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();
  function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),.05),s=reduced?1:1-Math.exp(-dt*8.8);
@@ -145,7 +162,7 @@ async function start(){
   reveal.update(dt);
   renderer.render(scene,camera);
  }frame();
- }catch(e){$('#loading').innerHTML='3D is unavailable here. Search for a book to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src='./assets/full.jpg';img.alt='Original bookshelf';img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length}
+ }catch(e){$('#loading').innerHTML='3D is unavailable here. Search for a book to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src=`./assets/${bookcase.photo}.jpg`;img.alt=bookcase.name;img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length}
 }
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
 host.addEventListener('pointerdown',e=>{
