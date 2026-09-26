@@ -1,6 +1,6 @@
 import {books as woodenBooks} from './books.js?v=closeups-5';
 import {glassBooks} from './glass-books.js';
-import {drawerBooks} from './drawer-books.js?v=drawer-photos-2';
+import {drawerBooks} from './drawer-books.js?v=lenny-notebook-1';
 
 export const bookcases={
  wood:{id:'wood',name:'The wooden bookcase',books:woodenBooks,rows:5,centerY:7.05,minDistance:24,yBase:[10.7,8.25,5.8,3.35,.9],photo:'full',assets:['top','middle','bottom','full','surfaces/left-side','surfaces/right-side']},

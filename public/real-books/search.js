@@ -1,6 +1,6 @@
 // Title-or-author search shared by the phone catalog and the desktop side panel.
 export function bookMatches(book,query){
- return !book.nonBook&&`${book.title} ${book.author}`.toLocaleLowerCase().includes(query);
+ return (!book.nonBook||!!book.easterEgg)&&`${book.title} ${book.author}`.toLocaleLowerCase().includes(query);
 }
 
 // Suggestions favour titles that begin with the query, then titles with a word

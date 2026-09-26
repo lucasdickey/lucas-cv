@@ -4,7 +4,7 @@ const row=[
  ['A Light in the Attic','Shel Silverstein',.39,2.05,1.85,'left',[[112,90],[177,94],[159,820],[76,822]]],
  ['L’enfant, la taupe, le renard et le cheval','Charlie Mackesy',.37,2.0,1.82,'left',[[210,109],[274,105],[270,787],[173,803]]],
  ['The Scaling Era: An Oral History of AI, 2019–2025','Dwarkesh Patel with Gavin Leech',.40,2.0,1.76,'left',[[302,118],[374,149],[355,833],[277,822]]],
- ['Unidentified Stripe volume','',.13,1.68,1.5,'left',[[387,158],[421,165],[421,727],[385,731]]],
+ ['Presented by Stripe','Notebook',.13,1.68,1.5,'left',[[387,158],[421,165],[421,727],[385,731]]],
  ['The Glass Castle','Jeannette Walls',.22,1.65,1.52,'left',[[434,169],[469,173],[468,722],[430,728]]],
  ['I Who Have Never Known Men','Jacqueline Harpman',.17,1.65,1.5,'left',[[483,161],[516,159],[520,710],[480,715]]],
  ['The Pig That Wants to Be Eaten','Julian Baggini',.25,1.65,1.5,'left',[[539,155],[573,163],[575,707],[527,711]]],
@@ -29,7 +29,10 @@ let x=-2.325;
 export const drawerBooks=row.map(([title,author,weight,height,depth,source,quad])=>{
  const width=weight*scale;
  const book={title,author,row:0,layout:{x:x+width/2,y:depth/2,z:-.83,width:width-.008,height,depth},spine:{source:`drawer/${source}`,quad}};
- if(title==='Unidentified Stripe volume')book.unidentified=true;
+ if(title==='Presented by Stripe'){
+  book.nonBook=true;
+  book.easterEgg={title:'Lenny’s Summit notebook',message:'A blank notebook. A good place to start.',description:'You found a keepsake from Lenny’s Summit, presented by Stripe. The pages are empty; the next good idea might start with Lenny’s Newsletter.',url:'https://www.lennysnewsletter.com/subscribe',label:'Subscribe to Lenny’s Newsletter'};
+ }
  x+=width;return book;
 });
 // The visible Calvin and Hobbes volume lies face-up in front of the upright row.
