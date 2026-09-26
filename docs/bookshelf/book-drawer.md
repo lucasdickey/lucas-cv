@@ -8,7 +8,7 @@ The upper-right drawer contains 23 physical volumes: 22 identified books and one
 
 `drawer-books.js` records order, dimensions and photographic spine quadrilaterals. `drawer-links.json` records print-edition metadata and its sources. `drawer-covers.json` references 21 locally stored Amazon cover images; these can differ from the photographed edition. The French Charlie Mackesy edition has a verified 979 ISBN, no invented ISBN-10/ASIN, and a title-and-author search link. Its full cover is unavailable. The Stripe volume has no guessed author, product link or cover.
 
-Photo assets: `closed.jpg` is 7021, `open.jpg` is 7024, `left.jpg` is 7026 and `right.jpg` is 7027. The scene samples these images for the countertop and spines. Geometry approximates the photographs rather than measured cabinetry.
+Photo assets: `closed.jpg` is 7021, `open.jpg` is 7024, `left.jpg` is 7026 and `right.jpg` is 7027. The scene samples these images for the countertop and spines. The follow-up `right-closeup.jpg` (7030) supplies nine clearer spine crops, rotated upright through their texture coordinates; clipped titles retain their earlier crops. `kitchen.jpg` (7020) provides the wider kitchen context in “The original.” The repeated 7021 reference adds no new volume or asset. Geometry approximates the photographs rather than measured cabinetry.
 
 ## Interaction
 
