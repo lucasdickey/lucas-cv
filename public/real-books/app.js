@@ -1,5 +1,5 @@
 import * as THREE from './assets/three.module.js';
-import {selectBookcase} from './bookcases.js?v=drawer-1';
+import {selectBookcase} from './bookcases.js?v=drawer-photos-2';
 import {addGlassCabinet,addGlassDecor,addCupShelf} from './glass-cabinet.js';
 import {addBookDrawer} from './book-drawer.js';
 const bookcase=selectBookcase(location.search),books=bookcase.books;

@@ -1,4 +1,5 @@
-// Photo order, left to right. Quads are TL, TR, BR, BL in the original 1280×964 images.
+// Photo order, left to right. Quads map texture TL, TR, BR, BL into the source photo.
+// right-closeup is photographed sideways; its corner order rotates the spines upright.
 const row=[
  ['A Light in the Attic','Shel Silverstein',.39,2.05,1.85,'left',[[112,90],[177,94],[159,820],[76,822]]],
  ['L’enfant, la taupe, le renard et le cheval','Charlie Mackesy',.37,2.0,1.82,'left',[[210,109],[274,105],[270,787],[173,803]]],
@@ -12,15 +13,15 @@ const row=[
  ['Fifty Things That Made the Modern Economy','Tim Harford',.25,1.6,1.48,'left',[[670,179],[715,176],[746,681],[687,682]]],
  ['Taiwan Travelogue','Yang Shuang-zi',.27,1.68,1.53,'right',[[225,150],[279,147],[277,727],[198,726]]],
  ['Never Let Me Go','Kazuo Ishiguro',.22,1.65,1.5,'right',[[293,160],[329,160],[328,711],[289,717]]],
- ['In the Distance','Hernan Diaz',.20,1.65,1.5,'right',[[346,155],[379,151],[393,719],[338,720]]],
- ['Waking Up','Sam Harris',.22,1.65,1.5,'right',[[395,152],[430,155],[443,719],[395,722]]],
- ['The Righteous Mind','Jonathan Haidt',.34,1.65,1.51,'right',[[449,155],[516,166],[537,697],[445,709]]],
- ['The Conquest of Happiness','Bertrand Russell',.18,1.65,1.47,'right',[[551,151],[587,159],[598,712],[552,718]]],
- ['The Square and the Tower','Niall Ferguson',.30,1.65,1.53,'right',[[603,176],[659,179],[683,690],[609,700]]],
- ['Amusing Ourselves to Death','Neil Postman',.21,1.65,1.5,'right',[[688,178],[725,187],[740,712],[699,708]]],
- ['Motherless Brooklyn / The Fortress of Solitude','Jonathan Lethem',.49,1.7,1.58,'right',[[743,153],[840,151],[877,710],[756,717]]],
- ['The Tusks of Extinction','Ray Nayler',.16,1.64,1.5,'right',[[860,166],[883,163],[916,704],[886,707]]],
- ['Wolf Hall','Hilary Mantel',.40,1.7,1.58,'right',[[915,158],[971,157],[1032,694],[939,704]]],
+ ['In the Distance','Hernan Diaz',.20,1.65,1.5,'right-closeup',[[239,934],[240,884],[1017,869],[1032,927]]],
+ ['Waking Up','Sam Harris',.22,1.65,1.5,'right-closeup',[[228,872],[240,806],[1011,783],[1033,859]]],
+ ['The Righteous Mind','Jonathan Haidt',.34,1.65,1.51,'right-closeup',[[246,791],[245,673],[974,648],[987,778]]],
+ ['The Conquest of Happiness','Bertrand Russell',.18,1.65,1.47,'right-closeup',[[241,654],[243,597],[995,577],[1008,635]]],
+ ['The Square and the Tower','Niall Ferguson',.30,1.65,1.53,'right-closeup',[[251,582],[263,483],[971,458],[975,560]]],
+ ['Amusing Ourselves to Death','Neil Postman',.21,1.65,1.5,'right-closeup',[[259,470],[265,406],[979,380],[977,451]]],
+ ['Motherless Brooklyn / The Fortress of Solitude','Jonathan Lethem',.49,1.7,1.58,'right-closeup',[[227,403],[219,244],[984,199],[1000,371]]],
+ ['The Tusks of Extinction','Ray Nayler',.16,1.64,1.5,'right-closeup',[[222,237],[217,191],[978,143],[981,194]]],
+ ['Wolf Hall','Hilary Mantel',.40,1.7,1.58,'right-closeup',[[217,184],[210,57],[962,4],[977,125]]],
  ['Bedtime in the Southwest','Mona Hodgson',.29,1.75,1.61,'right',[[1013,171],[1072,160],[1133,680],[1058,684]]],
 ];
 const span=row.reduce((n,b)=>n+b[2],0),scale=4.65/span;

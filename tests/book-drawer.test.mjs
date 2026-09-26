@@ -23,7 +23,7 @@ test('drawer gestures preserve overhead pitch while other shelves keep existing 
  assert.ok(dragView({...view,maxPitch:1.15}).pitch>.85);
 });
 test('catalog preserves photographed order and the unidentified Stripe volume',()=>{
- assert.equal(selectBookcase('?case=drawer').books,drawerBooks);
+ assert.deepEqual(selectBookcase('?case=drawer').books,drawerBooks);
  assert.equal(drawerBooks.length,23);assert.equal(drawerBooks[0].title,'A Light in the Attic');
  assert.equal(drawerBooks[21].title,'Bedtime in the Southwest');
  assert.equal(drawerBooks[22].coverFace,4);
