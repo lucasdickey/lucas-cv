@@ -1,6 +1,6 @@
 import * as THREE from './assets/three.module.js';
 import {selectBookcase} from './bookcases.js';
-import {addGlassCabinet,addGlassDecor} from './glass-cabinet.js';
+import {addGlassCabinet,addGlassDecor,addCupShelf} from './glass-cabinet.js';
 const bookcase=selectBookcase(location.search),books=bookcase.books;
 import { createSpineCanvas } from './spine-texture.js';
 import { cabinet, orbitDistance, panGeometry, dragView, visibleBook } from './navigation.js?v=controls-2';
@@ -25,10 +25,10 @@ $('.mobile-intro h1').textContent=bookcase.id==='glass'?'The glass bookcase.':'T
 books.forEach((book,id)=>{book.id=id});
 const mobileBrowser=createMobileBrowser(books,book=>displayBook(book,true),closeBook);
 const desktopSearch=createDesktopSearch(books,book=>displayBook(book,true));
-let focusedRow='all',navigationTool='turn',targetX=0,goalX=0;
+let focusedRow='all',navigationTool='turn',targetX=bookcase.centerX||0,goalX=bookcase.centerX||0;
 const sourceFiles=['top','top','middle','bottom','bottom'];
 const sources={};
-let covers={},pickTargets=[],occluders=[];
+let covers={},pickTargets=[],occluders=[],cabinetDoors;
 const dwell=new HoverDwell(),mouse={x:0,y:0};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const yBase=bookcase.yBase, photoBounds=[[62,1240],[62,1240],[70,1245],[50,1258],[50,1258]];
@@ -43,7 +43,7 @@ function applyCrop(geometry,rect,name,frontOnly=true){const uv=geometry.attribut
 function photoBox(w,h,d,x,y,z,name,rect,side){const m=cropMaterial(name,rect);const mesh=box(w,h,d,x,y,z,[side,side,mat('#ddd7bb'),side,m,side]);applyCrop(mesh.geometry,rect,name);return mesh}
 function sampleColor(name,r){const c=sources[name].canvas.getContext('2d').getImageData(Math.min(r[0]+Math.floor(r[2]/2),sources[name].canvas.width-1),Math.min(r[1]+Math.floor(r[3]/2),sources[name].canvas.height-1),1,1).data;return new THREE.Color(`rgb(${c[0]},${c[1]},${c[2]})`)}
 function addShelf(){
- if(bookcase.id==='glass')return addGlassCabinet({box,mat,root});
+ if(bookcase.id==='glass'){cabinetDoors=addGlassCabinet({box,mat,root,reduced});return}
  const frame=mat('#241c17'),wood=mat('#4b2319'),leftSide=mat('#ffffff',{map:sources['surfaces/left-side'].texture}),rightSide=mat('#ffffff',{map:sources['surfaces/right-side'].texture}),gold=mat('#998157',{metalness:.55,roughness:.5});
  box(10.35,13.2,.16,0,6.65,cabinet.back,wood);
  box(.2,13.3,cabinet.depth,-5.2,6.65,-.04,[frame,leftSide,frame,frame,frame,frame]);
@@ -67,7 +67,7 @@ function addBooks(){books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sou
  });$('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
 function decor(){
- if(bookcase.id==='glass')return addGlassDecor({box,mat,root});
+ if(bookcase.id==='glass'){addGlassDecor({box,mat,root});addCupShelf({box,mat,root});return}
  const pot=new THREE.Mesh(new THREE.CylinderGeometry(.58,.44,.60,28),mat('#a89d71'));pot.position.set(-4,13.71,0);pot.castShadow=true;root.add(pot);
  const stemMat=mat('#497035'),leafMat=mat('#648a36',{side:THREE.DoubleSide});
  for(let k=0;k<13;k++){const points=[];const a=k*2.4,L=1.1+(k%4)*.27;for(let j=0;j<=12;j++){const t=j/12;points.push(new THREE.Vector3(-4+Math.cos(a)*L*t,14+Math.sin(t*2.8)*.72-t*t*(k%3===0?1.5:.22),Math.sin(a)*L*t))}const curve=new THREE.CatmullRomCurve3(points);const stem=new THREE.Mesh(new THREE.TubeGeometry(curve,18,.012,4,false),stemMat);root.add(stem);for(let j=1;j<12;j++){const t=j/12,p=curve.getPoint(t);for(let s of [-1,1]){const leaf=new THREE.Mesh(new THREE.SphereGeometry(1,8,4),leafMat);leaf.scale.set(.10*(1-t*.5),.025,.26*(1-t*.65));leaf.position.copy(p);leaf.position.x+=s*.1;leaf.rotation.y=a+s*.7;leaf.rotation.z=s*.4;root.add(leaf)}}}
@@ -78,7 +78,7 @@ function decor(){
 }
 function displayBook(book,open=false) {
  if (!book) return;
- if(open){mobileBrowser.open();if(!mobile.matches)$('aside').scrollTop=0}
+ if(open){setDoorsOpen(true);mobileBrowser.open();if(!mobile.matches)$('aside').scrollTop=0}
  if(open){clearHover();reveal.open(bookMeshes.find(m=>m.userData.book===book),book,covers[book.asin]);$('#return-book').hidden=false}
  if (selected === book) return;
  selected=book;
@@ -105,7 +105,7 @@ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#book-dialog').op
 function clearHover(){hovered=null;needsPick=false;dwell.clear();host.style.cursor=drag?'grabbing':'grab'}
 function pick() {
  raycaster.setFromCamera(pointer,camera);
- hovered=visibleBook(raycaster,pickTargets,occluders);
+ hovered=cabinetDoors&&!cabinetDoors.browseable?null:visibleBook(raycaster,pickTargets,occluders);
  host.style.cursor=hovered?'pointer':drag?'grabbing':'grab';
  dwell.update(hovered,performance.now(),mouse.x,mouse.y);
 }
@@ -117,7 +117,7 @@ function updateHint(){
  host.setAttribute('aria-label',`3D bookshelf. ${pan?'Drag to move left, right, up or down.':'Drag to turn and tilt.'} Use Rotate or Pan to change controls. Use arrow keys to adjust the view. Select a book to see its cover.`);
 }
 function setFocus(row){
- clearHover();focusedRow=row;goalX=0;
+ clearHover();focusedRow=row;goalX=row==='all'?(bookcase.centerX||0):0;
  if(row==='all'){goalY=bookcase.centerY;goalZoom=1}else{goalY=yBase[Number(row)]+1;goalZoom=mobile.matches?1.8:Math.min(2.65,Math.max(1,baseDistance*(camera?.aspect||1)/17))}
  document.querySelectorAll('[data-shelf]').forEach(b=>{const active=b.dataset.shelf===row;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
  updateHint();
@@ -142,7 +142,7 @@ async function start(){
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
  const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[...root.children];addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
- const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(mobile.matches?16.5:17)/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();
+ const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();
  function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),.05),s=reduced?1:1-Math.exp(-dt*8.8);
@@ -159,6 +159,7 @@ async function start(){
    if(m.scale.x!==scale)m.scale.setScalar(m.scale.x+(scale-m.scale.x)*s);
    m.material[4].emissive.setHex(active?0x443620:0);m.material[4].emissiveIntensity=.16;
   }
+  cabinetDoors?.update(dt);
   reveal.update(dt);
   renderer.render(scene,camera);
  }frame();
@@ -203,6 +204,14 @@ host.addEventListener('keydown',e=>{
 function reset(){chooseNavigation('turn');goalYaw=mobile.matches?0:.13;goalPitch=mobile.matches?0:.015;setFocus('all')}
 document.querySelectorAll('[data-navigation]').forEach(button=>button.onclick=()=>chooseNavigation(button.dataset.navigation));
 $('#reset').onclick=reset;
+const doorsButton=$('#cabinet-doors');doorsButton.hidden=bookcase.id!=='glass';
+function setDoorsOpen(open){
+ if(!cabinetDoors)return;
+ clearHover();cabinetDoors.setOpen(open);
+ doorsButton.textContent=open?'Close doors':'Open doors';
+ doorsButton.setAttribute('aria-expanded',String(open));
+}
+doorsButton.onclick=()=>{closeBook(true);setDoorsOpen(!cabinetDoors.open)};
 $('#zoom-in').onclick=()=>changeZoom(zoomFactor(1.2));
 $('#zoom-out').onclick=()=>changeZoom(zoomFactor(1/1.2));
 document.querySelectorAll('[data-shelf]').forEach(b=>b.onclick=()=>setFocus(b.dataset.shelf));

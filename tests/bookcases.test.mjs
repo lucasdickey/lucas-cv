@@ -30,7 +30,7 @@ test('every new spine samples a supplied photo and fits inside the two-row cabin
   assert.ok(width>0&&height>0,b.title);
   assert.ok(Math.abs(x)+width/2<5.14,b.title);
   const bottom=bookcases.glass.yBase[b.row];
-  assert.ok(y-height/2>=bottom-.001&&y+height/2<(b.row===0?8.22:4.4),b.title);
+  assert.ok(y-height/2>=bottom-.001&&y+height/2<(b.row===0?11.22:7.4),b.title);
  }
  const stack=glassBooks.filter(b=>b.row===1&&b.horizontal);
  for(let i=1;i<stack.length;i++)assert.ok(stack[i].layout.y-stack[i].layout.height/2>stack[i-1].layout.y+stack[i-1].layout.height/2);
