@@ -23,6 +23,11 @@ export interface ShipLogLink {
   url: string;
 }
 
+export interface ShipLogThumbnail {
+  src: string;
+  alt: string;
+}
+
 export interface ShipLogProject {
   /** Display name for the project. */
   name: string;
@@ -38,6 +43,8 @@ export interface ShipLogProject {
   liveUrl?: string;
   /** Additional public surfaces worth a direct look. */
   extraLinks?: ShipLogLink[];
+  /** Small 16:10 preview in public/images/ship-log/. Public material only. */
+  thumbnail?: ShipLogThumbnail;
   commits: number;
   firstCommit: string;
   lastCommit: string;
@@ -62,6 +69,10 @@ export const shipLog: ShipLogProject[] = [
         "url": "https://yourpinata.dev/walkthrough"
       }
     ],
+    "thumbnail": {
+      "src": "/images/ship-log/pinata.webp",
+      "alt": "A marked-up page capture in Piñata, with numbered pins and a reply thread"
+    },
     "commits": 122,
     "firstCommit": "2026-09-04",
     "lastCommit": "2026-09-23",
@@ -82,6 +93,10 @@ export const shipLog: ShipLogProject[] = [
     ],
     "repoUrl": "https://github.com/lucasdickey/lucas-cv",
     "liveUrl": "https://www.lucasdickey.com/real-books",
+    "thumbnail": {
+      "src": "/images/ship-log/real-books.webp",
+      "alt": "The real bookshelf the 3D reading list was built from"
+    },
     "commits": 35,
     "firstCommit": "2026-07-01",
     "lastCommit": "2026-09-24",
@@ -111,6 +126,10 @@ export const shipLog: ShipLogProject[] = [
         "url": "https://one-off.dev/youtube-block"
       }
     ],
+    "thumbnail": {
+      "src": "/images/ship-log/one-off-zingers.webp",
+      "alt": "A three-panel Zingers comic strip drawn by code"
+    },
     "commits": 133,
     "firstCommit": "2026-07-01",
     "lastCommit": "2026-09-24",
@@ -130,6 +149,10 @@ export const shipLog: ShipLogProject[] = [
       "Offer dated permalinks and a Markdown version alongside the readable daily issue."
     ],
     "liveUrl": "https://www.downstream.sh/daily/",
+    "thumbnail": {
+      "src": "/images/ship-log/downstream.webp",
+      "alt": "Downstream daily issue: what the government did, every day it did it"
+    },
     "commits": 430,
     "firstCommit": "2026-08-01",
     "lastCommit": "2026-09-24",
@@ -150,6 +173,10 @@ export const shipLog: ShipLogProject[] = [
     ],
     "repoUrl": "https://github.com/lucasdickey/a-ok-shop",
     "liveUrl": "https://a-ok-shop.vercel.app",
+    "thumbnail": {
+      "src": "/images/ship-log/a-ok-shop.webp",
+      "alt": "The A-OK ape logo in headphones and a cap"
+    },
     "commits": 12,
     "firstCommit": "2026-07-25",
     "lastCommit": "2026-09-23",
@@ -169,6 +196,10 @@ export const shipLog: ShipLogProject[] = [
       "Updated the app’s framework and runtime to repair its deployment build. The public source is available below."
     ],
     "repoUrl": "https://github.com/lucasdickey/breathe-free",
+    "thumbnail": {
+      "src": "/images/ship-log/breathe-free.webp",
+      "alt": "Breathe Free showing a blue circle with the cue “Breathe out”"
+    },
     "commits": 5,
     "firstCommit": "2026-08-19",
     "lastCommit": "2026-08-20",
@@ -194,6 +225,10 @@ export const shipLog: ShipLogProject[] = [
         "url": "https://2dads2dudes.dev/cross-cross-footy/apk/"
       }
     ],
+    "thumbnail": {
+      "src": "/images/ship-log/cross-cross-footy.webp",
+      "alt": "Cross Cross Footy: an octagonal pitch with a goal on each side"
+    },
     "commits": 46,
     "firstCommit": "2026-07-26",
     "lastCommit": "2026-08-18",

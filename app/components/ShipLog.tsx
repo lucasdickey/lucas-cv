@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ExternalLink, Github } from "lucide-react";
 import { shipLog, type ShipLogProject } from "../data/shipLog";
 import { ExpandableSection } from "./ExpandableSection";
@@ -26,94 +27,134 @@ const formatRange = (project: ShipLogProject) => {
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
+// Small 16:10 preview beside each entry. Links to the same place as the name,
+// falling back to the source when there is no live site.
+function Thumbnail({
+  project,
+  className,
+}: {
+  project: ShipLogProject;
+  className: string;
+}) {
+  if (!project.thumbnail) return null;
+  const href = project.liveUrl ?? project.repoUrl;
+  const image = (
+    <Image
+      src={project.thumbnail.src}
+      alt={project.thumbnail.alt}
+      width={800}
+      height={500}
+      sizes="160px"
+      className="w-full h-auto"
+    />
+  );
+  return (
+    <div className={`shrink-0 overflow-hidden ${className}`}>
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" tabIndex={-1}>
+          {image}
+        </a>
+      ) : (
+        image
+      )}
+    </div>
+  );
+}
+
 function TerminalProject({ project }: { project: ShipLogProject }) {
   return (
-    <div className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200">
-      <div className="flex justify-between items-start mb-1 flex-wrap gap-2">
-        <div className="text-[#0000ff] font-bold text-lg">
-          {project.liveUrl ? (
+    <div className="p-4 border-b border-[#e0e0d0] last:border-b-0 hover:bg-[#f0f0e0] transition-colors duration-200 flex flex-col sm:flex-row gap-4">
+      <Thumbnail
+        project={project}
+        className="w-40 self-start rounded border border-[#e0e0d0] bg-white"
+      />
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between items-start mb-1 flex-wrap gap-2">
+          <div className="text-[#0000ff] font-bold text-lg">
+            {project.liveUrl ? (
+              <a
+                href={project.liveUrl}
+                className="hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {project.name}
+              </a>
+            ) : (
+              <span className="text-[#333333]">{project.name}</span>
+            )}
+            {project.liveUrl && (
+              <span className="ml-2 align-middle text-[10px] font-normal uppercase tracking-wide bg-[#28ca41] text-[#14471f] px-1.5 py-0.5 rounded">
+                live
+              </span>
+            )}
+          </div>
+          <span className="text-[#8b0000] text-sm whitespace-nowrap">
+            {plural(project.commits, "commit")} · {formatRange(project)}
+          </span>
+        </div>
+
+        <div className="text-[#666666] text-sm italic mb-2">
+          {project.tagline}
+        </div>
+
+        <div className="text-[#333333] mb-3 leading-relaxed">
+          {project.summary}
+        </div>
+
+        <ul className="mb-3 space-y-1.5">
+          {project.bullets.map((bullet, i) => (
+            <li key={i} className="text-[#333333] text-sm leading-relaxed flex">
+              <span className="text-[#8b0000] mr-2 select-none">▸</span>
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+          {project.liveUrl && (
             <a
               href={project.liveUrl}
-              className="hover:underline"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-[#0000ff] hover:underline inline-flex items-center gap-1"
             >
-              {project.name}
+              <ExternalLink size={13} /> Open it
             </a>
-          ) : (
-            <span className="text-[#333333]">{project.name}</span>
           )}
-          {project.liveUrl && (
-            <span className="ml-2 align-middle text-[10px] font-normal uppercase tracking-wide bg-[#28ca41] text-[#14471f] px-1.5 py-0.5 rounded">
-              live
-            </span>
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#0000ff] hover:underline inline-flex items-center gap-1"
+            >
+              <Github size={13} /> Source
+            </a>
           )}
+          {project.extraLinks?.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#0000ff] hover:underline text-xs"
+            >
+              {link.label} →
+            </a>
+          ))}
         </div>
-        <span className="text-[#8b0000] text-sm whitespace-nowrap">
-          {plural(project.commits, "commit")} · {formatRange(project)}
-        </span>
-      </div>
 
-      <div className="text-[#666666] text-sm italic mb-2">
-        {project.tagline}
-      </div>
-
-      <div className="text-[#333333] mb-3 leading-relaxed">
-        {project.summary}
-      </div>
-
-      <ul className="mb-3 space-y-1.5">
-        {project.bullets.map((bullet, i) => (
-          <li key={i} className="text-[#333333] text-sm leading-relaxed flex">
-            <span className="text-[#8b0000] mr-2 select-none">▸</span>
-            <span>{bullet}</span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0000ff] hover:underline inline-flex items-center gap-1"
-          >
-            <ExternalLink size={13} /> Open it
-          </a>
-        )}
-        {project.repoUrl && (
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0000ff] hover:underline inline-flex items-center gap-1"
-          >
-            <Github size={13} /> Source
-          </a>
-        )}
-        {project.extraLinks?.map((link) => (
-          <a
-            key={link.url}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0000ff] hover:underline text-xs"
-          >
-            {link.label} →
-          </a>
-        ))}
-      </div>
-
-      <div className="flex flex-wrap gap-2 mt-3">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"
-          >
-            #{tag}
-          </span>
-        ))}
+        <div className="flex flex-wrap gap-2 mt-3">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs bg-[#e0e0d0] text-[#666666] px-2 py-1 rounded border"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -122,30 +163,38 @@ function TerminalProject({ project }: { project: ShipLogProject }) {
 function MarketerProject({ project }: { project: ShipLogProject }) {
   return (
     <div className="bg-[#F4F5F7] rounded-lg p-6 border border-transparent hover:border-[#0052CC] hover:shadow-lg transition-all flex flex-col">
-      <div className="flex justify-between items-start mb-2 gap-2">
-        <h3 className="font-semibold text-[#172B4D] text-lg">
-          {project.liveUrl ? (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#0052CC] hover:underline"
-            >
-              {project.name}
-            </a>
-          ) : (
-            project.name
-          )}
-        </h3>
-        {project.liveUrl && (
-          <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide bg-[#E3FCEF] text-[#006644] px-2 py-1 rounded">
-            Live
-          </span>
-        )}
-      </div>
+      <div className="flex items-start gap-4 mb-3">
+        <Thumbnail
+          project={project}
+          className="w-28 self-start rounded-md border border-[#DFE1E6] bg-white"
+        />
+        <div className="flex-1 min-w-0">
+          <div className="flex justify-between items-start mb-2 gap-2">
+            <h3 className="font-semibold text-[#172B4D] text-lg">
+              {project.liveUrl ? (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#0052CC] hover:underline"
+                >
+                  {project.name}
+                </a>
+              ) : (
+                project.name
+              )}
+            </h3>
+            {project.liveUrl && (
+              <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide bg-[#E3FCEF] text-[#006644] px-2 py-1 rounded">
+                Live
+              </span>
+            )}
+          </div>
 
-      <div className="text-xs text-[#6B778C] mb-3">
-        {plural(project.commits, "commit")} · {formatRange(project)}
+          <div className="text-xs text-[#6B778C]">
+            {plural(project.commits, "commit")} · {formatRange(project)}
+          </div>
+        </div>
       </div>
 
       <p className="text-sm text-[#172B4D] font-medium mb-3 leading-relaxed">
