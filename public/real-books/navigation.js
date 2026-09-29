@@ -17,11 +17,11 @@ export function horizontalDrag({start,delta,pixels,distance,aspect,mode,panRange
  return clamp(start-delta/Math.max(1,pixels)*width,...panBounds(distance,aspect,panRange));
 }
 // The chosen tool controls both axes and never changes with zoom or screen size.
-export function dragView({mode,yaw,pitch,x,y,dx,dy,width,height,distance,aspect,panRange,maxPitch=.3}){
+export function dragView({mode,yaw,pitch,x,y,dx,dy,width,height,distance,aspect,panRange,maxPitch=.3,maxY=14.3}){
  const horizontal=horizontalDrag({start:mode==='pan'?x:yaw,delta:dx,pixels:width,distance,aspect,mode,panRange});
  if(mode==='pan'){
   const verticalSpan=panGeometry(distance,aspect).width/aspect;
-  return {yaw,pitch,x:horizontal,y:clamp(y+dy/Math.max(1,height)*verticalSpan,0,14.3)};
+  return {yaw,pitch,x:horizontal,y:clamp(y+dy/Math.max(1,height)*verticalSpan,0,maxY)};
  }
  return {yaw:horizontal,pitch:clamp(pitch+dy/Math.max(1,height)*1.2,-.23,maxPitch),x,y};
 }
