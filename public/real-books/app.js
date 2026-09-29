@@ -82,7 +82,7 @@ function addBooks(){if(bookcase.id==='drawer'){addDrawerBooks();return}books.for
   if(b.elevation!==undefined)y=yBase[b.row]+b.elevation+h/2;
  }
  const textureRect=b.textureRect||r;
- const depth=b.layout?.depth||(b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65)),restZ=.8-depth/2,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);if(b.topTexture){mesh.material[2].map=b.topTexture;mesh.material[2].color.set('#ffffff')}mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
+ const depth=b.layout?.depth||(b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65)),restZ=b.layout?.z??(.8-depth/2),side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);if(b.topTexture){mesh.material[2].map=b.topTexture;mesh.material[2].color.set('#ffffff')}mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  });$('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
 function addDrawerBooks(){
@@ -181,7 +181,7 @@ async function start(){
   sources[book.textureSource]={image:canvas,canvas,texture};
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[];root.traverse(object=>{if(object.isMesh)occluders.push(object)});addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='drawer'?'Taiwan Travelogue':bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=bookcase.shape?-.02:-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[];root.traverse(object=>{if(object.isMesh)occluders.push(object)});addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='drawer'?'Taiwan Travelogue':bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
  const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();setFocus(focusedRow);
  function frame(){
   requestAnimationFrame(frame);

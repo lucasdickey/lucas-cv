@@ -449,7 +449,7 @@ corners('cream','Unscaled',[[314,202],[368,211],[398,608],[351,609]]);
 
 // Keep plainly visible but unreadable volumes in place without inventing a title.
 studyBooks.right.push({title:'Unidentified white volume',author:'',unidentified:true,row:0,rect:[641,15,47,135],layout:{x:2.95,y:14.65,width:.15,height:1.8,depth:1.25},spine:{source:'study/03',quad:[[671,15],[688,17],[664,149],[641,148]]}});
-studyBooks.cream.push({title:'Unidentified illustrated volume',author:'',unidentified:true,row:2,horizontal:true,coverFace:2,rect:[4,783,425,19],layout:{x:-1.93,y:5.84,width:2.2,height:.08,depth:1.9},spine:{source:'study/12',quad:[[4,783],[429,786],[430,803],[4,798]]},top:{source:'study/12',quad:[[185,651],[495,650],[440,790],[9,779]]}});
+studyBooks.cream.push({title:'Unidentified illustrated volume',author:'',unidentified:true,row:2,horizontal:true,coverFace:2,rect:[4,783,425,19],layout:{x:-1.93,y:5.84,z:1.32,width:2.2,height:.08,depth:.9},spine:{source:'study/12',quad:[[4,783],[429,786],[430,803],[4,798]]},top:{source:'study/12',quad:[[185,651],[495,650],[440,790],[9,779]]}});
 studyBooks.left.push({title:'Unidentified flat volume',author:'',unidentified:true,row:5,horizontal:true,rect:[1,214,425,45],layout:{x:-2.04,y:2.91,width:2.51,height:.08,depth:1.7},spine:{source:'study/19',quad:[[2,214],[428,247],[427,260],[2,228]]}});
 
 // Perspective can make adjacent photographed spines overlap. Their physical
@@ -466,6 +466,7 @@ for(const key of ['left','cream','right']){
  if(key==='right')overhang.forEach(b=>b.layout.y-=.065);
  for(let i=0;i<list.length;i++)for(let j=i+1;j<list.length;j++){
   const a=list[i],b=list[j],p=a.layout,q=b.layout;
+  if(Math.abs((p.z??(.8-p.depth/2))-(q.z??(.8-q.depth/2)))>=(p.depth+q.depth)/2)continue;
   if(a.row!==b.row||Math.abs(p.y-q.y)>=(p.height+q.height)/2-.025)continue;
   const gap=Math.abs(p.x-q.x),span=(p.width+q.width)/2;
   if(gap<span+.008){const scale=Math.max(.1,(gap-.008)/span);p.width*=scale;q.width*=scale}

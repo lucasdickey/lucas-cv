@@ -12,12 +12,12 @@ export function addStudyBookcase({box,mat,bookcase}){
   return;
  }
  const cream=bookcase.shape==='cream',paint=mat(cream?'#d4d0b7':'#171b1c'),back=mat(cream?'#bcb8a2':'#101314');
- const height=13.75,depth=2.12;
+ const height=13.75,depth=cream?3:2.12,z=cream?.3:-.2;
  box(6.85,height,.11,0,height/2,-1.2,back);
- for(const x of [-3.48,3.48])box(.22,height,depth,x,height/2,-.2,paint);
- for(const y of [.5,3.15,5.8,8.45,11.1,13.75])box(6.85,.18,depth,0,y-.09,-.2,paint);
- box(6.85,.32,.16,0,.18,.78,paint);
+ for(const x of [-3.48,3.48])box(.22,height,depth,x,height/2,z,paint);
+ for(const y of [.5,3.15,5.8,8.45,11.1,13.75])box(6.85,.18,depth,0,y-.09,z,paint);
+ box(6.85,.32,.16,0,.18,z+depth/2-.08,paint);
  // Recessed shelf-pin holes on the inner walls make the plain frames less flat.
  const holes=mat(cream?'#7f7b67':'#393b33');
- for(const x of [-3.362,3.362])for(const z of [-.82,.58])for(let y=.85;y<13.4;y+=.43)box(.012,.026,.026,x,y,z,holes);
+ for(const x of [-3.362,3.362])for(const z of [-.82,cream?1.5:.58])for(let y=.85;y<13.4;y+=.43)box(.012,.026,.026,x,y,z,holes);
 }

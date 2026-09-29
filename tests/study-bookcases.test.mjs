@@ -37,7 +37,7 @@ test('each book clears its supporting shelf, neighboring books, and the cabinet 
   }
   for(let i=0;i<c.books.length;i++)for(let j=i+1;j<c.books.length;j++){
    const a=c.books[i],b=c.books[j],p=a.layout,q=b.layout;
-   if(a.row!==b.row)continue;
+   if(a.row!==b.row||Math.abs((p.z??(.8-p.depth/2))-(q.z??(.8-q.depth/2)))>=(p.depth+q.depth)/2)continue;
    const overlapX=(p.width+q.width)/2-Math.abs(p.x-q.x),overlapY=(p.height+q.height)/2-Math.abs(p.y-q.y);
    assert.ok(overlapX<.025||overlapY<.025,`${a.title} intersects ${b.title}`);
   }
