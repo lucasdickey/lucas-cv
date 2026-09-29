@@ -1,0 +1,2423 @@
+{
+  "Strategic Marketing Management": {
+    "asin": "0982512635",
+    "source": "https://openlibrary.org/works/OL27306826W",
+    "matchedTitle": "Strategic marketing management",
+    "matchedAuthor": [
+      "Alexander Chernev"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The 48 Laws of Power": {
+    "asin": "0670881465",
+    "source": "https://openlibrary.org/works/OL1968368W",
+    "matchedTitle": "The 48 Laws of Power",
+    "matchedAuthor": [
+      "Robert Greene"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Laws of Human Nature": {
+    "asin": "0525561803",
+    "source": "https://openlibrary.org/works/OL19761410W",
+    "matchedTitle": "The Laws of Human Nature",
+    "matchedAuthor": [
+      "Robert Greene"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Connecting the Dots": {
+    "asin": "0316486531",
+    "source": "https://openlibrary.org/works/OL17995873W",
+    "matchedTitle": "Connecting the dots",
+    "matchedAuthor": [
+      "John Chambers"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Starfish and the Spider": {
+    "asin": "1591841437",
+    "source": "https://openlibrary.org/works/OL16938301W",
+    "matchedTitle": "The starfish and the spider",
+    "matchedAuthor": [
+      "Ori Brafman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Tipping Point": {
+    "asin": "0316648523",
+    "source": "https://openlibrary.org/works/OL5749848W",
+    "matchedTitle": "The Tipping Point",
+    "matchedAuthor": [
+      "Malcolm Gladwell"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Blink": {
+    "asin": "0316172324",
+    "source": "https://openlibrary.org/works/OL5749849W",
+    "matchedTitle": "Blink",
+    "matchedAuthor": [
+      "Malcolm Gladwell"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Outliers": {
+    "asin": "031602497X",
+    "source": "https://openlibrary.org/works/OL5749847W",
+    "matchedTitle": "Outliers",
+    "matchedAuthor": [
+      "Malcolm Gladwell"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Undoing Project": {
+    "asin": "1410496457",
+    "source": "https://openlibrary.org/works/OL19669285W",
+    "matchedTitle": "The undoing project",
+    "matchedAuthor": [
+      "Michael Lewis",
+      "Dennis Boutsikaris",
+      "Michael Lewis"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Good to Great": {
+    "asin": "0712676090",
+    "source": "https://openlibrary.org/works/OL3486275W",
+    "matchedTitle": "Good to Great",
+    "matchedAuthor": [
+      "Collins, James C.",
+      "Jim Collins"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Lords of Strategy": {
+    "asin": "1591397820",
+    "source": "https://openlibrary.org/works/OL4652109W",
+    "matchedTitle": "The lords of strategy",
+    "matchedAuthor": [
+      "Walter Kiechel"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Leadership": {
+    "asin": "0141998687",
+    "source": "https://openlibrary.org/works/OL25348188W",
+    "matchedTitle": "Leadership",
+    "matchedAuthor": [
+      "Henry Kissinger"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "On Grand Strategy": {
+    "asin": "0141987227",
+    "source": "https://openlibrary.org/works/OL19742371W",
+    "matchedTitle": "On grand strategy",
+    "matchedAuthor": [
+      "John Lewis Gaddis"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Competitive Strategy": {
+    "asin": "0029253608",
+    "source": "https://openlibrary.org/works/OL1827735W",
+    "matchedTitle": "Competitive Strategy",
+    "matchedAuthor": [
+      "Michael E. Porter"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Great Escape": {
+    "asin": "1299783333",
+    "source": "https://openlibrary.org/works/OL20315800W",
+    "matchedTitle": "The Great Escape",
+    "matchedAuthor": [
+      "Angus Deaton"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The New Economics": {
+    "asin": "091137907X",
+    "source": "https://openlibrary.org/works/OL3190935W",
+    "matchedTitle": "The new economics",
+    "matchedAuthor": [
+      "W. Edwards Deming"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Narrative Economics": {
+    "asin": "0691189978",
+    "source": "https://openlibrary.org/works/OL20683750W",
+    "matchedTitle": "Narrative Economics",
+    "matchedAuthor": [
+      "Robert J. Shiller"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Scarcity": {
+    "asin": "1429943459",
+    "source": "https://openlibrary.org/works/OL19969724W",
+    "matchedTitle": "Scarcity",
+    "matchedAuthor": [
+      "Sendhil Mullainathan"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Economics for the Common Good": {
+    "asin": "0691175160",
+    "source": "https://openlibrary.org/works/OL19725831W",
+    "matchedTitle": "Economics for the Common Good",
+    "matchedAuthor": [
+      "Jean Tirole"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Misbehaving": {
+    "asin": "039335279X",
+    "source": "https://openlibrary.org/works/OL17940527W",
+    "matchedTitle": "Misbehaving",
+    "matchedAuthor": [
+      "Richard H. Thaler"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Nudge": {
+    "asin": "0241552109",
+    "source": "https://openlibrary.org/works/OL3936258W",
+    "matchedTitle": "Nudge",
+    "matchedAuthor": [
+      "Richard H. Thaler",
+      "Cass R. Sunstein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "American Bonds": {
+    "asin": "0691156751",
+    "source": "https://openlibrary.org/works/OL21639864W",
+    "matchedTitle": "American Bonds",
+    "matchedAuthor": [
+      "Sarah L. Quinn"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Competition": {
+    "asin": "0809035774",
+    "source": "https://openlibrary.org/works/OL4684877W",
+    "matchedTitle": "Competition",
+    "matchedAuthor": [
+      "James Case"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Undercover Economist Strikes Back": {
+    "asin": "1594631409",
+    "source": "https://openlibrary.org/works/OL19974553W",
+    "matchedTitle": "The undercover economist strikes back",
+    "matchedAuthor": [
+      "Tim Harford"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Undercover Economist": {
+    "asin": "0195189779",
+    "source": "https://openlibrary.org/works/OL8005105W",
+    "matchedTitle": "The Undercover Economist",
+    "matchedAuthor": [
+      "Tim Harford"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Information Rules": {
+    "asin": "087584863X",
+    "source": "https://openlibrary.org/works/OL1906587W",
+    "matchedTitle": "Information rules",
+    "matchedAuthor": [
+      "Carl Shapiro",
+      "Hal R. Varian"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Logic of Life": {
+    "asin": "1588366820",
+    "source": "https://openlibrary.org/works/OL8005104W",
+    "matchedTitle": "The Logic of Life",
+    "matchedAuthor": [
+      "Tim Harford"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Exponential Age": {
+    "asin": "1635768276",
+    "source": "https://openlibrary.org/works/OL25014335W",
+    "matchedTitle": "The Exponential Age",
+    "matchedAuthor": [
+      "Azeem Azhar"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Four Threats": {
+    "asin": "1250797160",
+    "source": "https://openlibrary.org/works/OL20811165W",
+    "matchedTitle": "Four Threats",
+    "matchedAuthor": [
+      "Suzanne Mettler",
+      "Robert C. Lieberman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The People Themselves": {
+    "asin": "0195306457",
+    "source": "https://openlibrary.org/works/OL6030780W",
+    "matchedTitle": "The people themselves",
+    "matchedAuthor": [
+      "Larry Kramer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Mission Economy": {
+    "asin": "0063046237",
+    "source": "https://openlibrary.org/works/OL21907327W",
+    "matchedTitle": "Mission Economy",
+    "matchedAuthor": [
+      "Mariana Mazzucato"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "10% Less Democracy": {
+    "asin": "1503603571",
+    "source": "https://openlibrary.org/works/OL20728295W",
+    "matchedTitle": "10% Less Democracy",
+    "matchedAuthor": [
+      "Garett Jones"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Tools and Weapons": {
+    "asin": "152935157X",
+    "source": "https://openlibrary.org/works/OL20128042W",
+    "matchedTitle": "Tools And Weapons",
+    "matchedAuthor": [
+      "Brad Smith",
+      "Carol Ann Browne"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Coming Wave": {
+    "asin": "1529923832",
+    "source": "https://openlibrary.org/works/OL36525720W",
+    "matchedTitle": "The Coming Wave",
+    "matchedAuthor": [
+      "Mustafa Suleyman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Sentient Machine": {
+    "asin": "1501144693",
+    "source": "https://openlibrary.org/works/OL20168900W",
+    "matchedTitle": "The Sentient Machine",
+    "matchedAuthor": [
+      "Amir Husain"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Second Machine Age": {
+    "asin": "150123837X",
+    "source": "https://openlibrary.org/works/OL17047067W",
+    "matchedTitle": "The Second Machine Age",
+    "matchedAuthor": [
+      "Erik Brynjolfsson",
+      "Andrew McAfee"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Co-Intelligence": {
+    "asin": "0593852508",
+    "source": "https://openlibrary.org/works/OL37565105W",
+    "matchedTitle": "Co-Intelligence",
+    "matchedAuthor": [
+      "Ethan Mollick"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Shape": {
+    "asin": "0241413524",
+    "source": "https://openlibrary.org/works/OL24311715W",
+    "matchedTitle": "Shape",
+    "matchedAuthor": [
+      "Jordan Ellenberg"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How Not to Be Wrong": {
+    "asin": "1594205221",
+    "source": "https://openlibrary.org/works/OL17062668W",
+    "matchedTitle": "How Not to Be Wrong",
+    "matchedAuthor": [
+      "Jordan Ellenberg"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "God, Human, Animal, Machine": {
+    "asin": "0525562710",
+    "source": "https://openlibrary.org/works/OL24894855W",
+    "matchedTitle": "God, Human, Animal, Machine",
+    "matchedAuthor": [
+      "Meghan O'Gieblyn"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Theory of Games and Economic Behavior": {
+    "asin": "0691130612",
+    "source": "https://openlibrary.org/works/OL1204974W",
+    "matchedTitle": "Theory of Games and Economic Behavior",
+    "matchedAuthor": [
+      "John von Neumann",
+      "Oskar Morgenstern"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "GreenPilled": {
+    "asin": "1034928163",
+    "source": "https://openlibrary.org/works/OL27673407W",
+    "matchedTitle": "GreenPilled",
+    "matchedAuthor": [
+      "Kevin Owocki"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Exercised": {
+    "asin": "0141986360",
+    "source": "https://openlibrary.org/works/OL21800587W",
+    "matchedTitle": "Exercised",
+    "matchedAuthor": [
+      "Daniel E. Lieberman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Confessions of an Advertising Man": {
+    "asin": "0345021843",
+    "source": "https://openlibrary.org/works/OL3346507W",
+    "matchedTitle": "Confessions of an advertising man",
+    "matchedAuthor": [
+      "David Ogilvy",
+      "Matthieu Deloison"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Shoe Dog": {
+    "asin": "1501135929",
+    "source": "https://openlibrary.org/works/OL17825802W",
+    "matchedTitle": "Shoe Dog",
+    "matchedAuthor": [
+      "Phil Knight"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Genius Makers": {
+    "asin": "1524742678",
+    "source": "https://openlibrary.org/works/OL24233014W",
+    "matchedTitle": "Genius Makers",
+    "matchedAuthor": [
+      "Cade Metz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Leading Matters": {
+    "asin": "1503608018",
+    "source": "https://openlibrary.org/works/OL19764616W",
+    "matchedTitle": "Leading matters",
+    "matchedAuthor": [
+      "John L. Hennessy"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Who Is Michael Ovitz?": {
+    "asin": "0753553392",
+    "source": "https://openlibrary.org/works/OL19749418W",
+    "matchedTitle": "Who is Michael Ovitz?",
+    "matchedAuthor": [
+      "Michael Ovitz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Good Economics for Hard Times": {
+    "asin": "0141986204",
+    "source": "https://openlibrary.org/works/OL20659791W",
+    "matchedTitle": "Good Economics for Hard Times",
+    "matchedAuthor": [
+      "Abhijit Banerjee",
+      "Esther Duflo"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Net Positive": {
+    "asin": "1647821304",
+    "source": "https://openlibrary.org/works/OL25774339W",
+    "matchedTitle": "Net Positive",
+    "matchedAuthor": [
+      "Paul Polman",
+      "Andrew Winston"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "More from Less": {
+    "asin": "1982103574",
+    "source": "https://openlibrary.org/works/OL20346106W",
+    "matchedTitle": "More from Less",
+    "matchedAuthor": [
+      "Andrew McAfee"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Business of Venture Capital": {
+    "asin": "1118130405",
+    "source": "https://openlibrary.org/works/OL16183893W",
+    "matchedTitle": "The business of venture capital",
+    "matchedAuthor": [
+      "Mahendra Ramsinghani"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "High Growth Handbook": {
+    "asin": "1732265100",
+    "source": "https://openlibrary.org/works/OL20564340W",
+    "matchedTitle": "High Growth Handbook",
+    "matchedAuthor": [
+      "Elad Gil"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The God Delusion": {
+    "asin": "8467031972",
+    "source": "https://openlibrary.org/works/OL1966485W",
+    "matchedTitle": "The God Delusion",
+    "matchedAuthor": [
+      "Richard Dawkins"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Portable Atheist": {
+    "asin": "0306816083",
+    "source": "https://openlibrary.org/works/OL2974359W",
+    "matchedTitle": "The portable atheist",
+    "matchedAuthor": [
+      "Christopher Hitchens"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Why Buddhism Is True": {
+    "asin": "1439195463",
+    "source": "https://openlibrary.org/works/OL20917487W",
+    "matchedTitle": "Why Buddhism is True",
+    "matchedAuthor": [
+      "Robert Wright"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Meaning of Human Existence": {
+    "asin": "0871401002",
+    "source": "https://openlibrary.org/works/OL17634954W",
+    "matchedTitle": "The Meaning of Human Existence",
+    "matchedAuthor": [
+      "Edward Osborne Wilson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Infidel and the Professor": {
+    "asin": "0691192286",
+    "source": "https://openlibrary.org/works/OL20156887W",
+    "matchedTitle": "The Infidel and the Professor",
+    "matchedAuthor": [
+      "Dennis C. Rasmussen"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Major Works": {
+    "asin": "0061550248",
+    "source": "https://openlibrary.org/works/OL1410283W",
+    "matchedTitle": "Major Works",
+    "matchedAuthor": [
+      "Ludwig Wittgenstein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Moral Action": {
+    "asin": "0253338719",
+    "source": "https://openlibrary.org/works/OL3523848W",
+    "matchedTitle": "Moral action",
+    "matchedAuthor": [
+      "Robert Sokolowski"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Nicomachean Ethics": {
+    "asin": "1147501998",
+    "source": "https://openlibrary.org/works/OL8273964W",
+    "matchedTitle": "Nicomachean Ethics",
+    "matchedAuthor": [
+      "Aristotle"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Evolution of God": {
+    "asin": "0316734918",
+    "source": "https://openlibrary.org/works/OL18098196W",
+    "matchedTitle": "The evolution of God",
+    "matchedAuthor": [
+      "Wright, Robert"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Divine Comedy: Inferno": {
+    "asin": "1425060102",
+    "source": "https://openlibrary.org/works/OL267394W",
+    "matchedTitle": "The Divine Comedy Inferno",
+    "matchedAuthor": [
+      "Dante Alighieri"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Man's Search for Meaning": {
+    "asin": "0807067997",
+    "source": "https://openlibrary.org/works/OL24557376W",
+    "matchedTitle": "Man's Search for Meaning adapted for Young Adults [adaptation]",
+    "matchedAuthor": [
+      "Viktor Emil Frankl"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Beyond Good and Evil": {
+    "asin": "1979466076",
+    "source": "https://openlibrary.org/works/OL41618480W",
+    "matchedTitle": "Beyond Good and Evil",
+    "matchedAuthor": [
+      "Friedrich Nietzsche"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Theory of the Leisure Class": {
+    "asin": "094256300X",
+    "source": "https://openlibrary.org/works/OL1868441W",
+    "matchedTitle": "The Theory of the Leisure Class",
+    "matchedAuthor": [
+      "Thorstein Veblen"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Does the Center Hold?": {
+    "asin": "1559344830",
+    "source": "https://openlibrary.org/works/OL3162158W",
+    "matchedTitle": "Does the center hold?",
+    "matchedAuthor": [
+      "Donald Palmer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The World as I See It": {
+    "asin": "938811812X",
+    "source": "https://openlibrary.org/works/OL45327108W",
+    "matchedTitle": "The World as I See It",
+    "matchedAuthor": [
+      "Albert Einstein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Twilight of the Idols": {
+    "asin": "0140445145",
+    "source": "https://openlibrary.org/works/OL98127W",
+    "matchedTitle": "Twilight of the Idols and The Antichrist",
+    "matchedAuthor": [
+      "Friedrich Nietzsche"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Theory of Moral Sentiments": {
+    "asin": "0870000616",
+    "source": "https://openlibrary.org/works/OL76826W",
+    "matchedTitle": "The theory of moral sentiments",
+    "matchedAuthor": [
+      "Adam Smith"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Begin Again": {
+    "asin": "0525575324",
+    "source": "https://openlibrary.org/works/OL20892038W",
+    "matchedTitle": "Begin Again",
+    "matchedAuthor": [
+      "Eddie S. Glaude Jr."
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Big Sea": {
+    "asin": "082621410X",
+    "source": "https://openlibrary.org/works/OL28563W",
+    "matchedTitle": "The big sea",
+    "matchedAuthor": [
+      "Langston Hughes"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Yarmulkes & Fitted Caps": {
+    "asin": "193891239X",
+    "source": "https://openlibrary.org/works/OL24221631W",
+    "matchedTitle": "Yarmulkes & Fitted Caps",
+    "matchedAuthor": [
+      "Aaron Levy Samuels"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Collected Poems of Wallace Stevens": {
+    "asin": "1101911689",
+    "source": "https://openlibrary.org/works/OL19761689W",
+    "matchedTitle": "The collected poems of Wallace Stevens",
+    "matchedAuthor": [
+      "Wallace Stevens"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Principles for Success": {
+    "asin": "1982147253",
+    "source": "https://openlibrary.org/works/OL21878839W",
+    "matchedTitle": "Principles for Success",
+    "matchedAuthor": [
+      "Ray Dalio"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Joe Biden": {
+    "asin": "1526635194",
+    "source": "https://openlibrary.org/works/OL22797026W",
+    "matchedTitle": "Joe Biden",
+    "matchedAuthor": [
+      "Evan Osnos"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Andrew Carnegie": {
+    "asin": "1596591242",
+    "source": "https://openlibrary.org/works/OL891762W",
+    "matchedTitle": "Andrew Carnegie",
+    "matchedAuthor": [
+      "David Nasaw"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Steve Jobs": {
+    "asin": "357010124X",
+    "source": "https://openlibrary.org/works/OL16085155W",
+    "matchedTitle": "Steve Jobs",
+    "matchedAuthor": [
+      "Walter Isaacson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "A Promised Land": {
+    "asin": "0593239040",
+    "source": "https://openlibrary.org/works/OL22235242W",
+    "matchedTitle": "A Promised Land",
+    "matchedAuthor": [
+      "Barack Obama",
+      "Francisco José Ramos Mena",
+      "Efrén del Valle Peñamil",
+      "Marcos Pérez Sánchez",
+      "Carmen Mercedes Cáceres",
+      "Andrés Barba Muñiz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Elon Musk": {
+    "asin": "1982181303",
+    "source": "https://openlibrary.org/works/OL35720357W",
+    "matchedTitle": "Elon Musk",
+    "matchedAuthor": [
+      "Walter Isaacson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Keynes Hayek": {
+    "asin": "0393343634",
+    "source": "https://openlibrary.org/works/OL16282899W",
+    "matchedTitle": "Keynes Hayek",
+    "matchedAuthor": [
+      "Nicholas Wapshott"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "John Adams": {
+    "asin": "0743223136",
+    "source": "https://openlibrary.org/works/OL2820749W",
+    "matchedTitle": "John Adams",
+    "matchedAuthor": [
+      "David McCullough"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Louis D. Brandeis": {
+    "asin": "0307378586",
+    "source": "https://openlibrary.org/works/OL2072211W",
+    "matchedTitle": "Louis D. Brandeis",
+    "matchedAuthor": [
+      "Melvin I. Urofsky"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Catching the Wind": {
+    "asin": "0804137021",
+    "source": "https://openlibrary.org/works/OL21908833W",
+    "matchedTitle": "Catching the Wind",
+    "matchedAuthor": [
+      "Neal Gabler"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Mellon": {
+    "asin": "0679450327",
+    "source": "https://openlibrary.org/works/OL1920330W",
+    "matchedTitle": "Mellon",
+    "matchedAuthor": [
+      "David Cannadine"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Team of Rivals": {
+    "asin": "0684824906",
+    "source": "https://openlibrary.org/works/OL1856010W",
+    "matchedTitle": "Team of Rivals",
+    "matchedAuthor": [
+      "Doris Kearns Goodwin"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Code Breaker": {
+    "asin": "1797117041",
+    "source": "https://openlibrary.org/works/OL24217656W",
+    "matchedTitle": "The Code Breaker",
+    "matchedAuthor": [
+      "Walter Isaacson",
+      "Kathe Mazur",
+      "Sarah Durand"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Betraying the Nobel": {
+    "asin": "1643135643",
+    "source": "https://openlibrary.org/works/OL25439440W",
+    "matchedTitle": "Betraying the Nobel",
+    "matchedAuthor": [
+      "Unni Turrettini"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Enlightenment Now": {
+    "asin": "0525529772",
+    "source": "https://openlibrary.org/works/OL17848539W",
+    "matchedTitle": "Enlightenment now",
+    "matchedAuthor": [
+      "Steven Pinker",
+      "Pablo Hermida Lazcano"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Dawn of Everything": {
+    "asin": "3608966145",
+    "source": "https://openlibrary.org/works/OL24663287W",
+    "matchedTitle": "The Dawn of Everything",
+    "matchedAuthor": [
+      "David Graeber",
+      "David Wengrow"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Ministry for the Future": {
+    "asin": "164732162X",
+    "source": "https://openlibrary.org/works/OL21680947W",
+    "matchedTitle": "The Ministry for the Future",
+    "matchedAuthor": [
+      "Kim Stanley Robinson",
+      "Simon Saito"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Guns, Germs, and Steel": {
+    "asin": "0224038095",
+    "source": "https://openlibrary.org/works/OL276558W",
+    "matchedTitle": "Guns, Germs, and Steel",
+    "matchedAuthor": [
+      "Jared Diamond"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Sapiens": {
+    "asin": "1716994985",
+    "source": "https://openlibrary.org/works/OL17075811W",
+    "matchedTitle": "Sapiens",
+    "matchedAuthor": [
+      "Yuval Noah Harari"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Homo Deus": {
+    "asin": "1784703931",
+    "source": "https://openlibrary.org/works/OL37486679W",
+    "matchedTitle": "Homo Deus",
+    "matchedAuthor": [
+      "Yuval Noah Harari"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "21 Lessons for the 21st Century": {
+    "asin": "8308065856",
+    "source": "https://openlibrary.org/works/OL17917961W",
+    "matchedTitle": "21 Lessons for the 21st Century",
+    "matchedAuthor": [
+      "Yuval Noah Harari"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "One Small Step Can Change Your Life": {
+    "asin": "0761129235",
+    "source": "https://openlibrary.org/works/OL8494557W",
+    "matchedTitle": "One Small Step Can Change Your Life",
+    "matchedAuthor": [
+      "Robert Maurer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Dopamine Nation": {
+    "asin": "1472294122",
+    "source": "https://openlibrary.org/works/OL24868953W",
+    "matchedTitle": "Dopamine Nation",
+    "matchedAuthor": [
+      "Anna Lembke"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Emotional Agility": {
+    "asin": "0241976588",
+    "source": "https://openlibrary.org/works/OL21157907W",
+    "matchedTitle": "Emotional Agility",
+    "matchedAuthor": [
+      "Susan A. David"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Joyful": {
+    "asin": "0316399280",
+    "source": "https://openlibrary.org/works/OL21158131W",
+    "matchedTitle": "Joyful",
+    "matchedAuthor": [
+      "Ingrid Fetell Lee"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Wanting": {
+    "asin": "1250262488",
+    "source": "https://openlibrary.org/works/OL24166598W",
+    "matchedTitle": "Wanting",
+    "matchedAuthor": [
+      "Luke Burgis"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "When": {
+    "asin": "0525528229",
+    "source": "https://openlibrary.org/works/OL19742083W",
+    "matchedTitle": "When",
+    "matchedAuthor": [
+      "Daniel H. Pink"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Numbers Don't Lie": {
+    "asin": "0241989701",
+    "source": "https://openlibrary.org/works/OL21680958W",
+    "matchedTitle": "Numbers Don't Lie",
+    "matchedAuthor": [
+      "Vaclav Smil"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Messy": {
+    "asin": "1408706768",
+    "source": "https://openlibrary.org/works/OL20201069W",
+    "matchedTitle": "Messy",
+    "matchedAuthor": [
+      "Tim Harford"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Applied Empathy": {
+    "asin": "1529378222",
+    "source": "https://openlibrary.org/works/OL20153638W",
+    "matchedTitle": "Applied Empathy",
+    "matchedAuthor": [
+      "Michael Ventura"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "A Brief History of Intelligence": {
+    "asin": "0008560137",
+    "source": "https://openlibrary.org/works/OL28354737W",
+    "matchedTitle": "A Brief History of Intelligence",
+    "matchedAuthor": [
+      "Max Bennett"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Noise": {
+    "asin": "8466362185",
+    "source": "https://openlibrary.org/works/OL17962180W",
+    "matchedTitle": "Noise",
+    "matchedAuthor": [
+      "Daniel Kahneman",
+      "Olivier Sibony",
+      "Cass R. Sunstein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Quantum Labyrinth": {
+    "asin": "0465097588",
+    "source": "https://openlibrary.org/works/OL19725928W",
+    "matchedTitle": "The quantum labyrinth",
+    "matchedAuthor": [
+      "Paul Halpern"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Social Chemistry": {
+    "asin": "1524743801",
+    "source": "https://openlibrary.org/works/OL20749207W",
+    "matchedTitle": "Social Chemistry",
+    "matchedAuthor": [
+      "Marissa King"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Stumbling on Happiness": {
+    "asin": "0676978584",
+    "source": "https://openlibrary.org/works/OL15840192W",
+    "matchedTitle": "Stumbling on happiness",
+    "matchedAuthor": [
+      "Daniel T. Gilbert"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "More Human": {
+    "asin": "0753551527",
+    "source": "https://openlibrary.org/works/OL20032421W",
+    "matchedTitle": "More human",
+    "matchedAuthor": [
+      "Steve Hilton"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Flow": {
+    "asin": "0061876720",
+    "source": "https://openlibrary.org/works/OL278571W",
+    "matchedTitle": "Flow",
+    "matchedAuthor": [
+      "Mihaly Csikszentmihalyi"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Originals": {
+    "asin": "0753556987",
+    "source": "https://openlibrary.org/works/OL20218426W",
+    "matchedTitle": "Originals",
+    "matchedAuthor": [
+      "Adam Grant"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Give and Take": {
+    "asin": "8543100739",
+    "source": "https://openlibrary.org/works/OL17312332W",
+    "matchedTitle": "Give and Take",
+    "matchedAuthor": [
+      "Adam Grant",
+      "Adam M. Grant"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Think Again": {
+    "asin": "1984878107",
+    "source": "https://openlibrary.org/works/OL22484556W",
+    "matchedTitle": "Think Again",
+    "matchedAuthor": [
+      "Adam Grant"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "No Hard Feelings": {
+    "asin": "0525533834",
+    "source": "https://openlibrary.org/works/OL20161429W",
+    "matchedTitle": "No Hard Feelings",
+    "matchedAuthor": [
+      "Liz Fosslien",
+      "Mollie West Duffy"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Thinking, Fast and Slow": {
+    "asin": "0606275649",
+    "source": "https://openlibrary.org/works/OL15992072W",
+    "matchedTitle": "Thinking, fast and slow",
+    "matchedAuthor": [
+      "Daniel Kahneman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Why Zebras Don't Get Ulcers": {
+    "asin": "0805073698",
+    "source": "https://openlibrary.org/works/OL1816386W",
+    "matchedTitle": "Why Zebras Don't Get Ulcers",
+    "matchedAuthor": [
+      "Robert M. Sapolsky"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "On the Edge": {
+    "asin": "0593491637",
+    "source": "https://openlibrary.org/works/OL37768334W",
+    "matchedTitle": "On the Edge",
+    "matchedAuthor": [
+      "Nate Silver"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "You Are a Badass": {
+    "asin": "0762486074",
+    "source": "https://openlibrary.org/works/OL17102197W",
+    "matchedTitle": "You Are a Badass",
+    "matchedAuthor": [
+      "Jen Sincero"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Obsessed": {
+    "asin": "0593084314",
+    "source": "https://openlibrary.org/works/OL21665115W",
+    "matchedTitle": "Obsessed",
+    "matchedAuthor": [
+      "Emily Heyward"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Making of a Manager": {
+    "asin": "0735219567",
+    "source": "https://openlibrary.org/works/OL20159758W",
+    "matchedTitle": "The Making of a Manager",
+    "matchedAuthor": [
+      "Julie Zhuo"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "You're Not Listening": {
+    "asin": "1250297206",
+    "source": "https://openlibrary.org/works/OL20642112W",
+    "matchedTitle": "You're Not Listening",
+    "matchedAuthor": [
+      "Kate Murphy"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Measure What Matters": {
+    "asin": "0241290872",
+    "source": "https://openlibrary.org/works/OL19746884W",
+    "matchedTitle": "Measure what matters",
+    "matchedAuthor": [
+      "John Doerr"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "User Friendly": {
+    "asin": "8367016009",
+    "source": "https://openlibrary.org/works/OL20859147W",
+    "matchedTitle": "User Friendly",
+    "matchedAuthor": [
+      "Cliff Kuang",
+      "Robert Fabricant"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Master Algorithm": {
+    "asin": "0465061923",
+    "source": "https://openlibrary.org/works/OL19663805W",
+    "matchedTitle": "The Master Algorithm",
+    "matchedAuthor": [
+      "Pedro Domingos"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Read Write Own": {
+    "asin": "1804949248",
+    "source": "https://openlibrary.org/works/OL37568701W",
+    "matchedTitle": "Read Write Own",
+    "matchedAuthor": [
+      "Chris Dixon"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Always Day One": {
+    "asin": "0241459087",
+    "source": "https://openlibrary.org/works/OL21657897W",
+    "matchedTitle": "Always Day One",
+    "matchedAuthor": [
+      "Alex Kantrowitz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Infinite Game": {
+    "asin": "073521350X",
+    "source": "https://openlibrary.org/works/OL20469879W",
+    "matchedTitle": "The Infinite Game",
+    "matchedAuthor": [
+      "Simon Sinek"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Entrepreneur's Weekly Nietzsche": {
+    "asin": "1544521405",
+    "source": "https://openlibrary.org/works/OL24559887W",
+    "matchedTitle": "The Entrepreneur's Weekly Nietzsche",
+    "matchedAuthor": [
+      "Dave Jilk",
+      "Brad Feld"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Range": {
+    "asin": "0735214484",
+    "source": "https://openlibrary.org/works/OL20131297W",
+    "matchedTitle": "Range",
+    "matchedAuthor": [
+      "David J. Epstein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Can’t Even": {
+    "asin": "0358561841",
+    "source": "https://openlibrary.org/works/OL21175955W",
+    "matchedTitle": "Can't Even",
+    "matchedAuthor": [
+      "Anne Helen Petersen"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Art of the Start": {
+    "asin": "1591841151",
+    "source": "https://openlibrary.org/works/OL1847363W",
+    "matchedTitle": "The Art of the Start",
+    "matchedAuthor": [
+      "Guy Kawasaki"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Blue Ocean Strategy": {
+    "asin": "9864175351",
+    "source": "https://openlibrary.org/works/OL8980380W",
+    "matchedTitle": "Blue ocean strategy",
+    "matchedAuthor": [
+      "W. Chan Kim"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Jobs to Be Done": {
+    "asin": "0814438032",
+    "source": "https://openlibrary.org/works/OL20054785W",
+    "matchedTitle": "Jobs to be done",
+    "matchedAuthor": [
+      "Stephen M. Wunker"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "That Will Never Work": {
+    "asin": "0316460664",
+    "source": "https://openlibrary.org/works/OL21355998W",
+    "matchedTitle": "That Will Never Work",
+    "matchedAuthor": [
+      "Marc Randolph"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Lean Startup": {
+    "asin": "3868815678",
+    "source": "https://openlibrary.org/works/OL16086010W",
+    "matchedTitle": "The Lean Startup",
+    "matchedAuthor": [
+      "Eric Ries"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Machine That Changed the World": {
+    "asin": "0060974176",
+    "source": "https://openlibrary.org/works/OL3252235W",
+    "matchedTitle": "The machine that changed the world",
+    "matchedAuthor": [
+      "James P. Womack"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Behind the Cloud": {
+    "asin": "0470521163",
+    "source": "https://openlibrary.org/works/OL16062424W",
+    "matchedTitle": "Behind the cloud",
+    "matchedAuthor": [
+      "Marc R. Benioff"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Upstarts": {
+    "asin": "0316396818",
+    "source": "https://openlibrary.org/works/OL20046494W",
+    "matchedTitle": "The Upstarts",
+    "matchedAuthor": [
+      "Brad Stone"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Chaos Monkeys": {
+    "asin": "1785034553",
+    "source": "https://openlibrary.org/works/OL20032373W",
+    "matchedTitle": "Chaos monkeys",
+    "matchedAuthor": [
+      "Antonio Garcia Martinez"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Unscaled": {
+    "asin": "0349417237",
+    "source": "https://openlibrary.org/works/OL19743079W",
+    "matchedTitle": "Unscaled",
+    "matchedAuthor": [
+      "Hemant Taneja"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Cold Start Problem": {
+    "asin": "1847942792",
+    "source": "https://openlibrary.org/works/OL24182444W",
+    "matchedTitle": "The Cold Start Problem",
+    "matchedAuthor": [
+      "Andrew Chen"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Hooked": {
+    "asin": "9089652701",
+    "source": "https://openlibrary.org/works/OL19992071W",
+    "matchedTitle": "Hooked",
+    "matchedAuthor": [
+      "Nir Eyal"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Design to Grow": {
+    "asin": "1451671822",
+    "source": "https://openlibrary.org/works/OL20631436W",
+    "matchedTitle": "Design to Grow",
+    "matchedAuthor": [
+      "David Butler",
+      "Linda Tischler"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Growth Hacker Marketing": {
+    "asin": "1782830197",
+    "source": "https://openlibrary.org/works/OL19986537W",
+    "matchedTitle": "Growth Hacker Marketing",
+    "matchedAuthor": [
+      "Ryan Holiday"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Obstacle Is the Way": {
+    "asin": "0578808390",
+    "source": "https://openlibrary.org/works/OL19977665W",
+    "matchedTitle": "The Obstacle is the Way",
+    "matchedAuthor": [
+      "Ryan Holiday"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Remote": {
+    "asin": "080413751X",
+    "source": "https://openlibrary.org/works/OL44567552W",
+    "matchedTitle": "Remote",
+    "matchedAuthor": [
+      "Jason Fried",
+      "David Heinemeier Hansson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Accelerate": {
+    "asin": "1942788622",
+    "source": "https://openlibrary.org/works/OL19542983W",
+    "matchedTitle": "Accelerate",
+    "matchedAuthor": [
+      "Nicole Forsgren",
+      "Jez Humble",
+      "Gene Kim"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Alibaba": {
+    "asin": "0062413406",
+    "source": "https://openlibrary.org/works/OL20023885W",
+    "matchedTitle": "Alibaba",
+    "matchedAuthor": [
+      "Duncan Clark"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Work Rules!": {
+    "asin": "1444792385",
+    "source": "https://openlibrary.org/works/OL21657434W",
+    "matchedTitle": "Work Rules!",
+    "matchedAuthor": [
+      "Laszlo Bock"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How I Built This": {
+    "asin": "1713577232",
+    "source": "https://openlibrary.org/works/OL21678590W",
+    "matchedTitle": "How I Built This",
+    "matchedAuthor": [
+      "Built-in Productions",
+      "Built-It Productions",
+      "Guy Raz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Crossing the Chasm": {
+    "asin": "1841120634",
+    "source": "https://openlibrary.org/works/OL30695W",
+    "matchedTitle": "Crossing the Chasm",
+    "matchedAuthor": [
+      "Geoffrey A. Moore"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Never Split the Difference": {
+    "asin": "1504735064",
+    "source": "https://openlibrary.org/works/OL18819818W",
+    "matchedTitle": "Never Split the Difference",
+    "matchedAuthor": [
+      "Chris Voss",
+      "Tahl Raz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How to Fail at Almost Everything and Still Win Big": {
+    "asin": "1591846919",
+    "source": "https://openlibrary.org/works/OL19974170W",
+    "matchedTitle": "How to fail at almost everything and still win big",
+    "matchedAuthor": [
+      "Scott Adams"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Nordstrom Way": {
+    "asin": "0471584967",
+    "source": "https://openlibrary.org/works/OL551076W",
+    "matchedTitle": "The Nordstrom Way",
+    "matchedAuthor": [
+      "Robert Spector"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Ogilvy on Advertising": {
+    "asin": "1853756156",
+    "source": "https://openlibrary.org/works/OL3346506W",
+    "matchedTitle": "Ogilvy on advertising",
+    "matchedAuthor": [
+      "David Ogilvy"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "After the Fall": {
+    "asin": "1526642077",
+    "source": "https://openlibrary.org/works/OL24191180W",
+    "matchedTitle": "After the Fall",
+    "matchedAuthor": [
+      "Ben Rhodes"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "White Trash": {
+    "asin": "0670785970",
+    "source": "https://openlibrary.org/works/OL17360507W",
+    "matchedTitle": "White trash",
+    "matchedAuthor": [
+      "Nancy Isenberg"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Kill Switch": {
+    "asin": "1665174242",
+    "source": "https://openlibrary.org/works/OL21988378W",
+    "matchedTitle": "Kill Switch",
+    "matchedAuthor": [
+      "Adam Jentleson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Tailspin": {
+    "asin": "1524731633",
+    "source": "https://openlibrary.org/works/OL19739338W",
+    "matchedTitle": "Tailspin",
+    "matchedAuthor": [
+      "Steven Brill"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Lessons of History": {
+    "asin": "143914995X",
+    "source": "https://openlibrary.org/works/OL1073956W",
+    "matchedTitle": "The Lessons of History",
+    "matchedAuthor": [
+      "Will Durant",
+      "Ariel Durant",
+      "Ni yu ping",
+      "Zhang kang"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "On Freedom": {
+    "asin": "0593728726",
+    "source": "https://openlibrary.org/works/OL37574810W",
+    "matchedTitle": "On Freedom",
+    "matchedAuthor": [
+      "Timothy Snyder"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Seeing Like a State": {
+    "asin": "2348057352",
+    "source": "https://openlibrary.org/works/OL26241985W",
+    "matchedTitle": "Seeing Like a State",
+    "matchedAuthor": [
+      "James C. Scott"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Twilight of the Elites": {
+    "asin": "0307720454",
+    "source": "https://openlibrary.org/works/OL19954762W",
+    "matchedTitle": "Twilight of the elites",
+    "matchedAuthor": [
+      "Christopher L. Hayes"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Fear Itself": {
+    "asin": "0871404508",
+    "source": "https://openlibrary.org/works/OL16809806W",
+    "matchedTitle": "Fear itself",
+    "matchedAuthor": [
+      "Ira Katznelson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Post-Capitalist Society": {
+    "asin": "1136008691",
+    "source": "https://openlibrary.org/works/OL2721823W",
+    "matchedTitle": "Post-capitalist society",
+    "matchedAuthor": [
+      "Peter F. Drucker"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The System": {
+    "asin": "1529043727",
+    "source": "https://openlibrary.org/works/OL20679618W",
+    "matchedTitle": "The System",
+    "matchedAuthor": [
+      "Robert B. Reich"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How Democracies Die": {
+    "asin": "0241317991",
+    "source": "https://openlibrary.org/works/OL18139175W",
+    "matchedTitle": "How Democracies Die",
+    "matchedAuthor": [
+      "Steven Levitsky",
+      "Daniel Ziblatt"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "American Dialogue": {
+    "asin": "0385353421",
+    "source": "https://openlibrary.org/works/OL18173502W",
+    "matchedTitle": "American Dialogue",
+    "matchedAuthor": [
+      "Joseph J. Ellis"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Optimistic Leftist": {
+    "asin": "1250089662",
+    "source": "https://openlibrary.org/works/OL20049854W",
+    "matchedTitle": "The optimistic leftist",
+    "matchedAuthor": [
+      "Ruy A. Teixeira"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Recoding America": {
+    "asin": "1250266769",
+    "source": "https://openlibrary.org/works/OL28847212W",
+    "matchedTitle": "Recoding America",
+    "matchedAuthor": [
+      "Jennifer Pahlka"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Six Amendments": {
+    "asin": "0316373729",
+    "source": "https://openlibrary.org/works/OL19976009W",
+    "matchedTitle": "Six amendments",
+    "matchedAuthor": [
+      "John Paul Stevens"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "On Fire": {
+    "asin": "0735279241",
+    "source": "https://openlibrary.org/works/OL20146921W",
+    "matchedTitle": "On fire",
+    "matchedAuthor": [
+      "Naomi Klein",
+      "Jordi Boixadós"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "This Changes Everything": {
+    "asin": "9571364703",
+    "source": "https://openlibrary.org/works/OL17062332W",
+    "matchedTitle": "This Changes Everything",
+    "matchedAuthor": [
+      "Naomi Klein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Precipice": {
+    "asin": "031648489X",
+    "source": "https://openlibrary.org/works/OL20670327W",
+    "matchedTitle": "The Precipice",
+    "matchedAuthor": [
+      "Toby Ord"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How to Avoid a Climate Disaster": {
+    "asin": "0241448328",
+    "source": "https://openlibrary.org/works/OL21667536W",
+    "matchedTitle": "How to Avoid a Climate Disaster",
+    "matchedAuthor": [
+      "Bill Gates"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Uninhabitable Earth": {
+    "asin": "0241400511",
+    "source": "https://openlibrary.org/works/OL19096883W",
+    "matchedTitle": "The Uninhabitable Earth",
+    "matchedAuthor": [
+      "David Wallace-Wells"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Upcycle": {
+    "asin": "1429969059",
+    "source": "https://openlibrary.org/works/OL16803942W",
+    "matchedTitle": "The Upcycle",
+    "matchedAuthor": [
+      "William McDonough"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Sixth Extinction": {
+    "asin": "1797107445",
+    "source": "https://openlibrary.org/works/OL16820830W",
+    "matchedTitle": "The Sixth Extinction",
+    "matchedAuthor": [
+      "Elizabeth Kolbert",
+      "Marcel Blanc"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Tyranny of Merit": {
+    "asin": "0141991186",
+    "source": "https://openlibrary.org/works/OL22063373W",
+    "matchedTitle": "The Tyranny of Merit",
+    "matchedAuthor": [
+      "Michael J. Sandel"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Arguing with Zombies": {
+    "asin": "1324005017",
+    "source": "https://openlibrary.org/works/OL20647253W",
+    "matchedTitle": "Arguing with Zombies",
+    "matchedAuthor": [
+      "Paul R. Krugman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Poorly Understood": {
+    "asin": "0190881380",
+    "source": "https://openlibrary.org/works/OL25762003W",
+    "matchedTitle": "Poorly Understood",
+    "matchedAuthor": [
+      "Mark Robert Rank",
+      "Lawrence M. Eppard",
+      "Heather E. Bullock"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Decadent Society": {
+    "asin": "1476785252",
+    "source": "https://openlibrary.org/works/OL20652745W",
+    "matchedTitle": "The Decadent Society",
+    "matchedAuthor": [
+      "Ross Gregory Douthat"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Hidden in Plain Sight": {
+    "asin": "1594038651",
+    "source": "https://openlibrary.org/works/OL20031705W",
+    "matchedTitle": "Hidden in plain sight",
+    "matchedAuthor": [
+      "Peter J. Wallison"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Radical Markets": {
+    "asin": "0691177503",
+    "source": "https://openlibrary.org/works/OL19745341W",
+    "matchedTitle": "Radical markets",
+    "matchedAuthor": [
+      "Eric A. Posner"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "What Is Real?": {
+    "asin": "0465096050",
+    "source": "https://openlibrary.org/works/OL19738323W",
+    "matchedTitle": "What is real?",
+    "matchedAuthor": [
+      "Adam Becker"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Wizard and the Prophet": {
+    "asin": "1509884181",
+    "source": "https://openlibrary.org/works/OL17923653W",
+    "matchedTitle": "The Wizard and the Prophet",
+    "matchedAuthor": [
+      "Charles C. Mann"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "A Brief History of Time": {
+    "asin": "1439503923",
+    "source": "https://openlibrary.org/works/OL1892617W",
+    "matchedTitle": "A Brief History of Time",
+    "matchedAuthor": [
+      "Stephen Hawking"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "On Edge": {
+    "asin": "0553418599",
+    "source": "https://openlibrary.org/works/OL20054375W",
+    "matchedTitle": "On edge",
+    "matchedAuthor": [
+      "Andrea Petersen"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Heartfulness Way": {
+    "asin": "1684031354",
+    "source": "https://openlibrary.org/works/OL19746024W",
+    "matchedTitle": "The heartfulness way",
+    "matchedAuthor": [
+      "Kamlesh D. Patel"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Humble Leadership": {
+    "asin": "1523095393",
+    "source": "https://openlibrary.org/works/OL20168250W",
+    "matchedTitle": "Humble Leadership",
+    "matchedAuthor": [
+      "Edgar H. Schein",
+      "Peter A. Schein"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Creative Curve": {
+    "asin": "0753548755",
+    "source": "https://openlibrary.org/works/OL19753402W",
+    "matchedTitle": "The creative curve",
+    "matchedAuthor": [
+      "Allen Gannett"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "My Age of Anxiety": {
+    "asin": "0099525887",
+    "source": "https://openlibrary.org/works/OL19972752W",
+    "matchedTitle": "My age of anxiety",
+    "matchedAuthor": [
+      "Scott Stossel"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Cognitive Behavioral Therapy": {
+    "asin": "1989588352",
+    "source": "https://openlibrary.org/works/OL20983726W",
+    "matchedTitle": "Cognitive Behavioral Therapy",
+    "matchedAuthor": [
+      "Olivia Telford"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Quiet Your Mind": {
+    "asin": "1844135624",
+    "source": "https://openlibrary.org/works/OL8444877W",
+    "matchedTitle": "Quiet Your Mind",
+    "matchedAuthor": [
+      "John Selby"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Art of Happiness": {
+    "asin": "2702832148",
+    "source": "https://openlibrary.org/works/OL318761W",
+    "matchedTitle": "The art of happiness",
+    "matchedAuthor": [
+      "His Holiness Tenzin Gyatso the XIV Dalai Lama",
+      "Howard C. Cutler"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Fear of Falling": {
+    "asin": "1455543756",
+    "source": "https://openlibrary.org/works/OL2520826W",
+    "matchedTitle": "Fear of falling",
+    "matchedAuthor": [
+      "Barbara Ehrenreich"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Worry Cure": {
+    "asin": "0749926767",
+    "source": "https://openlibrary.org/works/OL3256653W",
+    "matchedTitle": "The Worry Cure",
+    "matchedAuthor": [
+      "Robert L. Leahy"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Gifts of Imperfection": {
+    "asin": "0593133587",
+    "source": "https://openlibrary.org/works/OL16010306W",
+    "matchedTitle": "The Gifts of Imperfection",
+    "matchedAuthor": [
+      "Brené Brown"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Fully Present": {
+    "asin": "0306829401",
+    "source": "https://openlibrary.org/works/OL15632288W",
+    "matchedTitle": "Fully present",
+    "matchedAuthor": [
+      "Susan L. Smalley"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Burn Rate": {
+    "asin": "0593238281",
+    "source": "https://openlibrary.org/works/OL25960321W",
+    "matchedTitle": "Burn Rate",
+    "matchedAuthor": [
+      "Andy Dunn"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Overwhelmed": {
+    "asin": "0374228442",
+    "source": "https://openlibrary.org/works/OL17060774W",
+    "matchedTitle": "Overwhelmed",
+    "matchedAuthor": [
+      "Brigid Schulte"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Zen and the Art of Motorcycle Maintenance": {
+    "asin": "0552993786",
+    "source": "https://openlibrary.org/works/OL827357W",
+    "matchedTitle": "Zen and the Art of Motorcycle Maintenance",
+    "matchedAuthor": [
+      "Robert M. Pirsig"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Untethered Soul": {
+    "asin": "1452605165",
+    "source": "https://openlibrary.org/works/OL15845722W",
+    "matchedTitle": "The untethered soul",
+    "matchedAuthor": [
+      "Michael A. Singer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "When Breath Becomes Air": {
+    "asin": "8652122822",
+    "source": "https://openlibrary.org/works/OL17356252W",
+    "matchedTitle": "When Breath Becomes Air",
+    "matchedAuthor": [
+      "Paul Kalanithi"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Happiness Advantage": {
+    "asin": "0307591557",
+    "source": "https://openlibrary.org/works/OL15674042W",
+    "matchedTitle": "The happiness advantage",
+    "matchedAuthor": [
+      "Shawn Achor"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Option B": {
+    "asin": "1524732699",
+    "source": "https://openlibrary.org/works/OL17710048W",
+    "matchedTitle": "Option B",
+    "matchedAuthor": [
+      "Sheryl Sandberg",
+      "Adam Grant"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Wild at Heart": {
+    "asin": "1589267311",
+    "source": "https://openlibrary.org/works/OL4046227W",
+    "matchedTitle": "Wild at Heart",
+    "matchedAuthor": [
+      "John Eldredge"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The 5 Love Languages": {
+    "asin": "0802473164",
+    "source": "https://openlibrary.org/works/OL15626796W",
+    "matchedTitle": "The 5 love languages, men's edition",
+    "matchedAuthor": [
+      "Gary D. Chapman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Attached": {
+    "asin": "1585428485",
+    "source": "https://openlibrary.org/works/OL16929630W",
+    "matchedTitle": "Attached",
+    "matchedAuthor": [
+      "Amir Levine"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The State of Affairs": {
+    "asin": "6070751213",
+    "source": "https://openlibrary.org/works/OL19718878W",
+    "matchedTitle": "The state of affairs",
+    "matchedAuthor": [
+      "Esther Perel"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Hold Me Tight": {
+    "asin": "0316113018",
+    "source": "https://openlibrary.org/works/OL7909038W",
+    "matchedTitle": "Hold Me Tight",
+    "matchedAuthor": [
+      "Sue Johnson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "SuperFreakonomics": {
+    "asin": "0061932922",
+    "source": "https://openlibrary.org/works/OL14909866W",
+    "matchedTitle": "Superfreakonomics",
+    "matchedAuthor": [
+      "Steven D. Levitt",
+      "Stephen J. Dubner"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "What Money Can't Buy": {
+    "asin": "0374533652",
+    "source": "https://openlibrary.org/works/OL16451683W",
+    "matchedTitle": "What Money Can't Buy",
+    "matchedAuthor": [
+      "Michael J. Sandel"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Bogleheads' Guide to Investing": {
+    "asin": "0471730335",
+    "source": "https://openlibrary.org/works/OL5828429W",
+    "matchedTitle": "The Bogleheads' guide to investing",
+    "matchedAuthor": [
+      "Taylor Larimore"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "One Billion Americans": {
+    "asin": "0593853881",
+    "source": "https://openlibrary.org/works/OL20887409W",
+    "matchedTitle": "One Billion Americans",
+    "matchedAuthor": [
+      "Matthew Yglesias"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Un-Trumping America": {
+    "asin": "1538733560",
+    "source": "https://openlibrary.org/works/OL20670483W",
+    "matchedTitle": "Un-Trumping America",
+    "matchedAuthor": [
+      "Dan Pfeiffer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "HBR Guide to Coaching Employees": {
+    "asin": "1625275331",
+    "source": "https://openlibrary.org/works/OL20000893W",
+    "matchedTitle": "HBR guide to coaching employees",
+    "matchedAuthor": [
+      "Harvard Business Review Press"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Juxtapoz Poster Art": {
+    "asin": "158423346X",
+    "source": "https://openlibrary.org/works/OL21013670W",
+    "matchedTitle": "Juxtapoz Poster Art",
+    "matchedAuthor": [
+      "Magazine Juxtapoz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Can't Stop Won't Stop": {
+    "asin": "1515908534",
+    "source": "https://openlibrary.org/works/OL15835141W",
+    "matchedTitle": "Can't stop, won't stop",
+    "matchedAuthor": [
+      "Jeff Chang",
+      "D.J. Kool Herc",
+      "Dave Cook",
+      "Mirron Willis"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Ego Trip's Book of Rap Lists": {
+    "asin": "0312242980",
+    "source": "https://openlibrary.org/works/OL17732789W",
+    "matchedTitle": "Ego trip's book of rap lists",
+    "matchedAuthor": [
+      "Sacha Jenkins"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Decoded": {
+    "asin": "1400068924",
+    "source": "https://openlibrary.org/works/OL15481126W",
+    "matchedTitle": "Decoded",
+    "matchedAuthor": [
+      "Jay-Z"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Creative Act": {
+    "asin": "1838858636",
+    "source": "https://openlibrary.org/works/OL27955361W",
+    "matchedTitle": "The Creative Act",
+    "matchedAuthor": [
+      "Rick Rubin"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Mo' Meta Blues": {
+    "asin": "1410466493",
+    "source": "https://openlibrary.org/works/OL23323095W",
+    "matchedTitle": "Mo' meta blues",
+    "matchedAuthor": [
+      "Questlove"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "All You Need to Know About the Music Business": {
+    "asin": "150110490X",
+    "source": "https://openlibrary.org/works/OL20464343W",
+    "matchedTitle": "All You Need to Know About the Music Business",
+    "matchedAuthor": [
+      "Donald S. Passman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Rolling Stone Interviews": {
+    "asin": "0316023159",
+    "source": "https://openlibrary.org/works/OL15180649W",
+    "matchedTitle": "The Rolling Stone Interviews",
+    "matchedAuthor": [
+      "Jann Wenner",
+      "Joe Levy"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Jay-Z": {
+    "asin": "1250230969",
+    "source": "https://openlibrary.org/works/OL20649986W",
+    "matchedTitle": "Jay-Z",
+    "matchedAuthor": [
+      "Michael Eric Dyson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Go Ahead in the Rain": {
+    "asin": "1911545450",
+    "source": "https://openlibrary.org/works/OL20904413W",
+    "matchedTitle": "Go Ahead in the Rain",
+    "matchedAuthor": [
+      "Hanif Abdurraqib"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Securities Regulation: Cases and Materials": {
+    "asin": "0735559600",
+    "source": "https://openlibrary.org/works/OL18178454W",
+    "matchedTitle": "Securities regulation : cases and materials",
+    "matchedAuthor": [
+      "James D. Cox",
+      "Robert W. Hillman",
+      "Donald C. Langevoort"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How to Reassess Your Chess": {
+    "asin": "1890085006",
+    "source": "https://openlibrary.org/works/OL1806212W",
+    "matchedTitle": "How to reassess your chess",
+    "matchedAuthor": [
+      "Jeremy Silman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Eating Animals": {
+    "asin": "0141932651",
+    "source": "https://openlibrary.org/works/OL5738255W",
+    "matchedTitle": "Eating animals",
+    "matchedAuthor": [
+      "Jonathan Safran Foer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Economics": {
+    "asin": "0716771586",
+    "source": "https://openlibrary.org/works/OL11032100W",
+    "matchedTitle": "ECONOMICS",
+    "matchedAuthor": [
+      "Paul R. Krugman",
+      "Robin Wells",
+      "Robin Wells"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Where Is My Flying Car?": {
+    "asin": "1953953182",
+    "source": "https://openlibrary.org/works/OL25190572W",
+    "matchedTitle": "Where Is My Flying Car?",
+    "matchedAuthor": [
+      "J. Storrs Hall"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Sprint": {
+    "asin": "0593076117",
+    "source": "https://openlibrary.org/works/OL17353358W",
+    "matchedTitle": "Sprint",
+    "matchedAuthor": [
+      "Jake Knapp",
+      "John Zeratsky",
+      "Braden Kowitz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Art of Doing Science and Engineering": {
+    "asin": "1280074485",
+    "source": "https://openlibrary.org/works/OL1185120W",
+    "matchedTitle": "The art of doing science and engineering",
+    "matchedAuthor": [
+      "Richard Hamming",
+      "Bret Victor"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "An Elegant Puzzle": {
+    "asin": "1732265186",
+    "source": "https://openlibrary.org/works/OL20641522W",
+    "matchedTitle": "An Elegant Puzzle",
+    "matchedAuthor": [
+      "Will Larson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Big Score": {
+    "asin": "0385183518",
+    "source": "https://openlibrary.org/works/OL1881367W",
+    "matchedTitle": "The big score",
+    "matchedAuthor": [
+      "Michael S. Malone",
+      "Michael S. Malone"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Ethics in the Real World": {
+    "asin": "1925603008",
+    "source": "https://openlibrary.org/works/OL20228183W",
+    "matchedTitle": "Ethics in the Real World",
+    "matchedAuthor": [
+      "Peter Singer"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "High Output Management": {
+    "asin": "0330289632",
+    "source": "https://openlibrary.org/works/OL2355834W",
+    "matchedTitle": "High Output Management",
+    "matchedAuthor": [
+      "Andrew S. Grove"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Hard Thing About Hard Things": {
+    "asin": "1483002896",
+    "source": "https://openlibrary.org/works/OL16818208W",
+    "matchedTitle": "The Hard Thing About Hard Things",
+    "matchedAuthor": [
+      "Ben Horowitz"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Nexus": {
+    "asin": "8830137995",
+    "source": "https://openlibrary.org/works/OL37826293W",
+    "matchedTitle": "Nexus",
+    "matchedAuthor": [
+      "Yuval Noah Harari"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Thinking in Systems": {
+    "asin": "1603580557",
+    "source": "https://openlibrary.org/works/OL3737036W",
+    "matchedTitle": "Thinking in systems",
+    "matchedAuthor": [
+      "Donella H. Meadows",
+      "Diana Wright"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Alignment Problem": {
+    "asin": "1786494337",
+    "source": "https://openlibrary.org/works/OL20781447W",
+    "matchedTitle": "The Alignment Problem",
+    "matchedAuthor": [
+      "Brian Christian"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Dream Machine": {
+    "asin": "1953953360",
+    "source": "https://openlibrary.org/works/OL4300550W",
+    "matchedTitle": "The Dream Machine",
+    "matchedAuthor": [
+      "M. Mitchell Waldrop"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Revolt of the Public": {
+    "asin": "1732265143",
+    "source": "https://openlibrary.org/works/OL20789949W",
+    "matchedTitle": "The Revolt of The Public and the Crisis of Authority in the New Millennium",
+    "matchedAuthor": [
+      "Martin Gurri"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Abundance": {
+    "asin": "1805226053",
+    "source": "https://openlibrary.org/works/OL42415680W",
+    "matchedTitle": "Abundance",
+    "matchedAuthor": [
+      "Ezra Klein",
+      "Derek Thompson"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Only the Paranoid Survive": {
+    "asin": "0385483821",
+    "source": "https://openlibrary.org/works/OL2355832W",
+    "matchedTitle": "Only the paranoid survive",
+    "matchedAuthor": [
+      "Andrew S. Grove"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Algorithms to Live By": {
+    "asin": "0008166099",
+    "source": "https://openlibrary.org/works/OL17357767W",
+    "matchedTitle": "Algorithms to Live By",
+    "matchedAuthor": [
+      "Brian Christian",
+      "Tom Griffiths",
+      "Brian Christian"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Essays of Warren Buffett": {
+    "asin": "1611637589",
+    "source": "https://openlibrary.org/works/OL18072192W",
+    "matchedTitle": "The essays of Warren Buffett",
+    "matchedAuthor": [
+      "Warren Buffett",
+      "Lawrence A. Cunningham"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "How to Lie with Statistics": {
+    "asin": "039309426X",
+    "source": "https://openlibrary.org/works/OL2975846W",
+    "matchedTitle": "How to Lie with Statistics",
+    "matchedAuthor": [
+      "Darrell Huff",
+      "Irving Geis"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Anti-Intellectualism in American Life": {
+    "asin": "0394415353",
+    "source": "https://openlibrary.org/works/OL16445795W",
+    "matchedTitle": "Anti-intellectualism in American life",
+    "matchedAuthor": [
+      "Richard Hofstadter",
+      "Richard Hofstadter",
+      "Adam Verner",
+      "Richard Hofstadter"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The American Political Tradition": {
+    "asin": "0394700090",
+    "source": "https://openlibrary.org/works/OL2465581W",
+    "matchedTitle": "The American political tradition and the men who made it",
+    "matchedAuthor": [
+      "Richard Hofstadter"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Stubborn Attachments": {
+    "asin": "1953953352",
+    "source": "https://openlibrary.org/works/OL26422034W",
+    "matchedTitle": "Stubborn Attachments",
+    "matchedAuthor": [
+      "Tyler Cowen"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Power Law": {
+    "asin": "0141988940",
+    "source": "https://openlibrary.org/works/OL25328015W",
+    "matchedTitle": "The Power Law",
+    "matchedAuthor": [
+      "Sebastian Mallaby"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Orbiting the Giant Hairball": {
+    "asin": "0670879835",
+    "source": "https://openlibrary.org/works/OL93480W",
+    "matchedTitle": "Orbiting the giant hairball",
+    "matchedAuthor": [
+      "Gordon MacKenzie"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Wealth of Nations": {
+    "asin": "1432625462",
+    "source": "https://openlibrary.org/works/OL76827W",
+    "matchedTitle": "The Wealth of Nations",
+    "matchedAuthor": [
+      "Adam Smith"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The End of History and the Last Man": {
+    "asin": "0241130131",
+    "source": "https://openlibrary.org/works/OL2670501W",
+    "matchedTitle": "The End of History and the Last Man",
+    "matchedAuthor": [
+      "Francis Fukuyama"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "The Federalist Papers": {
+    "asin": "0143121979",
+    "source": "https://openlibrary.org/works/OL16688567W",
+    "matchedTitle": "The Federalist papers",
+    "matchedAuthor": [
+      "Alexander Hamilton",
+      "James Madison",
+      "John Jay",
+      "Richard R. Beeman"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Empowered": {
+    "asin": "111969132X",
+    "source": "https://openlibrary.org/works/OL21688399W",
+    "matchedTitle": "Empowered",
+    "matchedAuthor": [
+      "Marty Cagan",
+      "Chris Jones"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Founders at Work": {
+    "asin": "1430210788",
+    "source": "https://openlibrary.org/works/OL16063674W",
+    "matchedTitle": "Founders at work",
+    "matchedAuthor": [
+      "Jessica Livingston"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  },
+  "Inspired": {
+    "asin": "111938754X",
+    "source": "https://openlibrary.org/works/OL16803591W",
+    "matchedTitle": "Inspired",
+    "matchedAuthor": [
+      "Marty Cagan"
+    ],
+    "linkBasis": "Bibliographic ISBN match; edition and Amazon availability may differ"
+  }
+}

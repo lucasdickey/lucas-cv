@@ -1,11 +1,12 @@
 import * as THREE from './assets/three.module.js';
-import {selectBookcase} from './bookcases.js?v=lenny-notebook-1';
+import {selectBookcase} from './bookcases.js?v=study-1';
 import {addGlassCabinet,addGlassDecor,addCupShelf} from './glass-cabinet.js';
+import {addStudyBookcase} from './study-bookcases.js';
 import {addBookDrawer} from './book-drawer.js';
 const bookcase=selectBookcase(location.search),books=bookcase.books;
-import {CanvasGestures,canvasTapAction} from './canvas-gestures.js?v=drawer-1';
+import {CanvasGestures,canvasTapAction} from './canvas-gestures.js?v=study-1';
 import { createSpineCanvas } from './spine-texture.js';
-import { cabinet, orbitDistance, panBounds, visibleBook } from './navigation.js?v=drawer-1';
+import { cabinet, orbitDistance, panBounds, visibleBook } from './navigation.js?v=study-1';
 import { createMobileBrowser } from './mobile.js?v=lenny-notebook-1';
 import { createDesktopSearch } from './search.js?v=lenny-notebook-1';
 import { BookReveal } from './book-reveal.js?v=drawer-1';
@@ -49,6 +50,7 @@ function applyCrop(geometry,rect,name,frontOnly=true){const uv=geometry.attribut
 function photoBox(w,h,d,x,y,z,name,rect,side){const m=cropMaterial(name,rect);const mesh=box(w,h,d,x,y,z,[side,side,mat('#ddd7bb'),side,m,side]);applyCrop(mesh.geometry,rect,name);return mesh}
 function sampleColor(name,r){const c=sources[name].canvas.getContext('2d').getImageData(Math.min(r[0]+Math.floor(r[2]/2),sources[name].canvas.width-1),Math.min(r[1]+Math.floor(r[3]/2),sources[name].canvas.height-1),1,1).data;return new THREE.Color(`rgb(${c[0]},${c[1]},${c[2]})`)}
 function addShelf(){
+ if(bookcase.shape){addStudyBookcase({box,mat,bookcase});return}
  if(bookcase.id==='drawer'){
   const canvas=createSpineCanvas(sources['drawer/closed'],[[2,260],[934,250],[1034,356],[2,364]]),counterTexture=new THREE.CanvasTexture(canvas);
   counterTexture.colorSpace=THREE.SRGBColorSpace;
@@ -69,12 +71,18 @@ function addShelf(){
  for(let j of [-1,1]){photoBox(5.02,.59,.25,j*2.58,.3,.96,'full',j===-1?[199,1182,272,46]:[485,1184,274,40],mat('#785727'));for(let k of [-.95,.95]){const knob=new THREE.Mesh(new THREE.SphereGeometry(.065,12,10),gold);knob.position.set(j*2.58+k,.33,1.15);root.add(knob)}}
  box(10.55,.16,cabinet.depth,0,-.1,-.04,frame);for(let x of [-5.1,5.1])box(.22,.45,1.6,x,-.31,0,frame);
 }
-function addBooks(){if(bookcase.id==='drawer'){addDrawerBooks();return}books.forEach((b,i)=>{b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect,[left,right]=photoBounds[b.row];let w=r[2]/(right-left)*10.1,h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);let x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;let y=yBase[b.row]+h/2;
- if(b.horizontal){h=r[3]/250*1.98;y=yBase[b.row]+(515-r[1]-r[3]/2)/250*1.98}
- if(b.elevation!==undefined)y=yBase[b.row]+b.elevation+h/2;
- if(b.layout){({x,y,width:w,height:h}=b.layout)}
+function addBooks(){if(bookcase.id==='drawer'){addDrawerBooks();return}books.forEach((b,i)=>{
+ b.id=i;const name=b.textureSource||sourceFiles[b.row],r=b.rect;
+ let x,y,w,h;
+ if(b.layout){({x,y,width:w,height:h}=b.layout)}else{
+  const [left,right]=photoBounds[b.row];
+  w=r[2]/(right-left)*10.1;h=r[3]/(b.row===0?212:b.row===1?232:250)*(b.row===0?1.9:1.98);
+  x=((r[0]+r[2]/2-left)/(right-left)-.5)*10.1;y=yBase[b.row]+h/2;
+  if(b.horizontal){h=r[3]/250*1.98;y=yBase[b.row]+(515-r[1]-r[3]/2)/250*1.98}
+  if(b.elevation!==undefined)y=yBase[b.row]+b.elevation+h/2;
+ }
  const textureRect=b.textureRect||r;
- const depth=b.layout?.depth||(b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65)),restZ=.8-depth/2,side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
+ const depth=b.layout?.depth||(b.horizontal?1.35:THREE.MathUtils.clamp(h*.7,.85,1.65)),restZ=b.layout?.z??(.8-depth/2),side=mat(sampleColor(name,textureRect));const mesh=photoBox(Math.max(.045,w-.012),h,depth,x,y,restZ,name,textureRect,side);if(b.topTexture){mesh.material[2].map=b.topTexture;mesh.material[2].color.set('#ffffff')}mesh.userData.book=b;mesh.userData.restZ=restZ;mesh.userData.baseEmissive=0;bookMeshes.push(mesh);pickTargets.push(createPickTarget(mesh));
  });$('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
 function addDrawerBooks(){
@@ -94,7 +102,7 @@ function addDrawerBooks(){
  $('#book-count').textContent=books.filter(b=>!b.nonBook).length;
 }
 function decor(){
- if(bookcase.id==='drawer')return;
+ if(bookcase.id==='drawer'||bookcase.shape)return;
  if(bookcase.id==='glass'){addGlassDecor({box,mat,root});addCupShelf({box,mat,root});return}
  const pot=new THREE.Mesh(new THREE.CylinderGeometry(.58,.44,.60,28),mat('#a89d71'));pot.position.set(-4,13.71,0);pot.castShadow=true;root.add(pot);
  const stemMat=mat('#497035'),leafMat=mat('#648a36',{side:THREE.DoubleSide});
@@ -117,7 +125,7 @@ function displayBook(book,open=false) {
  fallback.textContent=egg?egg.message:book.nonBook?'Personal notebook':art?'Loading cover…':book.unidentified?'Choose an identified book to see its cover.':'Cover artwork unavailable for this edition.';
  cover.onload=()=>{if(selected!==book)return;cover.hidden=false;fallback.hidden=true};
  cover.onerror=()=>{if(selected!==book)return;cover.hidden=true;fallback.hidden=false;fallback.textContent='Cover artwork unavailable for this edition.'};
- cover.alt=`${book.title} — full cover from Amazon`;
+ cover.alt=`${book.title} — full cover from ${art?.sourceLabel||'Amazon'}`;
  if(art)cover.src=art.path;else cover.removeAttribute('src');
  $('#shelf-label').textContent=egg?'YOU FOUND AN EASTER EGG':bookcase.id==='drawer'?'THE BOOK DRAWER / THE COLLECTION':`SHELF ${String(book.row+1).padStart(2,'0')} / THE COLLECTION`;
  $('#book-title').textContent=egg?egg.title:book.title;
@@ -126,7 +134,7 @@ function displayBook(book,open=false) {
  link.href=egg?egg.url:book.asin?`https://www.amazon.com/dp/${book.asin}`:`https://www.amazon.com/s?k=${encodeURIComponent(book.title+' '+book.author)}`;
  link.innerHTML=book.asin?'View on Amazon <span>↗</span>':'Find on Amazon <span>↗</span>';
  if(egg)link.textContent=egg.label+' ↗';
- $('#link-note').textContent=egg?egg.description:book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?'Amazon cover artwork. The edition may differ from the copy on this shelf.':'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
+ $('#link-note').textContent=egg?egg.description:book.nonBook?'A spiral notebook from the shelf. No retail listing.':book.unidentified?'This spine needs a closer photograph before it can be matched.':book.asin?(art?`${art.sourceLabel||'Amazon'} cover artwork. The edition may differ from the copy on this shelf.`:'Opens the Amazon product page. Cover artwork is unavailable for this edition.'):'A direct product match is not yet confirmed. Opens an Amazon title-and-author search.';
 }
 function resetDetail(){if(document.activeElement===$('#return-book'))host.focus({preventScroll:true});selected=null;$('#return-book').hidden=true;$('#book-cover').hidden=true;$('#cover-fallback').hidden=false;$('#cover-fallback').textContent='Choose a book to take it off the shelf.';$('#book-title').textContent='Every spine has a story.';$('#book-author').textContent='';$('#shelf-label').textContent='FROM THE SHELF';$('#amazon-link').hidden=true;$('#link-note').textContent='Pause over a spine to pull it forward. Pick a book to see its cover.'}
 function closeBook(immediate=false){pendingBook=null;clearHover();if(immediate){reveal.clear();resetDetail()}else reveal.close()}
@@ -158,21 +166,22 @@ mobile.addEventListener('change',()=>setFocus(focusedRow));
 setFocus('all');
 async function start(){
  try{
- const [coverData,links]=await Promise.all([bookcase.id==='drawer'?'drawer-covers':'covers',bookcase.id==='drawer'?'drawer-links':bookcase.id==='glass'?'glass-links':'links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
+ const [coverData,links]=await Promise.all([bookcase.id==='drawer'?'drawer-covers':bookcase.shape?'study-covers':'covers',bookcase.id==='drawer'?'drawer-links':bookcase.id==='glass'?'glass-links':bookcase.shape?'study-links':'links'].map(name=>fetch(`./${name}.json`).then(r=>r.ok?r.json():{}).catch(()=>({}))));
  covers=coverData;for(const b of books)if(!b.unidentified&&!b.nonBook&&links[b.title])Object.assign(b,links[b.title]);
  mobileBrowser.render(covers);desktopSearch.render(covers);
  if(selected){const book=selected;selected=null;displayBook(book)}
  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;host.append(renderer.domElement);
  scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(38,1,.1,150);root=new THREE.Group();scene.add(root);
- for(const name of new Set([...bookcase.assets,...books.filter(b=>b.spine).map(b=>b.spine.source)])){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
+ for(const name of new Set([...bookcase.assets,...books.flatMap(b=>[b.spine?.source,b.top?.source].filter(Boolean))])){const image=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=`./assets/${name}.jpg`});const texture=new THREE.Texture(image);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();texture.needsUpdate=true;const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;canvas.getContext('2d').drawImage(image,0,0);sources[name]={image,texture,canvas}}
  for(const [i,book] of books.entries())if(book.spine){
+  if(book.top){const topCanvas=createSpineCanvas(sources[book.top.source],book.top.quad);book.topTexture=new THREE.CanvasTexture(topCanvas);book.topTexture.colorSpace=THREE.SRGBColorSpace;}
   const canvas=createSpineCanvas(sources[book.spine.source],book.spine.quad),texture=new THREE.CanvasTexture(canvas);
   texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
   book.textureSource=`spine-${i}`;book.textureRect=[0,0,canvas.width,canvas.height];
   sources[book.textureSource]={image:canvas,canvas,texture};
  }
  scene.add(new THREE.HemisphereLight('#f4ebd5','#455740',2.6));const sun=new THREE.DirectionalLight('#ffe5bd',4);sun.position.set(-8,18,12);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-10,right:10,top:17,bottom:-8,far:55});sun.shadow.bias=-.001;scene.add(sun);const rim=new THREE.DirectionalLight('#b8d4d0',2);rim.position.set(9,9,-3);scene.add(rim);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[];root.traverse(object=>{if(object.isMesh)occluders.push(object)});addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='drawer'?'Taiwan Travelogue':bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.30}));floor.rotation.x=-Math.PI/2;floor.position.y=bookcase.shape?-.02:-.56;floor.receiveShadow=true;scene.add(floor);addShelf();occluders=[];root.traverse(object=>{if(object.isMesh)occluders.push(object)});addBooks();decor();if(!selected)displayBook(books.find(b=>b.title===(bookcase.id==='drawer'?'Taiwan Travelogue':bookcase.id==='glass'?'The Infinity Machine':'Katabasis'))||books[0]);$('#loading').hidden=true;
  const resize=()=>{clearHover();const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();baseDistance=Math.max(bookcase.minDistance,(bookcase.framingWidth||(mobile.matches?16.5:17))/camera.aspect);updateHint()};new ResizeObserver(resize).observe(host);resize();setFocus(focusedRow);
  function frame(){
   requestAnimationFrame(frame);
@@ -198,7 +207,7 @@ async function start(){
  }catch(e){$('#loading').innerHTML='3D is unavailable here. Search for a book to browse.';$('#loading').style.cssText='inset:auto 20px 90px;padding:12px;background:#14221ee8;';console.error(e);const img=document.createElement('img');img.src=`./assets/${bookcase.photo}.jpg`;img.alt=bookcase.name;img.style='position:absolute;inset:0;width:100%;height:100%;object-fit:contain';host.append(img);$('#book-count').textContent=books.filter(b=>!b.nonBook).length}
 }
 function updatePointer(e){const r=host.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;pointer.set(mouse.x/r.width*2-1,-mouse.y/r.height*2+1)}
-function gestureView(){return {yaw:goalYaw,pitch:goalPitch,x:goalX,y:goalY,zoom:goalZoom,width:host.clientWidth,height:host.clientHeight,distance:baseDistance/goalZoom,aspect:camera.aspect,panRange:bookcase.panRange,maxPitch:bookcase.maxPitch||.3}}
+function gestureView(){return {yaw:goalYaw,pitch:goalPitch,x:goalX,y:goalY,zoom:goalZoom,width:host.clientWidth,height:host.clientHeight,distance:baseDistance/goalZoom,aspect:camera.aspect,panRange:bookcase.panRange,maxPitch:bookcase.maxPitch||.3,maxY:Math.max(14.3,...yBase.map(y=>y+1))}}
 function applyGesture(next){if(!next)return;goalYaw=next.yaw;goalPitch=next.pitch;goalX=next.x;goalY=next.y;goalZoom=next.zoom}
 function tapCanvas(e){
  updatePointer(e);root.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);
@@ -239,7 +248,7 @@ host.addEventListener('keydown',e=>{
  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','Home','Enter','Escape'].includes(e.key))return;
  e.preventDefault();clearHover();
  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const step=e.key==='ArrowLeft'?-1:1;if(e.shiftKey)goalX=THREE.MathUtils.clamp(goalX+step*.45,...panRange());else goalYaw=THREE.MathUtils.clamp(goalYaw+step*.08,-cabinet.maxYaw,cabinet.maxYaw)}
- if(e.key==='ArrowUp'){if(e.shiftKey)goalY=Math.min(14.3,goalY+.4);else goalPitch=Math.min(bookcase.maxPitch||.3,goalPitch+.04)}
+ if(e.key==='ArrowUp'){if(e.shiftKey)goalY=Math.min(Math.max(14.3,...yBase.map(y=>y+1)),goalY+.4);else goalPitch=Math.min(bookcase.maxPitch||.3,goalPitch+.04)}
  if(e.key==='ArrowDown'){if(e.shiftKey)goalY=Math.max(0,goalY-.4);else goalPitch=Math.max(-.23,goalPitch-.04)}
  if(e.key==='+')changeZoom(zoomFactor(1.15));
  if(e.key==='-')changeZoom(zoomFactor(1/1.15));

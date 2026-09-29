@@ -1,4 +1,4 @@
-import {dragView} from './navigation.js?v=drawer-1';
+import {dragView} from './navigation.js?v=study-1';
 const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
 function measure(points){
  const [a,b]=points.values();
