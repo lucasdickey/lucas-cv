@@ -475,12 +475,12 @@ export default function TerminalRepoList() {
           <div className="flex items-center gap-2">
             <Twitter size={16} className="text-[#333333]" />
             <a
-              href="https://twitter.com/lucasdickey4"
+              href="https://x.com/lucasdickey"
               className="text-[#0000ff] hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              @lucasdickey4
+              @lucasdickey
             </a>
           </div>
           <div className="flex items-center gap-2">
