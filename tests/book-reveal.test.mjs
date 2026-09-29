@@ -107,3 +107,54 @@ test('drawer selection lifts on its extraction axis and returns to the moving pa
   assert.ok(Math.abs(source.getWorldPosition(new Vector3()).z-3.4)<1e-10);
  }finally{globalThis.innerHeight=h;globalThis.innerWidth=w}
 });
+
+test('horizontal books turn their spine upright and align the cover with the card',async()=>{
+ const THREE=await import('../public/real-books/assets/three.module.js');
+ const {BookReveal}=await import('../public/real-books/book-reveal.js');
+ const previous={document:globalThis.document,innerWidth:globalThis.innerWidth,innerHeight:globalThis.innerHeight};
+ const classes={add(){},remove(){},toggle(){}};
+ const context={fillRect(){},strokeRect(){},fillText(){},measureText:()=>({width:0})};
+ globalThis.document={createElement:()=>({getContext:()=>context}),body:{append(){}}};
+ globalThis.innerWidth=1000;globalThis.innerHeight=800;
+ const rect={left:100,top:50,width:600,height:600};
+ const card={left:740,top:150,width:180,height:300};
+ const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(3,2,24);camera.lookAt(0,0,0);camera.updateMatrixWorld();
+ const reveal=new BookReveal({host:{classList:classes,getBoundingClientRect:()=>rect},detail:{classList:classes,querySelector:()=>({hidden:false,getBoundingClientRect:()=>card})},dialog:{classList:classes},getCamera:()=>camera,onReturned(){}});
+ reveal.initRenderer=()=>{
+  reveal.scene=new THREE.Scene();reveal.camera=new THREE.PerspectiveCamera();
+  reveal.renderer={domElement:{remove(){}},setSize(){},render(){}};
+ };
+ const source=new THREE.Mesh(new THREE.BoxGeometry(3,.2,1.8),Array.from({length:6},()=>new THREE.MeshStandardMaterial()));
+ source.rotation.z=.08;source.userData.restZ=0;
+ const sourceUV=Array.from(source.geometry.attributes.uv.array);
+ try{
+  reveal.open(source,{title:'A horizontal tower book',horizontal:true});
+  const record=reveal.active;
+  const frame=progress=>{record.motion.progress=progress;record.settled=false;reveal.update(0);return record.clone};
+  const start=frame(.300001);
+  assert.ok(start.quaternion.angleTo(source.quaternion)<1e-8,'flight starts at the exact shelf orientation');
+  assert.ok(start.position.distanceTo(source.position)<1e-8,'flight starts at the fully extracted position');
+  const middle=frame(.65),outbound=middle.quaternion.clone();
+  reveal.close();frame(.65);
+  assert.ok(middle.quaternion.angleTo(outbound)<1e-7,'return retraces the same rotation');
+  const end=frame(.999999),cameraInverse=camera.quaternion.clone().invert();
+  const inView=axis=>axis.applyQuaternion(end.quaternion).applyQuaternion(cameraInverse);
+  assert.ok(inView(new THREE.Vector3(1,0,0)).distanceTo(new THREE.Vector3(0,-1,0))<1e-7,'long spine is vertical, not sideways');
+  assert.ok(inView(new THREE.Vector3(0,1,0)).distanceTo(new THREE.Vector3(0,0,1))<1e-7,'top cover faces the viewer');
+  const ppu=rect.height/(2*Math.tan(camera.fov*Math.PI/360)*6);
+  assert.ok(Math.abs(3*end.scale.x*ppu-card.height)<1e-5,'spine fits the card height');
+  assert.ok(Math.abs(1.8*end.scale.z*ppu-card.width)<1e-5,'cover width fits the card width');
+  // Top-face vertices are indexed 8–11: the spine at +z becomes the left edge.
+  const uv=end.geometry.attributes.uv;
+  assert.deepEqual([uv.getX(8),uv.getY(8)],[1,1]);
+  assert.deepEqual([uv.getX(9),uv.getY(9)],[1,0]);
+  assert.deepEqual([uv.getX(10),uv.getY(10)],[0,1]);
+  assert.deepEqual([uv.getX(11),uv.getY(11)],[0,0]);
+  assert.deepEqual(Array.from(source.geometry.attributes.uv.array),sourceUV,'shelf texture coordinates stay unchanged');
+  let disposed=false;end.geometry.addEventListener('dispose',()=>{disposed=true});
+  frame(0);assert.equal(source.visible,true);assert.equal(source.position.z,0);assert.ok(disposed,'flight geometry is released on return');
+ }finally{
+  reveal.clear();source.geometry.dispose();source.material.forEach(m=>m.dispose());
+  Object.assign(globalThis,previous);
+ }
+});

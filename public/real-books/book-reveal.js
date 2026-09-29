@@ -70,11 +70,20 @@ export class BookReveal {
    materials.forEach(m=>{m.emissive?.setHex(0)});
    record.materials=materials;record.texture=fallbackCover(book);
    const face=book.coverFace??(book.horizontal?2:0);
+   record.face=face;
    materials[face].dispose();
    materials[face]=new THREE.MeshStandardMaterial({map:record.texture,roughness:.72});
    record.pages=pageEdges();
-   for(const index of (book.horizontal?[3,5]:[1,2,3])){materials[index].color.set('#ffffff');materials[index].map=record.pages}
-   record.clone=new THREE.Mesh(source.geometry,materials);this.scene.add(record.clone);
+   for(const index of (face===2?[0,1,5]:[1,2,3])){materials[index].color.set('#ffffff');materials[index].map=record.pages}
+   record.geometry=source.geometry.clone();
+   if(face===2){
+    // A stacked book's long spine is X, so its cover reads across Z and up -X.
+    // Rotate only the flight cover UVs; preserve the photographed spine and slot.
+    const uv=record.geometry.attributes.uv;
+    for(let i=8;i<12;i++){const u=uv.getX(i),v=uv.getY(i);uv.setXY(i,v,1-u)}
+    uv.needsUpdate=true;
+   }
+   record.clone=new THREE.Mesh(record.geometry,materials);this.scene.add(record.clone);
    if(art){
     const image=new Image();image.onload=()=>{
      if(this.active!==record)return;
@@ -92,7 +101,7 @@ export class BookReveal {
   const record=this.active;if(!record)return;
   record.source.visible=true;record.source.position.copy(record.rest);record.source.scale.setScalar(1);
   if(record.clone)this.scene.remove(record.clone);
-  record.materials?.forEach(m=>m.dispose());record.texture?.dispose();record.pages?.dispose();
+  record.geometry?.dispose();record.materials?.forEach(m=>m.dispose());record.texture?.dispose();record.pages?.dispose();
   this.active=null;this.renderer?.domElement.remove();
   this.detail.classList.remove('book-in-transit','book-returning');
   this.host.classList.remove('book-selected');this.dialog.classList.remove('reveal-running');
@@ -132,12 +141,14 @@ export class BookReveal {
   const start=rest.clone().addScaledVector(record.axis,record.pull);
   source.parent?.localToWorld(start);
   record.clone.position.lerpVectors(start,destination,fly);
-  const faceUp=record.book.coverFace===4;
-  const turn=new THREE.Quaternion().setFromEuler(new THREE.Euler(record.book.horizontal?Math.PI/2:0,faceUp||record.book.horizontal?0:-Math.PI/2,0));
+  const faceUp=record.face===4,horizontal=record.face===2;
+  // Pitch the top cover toward the viewer, then roll the long spine upright.
+  // ZXY applies the screen-space roll after the pitch; the spine ends on the left.
+  const turn=new THREE.Quaternion().setFromEuler(new THREE.Euler(horizontal?Math.PI/2:0,faceUp||horizontal?0:-Math.PI/2,horizontal?-Math.PI/2:0,'ZXY'));
   const orientation=this.camera.quaternion.clone().multiply(turn);
   source.getWorldQuaternion(record.clone.quaternion);record.clone.quaternion.slerp(orientation,fly);
   const {width,height,depth}=source.geometry.parameters;
-  const size=faceUp?new THREE.Vector3(end.width/pixelsPerUnit/width,end.height/pixelsPerUnit/height,1):record.book.horizontal?new THREE.Vector3(end.width/pixelsPerUnit/width,1,end.height/pixelsPerUnit/depth):new THREE.Vector3(1,end.height/pixelsPerUnit/height,end.width/pixelsPerUnit/depth);
+  const size=faceUp?new THREE.Vector3(end.width/pixelsPerUnit/width,end.height/pixelsPerUnit/height,1):horizontal?new THREE.Vector3(end.height/pixelsPerUnit/width,1,end.width/pixelsPerUnit/depth):new THREE.Vector3(1,end.height/pixelsPerUnit/height,end.width/pixelsPerUnit/depth);
   record.clone.scale.lerpVectors(new THREE.Vector3(1,1,1),size,fly);
   this.renderer.render(this.scene,this.camera);
  }
