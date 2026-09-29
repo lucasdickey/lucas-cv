@@ -9,7 +9,7 @@ import { createSpineCanvas } from './spine-texture.js';
 import { cabinet, orbitDistance, panBounds, visibleBook } from './navigation.js?v=study-1';
 import { createMobileBrowser } from './mobile.js?v=lenny-notebook-1';
 import { createDesktopSearch } from './search.js?v=lenny-notebook-1';
-import { BookReveal } from './book-reveal.js?v=drawer-1';
+import { BookReveal } from './book-reveal.js?v=horizontal-2';
 import { createPickTarget, updatePickTarget, HoverDwell, zoomFactor } from './interaction.js?v=drawer-1';
 const $=s=>document.querySelector(s), host=$('#scene');
 const mobile=matchMedia('(max-width: 760px), (max-width: 1000px) and (max-height: 500px)');
