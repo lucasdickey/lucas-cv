@@ -43,7 +43,7 @@ export interface ACPConfig {
 export const acpConfig: ACPConfig = {
   // Use local API route as proxy to avoid CORS issues
   apebotEndpoint: '/api/apebot',
-  shopUrl: 'https://a-ok.shop',
+  shopUrl: 'https://a-ok.ai',
   shopName: 'A-OK Shop',
 
   // Note: API key should be stored in environment variables in production

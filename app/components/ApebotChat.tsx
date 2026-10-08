@@ -400,7 +400,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
                   rel="noopener noreferrer"
                   className="text-[#0000ff] hover:underline"
                 >
-                  A-OK.shop
+                  a-ok.ai
                 </a>
               </div>
             </div>
