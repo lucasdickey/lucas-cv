@@ -43,7 +43,7 @@ export interface ACPConfig {
 export const acpConfig: ACPConfig = {
   // Use local API route as proxy to avoid CORS issues
   apebotEndpoint: '/api/apebot',
-  shopUrl: 'https://a-ok.shop',
+  shopUrl: 'https://a-ok.ai',
   shopName: 'A-OK Shop',
 
   // Note: API key should be stored in environment variables in production
@@ -124,8 +124,8 @@ export async function sendToApebot(
 
     // Return a fallback response
     return {
-      message: "I'm having trouble connecting right now. Please visit A-OK.shop directly or try again later!",
-      suggestions: ['Visit A-OK.shop', 'Try again'],
+      message: "I'm having trouble connecting right now. Please visit a-ok.ai directly or try again later!",
+      suggestions: ['Visit a-ok.ai', 'Try again'],
     };
   }
 }

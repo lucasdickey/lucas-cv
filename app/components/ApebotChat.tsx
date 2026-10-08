@@ -120,7 +120,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
       console.error("Checkout error:", error);
       const errorMessage: ChatMessage = {
         role: "assistant",
-        content: "Sorry, there was an issue starting checkout. Please visit A-OK.shop directly to complete your purchase.",
+        content: "Sorry, there was an issue starting checkout. Please visit a-ok.ai directly to complete your purchase.",
         timestamp: Date.now(),
       };
       const newMessages = [...messages, errorMessage];
@@ -188,7 +188,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
       console.error("Error sending message:", error);
       const errorMessage: ChatMessage = {
         role: "assistant",
-        content: "Sorry, I encountered an error. Please try again or visit A-OK.shop directly.",
+        content: "Sorry, I encountered an error. Please try again or visit a-ok.ai directly.",
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -400,7 +400,7 @@ export default function ApebotChat({ initialOpen = false }: ApebotChatProps) {
                   rel="noopener noreferrer"
                   className="text-[#0000ff] hover:underline"
                 >
-                  A-OK.shop
+                  a-ok.ai
                 </a>
               </div>
             </div>
