@@ -18,8 +18,9 @@
  *   node scripts/ship-log-thumbnails.mjs --keep-png       # also save full-size PNGs
  *
  * Look at the results before committing: a page that was mid-load or showing
- * a sign-in screen makes a bad thumbnail. Projects without a live site (Breathe
- * Free, simple-survey) are not listed here; their images are made by hand.
+ * a sign-in screen makes a bad thumbnail. OP-1 Jam and Breathe Free are not
+ * listed here: their images come from the teaser video and app screenshots
+ * their pages publish, which make better thumbnails than the pages themselves.
  */
 
 import { mkdir } from "node:fs/promises";
@@ -64,7 +65,7 @@ const TARGETS = [
   {
     name: "a-ok-shop",
     file: "a-ok-shop.webp",
-    url: "https://a-ok-shop.vercel.app",
+    url: "https://a-ok.ai",
   },
   {
     name: "cross-cross-footy",
