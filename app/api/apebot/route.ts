@@ -168,8 +168,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message:
-          "I'm having trouble connecting right now. Please visit A-OK.shop directly or try again later!",
-        suggestions: ['Visit A-OK.shop', 'Try again'],
+          "I'm having trouble connecting right now. Please visit a-ok.ai directly or try again later!",
+        suggestions: ['Visit a-ok.ai', 'Try again'],
       },
       { status: 200 }
     );

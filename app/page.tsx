@@ -498,12 +498,12 @@ export default function TerminalRepoList() {
         <div className="mt-3 flex items-center gap-2">
           <ShoppingBag size={16} className="text-[#333333]" />
           <a
-            href="https://a-ok.shop"
+            href="https://a-ok.ai"
             className="text-[#0000ff] hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            A-OK.shop
+            a-ok.ai
           </a>
           <span className="text-[#666666] text-xs ml-2">
             (AI-driven nerdwear satire fashion brand)
