@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { ViewModeProvider } from "./contexts/view-mode-context";
-import ViewModeToggle from "./components/ViewModeToggle";
 import { SITE_URL } from './lib/site';
 
 export const metadata: Metadata = {
@@ -132,12 +130,7 @@ export default function RootLayout({
           title="llms.txt"
         />
       </head>
-      <body>
-        <ViewModeProvider>
-          <ViewModeToggle />
-          {children}
-        </ViewModeProvider>
-      </body>
+      <body>{children}</body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-RRM60KD28D"
         strategy="afterInteractive"

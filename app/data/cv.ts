@@ -486,8 +486,8 @@ export function groupEntriesByType(
  *
  * Nothing is deleted: the entries stay in `entries` above and remain
  * reachable via `groupEntriesByType(entries)`. They are simply left out of
- * every rendered surface — the terminal view, the marketer view, and the
- * Markdown at /cv.md — so the section can be rewritten before it goes back up.
+ * every rendered surface — the homepage and the Markdown at /cv.md — so the
+ * section can be rewritten before it goes back up.
  *
  * To restore a section, remove its type from this set.
  */

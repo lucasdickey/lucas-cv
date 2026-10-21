@@ -288,15 +288,6 @@
   outline-offset: 2px;
 }
 
-.marketer .frame { border-color: #dfe1e6; border-radius: 12px; }
-.marketer .caption { background: #ffffff; border-top-color: #dfe1e6; color: #6b778c; font-size: 14px; padding: 10px 16px; }
-.marketer .plate { color: #0052cc; font-weight: 600; }
-.marketer .button { color: #172b4d; background: #ffffff; border-color: #dfe1e6; border-radius: 6px; font-size: 13px; padding: 5px 12px; }
-.marketer .button:hover { background: #f4f5f7; }
-.marketer .link { color: #0052cc; font-weight: 500; }
-.marketer .button:focus-visible,
-.marketer .link:focus-visible { outline-color: #0052cc; }
-
 @media (prefers-reduced-motion: reduce) {
   .stage *,
   .stage *::before { animation: none !important; transition: none !important; }

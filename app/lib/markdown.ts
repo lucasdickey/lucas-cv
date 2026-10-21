@@ -305,14 +305,10 @@ export function renderSyllabusMarkdown(): string {
     "",
     `- ${SITE_URL}/syllabus — the graph, the default`,
     `- ${SITE_URL}/syllabus?view=list — the same readings as a list`,
-    `- ${SITE_URL}/syllabus?theme=marketer — the light editorial presentation`,
-    `- ${SITE_URL}/syllabus?theme=terminal — the terminal presentation`,
     `- ${SITE_URL}/syllabus.md — this document`,
     "",
-    "`view` and `theme` compose, e.g. `?theme=marketer&view=list`. `theme` works",
-    "on every page of the site, not just this one, and applies to the page it is",
-    "on without changing what the browser has stored. Without either parameter",
-    "the page falls back to whatever was last chosen, then to the default.",
+    "Without `view` the page falls back to whichever view was last chosen, then",
+    "to the graph.",
     ""
   );
 
@@ -345,9 +341,7 @@ export function renderLlmsTxt(): string {
     "This site publishes Markdown alongside every HTML page so that agents can read it",
     "directly. Append `.md` to a blog post URL to get its source.",
     "",
-    "Pages render in one of two presentations, selectable per-request with a query",
-    "parameter: `?theme=terminal` or `?theme=marketer`. The syllabus additionally",
-    "takes `?view=graph` or `?view=list`. The content is identical either way.",
+    "The syllabus takes `?view=graph` or `?view=list` to open in a particular view.",
     "",
     "## Core",
     "",

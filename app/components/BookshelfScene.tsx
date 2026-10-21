@@ -10,8 +10,8 @@ import ShelfTrain from "./ShelfTrain";
 import styles from "./BookshelfScene.module.css";
 
 /**
- * Engraved plates of the real bookshelves, placed through the homepage in
- * either theme. Each is built from depth layers rendered out of the /real-books
+ * Engraved plates of the real bookshelves, placed through the homepage. Each
+ * is built from depth layers rendered out of the /real-books
  * 3D scene (see scripts/bookshelf-header); things move in a middle layer and
  * pass behind the layer in front.
  *
@@ -196,12 +196,10 @@ const prefersStill = () => window.matchMedia("(prefers-reduced-motion: reduce)")
 
 export default function BookshelfScene({
   scene,
-  variant,
   priority = false,
   className,
 }: {
   scene: BookshelfSceneKind;
-  variant: "terminal" | "marketer";
   /** Load right away; use for the plate at the top of the page. */
   priority?: boolean;
   className?: string;
@@ -286,7 +284,7 @@ export default function BookshelfScene({
   return (
     <figure
       ref={root}
-      className={cx(styles.scene, styles[scene], styles[variant], exploded && styles.exploded, className)}
+      className={cx(styles.scene, styles[scene], exploded && styles.exploded, className)}
       data-running={ready && visible && !paused}
     >
       <div className={styles.frame}>

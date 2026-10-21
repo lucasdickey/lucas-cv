@@ -6,9 +6,9 @@ This document provides guidance for AI assistants (like Claude) working on this 
 
 This is a Next.js-based personal website and portfolio for Lucas Dickey, featuring:
 - Professional resume/CV
-- Blog with multiple view modes (marketer and terminal themes)
+- Blog
 - Podcast integration
-- Two distinct UI themes that can be toggled
+- A retro terminal look throughout (cream paper, monospace type, dark red accents)
 
 ## Blog System
 
@@ -183,14 +183,6 @@ After adding a post:
    npm run build
    ```
    Ensure no build errors
-
-### View Modes
-
-The blog supports two view modes:
-- **Marketer View**: Professional blue design (Atlassian-inspired)
-- **Terminal View**: Retro terminal aesthetic
-
-Both modes use the same blog data—no changes needed to posts.
 
 ## Git Workflow
 

@@ -5,8 +5,6 @@ import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
 import IngestionQueue from "../components/IngestionQueue";
-import { useViewMode } from "./contexts/view-mode-context";
-import MarketerHome from "./components/MarketerHome";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
 import { ListeningSection } from "./components/ListeningSection";
 import { ExpandableSection } from "./components/ExpandableSection";
@@ -86,7 +84,6 @@ const thinkingVariants = [
 ];
 
 export default function TerminalRepoList() {
-  const { viewMode } = useViewMode();
   // Starts null so the server and the first client render agree; the live
   // clock is filled in after mount. Seeding this with `new Date()` would
   // produce a hydration mismatch now that the page renders on the server.
@@ -274,15 +271,10 @@ export default function TerminalRepoList() {
     return date.toLocaleDateString("en-US", options).replace(",", "");
   };
 
-  // Render marketer view if in marketer mode
-  if (viewMode === "marketer") {
-    return <MarketerHome />;
-  }
-
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
       {/* Plate I: the bookcases from morning to night */}
-      <BookshelfScene scene="night" variant="terminal" priority className="mb-5" />
+      <BookshelfScene scene="night" priority className="mb-5" />
 
       {/* Terminal Header */}
       <div className="border border-[#cccccc] bg-[#e8e8d8] p-2 md:p-4 mb-5 rounded-md shadow-sm overflow-x-auto">
@@ -594,12 +586,12 @@ export default function TerminalRepoList() {
               Public work from {WINDOW_LABEL}. Explore the live projects or browse the public source.
               Commit counts include merges and automated updates on each repository’s default branch.
             </div>
-            <ShipLog variant="terminal" />
+            <ShipLog />
           </div>
         </div>
 
         {/* Plate II: the study shelves, between the build log and the resume */}
-        <BookshelfScene scene="study" variant="terminal" className="mb-8" />
+        <BookshelfScene scene="study" className="mb-8" />
 
         {Object.keys(groupedEntries)
           .sort((a, b) => {
@@ -626,7 +618,7 @@ export default function TerminalRepoList() {
             return (
               <Fragment key={type}>
               {/* Plate III: the top shelf and its train, just above the reading list */}
-              {type === "books" && <BookshelfScene scene="train" variant="terminal" className="mb-8" />}
+              {type === "books" && <BookshelfScene scene="train" className="mb-8" />}
               <div
                 id={type}
                 className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
@@ -1248,7 +1240,7 @@ export default function TerminalRepoList() {
             <p className="text-[#333333] mb-4 leading-relaxed">
               Selected posts showcasing recent work and builds.
             </p>
-            <FeaturedTweets variant="terminal" />
+            <FeaturedTweets />
           </div>
         </div>
 

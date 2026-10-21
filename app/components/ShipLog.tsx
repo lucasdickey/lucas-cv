@@ -6,9 +6,9 @@ import { shipLog, type ShipLogProject } from "../data/shipLog";
 import { ExpandableSection } from "./ExpandableSection";
 
 /**
- * "The Last 90 Days" — renders the rolling build log in either the terminal
- * or the marketer theme. Data lives in `app/data/shipLog.ts`; only projects
- * with a public, un-gated deployment carry a live link.
+ * "The Last 90 Days" — renders the rolling build log. Data lives in
+ * `app/data/shipLog.ts`; only projects with a public, un-gated deployment
+ * carry a live link.
  */
 
 // Pinned to UTC: these dates are rendered on the server and hydrated on the
@@ -160,124 +160,7 @@ function TerminalProject({ project }: { project: ShipLogProject }) {
   );
 }
 
-function MarketerProject({ project }: { project: ShipLogProject }) {
-  return (
-    <div className="bg-[#F4F5F7] rounded-lg p-6 border border-transparent hover:border-[#0052CC] hover:shadow-lg transition-all flex flex-col">
-      <div className="flex items-start gap-4 mb-3">
-        <Thumbnail
-          project={project}
-          className="w-28 self-start rounded-md border border-[#DFE1E6] bg-white"
-        />
-        <div className="flex-1 min-w-0">
-          <div className="flex justify-between items-start mb-2 gap-2">
-            <h3 className="font-semibold text-[#172B4D] text-lg">
-              {project.liveUrl ? (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#0052CC] hover:underline"
-                >
-                  {project.name}
-                </a>
-              ) : (
-                project.name
-              )}
-            </h3>
-            {project.liveUrl && (
-              <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide bg-[#E3FCEF] text-[#006644] px-2 py-1 rounded">
-                Live
-              </span>
-            )}
-          </div>
-
-          <div className="text-xs text-[#6B778C]">
-            {plural(project.commits, "commit")} · {formatRange(project)}
-          </div>
-        </div>
-      </div>
-
-      <p className="text-sm text-[#172B4D] font-medium mb-3 leading-relaxed">
-        {project.summary}
-      </p>
-
-      <ul className="space-y-2 mb-4 flex-1">
-        {project.bullets.map((bullet, i) => (
-          <li key={i} className="text-sm text-[#6B778C] leading-relaxed flex">
-            <span className="text-[#0052CC] mr-2 select-none">•</span>
-            <span>{bullet}</span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm mb-3">
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0052CC] font-medium hover:underline inline-flex items-center gap-1"
-          >
-            <ExternalLink className="w-4 h-4" /> Open it
-          </a>
-        )}
-        {project.repoUrl && (
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0052CC] font-medium hover:underline inline-flex items-center gap-1"
-          >
-            <Github className="w-4 h-4" /> Source
-          </a>
-        )}
-      </div>
-
-      {project.extraLinks && (
-        <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
-          {project.extraLinks.map((link) => (
-            <a
-              key={link.url}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-[#0052CC] hover:underline"
-            >
-              {link.label} →
-            </a>
-          ))}
-        </div>
-      )}
-
-      <div className="flex flex-wrap gap-2">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs bg-[#DEEBFF] text-[#0052CC] px-2 py-1 rounded"
-          >
-            #{tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export default function ShipLog({
-  variant = "terminal",
-}: {
-  variant?: "terminal" | "marketer";
-}) {
-  if (variant === "marketer") {
-    return (
-      <div className="grid md:grid-cols-2 gap-6">
-        {shipLog.map((project) => (
-          <MarketerProject key={project.name} project={project} />
-        ))}
-      </div>
-    );
-  }
-
+export default function ShipLog() {
   return (
     <ExpandableSection
       maxRows={3}
