@@ -4,8 +4,8 @@ interface SyllabusPartIconProps {
 }
 
 /**
- * A thematic line icon per syllabus part. Strokes use currentColor so the same
- * icon works in the terminal and marketer palettes.
+ * A thematic line icon per syllabus part. Strokes use currentColor so the icon
+ * takes the colour of the text around it.
  */
 export default function SyllabusPartIcon({
   partId,

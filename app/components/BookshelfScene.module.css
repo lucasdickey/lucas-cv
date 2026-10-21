@@ -1,0 +1,300 @@
+/*
+ * Engraved bookshelf plates. Each plate is a stack of same-sized transparent
+ * layers; motion lives in a middle layer and passes behind the layer in front.
+ * The JS sets data-running only while the images are loaded, the plate is on
+ * screen, and the visitor hasn't paused it.
+ */
+
+.scene {
+  --paper: #f5f5dc;
+  --ink: #2a2521;
+  --night: #141b2b;
+}
+
+.frame {
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.viewport {
+  position: relative;
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ar);
+}
+
+.night .stage { --ar: 3600 / 1159; --focal: 0.53; --hh: 240px; }
+.study .stage { --ar: 3600 / 1186; --focal: 0.5; --hh: 230px; }
+.train .stage { --ar: 3600 / 1124; --focal: 0.5; --hh: 220px; }
+
+/* Phones: keep a usable height and crop around the plate's focal point */
+@media (max-width: 720px) {
+  .stage {
+    width: calc(var(--hh) * var(--ar));
+    height: var(--hh);
+    aspect-ratio: auto;
+    left: calc(50% - var(--focal) * var(--hh) * var(--ar));
+  }
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wall {
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(-32deg, rgba(42, 37, 33, 0.13) 0 0.7px, transparent 0.7px 2.7px);
+}
+
+.scene:not([data-running="true"]) .stage *,
+.scene:not([data-running="true"]) .stage *::before {
+  animation-play-state: paused !important;
+}
+
+/* ---------- Plate I: Night Shift ---------- */
+
+/* One full turn, morning to night and back. */
+.night { --cycle: 20s; }
+
+.sun,
+.moon {
+  position: absolute;
+  left: 0;
+  will-change: transform;
+}
+.sun { top: 3%; width: 12%; height: 50%; animation: sunPath var(--cycle) linear infinite; }
+.moon { top: 8%; width: 12%; height: 56%; animation: moonPath var(--cycle) linear infinite; }
+
+.pane {
+  position: absolute;
+  width: 44%;
+  height: 47%;
+  background: var(--paper);
+  box-shadow: 0 0 10px 6px var(--paper);
+  transform: skewX(-16deg);
+}
+.moon .pane { background: #26314a; box-shadow: 0 0 14px 8px #26314a; }
+.pane:nth-child(1) { left: 0; top: 0; }
+.pane:nth-child(2) { left: 54%; top: 0; }
+.pane:nth-child(3) { left: 0; top: 53%; }
+.pane:nth-child(4) { left: 54%; top: 53%; }
+
+@keyframes sunPath {
+  0% { transform: translateX(-120%); opacity: 1; }
+  40% { transform: translateX(640%); opacity: 1; }
+  45%, 100% { transform: translateX(760%); opacity: 0; }
+}
+@keyframes moonPath {
+  0%, 48% { transform: translateX(-140%); }
+  92%, 100% { transform: translateX(700%); }
+}
+
+.dusk {
+  background: #c46a2b;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  animation: dusk var(--cycle) linear infinite;
+}
+@keyframes dusk {
+  0%, 36% { opacity: 0; }
+  46% { opacity: 0.22; }
+  54%, 100% { opacity: 0; }
+}
+
+.nightfall {
+  opacity: 0;
+  animation: nightfall var(--cycle) linear infinite;
+  will-change: opacity;
+}
+@keyframes nightfall {
+  0%, 44% { opacity: 0; }
+  54%, 86% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+.nightWall {
+  background-color: var(--night);
+  background-image: repeating-linear-gradient(-32deg, rgba(5, 8, 15, 0.35) 0 0.7px, transparent 0.7px 2.7px);
+}
+
+.lamp {
+  position: absolute;
+  display: block;
+  opacity: 0;
+  animation: lamp var(--cycle) linear infinite;
+  will-change: opacity;
+}
+.lamps .lamp {
+  background: radial-gradient(70% 80% at 50% 66%, rgba(255, 214, 140, 0.98), rgba(255, 176, 92, 0.72) 42%, rgba(214, 120, 54, 0.18) 78%, rgba(214, 120, 54, 0) 100%);
+}
+.spill { mix-blend-mode: screen; opacity: 0.34; }
+.spill .lamp { background: radial-gradient(70% 80% at 50% 70%, rgba(255, 196, 120, 0.9), rgba(255, 160, 80, 0) 85%); }
+@keyframes lamp {
+  0%, 47% { opacity: 0; }
+  49% { opacity: 1; }
+  50% { opacity: 0.82; }
+  51%, 82% { opacity: 1; }
+  85%, 100% { opacity: 0; }
+}
+
+/* ---------- Plate II: the study shelves, in layers ---------- */
+
+.viewport3d { perspective: 1500px; }
+.rig {
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.card {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translate3d(calc(var(--px, 0) * var(--depth) * 1px), calc(var(--py, 0) * var(--depth) * 1px), 0);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(42, 37, 33, 0);
+  background: rgba(245, 245, 220, 0);
+  transition: background 0.6s, border-color 0.6s, box-shadow 0.6s;
+}
+.exploded .rig { transform: translateY(4%) rotateX(14deg) rotateY(-26deg) scale(0.56); }
+.exploded .card { transform: translate3d(0, 0, calc(var(--z) * var(--spread, 1) * 1px)); }
+@media (max-width: 720px) {
+  .exploded .rig { --spread: 0.5; transform: translateY(3%) rotateX(12deg) rotateY(-22deg) scale(0.46); }
+}
+.exploded .card::before {
+  border-color: rgba(42, 37, 33, 0.28);
+  background: rgba(245, 245, 220, 0.42);
+  box-shadow: 0 18px 40px -24px rgba(42, 37, 33, 0.45);
+}
+.exploded .cardWall::before { background: rgba(245, 245, 220, 0.9); }
+
+/* ---------- Plate III: Shelf Express ---------- */
+
+.track {
+  position: absolute;
+  left: 18.4%;
+  width: 63.2%;
+  top: 26%;
+  height: 58%;
+  overflow: hidden;
+}
+.rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3.1%;
+  height: 1px;
+  background: rgba(42, 37, 33, 0.5);
+}
+.engine {
+  position: absolute;
+  left: 0;
+  bottom: 3.1%;
+  width: 41.8%;
+  height: auto;
+  overflow: visible;
+  animation: run 12s linear infinite;
+  will-change: transform;
+}
+@keyframes run {
+  0% { transform: translateX(-102%); }
+  84%, 100% { transform: translateX(241%); }
+}
+.spin {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.rod { animation: rod 0.7s linear infinite; }
+@keyframes rod {
+  0%, 100% { transform: translate(0, -2.5px); }
+  25% { transform: translate(2.5px, 0); }
+  50% { transform: translate(0, 2.5px); }
+  75% { transform: translate(-2.5px, 0); }
+}
+.puff {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  animation: puff 2.1s ease-out infinite;
+}
+.puff:nth-of-type(2) { animation-delay: 0.7s; }
+.puff:nth-of-type(3) { animation-delay: 1.4s; }
+@keyframes puff {
+  0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translate(-46px, -34px) scale(2.1); opacity: 0; }
+}
+.fern {
+  transform-origin: 26% 30%;
+  animation: sway 7s ease-in-out infinite alternate;
+}
+@keyframes sway {
+  from { transform: rotate(-0.7deg); }
+  to { transform: rotate(0.8deg); }
+}
+
+/* ---------- Caption bar ---------- */
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 8px 12px;
+  border-top: 1px solid #cccccc;
+  background: #e8e8d0;
+  color: #666666;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.label { min-width: 0; }
+.plate { color: #8b0000; font-weight: 700; margin-right: 8px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 12px;
+  color: #333333;
+  background: var(--paper);
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.button:hover { border-color: #999999; }
+.link { color: #8b0000; text-decoration: none; white-space: nowrap; }
+.link:hover { text-decoration: underline; }
+.button:focus-visible,
+.link:focus-visible {
+  outline: 2px solid #8b0000;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage *,
+  .stage *::before { animation: none !important; transition: none !important; }
+  .nightfall, .dusk, .sun, .moon, .puff { display: none; }
+  .engine { transform: translateX(70%); }
+  .motionOnly { display: none; }
+}

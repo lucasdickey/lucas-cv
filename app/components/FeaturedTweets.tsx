@@ -27,11 +27,7 @@ const WIDGETS_SRC = "https://platform.twitter.com/widgets.js";
  * `childElementCount === 0`, which the fallback itself made permanently false,
  * so no embed ever rendered.
  */
-export default function FeaturedTweets({
-  variant = "marketer",
-}: {
-  variant?: "terminal" | "marketer";
-}) {
+export default function FeaturedTweets() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -108,19 +104,13 @@ export default function FeaturedTweets({
     };
   }, []);
 
-  const isTerminal = variant === "terminal";
-
   return (
     <div ref={containerRef} className="grid md:grid-cols-2 gap-6">
       {featuredTweets.map((tweet) => (
         <div
           key={tweet.id}
           data-tweet-card
-          className={
-            isTerminal
-              ? "min-h-[220px] flex flex-col items-center justify-center rounded border border-[#cccccc] bg-[#fafafa] p-2"
-              : "min-h-[220px] flex flex-col items-center justify-center rounded-lg bg-[#F4F5F7] p-2"
-          }
+          className="min-h-[220px] flex flex-col items-center justify-center rounded border border-[#cccccc] bg-[#fafafa] p-2"
         >
           {/* The embed is mounted here, separate from the fallback below. */}
           <div data-tweet-mount={tweet.id} className="w-full" />
@@ -129,11 +119,7 @@ export default function FeaturedTweets({
             href={tweet.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={
-              isTerminal
-                ? "text-sm text-[#0000ff] hover:underline py-4"
-                : "text-sm text-[#0052CC] hover:underline py-4"
-            }
+            className="text-sm text-[#0000ff] hover:underline py-4"
           >
             View post on X →
           </a>

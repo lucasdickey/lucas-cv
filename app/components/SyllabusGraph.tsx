@@ -20,8 +20,6 @@ import {
 } from '../lib/syllabusGraph';
 import { syllabus, getSyllabusStatusLabel } from '../data/syllabus';
 
-type Theme = 'marketer' | 'terminal';
-
 interface Palette {
   surface: string;
   panel: string;
@@ -35,8 +33,8 @@ interface Palette {
    * give it a stage to sit on. `stage*` are the three stops of the vignette
    * behind the map, `shadow` is the colour every drop shadow is mixed from,
    * and the `*Shadow` strings are the CSS elevations for the chrome around it.
-   * They are held per theme rather than as alpha-over-white so the terminal
-   * theme's shadows stay warm instead of turning grey.
+   * They are solid colours rather than alpha-over-white so the shadows stay
+   * warm instead of turning grey.
    */
   stageInner: string;
   stageMid: string;
@@ -47,45 +45,24 @@ interface Palette {
   frameShadow: string;
 }
 
-const PALETTES: Record<Theme, Palette> = {
-  marketer: {
-    surface: '#FFFFFF',
-    panel: '#F4F5F7',
-    ink: '#172B4D',
-    muted: '#6B778C',
-    edge: '#C1C7D0',
-    ring: '#172B4D',
-    focus: '#0052CC',
-    stageInner: '#FFFFFF',
-    stageMid: '#FAFBFC',
-    stageOuter: '#EDF1F6',
-    shadow: '#172B4D',
-    cardShadow:
-      '0 1px 1px rgba(23,43,77,0.06), 0 10px 24px -14px rgba(23,43,77,0.42)',
-    chipShadow:
-      '0 1px 1px rgba(23,43,77,0.05), 0 4px 8px -6px rgba(23,43,77,0.35)',
-    frameShadow:
-      '0 1px 2px rgba(23,43,77,0.07), 0 22px 44px -32px rgba(23,43,77,0.5)',
-  },
-  terminal: {
-    surface: '#f0f0e0',
-    panel: '#e8e8d8',
-    ink: '#333333',
-    muted: '#666666',
-    edge: '#b8b8a8',
-    ring: '#333333',
-    focus: '#8b0000',
-    stageInner: '#f7f7ea',
-    stageMid: '#f0f0e0',
-    stageOuter: '#e2e2ce',
-    shadow: '#3d3d2b',
-    cardShadow:
-      '0 1px 1px rgba(61,61,43,0.08), 0 10px 24px -14px rgba(61,61,43,0.5)',
-    chipShadow:
-      '0 1px 1px rgba(61,61,43,0.07), 0 4px 8px -6px rgba(61,61,43,0.45)',
-    frameShadow:
-      '0 1px 2px rgba(61,61,43,0.09), 0 22px 44px -32px rgba(61,61,43,0.55)',
-  },
+const PALETTE: Palette = {
+  surface: '#f0f0e0',
+  panel: '#e8e8d8',
+  ink: '#333333',
+  muted: '#666666',
+  edge: '#b8b8a8',
+  ring: '#333333',
+  focus: '#8b0000',
+  stageInner: '#f7f7ea',
+  stageMid: '#f0f0e0',
+  stageOuter: '#e2e2ce',
+  shadow: '#3d3d2b',
+  cardShadow:
+    '0 1px 1px rgba(61,61,43,0.08), 0 10px 24px -14px rgba(61,61,43,0.5)',
+  chipShadow:
+    '0 1px 1px rgba(61,61,43,0.07), 0 4px 8px -6px rgba(61,61,43,0.45)',
+  frameShadow:
+    '0 1px 2px rgba(61,61,43,0.09), 0 22px 44px -32px rgba(61,61,43,0.55)',
 };
 
 /** Padding around the graph so covers never sit flush against the frame. */
@@ -171,8 +148,7 @@ const ARROW_KEYS = new Set([
   'ArrowDown',
 ]);
 
-export default function SyllabusGraph({ theme }: { theme: Theme }) {
-  const palette = PALETTES[theme];
+export default function SyllabusGraph() {
   const svgRef = useRef<SVGSVGElement | null>(null);
   // useId can contain characters that are illegal in an XML id (React 19 wraps
   // it in guillemets), and these ids are referenced from url(#…).
@@ -688,19 +664,19 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
   // on screen. Left in user units it grows with the camera, and at the 2.9x a
   // selected reading pulls it reads as lumpy white blobs around the glyphs.
   const halo = {
-    stroke: palette.stageInner,
+    stroke: PALETTE.stageInner,
     strokeWidth: 7 / transform.k,
     strokeLinejoin: 'round' as const,
     paintOrder: 'stroke' as const,
   };
 
-  const glowColor = selectedBook?.color ?? selectedPart?.color ?? palette.focus;
+  const glowColor = selectedBook?.color ?? selectedPart?.color ?? PALETTE.focus;
 
   return (
     <div
       ref={shellRef}
       className={expanded ? 'fixed inset-0 z-[100] flex flex-col' : 'w-full'}
-      style={expanded ? { background: palette.surface } : undefined}
+      style={expanded ? { background: PALETTE.surface } : undefined}
       role={expanded ? 'dialog' : undefined}
       aria-modal={expanded ? true : undefined}
       aria-label={expanded ? 'Syllabus knowledge graph, full screen' : undefined}
@@ -709,12 +685,12 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
         <div
           className="flex flex-shrink-0 items-center justify-between border-b px-4 py-3"
           style={{
-            borderColor: palette.edge,
-            background: palette.surface,
-            boxShadow: palette.chipShadow,
+            borderColor: PALETTE.edge,
+            background: PALETTE.surface,
+            boxShadow: PALETTE.chipShadow,
           }}
         >
-          <span className="text-sm font-bold" style={{ color: palette.ink }}>
+          <span className="text-sm font-bold" style={{ color: PALETTE.ink }}>
             {syllabus.title}
           </span>
           <button
@@ -723,10 +699,10 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
             onClick={() => setExpanded(false)}
             className="rounded border px-3 py-1.5 text-sm font-medium"
             style={{
-              borderColor: palette.edge,
-              color: palette.ink,
-              background: palette.panel,
-              boxShadow: palette.chipShadow,
+              borderColor: PALETTE.edge,
+              color: PALETTE.ink,
+              background: PALETTE.panel,
+              boxShadow: PALETTE.chipShadow,
             }}
           >
             Close
@@ -763,11 +739,11 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
           }
           style={
             expanded
-              ? { background: palette.stageOuter }
+              ? { background: PALETTE.stageOuter }
               : {
-                  background: palette.stageOuter,
-                  borderColor: palette.edge,
-                  boxShadow: palette.frameShadow,
+                  background: PALETTE.stageOuter,
+                  borderColor: PALETTE.edge,
+                  boxShadow: PALETTE.frameShadow,
                   aspectRatio: '1 / 1',
                   maxHeight: '78vh',
                 }
@@ -798,9 +774,9 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                 cy={0}
                 r={VIEWBOX * 1.05}
               >
-                <stop offset="0" stopColor={palette.stageInner} />
-                <stop offset="0.55" stopColor={palette.stageMid} />
-                <stop offset="1" stopColor={palette.stageOuter} />
+                <stop offset="0" stopColor={PALETTE.stageInner} />
+                <stop offset="0.55" stopColor={PALETTE.stageMid} />
+                <stop offset="1" stopColor={PALETTE.stageOuter} />
               </radialGradient>
 
               <radialGradient
@@ -810,18 +786,18 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                 cy={0}
                 r={92}
               >
-                <stop offset="0" stopColor={palette.ring} stopOpacity={0.13} />
-                <stop offset="0.55" stopColor={palette.ring} stopOpacity={0.05} />
-                <stop offset="1" stopColor={palette.ring} stopOpacity={0} />
+                <stop offset="0" stopColor={PALETTE.ring} stopOpacity={0.13} />
+                <stop offset="0.55" stopColor={PALETTE.ring} stopOpacity={0.05} />
+                <stop offset="1" stopColor={PALETTE.ring} stopOpacity={0} />
               </radialGradient>
 
               {/* Contact shadow under each cover. A gradient rather than a blur
                   filter: one of these per reading costs nothing to rasterise
                   while the camera is moving. */}
               <linearGradient id={`${uid}-shelf`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor={palette.shadow} stopOpacity={0.3} />
-                <stop offset="0.6" stopColor={palette.shadow} stopOpacity={0.08} />
-                <stop offset="1" stopColor={palette.shadow} stopOpacity={0} />
+                <stop offset="0" stopColor={PALETTE.shadow} stopOpacity={0.3} />
+                <stop offset="0.6" stopColor={PALETTE.shadow} stopOpacity={0.08} />
+                <stop offset="1" stopColor={PALETTE.shadow} stopOpacity={0} />
               </linearGradient>
 
               {/* Spines run heavy and neutral at the hub, resolving into the
@@ -836,7 +812,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                   x2={part.x}
                   y2={part.y}
                 >
-                  <stop offset="0" stopColor={palette.ring} stopOpacity={0.5} />
+                  <stop offset="0" stopColor={PALETTE.ring} stopOpacity={0.5} />
                   <stop offset="1" stopColor={part.color} stopOpacity={1} />
                 </linearGradient>
               ))}
@@ -894,7 +870,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                 cy={0}
                 r={RING_R}
                 fill="none"
-                stroke={palette.edge}
+                stroke={PALETTE.edge}
                 strokeWidth={1.25}
                 strokeDasharray="2 10"
                 strokeLinecap="round"
@@ -939,12 +915,12 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
               <circle
                 r={31}
                 fill="none"
-                stroke={palette.ring}
+                stroke={PALETTE.ring}
                 strokeWidth={1}
                 opacity={0.35}
               />
-              <circle r={20} fill={palette.ring} />
-              <circle r={20} fill="none" stroke={palette.stageInner} strokeWidth={2} opacity={0.35} />
+              <circle r={20} fill={PALETTE.ring} />
+              <circle r={20} fill="none" stroke={PALETTE.stageInner} strokeWidth={2} opacity={0.35} />
               <text
                 x={0}
                 y={46}
@@ -952,7 +928,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                 fontSize={17}
                 fontWeight={700}
                 letterSpacing={2.4}
-                fill={palette.muted}
+                fill={PALETTE.muted}
                 {...halo}
               >
                 <tspan x={0} dy={0}>
@@ -999,7 +975,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                         cy={part.y}
                         r={isActive ? 32 : 26}
                         fill={part.color}
-                        stroke={palette.ring}
+                        stroke={PALETTE.ring}
                         strokeWidth={isActive ? 4 : 2.5}
                       />
                       {/* A hairline inside the ring: two weights of line read as
@@ -1009,7 +985,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                         cy={part.y}
                         r={isActive ? 28.5 : 23.4}
                         fill="none"
-                        stroke={palette.stageInner}
+                        stroke={PALETTE.stageInner}
                         strokeWidth={1}
                         opacity={0.4}
                       />
@@ -1021,7 +997,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                       fontSize={17}
                       fontWeight={700}
                       letterSpacing={2.2}
-                      fill={palette.muted}
+                      fill={PALETTE.muted}
                       {...halo}
                     >
                       {part.label.toUpperCase()}
@@ -1032,7 +1008,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                       textAnchor="middle"
                       fontSize={22}
                       fontWeight={700}
-                      fill={palette.ink}
+                      fill={PALETTE.ink}
                       {...halo}
                     >
                       {lines.map((line, i) => (
@@ -1090,7 +1066,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                         y={top}
                         width={BOOK_W}
                         height={BOOK_H}
-                        fill={palette.panel}
+                        fill={PALETTE.panel}
                       />
                       {book.coverUrl ? (
                         <image
@@ -1108,7 +1084,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                         width={BOOK_W}
                         height={BOOK_H}
                         fill="none"
-                        stroke={isActive || isHovered ? palette.ring : book.color}
+                        stroke={isActive || isHovered ? PALETTE.ring : book.color}
                         strokeWidth={isActive ? 5 : isHovered ? 4 : 2.5}
                       />
                       {/* Spine highlight down the left edge of the cover. */}
@@ -1117,7 +1093,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                         y={top + 2}
                         width={3}
                         height={BOOK_H - 4}
-                        fill={palette.stageInner}
+                        fill={PALETTE.stageInner}
                         opacity={0.22}
                       />
                     </g>
@@ -1127,7 +1103,7 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
                         cy={top + 11}
                         r={7}
                         fill={book.color}
-                        stroke={palette.surface}
+                        stroke={PALETTE.surface}
                         strokeWidth={2.5}
                       />
                     ) : null}
@@ -1138,7 +1114,6 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
           </svg>
 
           <GraphControls
-            palette={palette}
             expanded={expanded}
             expandRef={expandRef}
             onZoomIn={() => zoomBy(1.3)}
@@ -1162,19 +1137,17 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
           // variant can lift it — an inline style would win over the variant.
           style={
             expanded
-              ? { borderColor: palette.edge, background: palette.surface }
+              ? { borderColor: PALETTE.edge, background: PALETTE.surface }
               : undefined
           }
         >
           <Legend
-            palette={palette}
             selectedPartId={selectedPart?.id ?? null}
             onSelect={selectPart}
           />
 
           <div ref={detailRef}>
             <DetailPanel
-              palette={palette}
               book={selectedBook}
               part={selection?.kind === 'part' ? selectedPart : null}
               onClear={() => setSelection(null)}
@@ -1187,7 +1160,6 @@ export default function SyllabusGraph({ theme }: { theme: Theme }) {
 }
 
 function GraphControls({
-  palette,
   expanded,
   expandRef,
   onZoomIn,
@@ -1195,7 +1167,6 @@ function GraphControls({
   onReset,
   onToggleExpand,
 }: {
-  palette: Palette;
   expanded: boolean;
   expandRef: React.RefObject<HTMLButtonElement | null>;
   onZoomIn: () => void;
@@ -1204,10 +1175,10 @@ function GraphControls({
   onToggleExpand: () => void;
 }) {
   const style = {
-    background: palette.surface,
-    borderColor: palette.edge,
-    color: palette.ink,
-    boxShadow: palette.chipShadow,
+    background: PALETTE.surface,
+    borderColor: PALETTE.edge,
+    color: PALETTE.ink,
+    boxShadow: PALETTE.chipShadow,
   };
   return (
     <div className="absolute right-3 top-3 flex flex-col gap-1">
@@ -1266,11 +1237,9 @@ function GraphControls({
  * instead of centring itself under the first line.
  */
 function Legend({
-  palette,
   selectedPartId,
   onSelect,
 }: {
-  palette: Palette;
   selectedPartId: string | null;
   onSelect: (part: GraphPart) => void;
 }) {
@@ -1290,12 +1259,12 @@ function Legend({
               aria-pressed={isSelected}
               className="grid h-full w-full grid-cols-[auto_1fr_auto] items-start gap-x-2 rounded-md border px-3 py-2 text-left text-xs font-medium transition-colors"
               style={{
-                background: isSelected ? palette.panel : palette.surface,
-                borderColor: isSelected ? palette.focus : palette.edge,
-                color: palette.ink,
+                background: isSelected ? PALETTE.panel : PALETTE.surface,
+                borderColor: isSelected ? PALETTE.focus : PALETTE.edge,
+                color: PALETTE.ink,
                 boxShadow: isSelected
-                  ? `inset 0 0 0 1px ${palette.focus}`
-                  : palette.chipShadow,
+                  ? `inset 0 0 0 1px ${PALETTE.focus}`
+                  : PALETTE.chipShadow,
               }}
             >
               <span
@@ -1304,7 +1273,7 @@ function Legend({
                 style={{
                   marginTop: '2px',
                   background: part.color,
-                  boxShadow: `0 0 0 1.5px ${palette.ring}`,
+                  boxShadow: `0 0 0 1.5px ${PALETTE.ring}`,
                 }}
               />
               <span className="min-w-0 leading-snug">
@@ -1312,7 +1281,7 @@ function Legend({
               </span>
               <span
                 className="tabular-nums leading-snug"
-                style={{ color: palette.muted }}
+                style={{ color: PALETTE.muted }}
               >
                 ({part.bookCount})
               </span>
@@ -1325,12 +1294,10 @@ function Legend({
 }
 
 function DetailPanel({
-  palette,
   book,
   part,
   onClear,
 }: {
-  palette: Palette;
   book: GraphBook | null;
   part: GraphPart | null;
   onClear: () => void;
@@ -1338,20 +1305,20 @@ function DetailPanel({
   const shell = 'mt-4 rounded-lg border p-4 sm:p-5 transition-colors';
   const accent = book?.color ?? part?.color;
   const shellStyle = {
-    background: palette.panel,
-    borderColor: palette.edge,
-    color: palette.ink,
-    boxShadow: palette.cardShadow,
+    background: PALETTE.panel,
+    borderColor: PALETTE.edge,
+    color: PALETTE.ink,
+    boxShadow: PALETTE.cardShadow,
     ...(accent ? { borderLeft: `3px solid ${accent}` } : null),
   };
 
   if (!book && !part) {
     return (
       <div className={shell} style={shellStyle} aria-live="polite">
-        <p className="text-sm" style={{ color: palette.muted }}>
+        <p className="text-sm" style={{ color: PALETTE.muted }}>
           Select a part or a reading on the map to see its details. The centre
           node is the question the whole syllabus is built around:{' '}
-          <span style={{ color: palette.ink }}>
+          <span style={{ color: PALETTE.ink }}>
             {syllabus.missingBook.question}
           </span>
         </p>
@@ -1373,12 +1340,12 @@ function DetailPanel({
             {book ? book.title : part?.title}
           </h3>
           {book ? (
-            <p className="mt-1 text-sm" style={{ color: palette.muted }}>
+            <p className="mt-1 text-sm" style={{ color: PALETTE.muted }}>
               {book.author} · {getSyllabusStatusLabel(book.status)}
               {book.orderIndex ? ` · #${book.orderIndex} in reading order` : ''}
             </p>
           ) : (
-            <p className="mt-1 text-sm" style={{ color: palette.muted }}>
+            <p className="mt-1 text-sm" style={{ color: PALETTE.muted }}>
               {part?.bookCount} readings
             </p>
           )}
@@ -1388,9 +1355,9 @@ function DetailPanel({
           onClick={onClear}
           className="flex-shrink-0 rounded border px-2 py-1 text-xs"
           style={{
-            borderColor: palette.edge,
-            color: palette.muted,
-            background: palette.surface,
+            borderColor: PALETTE.edge,
+            color: PALETTE.muted,
+            background: PALETTE.surface,
           }}
         >
           Clear
@@ -1408,7 +1375,7 @@ function DetailPanel({
           target="_blank"
           rel="noopener noreferrer"
           className="mt-3 inline-block text-sm font-medium underline"
-          style={{ color: palette.focus }}
+          style={{ color: PALETTE.focus }}
         >
           Find this book →
         </a>

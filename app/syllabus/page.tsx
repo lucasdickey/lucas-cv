@@ -1,8 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BookOpen } from 'lucide-react';
-import { useViewMode } from '../contexts/view-mode-context';
 import SyllabusPartIcon from '../components/SyllabusPartIcon';
 import SyllabusGraph from '../components/SyllabusGraph';
 import SyllabusViewSwitch from '../components/SyllabusViewSwitch';
@@ -16,7 +14,6 @@ import {
 } from '../data/syllabus';
 
 export default function SyllabusPage() {
-  const { viewMode } = useViewMode();
   const stats = getSyllabusStats();
 
   // Amazon where the reading is a book, the canonical source where it lives
@@ -24,241 +21,6 @@ export default function SyllabusPage() {
   const readingHref = (reading: SyllabusReading) =>
     reading.amazonUrl || reading.url;
 
-  // Marketer view
-  if (viewMode === 'marketer') {
-    return (
-      <div className="min-h-screen bg-white marketer-view">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header */}
-          <div className="mb-10">
-            <Link
-              href="/#syllabus"
-              className="inline-flex items-center gap-2 text-[#0052CC] hover:text-[#0065FF] mb-4"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm font-medium">Back to home</span>
-            </Link>
-            <h1 className="text-4xl font-bold text-[#172B4D] mb-4">
-              {syllabus.title}
-            </h1>
-            <blockquote className="border-l-4 border-[#0052CC] pl-4 text-lg text-[#172B4D] italic mb-6">
-              {syllabus.guidingQuestion}
-            </blockquote>
-            <p className="text-[#6B778C] leading-relaxed">{syllabus.purpose}</p>
-          </div>
-
-          {/* Progress */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            {[
-              { value: stats.total, label: 'Readings' },
-              { value: stats.parts, label: 'Parts' },
-              { value: stats.read, label: 'Read' },
-              { value: stats.pending, label: 'Queued' },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-[#F4F5F7] rounded-lg px-3 py-4 text-center"
-              >
-                <div className="text-3xl font-bold text-[#0052CC] mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-[#6B778C]">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Lenses */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-[#172B4D] mb-4">Lenses</h2>
-            <div className="flex flex-wrap gap-2">
-              {syllabus.lenses.map((lens) => (
-                <span
-                  key={lens}
-                  className="px-3 py-1 bg-[#DEEBFF] text-[#0052CC] text-sm font-medium rounded-md"
-                >
-                  {lens}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Learning Goals */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-[#172B4D] mb-4">
-              Learning Goals
-            </h2>
-            <ol className="space-y-3">
-              {syllabus.learningGoals.map((goal, index) => (
-                <li key={goal} className="flex gap-3">
-                  <span className="font-bold text-[#0052CC] flex-shrink-0">
-                    {index + 1}.
-                  </span>
-                  <span className="text-[#172B4D] leading-relaxed">{goal}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          {/* Central Questions */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-[#172B4D] mb-4">
-              Central Questions
-            </h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              {syllabus.centralQuestions.map((question) => (
-                <div
-                  key={question}
-                  className="bg-[#F4F5F7] rounded-lg p-4 text-[#172B4D] leading-relaxed"
-                >
-                  {question}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Reading List */}
-          <div className="mb-12">
-            <div className="flex items-center gap-2 mb-6">
-              <BookOpen className="w-6 h-6 text-[#0052CC]" />
-              <h2 className="text-2xl font-bold text-[#172B4D]">
-                Reading Syllabus
-              </h2>
-              <span className="text-sm text-[#6B778C]">
-                ({stats.total} readings)
-              </span>
-            </div>
-
-            <SyllabusViewSwitch
-              theme="marketer"
-              graph={<SyllabusGraph theme="marketer" />}
-              list={
-            <div className="space-y-10">
-              {syllabusParts.map((part) => (
-                <section key={part.id} id={part.id} className="scroll-mt-8">
-                  <div className="flex items-center gap-3 mb-1">
-                    <SyllabusPartIcon
-                      partId={part.id}
-                      className="w-7 h-7 text-[#0052CC] flex-shrink-0"
-                    />
-                    <h3 className="text-xl font-bold text-[#172B4D]">
-                      {part.label} — {part.title}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-[#6B778C] mb-4">{part.summary}</p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {part.readings.map((reading) => (
-                      <div
-                        key={reading.slug}
-                        className="bg-[#F4F5F7] rounded-lg p-5 hover:shadow-lg transition-all border border-transparent hover:border-[#0052CC] relative"
-                      >
-                        <div
-                          className={`absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded ${
-                            reading.status === 'reading'
-                              ? 'bg-red-500 text-white'
-                              : reading.status === 'read'
-                              ? 'bg-[#00875A] text-white'
-                              : 'bg-[#DFE1E6] text-[#42526E]'
-                          }`}
-                        >
-                          {getSyllabusStatusLabel(reading.status)}
-                        </div>
-                        <div className="flex gap-4">
-                          {reading.coverUrl && (
-                            <a
-                              href={readingHref(reading)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-shrink-0"
-                            >
-                              <img
-                                src={reading.coverUrl}
-                                alt={`${reading.title} cover`}
-                                className="w-20 object-cover rounded shadow-sm hover:opacity-80 transition-opacity"
-                                style={{ height: '7.5rem' }}
-                              />
-                            </a>
-                          )}
-                          <div className="flex-1 min-w-0 pr-20">
-                            <h4 className="font-bold mb-1 text-sm leading-tight">
-                              <a
-                                href={readingHref(reading)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-[#0052CC] hover:underline"
-                              >
-                                {reading.title}
-                              </a>
-                            </h4>
-                            <p className="text-[#6B778C] text-xs mb-2">
-                              by {reading.author}
-                              {reading.orderIndex
-                                ? ` · #${reading.orderIndex} in reading order`
-                                : ''}
-                            </p>
-                            {reading.note && (
-                              <p className="text-[#333333] text-xs leading-relaxed">
-                                {reading.note}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
-              }
-            />
-          </div>
-
-          {/* Suggested Reading Order */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-[#172B4D] mb-4">
-              Suggested Reading Order
-            </h2>
-            <ol className="grid md:grid-cols-2 gap-2">
-              {syllabus.suggestedOrder.map((item, index) => (
-                <li
-                  key={item}
-                  className="flex gap-3 bg-[#F4F5F7] rounded-md px-4 py-2 text-[#172B4D] text-sm"
-                >
-                  <span className="font-bold text-[#0052CC]">{index + 1}.</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          {/* The Missing Book */}
-          <div className="bg-[#F4F5F7] rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-[#172B4D] mb-4">
-              The Missing Book
-            </h2>
-            <p className="text-[#172B4D] leading-relaxed mb-4">
-              The book I suspect has not yet been written sits somewhere between{' '}
-              {formatMissingBookInfluences()}. Its central question would be:
-            </p>
-            <blockquote className="border-l-4 border-[#0052CC] pl-4 text-lg font-medium text-[#172B4D] italic mb-4">
-              {syllabus.missingBook.question}
-            </blockquote>
-            <ul className="space-y-1 mb-4">
-              {syllabus.missingBook.progression.map((line) => (
-                <li key={line} className="text-[#172B4D]">
-                  {line}
-                </li>
-              ))}
-            </ul>
-            <p className="text-[#6B778C] leading-relaxed">
-              {syllabus.missingBook.closing}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Terminal view
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
       {/* Terminal Header */}
@@ -356,8 +118,7 @@ export default function SyllabusPage() {
 
       {/* Reading List */}
       <SyllabusViewSwitch
-        theme="terminal"
-        graph={<SyllabusGraph theme="terminal" />}
+        graph={<SyllabusGraph />}
         list={
           <>
       {syllabusParts.map((part) => (

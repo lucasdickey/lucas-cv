@@ -11,7 +11,6 @@ const isView = (value: unknown): value is SyllabusView =>
   value === 'graph' || value === 'list';
 
 interface Props {
-  theme: 'marketer' | 'terminal';
   graph: React.ReactNode;
   list: React.ReactNode;
 }
@@ -26,7 +25,7 @@ interface Props {
  * The hidden view is marked `inert` and `aria-hidden` so assistive technology
  * is offered exactly one copy of the syllabus, not two.
  */
-export default function SyllabusViewSwitch({ theme, graph, list }: Props) {
+export default function SyllabusViewSwitch({ graph, list }: Props) {
   const [view, setView] = useState<SyllabusView>(DEFAULT_VIEW);
 
   // The URL wins over the stored preference, so a shared ?view=list link opens
@@ -61,19 +60,14 @@ export default function SyllabusViewSwitch({ theme, graph, list }: Props) {
     window.history.replaceState(null, '', url);
   };
 
-  const marketer = theme === 'marketer';
-  const activeStyle = marketer
-    ? { background: '#0052CC', color: '#FFFFFF', borderColor: '#0052CC' }
-    : { background: '#8b0000', color: '#f5f5dc', borderColor: '#8b0000' };
-  const idleStyle = marketer
-    ? { background: '#FFFFFF', color: '#6B778C', borderColor: '#C1C7D0' }
-    : { background: '#f0f0e0', color: '#666666', borderColor: '#b8b8a8' };
+  const activeStyle = { background: '#8b0000', color: '#f5f5dc', borderColor: '#8b0000' };
+  const idleStyle = { background: '#f0f0e0', color: '#666666', borderColor: '#b8b8a8' };
 
   return (
     <div>
       <div
         className="mb-5 inline-flex rounded-md border p-0.5"
-        style={{ borderColor: marketer ? '#C1C7D0' : '#b8b8a8' }}
+        style={{ borderColor: '#b8b8a8' }}
         role="group"
         aria-label="Choose how to browse the syllabus"
       >

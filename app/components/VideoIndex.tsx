@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { useViewMode } from '../contexts/view-mode-context';
 
 export interface HostedVideo {
   name: string;
@@ -15,24 +12,15 @@ export interface HostedVideo {
 const formatSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 
 /**
- * Renders the unlisted video index in whichever presentation the site is in.
- *
- * Split from the route because the file listing is read off disk at build time
- * on the server, while the presentation comes from a client context.
+ * Renders the unlisted video index. The route reads the file listing off disk
+ * at build time and hands it here.
  */
 export default function VideoIndex({ videos }: { videos: HostedVideo[] }) {
-  const { viewMode } = useViewMode();
-  const marketer = viewMode === 'marketer';
-
-  const shell = marketer
-    ? 'min-h-screen bg-white marketer-view'
-    : 'min-h-screen bg-[#f5f5dc] text-[#333333] font-mono';
-  const card = marketer
-    ? 'rounded-lg border border-[#DFE1E6] bg-[#F4F5F7] p-5'
-    : 'rounded-md border border-[#cccccc] bg-[#f0f0e0] p-4';
-  const heading = marketer ? 'text-[#172B4D]' : 'text-[#8b0000]';
-  const muted = marketer ? 'text-[#6B778C]' : 'text-[#666666]';
-  const link = marketer ? 'text-[#0052CC]' : 'text-[#0000ff]';
+  const shell = 'min-h-screen bg-[#f5f5dc] text-[#333333] font-mono';
+  const card = 'rounded-md border border-[#cccccc] bg-[#f0f0e0] p-4';
+  const heading = 'text-[#8b0000]';
+  const muted = 'text-[#666666]';
+  const link = 'text-[#0000ff]';
 
   return (
     <div className={shell}>
@@ -56,7 +44,7 @@ export default function VideoIndex({ videos }: { videos: HostedVideo[] }) {
           {videos.map((video) => (
             <li key={video.name} className={card}>
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                <h2 className={`text-lg font-bold ${marketer ? 'text-[#172B4D]' : 'text-[#333333]'}`}>
+                <h2 className="text-lg font-bold text-[#333333]">
                   {video.title}
                 </h2>
                 <span className={`text-xs ${muted}`}>
