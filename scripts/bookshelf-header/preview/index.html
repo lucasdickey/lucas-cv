@@ -1,0 +1,360 @@
+<title>Bookshelf Header Studies</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&display=swap">
+<style>
+/* Layout: one column of full-width header proofs on the site's own cream terminal palette, each with its notes underneath. */
+:root {
+  color-scheme: light;
+  --paper: #f5f5dc;      /* the homepage background */
+  --panel: #e8e8d8;      /* the terminal box */
+  --rule: #cccccc;
+  --ink: #2a2521;        /* engraving ink */
+  --muted: #666666;
+  --red: #8b0000;        /* the site's accent, used for one moving thing */
+  --night: #141b2b;
+  --font-display: "Libre Caslon Display", "Libre Caslon Text", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 14px/1.6 var(--font-mono);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+main { max-width: 1240px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2 { font-family: var(--font-display); font-weight: 400; text-wrap: balance; margin: 0; letter-spacing: .005em; }
+h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; }
+h2 { font-size: clamp(24px, 3vw, 32px); line-height: 1.15; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.intro { display: grid; gap: 14px; }
+.intro p { color: #3d3833; }
+a { color: var(--red); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+/* How it's built: the four layers, back to front */
+.layers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.layers figure { margin: 0; display: grid; gap: 6px; }
+.layers .thumb { border: 1px solid var(--rule); background: var(--paper); aspect-ratio: 3600 / 1159; position: relative; overflow: hidden; }
+.layers .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.layers figcaption { font-size: 12px; color: var(--muted); }
+.layers figcaption b { color: var(--ink); font-weight: 500; }
+@media (max-width: 720px) { .layers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* A variant section */
+.variant { display: grid; gap: 16px; }
+.variant-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.variant-head .tag { font-family: var(--font-display); font-size: 20px; color: var(--red); }
+.variant-head p { color: #3d3833; flex-basis: 100%; }
+.proof { display: grid; gap: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+button {
+  font: 500 12px/1 var(--font-mono); letter-spacing: .04em;
+  color: var(--ink); background: var(--panel); border: 1px solid var(--rule);
+  border-radius: 4px; padding: 8px 12px; cursor: pointer;
+}
+button:hover { border-color: #a9a99a; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 24px; font-size: 13px; }
+.notes div { display: grid; gap: 2px; align-content: start; }
+.notes dt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.notes dd { margin: 0; }
+@media (max-width: 760px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+
+/* Site context under each header: the top of the terminal box */
+.site-bar { border: 1px solid var(--rule); border-top: 0; background: var(--panel); padding: 9px 12px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); border-radius: 0 0 6px 6px; }
+.site-bar i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.site-bar span { margin-left: 8px; }
+
+/* ---------- The header frame (shared) ---------- */
+.hdr { position: relative; overflow: hidden; border: 1px solid var(--rule); border-radius: 6px 6px 0 0; background: var(--paper); }
+.stage { position: relative; width: 100%; aspect-ratio: var(--ar); max-width: none; }
+.stage > *, .stage .fill { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stage img { display: block; pointer-events: none; user-select: none; }
+.wall {
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(-32deg, rgba(42, 37, 33, .13) 0 .7px, transparent .7px 2.7px);
+}
+/* Phones: keep a usable height and center the crop on the wooden bookcase */
+@media (max-width: 720px) {
+  .stage { width: calc(var(--hh) * var(--ar)); height: var(--hh); aspect-ratio: auto; left: calc(50% - var(--focal) * var(--hh) * var(--ar)); }
+}
+
+/* ---------- A: Night Shift ---------- */
+.v-night .stage { --ar: 3600 / 1159; --focal: .53; --hh: 230px; }
+.sun { inset: auto; left: 0; top: 3%; width: 12%; height: 50%; animation: sun-path 24s linear infinite; will-change: transform, opacity; }
+.sun i, .moon i { position: absolute; background: var(--paper); box-shadow: 0 0 10px 6px var(--paper); transform: skewX(-16deg); }
+.sun i:nth-child(1), .moon i:nth-child(1) { left: 0; top: 0; width: 44%; height: 47%; }
+.sun i:nth-child(2), .moon i:nth-child(2) { left: 54%; top: 0; width: 44%; height: 47%; }
+.sun i:nth-child(3), .moon i:nth-child(3) { left: 0; top: 53%; width: 44%; height: 47%; }
+.sun i:nth-child(4), .moon i:nth-child(4) { left: 54%; top: 53%; width: 44%; height: 47%; }
+@keyframes sun-path {
+  0% { transform: translateX(-120%); opacity: 1; }
+  40% { transform: translateX(640%); opacity: 1; }
+  45%, 100% { transform: translateX(760%); opacity: 0; }
+}
+.dusk { background: #c46a2b; mix-blend-mode: multiply; opacity: 0; animation: dusk 24s linear infinite; }
+@keyframes dusk { 0%, 36% { opacity: 0; } 46% { opacity: .22; } 54%, 100% { opacity: 0; } }
+.night { opacity: 0; animation: night 24s linear infinite; will-change: opacity; }
+@keyframes night { 0%, 44% { opacity: 0; } 54% { opacity: 1; } 86% { opacity: 1; } 96%, 100% { opacity: 0; } }
+.night-wall { background-color: var(--night); background-image: repeating-linear-gradient(-32deg, rgba(5, 8, 15, .35) 0 .7px, transparent .7px 2.7px); }
+.moon { inset: auto; left: 0; top: 10%; width: 12%; height: 60%; animation: moon-path 24s linear infinite; }
+.moon i { background: #26314a; box-shadow: 0 0 14px 8px #26314a; }
+@keyframes moon-path { 0%, 48% { transform: translateX(-140%); } 92%, 100% { transform: translateX(700%); } }
+.lamps i, .spill i { position: absolute; display: block; opacity: 0; animation: lamp 24s linear infinite; animation-delay: var(--d); will-change: opacity; }
+.lamps i { background: radial-gradient(70% 80% at 50% 66%, rgba(255, 214, 140, .98), rgba(255, 176, 92, .72) 42%, rgba(214, 120, 54, .18) 78%, rgba(214, 120, 54, 0) 100%); }
+.spill { mix-blend-mode: screen; opacity: .34; }
+.spill i { background: radial-gradient(70% 80% at 50% 70%, rgba(255, 196, 120, .9), rgba(255, 160, 80, 0) 85%); }
+@keyframes lamp { 0%, 47% { opacity: 0; } 49% { opacity: 1; } 50% { opacity: .82; } 51%, 82% { opacity: 1; } 85%, 100% { opacity: 0; } }
+
+/* ---------- B: Shelf Express ---------- */
+.v-train .stage { --ar: 3600 / 1124; --focal: .5; --hh: 220px; }
+.track { inset: auto; left: 18.4%; width: 63.2%; top: 26%; height: 58%; overflow: hidden; }
+.track .rail { position: absolute; left: 0; right: 0; bottom: 3.1%; height: 1px; background: rgba(42, 37, 33, .5); }
+.train { position: absolute; left: 0; bottom: 3.1%; width: 41.8%; height: auto; overflow: visible; animation: run 12s linear infinite; will-change: transform; }
+@keyframes run { 0% { transform: translateX(-102%); } 84% { transform: translateX(241%); } 100% { transform: translateX(241%); } }
+.train .spin { transform-box: fill-box; transform-origin: 50% 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.train .rod { animation: rod .7s linear infinite; }
+@keyframes rod { 0% { transform: translate(0, -2.5px); } 25% { transform: translate(2.5px, 0); } 50% { transform: translate(0, 2.5px); } 75% { transform: translate(-2.5px, 0); } 100% { transform: translate(0, -2.5px); } }
+.train .puff { transform-box: fill-box; transform-origin: 50% 50%; animation: puff 2.1s ease-out infinite; opacity: 0; }
+.train .puff:nth-of-type(2) { animation-delay: .7s; }
+.train .puff:nth-of-type(3) { animation-delay: 1.4s; }
+@keyframes puff { 0% { transform: translate(0, 0) scale(.5); opacity: 0; } 12% { opacity: 1; } 100% { transform: translate(-46px, -34px) scale(2.1); opacity: 0; } }
+.fern { transform-origin: 26% 30%; animation: sway 7s ease-in-out infinite alternate; }
+@keyframes sway { from { transform: rotate(-.7deg); } to { transform: rotate(.8deg); } }
+
+/* ---------- C: Exploded View ---------- */
+.v-plates .stage { --ar: 3600 / 1159; --focal: .53; --hh: 230px; }
+.v-plates .hdr { perspective: 1500px; }
+.v-plates .rig { transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2, .7, .2, 1); }
+.v-plates .card { transform-style: preserve-3d; transition: transform 1s cubic-bezier(.2, .7, .2, 1);
+  transform: translate3d(calc(var(--px, 0) * var(--depth) * 1px), calc(var(--py, 0) * var(--depth) * 1px), 0); }
+.v-plates .card::before { content: ""; position: absolute; inset: 0; border: 1px solid rgba(42, 37, 33, 0); background: rgba(245, 245, 220, 0); transition: background .6s, border-color .6s, box-shadow .6s; }
+.v-plates.exploded .rig { transform: rotateX(14deg) rotateY(-26deg) scale(.6); }
+.v-plates.exploded .card { transform: translate3d(0, 0, calc(var(--z) * 1px)); }
+.v-plates.exploded .card::before { border-color: rgba(42, 37, 33, .28); background: rgba(245, 245, 220, .42); box-shadow: 0 18px 40px -24px rgba(42, 37, 33, .45); }
+.v-plates.exploded .card.c-wall::before { background: rgba(245, 245, 220, .9); }
+
+/* Pausing and reduced motion */
+.paused *, .paused *::before { animation-play-state: paused !important; }
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .stage *, .stage *::before { animation: none !important; transition: none !important; }
+  .night, .dusk, .moon, .sun { display: none; }
+  .train { transform: translateX(70%); }
+  .controls .motion { display: none; }
+  .still-only { display: inline; }
+}
+
+footer { border-top: 1px solid var(--rule); padding-top: 20px; display: grid; gap: 10px; color: #3d3833; }
+</style>
+
+<main>
+  <header class="intro">
+    <span class="eyebrow">lucasdickey.com · header proposals</span>
+    <h1>Bookshelf header studies</h1>
+    <p>Each header starts from the 3D bookshelf on <a href="https://www.lucasdickey.com/real-books">/real-books</a>. I pointed a straight-on camera at each bookcase and rendered it in separate layers, keeping the real lighting and shadows. Then I drew every layer as a line engraving on the site's cream paper. Following <a href="https://x.com/_davideast/status/2112932231270285730">David East's multiplane occlusion post</a>, things move in a middle layer and pass behind the layer in front, so a still picture feels alive.</p>
+  </header>
+
+  <section class="variant" aria-labelledby="how-title">
+    <div class="variant-head"><h2 id="how-title">The four layers, back to front</h2></div>
+    <div class="layers">
+      <figure><div class="thumb"><img src="assets/sky-back-day.avif" alt="Engraved back walls of the six bookcases, empty of books"></div><figcaption><b>1 · Back wall.</b> The empty stage, books erased.</figcaption></figure>
+      <figure><div class="thumb"><img src="assets/sky-books-day.avif" alt="Engraved books on their own, floating where the shelves would be"></div><figcaption><b>2 · Books.</b> The middle layer, where motion lives.</figcaption></figure>
+      <figure><div class="thumb"><img src="assets/sky-frame-day.avif" alt="Engraved bookcase frames, shelves and dividers on their own"></div><figcaption><b>3 · Frame.</b> Shelves and dividers that things pass behind.</figcaption></figure>
+      <figure><div class="thumb"><img src="assets/sky-top-day.avif" alt="The fern and caps from the top of the wooden bookcase"></div><figcaption><b>4 · On top.</b> Fern, caps and the stacks on the study shelves.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- A -->
+  <section class="variant v-night" id="night" aria-labelledby="a-title">
+    <div class="variant-head"><span class="tag">A</span><h2 id="a-title">Night Shift</h2>
+      <p>All six bookcases as a skyline. Over 24 seconds a patch of window light drifts across the wall and slips behind each case. At dusk the paper turns navy and the reading lamps come on, cubby by cubby, behind the books.</p></div>
+    <div class="proof">
+      <div class="hdr" role="img" aria-label="Engraved panorama of six bookcases that cycles from day to night, with lamps lighting up inside the shelves">
+        <div class="stage">
+          <div class="wall"></div>
+          <div class="sun" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <img src="assets/sky-poster.avif" alt="">
+          <div class="dusk"></div>
+          <div class="night">
+            <div class="night-wall fill"></div>
+            <div class="moon" style="position:absolute" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <img class="fill" src="assets/sky-floor-night.avif" alt="">
+            <img class="fill" src="assets/sky-back-night.avif" alt="">
+            <div class="lamps fill"></div>
+            <img class="fill" src="assets/sky-fore-night.avif" alt="">
+            <div class="spill fill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="site-bar" aria-hidden="true"><i style="background:#ff6057"></i><i style="background:#ffbd2e"></i><i style="background:#28ca41"></i><span>terminal — bash</span></div>
+      <div class="controls"><button class="motion" type="button" data-pause aria-pressed="false">Pause</button><span class="still-only eyebrow">Motion is off on this device, so this shows the daytime still.</span></div>
+    </div>
+    <dl class="notes">
+      <div><dt>Moves</dt><dd>Window light on the back wall, hidden behind each case. Lamps sit between the back wall and the books, so books show as silhouettes and the frame crops every glow.</dd></div>
+      <div><dt>Weight</dt><dd>About 1.0 MB: one daytime image and three night layers. The lamps and light patches are drawn by the browser.</dd></div>
+      <div><dt>Phones</dt><dd>Crops to the middle of the skyline, centered on the wooden bookcase. Reduced-motion settings get the daytime still.</dd></div>
+    </dl>
+  </section>
+
+  <!-- B -->
+  <section class="variant v-train" id="train" aria-labelledby="b-title">
+    <div class="variant-head"><span class="tag">B</span><h2 id="b-title">Shelf Express</h2>
+      <p>A close crop of the wooden bookcase's top shelf. A small red engine and its cars run the length of the shelf, ducking behind each of the seven dividers the way the tweet's train runs behind the bridge piers. The books stay black and white, so the train is the only red.</p></div>
+    <div class="proof">
+      <div class="hdr" role="img" aria-label="Engraved top shelf of the wooden bookcase with a small red train running along it behind the dividers">
+        <div class="stage">
+          <div class="wall"></div>
+          <img src="assets/wood-backbooks.avif" alt="">
+          <div class="track" aria-hidden="true">
+            <div class="rail"></div>
+            <svg class="train" viewBox="0 0 480 67" fill="none" stroke="#8b0000" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+              <defs>
+                <pattern id="tH" width="4" height="3.2" patternUnits="userSpaceOnUse"><path d="M0 1.6H4" stroke="#8b0000" stroke-width=".9"/></pattern>
+                <pattern id="tV" width="5" height="4" patternUnits="userSpaceOnUse"><path d="M2.5 0V4" stroke="#8b0000" stroke-width=".8"/></pattern>
+                <pattern id="tD" width="3.6" height="3.6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><path d="M0 1.8H3.6" stroke="#8b0000" stroke-width="1"/></pattern>
+                <g id="wheel6"><circle r="6" fill="#f5f5dc"/><circle r="6"/><circle r="1.6" fill="#8b0000"/><g class="spin"><path d="M0-5.5V5.5M-5.5 0H5.5M-3.9-3.9 3.9 3.9M3.9-3.9-3.9 3.9" stroke-width=".9"/></g></g>
+                <g id="wheel9"><circle r="9" fill="#f5f5dc"/><circle r="9"/><circle r="7.4" stroke-width=".8"/><circle r="2" fill="#8b0000"/><g class="spin"><path d="M0-7.4V7.4M-7.4 0H7.4M-5.2-5.2 5.2 5.2M5.2-5.2-5.2 5.2M-2.8-6.8 2.8 6.8M2.8-6.8-2.8 6.8M-6.8-2.8 6.8 2.8M6.8-2.8-6.8 2.8" stroke-width=".8"/></g></g>
+                <g id="boxcar">
+                  <path d="M2 18 Q60 11 118 18 L118 21 L2 21 Z" fill="#f5f5dc"/><path d="M2 18 Q60 11 118 18 L118 21 L2 21 Z" fill="url(#tH)"/>
+                  <rect x="6" y="21" width="108" height="35" fill="#f5f5dc"/><rect x="6" y="21" width="108" height="35" fill="url(#tV)" opacity=".55"/>
+                  <rect x="6" y="42" width="108" height="14" fill="url(#tH)"/>
+                  <rect x="6" y="21" width="108" height="35"/>
+                  <rect x="46" y="24" width="28" height="29" fill="#f5f5dc"/><path d="M46 24h28v29H46zM46 24l28 29M74 24 46 53" stroke-width="1.1"/>
+                  <path d="M4 58h112" stroke-width="2.4"/>
+                  <use href="#wheel6" x="22" y="61"/><use href="#wheel6" x="38" y="61"/><use href="#wheel6" x="82" y="61"/><use href="#wheel6" x="98" y="61"/>
+                </g>
+              </defs>
+              <use href="#boxcar" x="0" y="0"/>
+              <path d="M116 54h10" stroke-width="2"/>
+              <use href="#boxcar" x="124" y="0"/>
+              <path d="M240 54h8" stroke-width="2"/>
+              <!-- tender -->
+              <path d="M250 30 L256 22 L298 22 L302 30 Z" fill="url(#tD)"/><path d="M250 30 L256 22 L298 22 L302 30"/>
+              <rect x="248" y="30" width="56" height="26" fill="#f5f5dc"/><rect x="248" y="44" width="56" height="12" fill="url(#tH)"/><rect x="248" y="30" width="56" height="26"/>
+              <path d="M246 58h60" stroke-width="2.4"/>
+              <use href="#wheel6" x="262" y="61"/><use href="#wheel6" x="290" y="61"/>
+              <path d="M304 54h6" stroke-width="2"/>
+              <!-- cab -->
+              <path d="M306 13 L354 13 L352 8 L308 8 Z" fill="#f5f5dc"/><path d="M306 13 L354 13 L352 8 L308 8 Z"/>
+              <rect x="310" y="13" width="40" height="43" fill="#f5f5dc"/><rect x="310" y="40" width="40" height="16" fill="url(#tH)"/><rect x="310" y="13" width="40" height="43"/>
+              <rect x="318" y="19" width="24" height="15" fill="#f5f5dc"/><path d="M318 19h24v15h-24zM330 19v15" stroke-width="1.1"/>
+              <!-- boiler and smokebox -->
+              <rect x="350" y="27" width="86" height="25" fill="#f5f5dc"/><rect x="350" y="40" width="86" height="12" fill="url(#tH)"/><rect x="350" y="27" width="86" height="25"/>
+              <path d="M372 27v25M396 27v25M418 27v25" stroke-width="1"/>
+              <path d="M436 25 h8 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-8 Z" fill="#f5f5dc"/><path d="M436 25 h8 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-8 Z" fill="url(#tD)" opacity=".7"/><path d="M436 25 h8 a4 4 0 0 1 4 4 v20 a4 4 0 0 1 -4 4 h-8 Z"/>
+              <path d="M378 27 a8 8 0 0 1 16 0" fill="#f5f5dc"/><path d="M378 27 a8 8 0 0 1 16 0"/>
+              <path d="M422 27 L424 11 L434 11 L436 27 Z" fill="#f5f5dc"/><path d="M424 11 L434 11 L436 27 L422 27 Z" fill="url(#tV)"/><path d="M422 27 L424 11 L434 11 L436 27"/>
+              <path d="M419 11 h18 v-5 h-18 Z" fill="#f5f5dc"/><path d="M419 11 h18 v-5 h-18 Z"/>
+              <rect x="444" y="17" width="9" height="8" fill="#f5f5dc"/><rect x="444" y="17" width="9" height="8"/><path d="M453 21h3" stroke-width="1"/>
+              <!-- running board, cylinder, pilot -->
+              <path d="M350 53h100" stroke-width="2.2"/>
+              <rect x="424" y="47" width="18" height="10" fill="#f5f5dc"/><rect x="424" y="47" width="18" height="10" fill="url(#tH)"/><rect x="424" y="47" width="18" height="10"/>
+              <path d="M446 55 L470 66 L446 66 Z" fill="#f5f5dc"/><path d="M446 55 L470 66 L446 66 Z" fill="url(#tD)"/><path d="M446 55 L470 66 L446 66 Z"/>
+              <use href="#wheel6" x="330" y="61"/>
+              <use href="#wheel9" x="366" y="58"/><use href="#wheel9" x="390" y="58"/><use href="#wheel9" x="414" y="58"/>
+              <use href="#wheel6" x="436" y="61"/>
+              <g class="rod"><path d="M366 58H414" stroke-width="2.6"/><circle cx="366" cy="58" r="1.6" fill="#8b0000"/><circle cx="390" cy="58" r="1.6" fill="#8b0000"/><circle cx="414" cy="58" r="1.6" fill="#8b0000"/></g>
+              <!-- smoke -->
+              <circle class="puff" cx="428" cy="2" r="6" fill="#f5f5dc"/>
+              <circle class="puff" cx="428" cy="2" r="6" fill="#f5f5dc"/>
+              <circle class="puff" cx="428" cy="2" r="6" fill="#f5f5dc"/>
+            </svg>
+          </div>
+          <img src="assets/wood-frame.avif" alt="">
+          <img class="fern" src="assets/wood-fern.avif" alt="">
+          <img src="assets/wood-caps.avif" alt="">
+        </div>
+      </div>
+      <div class="site-bar" aria-hidden="true"><i style="background:#ff6057"></i><i style="background:#ffbd2e"></i><i style="background:#28ca41"></i><span>terminal — bash</span></div>
+      <div class="controls"><button class="motion" type="button" data-pause aria-pressed="false">Pause</button><span class="still-only eyebrow">Motion is off on this device, so the train is parked mid-shelf.</span></div>
+    </div>
+    <dl class="notes">
+      <div><dt>Moves</dt><dd>The train rides on the shelf in front of the books and behind the frame, so each divider hides it for a moment. Wheels turn, smoke puffs drift back, and the fern sways slightly.</dd></div>
+      <div><dt>Weight</dt><dd>About 0.55 MB for four image layers. The train is a small drawing in the page itself.</dd></div>
+      <div><dt>Phones</dt><dd>Shows the middle five cubbies of the shelf. Reduced-motion settings get the train parked mid-shelf.</dd></div>
+    </dl>
+  </section>
+
+  <!-- C -->
+  <section class="variant v-plates" id="plates" aria-labelledby="c-title">
+    <div class="variant-head"><span class="tag">C</span><h2 id="c-title">Exploded View</h2>
+      <p>The skyline at rest, with red spines picked out like a second printing ink. Move the pointer across it and the layers shift by different amounts, giving a quiet sense of depth. Press the button and the layers swing apart into a stack of cards, like the middle of the tweet's video, then fall back into place.</p></div>
+    <div class="proof">
+      <div class="hdr" role="img" aria-label="Engraved panorama of six bookcases that can separate into its four layers">
+        <div class="stage rig">
+          <div class="card c-wall" style="--z:0; --depth:0"><div class="wall fill"></div><img class="fill" src="assets/sky-floor-day.avif" alt=""></div>
+          <div class="card" style="--z:70; --depth:2"><img class="fill" src="assets/sky-back-day.avif" alt=""></div>
+          <div class="card" style="--z:140; --depth:5"><img class="fill" src="assets/sky-books-day.avif" alt=""></div>
+          <div class="card" style="--z:210; --depth:8"><img class="fill" src="assets/sky-frame-day.avif" alt=""></div>
+          <div class="card" style="--z:280; --depth:11"><img class="fill" src="assets/sky-top-day.avif" alt=""></div>
+        </div>
+      </div>
+      <div class="site-bar" aria-hidden="true"><i style="background:#ff6057"></i><i style="background:#ffbd2e"></i><i style="background:#28ca41"></i><span>terminal — bash</span></div>
+      <div class="controls"><button type="button" data-explode aria-pressed="false">Separate the layers</button></div>
+    </div>
+    <dl class="notes">
+      <div><dt>Moves</dt><dd>Nothing until you interact. The pointer shifts the back wall, books, frame and top decor by different amounts. The button fans the four layers apart in 3D.</dd></div>
+      <div><dt>Weight</dt><dd>About 0.9 MB for five layers.</dd></div>
+      <div><dt>Phones</dt><dd>No pointer, so it sits still until tapped. Tapping the button still separates the layers.</dd></div>
+    </dl>
+  </section>
+
+  <footer>
+    <p><b>To choose:</b> reply with A, B or C. Mixing works too, for example "B's train on A's skyline", or "A with C's red spines".</p>
+    <p>Once you pick, I'll add it to the top of the homepage above the terminal box, with a pause button, a still image for reduced-motion settings, and smaller images for phones.</p>
+  </footer>
+</main>
+
+<script>
+(() => {
+  // Lamp positions: [left %, top %, width %, height %, start delay s], from the cubby openings found in the render.
+  const cubbies = [[3.75,19.15,11.17,11.99,1.04],[3.75,32.79,11.17,12.6,0.48],[3.75,46.42,11.17,12.77,2.08],[3.75,60.66,11.17,12.17,0.23],[3.75,74.89,11.17,11.56,1.71],[16.75,20.02,10.94,11.13,1.17],[16.75,33.48,10.94,11.91,0.19],[16.75,46.85,10.94,12.51,1.62],[16.75,60.66,10.94,12.08,0.12],[16.75,74.89,10.94,11.22,1.39],[29.5,19.15,11.17,11.91,0.22],[29.5,32.79,11.17,12.6,0.29],[29.5,46.42,11.17,12.68,1.36],[29.5,60.57,11.17,12.17,2.65],[29.5,74.81,11.17,11.56,0.4],[44.72,18.55,1.72,12.08,0.71],[44.72,32.87,3.94,10.96,2.01],[44.72,45.99,3.94,10.61,3.03],[44.72,59.1,3.94,10.09,1.85],[44.72,72.3,3.94,9.4,1.27],[46.92,18.55,1.75,12.08,3.12],[49.0,18.55,1.86,12.08,0.15],[49.03,32.87,4.03,10.96,2.75],[49.03,45.99,4.03,10.61,0.93],[49.03,59.1,4.03,10.09,0.46],[49.03,72.3,4.03,9.4,0.38],[51.11,18.55,1.94,12.08,0.99],[53.22,18.55,1.94,12.08,2.61],[53.22,32.87,4.03,10.96,0.58],[53.22,45.99,4.03,10.61,1.86],[53.22,59.1,4.03,10.09,2.04],[53.22,72.3,4.03,9.4,1.19],[55.44,18.55,1.83,12.08,1.75],[57.64,18.55,1.75,12.08,0.2],[57.64,32.87,3.92,10.96,0.19],[57.64,45.99,3.92,10.61,0.66],[57.64,59.1,3.92,10.09,2.18],[57.64,72.3,3.92,9.4,1.37],[59.83,18.55,1.72,12.08,1.01],[65.94,32.01,3.14,7.68,1.87],[65.94,41.42,3.14,8.28,1.45],[65.94,50.91,3.14,8.89,0.96],[65.94,60.48,3.14,8.8,2.54],[65.94,70.49,3.14,8.28,2.24],[65.94,80.5,3.14,7.77,0.78],[69.83,32.01,3.69,11.99,1.84],[69.83,45.47,3.69,5.0,1.68],[69.83,50.82,3.69,8.37,2.8],[69.83,60.48,3.69,10.53,2.33],[69.83,71.35,3.69,2.85,0.92],[69.83,75.67,3.69,12.51,3.14],[73.97,32.01,4.0,11.99,0.38],[73.97,45.47,4.0,5.0,1.34],[73.97,50.82,4.0,8.37,2.42],[73.97,60.48,4.0,10.53,0.49],[73.97,71.35,4.0,2.85,1.56],[73.97,75.67,4.0,12.51,0.13],[78.58,32.01,3.97,11.99,2.14],[78.58,45.47,3.97,5.0,2.45],[78.58,50.82,3.97,8.37,1.83],[78.58,60.48,3.97,10.53,2.8],[78.58,71.35,3.97,2.85,1.0],[78.58,75.67,3.97,12.51,2.22],[83.03,32.01,3.47,11.99,1.9],[83.03,45.47,3.47,5.0,1.86],[83.03,50.82,3.47,8.37,1.46],[83.03,60.48,3.47,10.53,2.69],[83.03,71.35,3.47,2.85,3.02],[83.03,75.67,3.47,12.51,1.52]];
+  // Skip the wine rack and the thin slivers between the glass doors' rails.
+  const lit = cubbies.filter(([x, , , h]) => h >= 6 && !(x > 65 && x < 69));
+  for (const layer of document.querySelectorAll('.v-night .lamps, .v-night .spill')) {
+    for (const [x, y, w, h, d] of lit) {
+      const i = document.createElement('i');
+      i.style.cssText = `left:${x}%;top:${y}%;width:${w}%;height:${h}%;--d:${d}s`;
+      layer.append(i);
+    }
+  }
+
+  for (const btn of document.querySelectorAll('[data-pause]')) {
+    btn.addEventListener('click', () => {
+      const v = btn.closest('.variant');
+      const paused = v.classList.toggle('paused');
+      btn.setAttribute('aria-pressed', String(paused));
+      btn.textContent = paused ? 'Play' : 'Pause';
+    });
+  }
+
+  const plates = document.querySelector('.v-plates');
+  const rig = plates.querySelector('.rig');
+  const hdr = plates.querySelector('.hdr');
+  const explode = plates.querySelector('[data-explode]');
+  explode.addEventListener('click', () => {
+    const on = plates.classList.toggle('exploded');
+    explode.setAttribute('aria-pressed', String(on));
+    explode.textContent = on ? 'Stack them back' : 'Separate the layers';
+  });
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  hdr.addEventListener('pointermove', e => {
+    if (still.matches || e.pointerType === 'touch') return;
+    const r = hdr.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width - .5) * 2;
+    const py = ((e.clientY - r.top) / r.height - .5) * 2;
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => { rig.style.setProperty('--px', px.toFixed(3)); rig.style.setProperty('--py', py.toFixed(3)); });
+  });
+  hdr.addEventListener('pointerleave', () => { rig.style.setProperty('--px', 0); rig.style.setProperty('--py', 0); });
+})();
+</script>
