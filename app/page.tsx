@@ -273,9 +273,6 @@ export default function TerminalRepoList() {
 
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
-      {/* Plate I: the bookcases from morning to night */}
-      <BookshelfScene scene="night" priority className="mb-5" />
-
       {/* Terminal Header */}
       <div className="border border-[#cccccc] bg-[#e8e8d8] p-2 md:p-4 mb-5 rounded-md shadow-sm overflow-x-auto">
         <div className="flex items-center mb-2">
@@ -338,6 +335,9 @@ export default function TerminalRepoList() {
           <span className="text-[#8b0000]">$</span> ls -la{" "}
         </div>
       </div>
+
+      {/* Plate I: the bookcases from morning to night, under the terminal header */}
+      <BookshelfScene scene="night" priority className="mb-5" />
 
       {/* Table of Contents */}
       <div className="border border-[#cccccc] bg-[#f0f0e0] p-4 mb-5 rounded-md shadow-sm">

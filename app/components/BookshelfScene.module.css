@@ -66,14 +66,17 @@
 
 /* ---------- Plate I: Night Shift ---------- */
 
+/* One full turn, morning to night and back. */
+.night { --cycle: 20s; }
+
 .sun,
 .moon {
   position: absolute;
   left: 0;
   will-change: transform;
 }
-.sun { top: 3%; width: 12%; height: 50%; animation: sunPath 24s linear infinite; }
-.moon { top: 8%; width: 12%; height: 56%; animation: moonPath 24s linear infinite; }
+.sun { top: 3%; width: 12%; height: 50%; animation: sunPath var(--cycle) linear infinite; }
+.moon { top: 8%; width: 12%; height: 56%; animation: moonPath var(--cycle) linear infinite; }
 
 .pane {
   position: absolute;
@@ -103,7 +106,7 @@
   background: #c46a2b;
   mix-blend-mode: multiply;
   opacity: 0;
-  animation: dusk 24s linear infinite;
+  animation: dusk var(--cycle) linear infinite;
 }
 @keyframes dusk {
   0%, 36% { opacity: 0; }
@@ -113,7 +116,7 @@
 
 .nightfall {
   opacity: 0;
-  animation: nightfall 24s linear infinite;
+  animation: nightfall var(--cycle) linear infinite;
   will-change: opacity;
 }
 @keyframes nightfall {
@@ -131,7 +134,7 @@
   position: absolute;
   display: block;
   opacity: 0;
-  animation: lamp 24s linear infinite;
+  animation: lamp var(--cycle) linear infinite;
   will-change: opacity;
 }
 .lamps .lamp {
