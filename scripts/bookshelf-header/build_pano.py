@@ -21,6 +21,9 @@ LAYOUTS = {
     "skyline": dict(cases=[("study-left", 0), ("study-cream", 0.25), ("study-right", 0.25), ("wood", 1.5),
                            ("glass", 1.5), ("tower", 1.3)],
                     width_px=3600, margin=1.8, top=0.9, floor=1.7),
+    # The three study cases, closer in: the top two rows and the stacks on top.
+    "study-band": dict(cases=[("study-left", 0), ("study-cream", 0.25), ("study-right", 0.25)],
+                       width_px=3600, margin=1.2, top=0.5, floor=0, crop_units=(8.2, 16.25)),
     # The wooden case alone, framed wide: top rows plus the fern and caps.
     "wood-band": dict(cases=[("wood", 0)], width_px=3600, margin=3.0, top=0.5, floor=0, crop_units=(9.75, 14.95)),
 }

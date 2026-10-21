@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
@@ -15,6 +15,7 @@ import SyllabusPartIcon from "./components/SyllabusPartIcon";
 import FeaturedTweets from "./components/FeaturedTweets";
 import ShipLog from "./components/ShipLog";
 import BookshelfPreview from "./components/BookshelfPreview";
+import BookshelfScene from "./components/BookshelfScene";
 import { featuredTweets } from "./data/tweets";
 import { getShipLogStats, WINDOW_LABEL } from "./data/shipLog";
 import { type Entry, getTypeInfo, groupedEntries } from "./data/cv";
@@ -280,6 +281,9 @@ export default function TerminalRepoList() {
 
   return (
     <div className="min-h-screen bg-[#f5f5dc] text-[#333333] font-mono p-5">
+      {/* Plate I: the bookcases from morning to night */}
+      <BookshelfScene scene="night" variant="terminal" priority className="mb-5" />
+
       {/* Terminal Header */}
       <div className="border border-[#cccccc] bg-[#e8e8d8] p-2 md:p-4 mb-5 rounded-md shadow-sm overflow-x-auto">
         <div className="flex items-center mb-2">
@@ -594,6 +598,9 @@ export default function TerminalRepoList() {
           </div>
         </div>
 
+        {/* Plate II: the study shelves, between the build log and the resume */}
+        <BookshelfScene scene="study" variant="terminal" className="mb-8" />
+
         {Object.keys(groupedEntries)
           .sort((a, b) => {
             const order = [
@@ -617,8 +624,10 @@ export default function TerminalRepoList() {
             const typeEntries = groupedEntries[type];
 
             return (
+              <Fragment key={type}>
+              {/* Plate III: the top shelf and its train, just above the reading list */}
+              {type === "books" && <BookshelfScene scene="train" variant="terminal" className="mb-8" />}
               <div
-                key={type}
                 id={type}
                 className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
               >
@@ -1218,6 +1227,7 @@ export default function TerminalRepoList() {
                   })()}
                 </div>
               </div>
+              </Fragment>
             );
           })}
 

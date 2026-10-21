@@ -15,6 +15,7 @@ import { featuredTweets } from '../data/tweets';
 import FeaturedTweets from './FeaturedTweets';
 import ShipLog from './ShipLog';
 import BookshelfPreview from './BookshelfPreview';
+import BookshelfScene from './BookshelfScene';
 import { getShipLogStats, WINDOW_LABEL } from '../data/shipLog';
 
 interface Entry {
@@ -389,6 +390,11 @@ export default function MarketerHome() {
 
   return (
     <div className="min-h-screen bg-white marketer-view">
+      {/* Plate I: the bookcases from morning to night */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <BookshelfScene scene="night" variant="marketer" priority />
+      </div>
+
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 mb-8">
@@ -519,6 +525,9 @@ export default function MarketerHome() {
           <ShipLog variant="marketer" />
         </section>
 
+        {/* Plate II: the study shelves, between the build log and the resume */}
+        <BookshelfScene scene="study" variant="marketer" />
+
         {/* Professional Profile / CV Section */}
         <section id="cv">
           <div className="flex items-center gap-2 mb-6">
@@ -623,6 +632,9 @@ export default function MarketerHome() {
           <p className="text-sm text-[#6B778C] mb-6">Selected posts showcasing recent work and builds</p>
           <FeaturedTweets variant="marketer" />
         </section>
+
+        {/* Plate III: the top shelf and its train, just above the reading list */}
+        <BookshelfScene scene="train" variant="marketer" />
 
         {/* Reading, Read, Reading Soon Section */}
         <section id="books">

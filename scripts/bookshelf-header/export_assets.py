@@ -1,6 +1,9 @@
-"""Turn engraved layer data into the WebP plates the header uses.
+"""Turn engraved layer data into the AVIF layers the homepage scenes use.
 
 usage: python3 -I export_assets.py <scripts dir> <out root> <assets dir>
+
+<out root> holds the build_pano.py output folders (skyline, studyband, woodband).
+Every layer is written twice: full width (3600px) and half width (-1800).
 """
 import json
 import sys
@@ -10,13 +13,12 @@ import numpy as np
 from PIL import Image
 
 sys.path.insert(0, sys.argv[1])
-from engrave import INK, PAPER, RED, hatch, layer_rgba, over
+from engrave import INK, PAPER, RED, layer_rgba
 
 root, assets = Path(sys.argv[2]), Path(sys.argv[3])
 assets.mkdir(parents=True, exist_ok=True)
 
 hexc = lambda h: np.array([int(h[i:i + 2], 16) for i in (1, 3, 5)], np.float32) / 255
-NIGHT_WALL = hexc("#141b2b")
 NIGHT_FILL = hexc("#232c44")
 NIGHT_INK = hexc("#0a0e18")
 NIGHT_RED = hexc("#5a1c24")
@@ -26,10 +28,12 @@ sizes = {}
 
 
 def save(name, rgba, quality=60):
-    im = Image.fromarray((np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA" if rgba.shape[2] == 4 else "RGB")
-    path = assets / f"{name}.avif"
-    im.save(path, "AVIF", quality=quality)
-    sizes[name] = path.stat().st_size // 1024
+    im = Image.fromarray((np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
+    half = im.convert("RGBa").resize((im.width // 2, im.height // 2), Image.LANCZOS).convert("RGBA")
+    for suffix, img in (("", im), ("-1800", half)):
+        path = assets / f"{name}{suffix}.avif"
+        img.save(path, "AVIF", quality=quality)
+        sizes[f"{name}{suffix}"] = path.stat().st_size // 1024
 
 
 def load(d, cat):
@@ -59,23 +63,30 @@ def floor_layer(floor_ink, ink):
     return layer_rgba(floor_ink, np.zeros_like(floor_ink), ink)
 
 
-# Skyline: separate plates for the exploded view, night set for the time-lapse.
+layouts = {}
+
+# Plate I, Night Shift: the skyline. One daytime image, three night layers.
 d = root / "skyline"
-meta = json.loads((d / "meta.json").read_text())
+layouts["skyline"] = json.loads((d / "meta.json").read_text())
 L = {c: load(d, c) for c in ["back", "books", "frame", "top"]}
 floor = np.load(d / "floor.npz")["ink"].astype(np.float32)
-H, W = floor.shape
-save("sky-floor-day", floor_layer(floor, INK))
+save("sky-day", stack(floor_layer(floor, INK), *(layer(L[c], PAPER, INK, RED) for c in ["back", "books", "frame", "top"])))
 save("sky-floor-night", floor_layer(floor, NIGHT_WALL_INK * 0.6 + NIGHT_FILL * 0.4))
-for c in ["back", "books", "frame", "top"]:
-    save(f"sky-{c}-day", layer(L[c], PAPER, INK, RED))
 save("sky-back-night", layer(L["back"], NIGHT_FILL, NIGHT_INK))
 save("sky-fore-night", stack(*(layer(L[c], NIGHT_FILL, NIGHT_INK, NIGHT_RED) for c in ["books", "frame", "top"])))
-save("sky-poster", stack(floor_layer(floor, INK), *(layer(L[c], PAPER, INK, RED) for c in ["back", "books", "frame", "top"])))
 
-# Wooden close-up: books in plain ink so the train is the only red.
+# Plate II, Exploded View: the three study cases, one image per layer, red spines kept.
+# The stacks on top of these cases are books, so they ride in the books layer.
+d = root / "studyband"
+layouts["studyband"] = json.loads((d / "meta.json").read_text())
+L = {c: load(d, c) for c in ["back", "books", "frame"]}
+for c in ["back", "books", "frame"]:
+    save(f"study-{c}", layer(L[c], PAPER, INK, RED))
+
+# Plate III, Shelf Express: the wooden case's top shelf, books in plain ink so the train is the only red.
 d = root / "woodband"
 wmeta = json.loads((d / "meta.json").read_text())
+layouts["woodband"] = wmeta
 L = {c: load(d, c) for c in ["back", "books", "frame", "top"]}
 H, W = L["back"]["ink"].shape
 save("wood-backbooks", stack(layer(L["back"], PAPER, INK), layer(L["books"], PAPER, INK, use_red=False)))
@@ -89,9 +100,9 @@ fern[:, split:, 3] = 0
 caps[:, :split, 3] = 0
 save("wood-fern", fern)
 save("wood-caps", caps)
-wood_poster = stack(layer(L["back"], PAPER, INK), layer(L["books"], PAPER, INK, use_red=False), layer(L["frame"], PAPER, INK), top)
-save("wood-poster", wood_poster)
+layouts["fern_split"] = split / W
 
-(assets / "layout.json").write_text(json.dumps(dict(sky=meta, wood=wmeta, fern_split=split / W), indent=1))
+(Path(sys.argv[1]) / "layout.json").write_text(json.dumps(layouts, indent=1))
 print(json.dumps(sizes))
-print("total KB", sum(sizes.values()))
+print("full KB", sum(v for k, v in sizes.items() if not k.endswith("-1800")),
+      "half KB", sum(v for k, v in sizes.items() if k.endswith("-1800")))
