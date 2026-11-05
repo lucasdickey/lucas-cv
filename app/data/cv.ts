@@ -26,6 +26,8 @@ export interface Entry {
   sourceUrl?: string;
   sourceTitle: string;
   sourceDescription: string;
+  /** Hidden from every rendered surface, like an archived section, but kept here. */
+  archived?: boolean;
 }
 
 export const entries: Entry[] = [
@@ -363,6 +365,8 @@ export const entries: Entry[] = [
     sourceUrl: "https://anchor.fm/s/104b5c3cc/podcast/rss",
     sourceTitle: "Key To Sleep",
     sourceDescription: "AI-generated sleep stories and calming content",
+    // Podcasts are off the site for now.
+    archived: true,
   },
   {
     title: "Apes on Keys YouTube Channel",
@@ -508,9 +512,9 @@ export function isArchivedType(type: string): boolean {
 export const allGroupedEntries: Record<string, Entry[]> = groupEntriesByType();
 
 /**
- * Entries grouped once at module scope, with archived sections removed.
- * This is what the site and the Markdown surfaces render.
+ * Entries grouped once at module scope, with archived sections and archived
+ * entries removed. This is what the site and the Markdown surfaces render.
  */
 export const groupedEntries: Record<string, Entry[]> = groupEntriesByType(
-  entries.filter((entry) => !isArchivedType(entry.type))
+  entries.filter((entry) => !isArchivedType(entry.type) && !entry.archived)
 );

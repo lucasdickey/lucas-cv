@@ -7,7 +7,6 @@ This document provides guidance for AI assistants (like Claude) working on this 
 This is a Next.js-based personal website and portfolio for Lucas Dickey, featuring:
 - Professional resume/CV
 - Blog
-- Podcast integration
 - A retro terminal look throughout (cream paper, monospace type, dark red accents)
 
 ## Blog System

@@ -17,6 +17,19 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "The Worldly Philosophers",
+    author: "Robert L. Heilbroner",
+    description: "The classic tour of the great economic thinkers, from Adam Smith, Malthus and Ricardo to Marx, Veblen, Keynes and Schumpeter, told through their lives and the times that shaped their ideas.",
+    coverUrl: "/images/books/the-worldly-philosophers.jpg",
+    amazonUrl: "https://www.amazon.com/dp/068486214X/",
+    slug: "the-worldly-philosophers-robert-l-heilbroner",
+    status: "reading",
+    detailedDescription: "First published in 1953 and revised many times since, Heilbroner's history of economic thought reads more like a set of biographies than a textbook. Each chapter follows one thinker, or a group of them, through the world they were trying to explain: Adam Smith watching the first factories, Malthus and Ricardo arguing over population and rent, the utopian socialists, Marx, Veblen's leisure class, Keynes in the Depression and Schumpeter on capitalism's future. The through line is that economics began as an attempt to make sense of how society provides for itself, and its big ideas came from people looking hard at their own times.",
+    genre: "Economics",
+    publishedYear: "1953",
+    publisher: "Touchstone"
+  },
+  {
     title: "Children of Time",
     author: "Adrian Tchaikovsky",
     description: "An Arthur C. Clarke Award-winning epic about the last humans fleeing a dying Earth and the uplifted spider civilization that evolves on the planet they hoped to claim.",
