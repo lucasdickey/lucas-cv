@@ -11,11 +11,27 @@ export interface FeaturedTweet {
 // Newest first. To add a tweet, drop in its status ID and URL.
 export const featuredTweets: FeaturedTweet[] = [
   {
-    id: "2052217979618853045",
-    url: "https://x.com/i/status/2052217979618853045",
+    id: "2097107494833422793",
+    url: "https://x.com/Lucasdickey/status/2097107494833422793",
   },
   {
-    id: "2050635178872115695",
-    url: "https://x.com/i/status/2050635178872115695",
+    id: "2092352357380358233",
+    url: "https://x.com/Lucasdickey/status/2092352357380358233",
+  },
+  {
+    id: "2088787364193972487",
+    url: "https://x.com/Lucasdickey/status/2088787364193972487",
+  },
+  {
+    id: "2112403570628632650",
+    url: "https://x.com/Lucasdickey/status/2112403570628632650",
+  },
+  {
+    id: "2090972531687878947",
+    url: "https://x.com/Lucasdickey/status/2090972531687878947",
+  },
+  {
+    id: "2094893782768722075",
+    url: "https://x.com/Lucasdickey/status/2094893782768722075",
   },
 ];
