@@ -46,7 +46,7 @@ export const entries: Entry[] = [
   {
     title: "Stripe Atlas - Product Manager (2025-2026)",
     description:
-      "Product Manager on the Stripe Atlas team through October 2026, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Built new products and features for founders at the earliest stages of their startup journey. Beyond Atlas, contributed to Stripe projects and Stripe's agentic payments efforts, worked on agent steering, and helped drive AI adoption within the product management function.",
+      "Product Manager on the Stripe Atlas team through October 2026, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Built new products and features for founders at the earliest stages of their startup journey. Beyond Atlas, contributed to [Stripe Projects](https://projects.dev) and Stripe's agentic payments efforts, worked on agent steering, and helped drive AI adoption within the product management function.",
     publishedDate: "2026-10-31",
     type: "cv",
     sourceUrl: "https://stripe.com/atlas",
