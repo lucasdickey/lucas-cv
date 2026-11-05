@@ -67,9 +67,9 @@ export function renderCvMarkdown(): string {
   const out: string[] = [
     "# Lucas Dickey",
     "",
-    "Product leader and serial founder. Currently a Product Manager on Stripe",
-    "Atlas, working on company formation and the developer surfaces early-stage",
-    "founders build on.",
+    "Product leader and serial founder. Most recently a Product Manager on Stripe",
+    "Atlas (2025–2026), working on company formation, the developer surfaces",
+    "early-stage founders build on, and Stripe's agentic payments efforts.",
     "",
     `Canonical HTML version: ${SITE_URL}`,
     "",
@@ -333,8 +333,8 @@ export function renderLlmsTxt(): string {
   const out: string[] = [
     "# Lucas Dickey",
     "",
-    "> Product leader and serial founder. Currently a Product Manager on Stripe Atlas.",
-    "> Previously founder/CEO of DeepCast, co-founder & CPTO of Fernish, CPO of Azibo,",
+    "> Product leader and serial founder. Most recently a Product Manager on Stripe Atlas",
+    "> (2025–2026). Before that, founder/CEO of DeepCast, co-founder & CPTO of Fernish, CPO of Azibo,",
     "> and an early PM on Amazon's digital music business. Writes and builds at the",
     "> intersection of AI agents, developer surfaces, and company formation.",
     "",

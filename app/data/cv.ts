@@ -26,6 +26,8 @@ export interface Entry {
   sourceUrl?: string;
   sourceTitle: string;
   sourceDescription: string;
+  /** Hidden from every rendered surface, like an archived section, but kept here. */
+  archived?: boolean;
 }
 
 export const entries: Entry[] = [
@@ -42,10 +44,10 @@ export const entries: Entry[] = [
       "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
   },
   {
-    title: "Stripe Atlas - Product Manager (2025-Present)",
+    title: "Stripe Atlas - Product Manager (2025-2026)",
     description:
-      "Product Manager on Stripe Atlas team, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Focused on building new products and features to support founders at the earliest stages of their startup journey.",
-    publishedDate: "2025-12-24",
+      "Product Manager on the Stripe Atlas team through October 2026, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Built new products and features for founders at the earliest stages of their startup journey. Beyond Atlas, contributed to [Stripe Projects](https://projects.dev) and Stripe's agentic payments efforts, worked on agent steering, and helped drive AI adoption within the product management function.",
+    publishedDate: "2026-10-31",
     type: "cv",
     sourceUrl: "https://stripe.com/atlas",
     sourceTitle: "Stripe Atlas",
@@ -363,6 +365,8 @@ export const entries: Entry[] = [
     sourceUrl: "https://anchor.fm/s/104b5c3cc/podcast/rss",
     sourceTitle: "Key To Sleep",
     sourceDescription: "AI-generated sleep stories and calming content",
+    // Podcasts are off the site for now.
+    archived: true,
   },
   {
     title: "Apes on Keys YouTube Channel",
@@ -508,9 +512,9 @@ export function isArchivedType(type: string): boolean {
 export const allGroupedEntries: Record<string, Entry[]> = groupEntriesByType();
 
 /**
- * Entries grouped once at module scope, with archived sections removed.
- * This is what the site and the Markdown surfaces render.
+ * Entries grouped once at module scope, with archived sections and archived
+ * entries removed. This is what the site and the Markdown surfaces render.
  */
 export const groupedEntries: Record<string, Entry[]> = groupEntriesByType(
-  entries.filter((entry) => !isArchivedType(entry.type))
+  entries.filter((entry) => !isArchivedType(entry.type) && !entry.archived)
 );

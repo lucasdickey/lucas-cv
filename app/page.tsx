@@ -1,12 +1,11 @@
 "use client";
 
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube, ShoppingBag } from "lucide-react";
 import AudioPlayer from "../components/AudioPlayer";
 import IngestionQueue from "../components/IngestionQueue";
 import { getCodeProjectImage } from "./utils/codeProjectImages";
-import { ListeningSection } from "./components/ListeningSection";
 import { ExpandableSection } from "./components/ExpandableSection";
 import ApebotChat from "./components/ApebotChat";
 import SyllabusPartIcon from "./components/SyllabusPartIcon";
@@ -82,6 +81,34 @@ const thinkingVariants = [
   "cooking",
   "formulating",
 ];
+
+// Resume descriptions may carry Markdown-style links, [text](https://…), so the
+// same string reads as a link both here and in /cv.md.
+const INLINE_LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+
+function withInlineLinks(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let last = 0;
+  for (const match of text.matchAll(INLINE_LINK)) {
+    const [whole, label, href] = match;
+    const at = match.index ?? 0;
+    parts.push(text.slice(last, at));
+    parts.push(
+      <a
+        key={at}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#0000ff] hover:underline"
+      >
+        {label}
+      </a>
+    );
+    last = at + whole.length;
+  }
+  parts.push(text.slice(last));
+  return parts;
+}
 
 export default function TerminalRepoList() {
   // Starts null so the server and the first client render agree; the live
@@ -362,7 +389,6 @@ export default function TerminalRepoList() {
                   "syllabus",
                   "lenny",
                   "toys",
-                  "podcasts",
                   "twitter",
                   "opinion",
                 ];
@@ -373,7 +399,7 @@ export default function TerminalRepoList() {
               })
               .filter((type) => type !== "media")
               .map((type) => {
-                // Skip opinion, we'll add it after podcasts
+                // Skip opinion; it gets its own link below.
                 if (type === "opinion") return null;
 
                 const typeInfo = getTypeInfo(type);
@@ -418,13 +444,6 @@ export default function TerminalRepoList() {
               🐦 Featured on X ({featuredTweets.length})
             </a>
 
-            {/* Podcast Brain Food link in table of contents */}
-            <a
-              href="#podcasts"
-              className="text-left px-2 py-1 rounded hover:bg-[#e0e0d0] transition-colors text-[#0000ff] hover:underline"
-            >
-              🎙️ Podcast Brain Food
-            </a>
           </div>
         </div>
       </div>
@@ -705,7 +724,7 @@ export default function TerminalRepoList() {
                         </div>
 
                         <div className="text-[#333333] mb-4 leading-relaxed">
-                          {entry.description}
+                          {withInlineLinks(entry.description)}
                         </div>
                       </>
                     );
@@ -1244,15 +1263,8 @@ export default function TerminalRepoList() {
           </div>
         </div>
 
-        {/* Listening Section */}
-        <div
-          id="podcasts"
-          className="mb-8 border border-[#cccccc] rounded-md overflow-hidden shadow-sm"
-        >
-          <div className="bg-[#f5f5dc]">
-            <ListeningSection showTitle={true} showDescription={true} />
-          </div>
-        </div>
+        {/* Podcast Brain Food is archived. ListeningSection and src/data/podcasts.ts
+            are kept, so it can return as a section here with id="podcasts". */}
       </div>
 
       {/* A-OK Shop Apebot Chat */}
