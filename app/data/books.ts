@@ -17,6 +17,19 @@ export interface Book {
 
 export const books: Book[] = [
   {
+    title: "The Adventures of Amina al-Sirafi",
+    author: "Shannon Chakraborty",
+    description: "A notorious pirate captain who retired to raise her daughter is pulled back for one last job: finding a wealthy woman's kidnapped granddaughter, across a twelfth-century Indian Ocean full of sorcerers, demons and sea monsters.",
+    coverUrl: "/images/books/the-adventures-of-amina-al-sirafi.jpg",
+    amazonUrl: "https://www.amazon.com/dp/0062963511/",
+    slug: "the-adventures-of-amina-al-sirafi-shannon-chakraborty",
+    status: "reading",
+    detailedDescription: "Amina al-Sirafi was one of the most feared captains on the Indian Ocean before she gave it up for a quiet life on shore with her daughter. When a rich and dangerous family offers her a fortune to rescue a missing girl, she gathers her old crew and sets sail again, and the job turns out to involve far more than a kidnapping. Told in Amina's own wry, unapologetic voice as she sets the record straight on her legend, the novel draws on the sea tales of the medieval Islamic world. From the author of the Daevabad trilogy, which begins with The City of Brass.",
+    genre: "Fantasy",
+    publishedYear: "2023",
+    publisher: "Harper Voyager"
+  },
+  {
     title: "The Worldly Philosophers",
     author: "Robert L. Heilbroner",
     description: "The classic tour of the great economic thinkers, from Adam Smith, Malthus and Ricardo to Marx, Veblen, Keynes and Schumpeter, told through their lives and the times that shaped their ideas.",
