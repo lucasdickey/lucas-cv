@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'AI & Civilization Reading Syllabus',
+        alt: 'Ex Libris bookplate for Lucas Dickey above an engraving of six bookcases full of books',
       },
     ],
     locale: 'en_US',

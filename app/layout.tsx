@@ -3,6 +3,11 @@ import Script from "next/script";
 import "./globals.css";
 import { SITE_URL } from './lib/site';
 
+// The icons and share image are drawn by scripts/site-images/render.mjs. Bump
+// ICON_VERSION when the icons change: browsers keep old favicons long after the
+// files are replaced, and a new URL makes them fetch again.
+const ICON_VERSION = "2";
+
 export const metadata: Metadata = {
   title: "Lucas Dickey - Product Leader & Serial Founder",
   description:
@@ -10,31 +15,31 @@ export const metadata: Metadata = {
   generator: "Lucas Dickey",
   metadataBase: new URL(SITE_URL),
   icons: [
-    { rel: "icon", url: "/favicon.ico", sizes: "any" },
+    { rel: "icon", url: `/favicon.ico?v=${ICON_VERSION}`, sizes: "any" },
     {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
-      url: "/favicon-16x16.png",
+      url: `/favicon-16x16.png?v=${ICON_VERSION}`,
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      url: "/favicon-32x32.png",
+      url: `/favicon-32x32.png?v=${ICON_VERSION}`,
     },
-    { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
+    { rel: "apple-touch-icon", sizes: "180x180", url: `/apple-touch-icon.png?v=${ICON_VERSION}` },
     {
       rel: "icon",
       type: "image/png",
       sizes: "192x192",
-      url: "/android-chrome-192x192.png",
+      url: `/android-chrome-192x192.png?v=${ICON_VERSION}`,
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "512x512",
-      url: "/android-chrome-512x512.png",
+      url: `/android-chrome-512x512.png?v=${ICON_VERSION}`,
     },
   ],
 
@@ -50,7 +55,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Lucas Dickey - Product Leader & Serial Founder",
+        alt: "Ex Libris bookplate for Lucas Dickey above an engraving of six bookcases full of books",
       },
     ],
     locale: "en_US",
