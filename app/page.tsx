@@ -13,6 +13,7 @@ import FeaturedTweets from "./components/FeaturedTweets";
 import ShipLog from "./components/ShipLog";
 import BookshelfPreview from "./components/BookshelfPreview";
 import BookshelfScene from "./components/BookshelfScene";
+import PegBoard from "./components/PegBoard";
 import { featuredTweets } from "./data/tweets";
 import { getShipLogStats, WINDOW_LABEL } from "./data/shipLog";
 import { type Entry, getTypeInfo, groupedEntries } from "./data/cv";
@@ -845,6 +846,8 @@ export default function TerminalRepoList() {
                             return (
                               <>
                                 <BookshelfPreview />
+                                {/* The books on the go as a peg-board light box, just above the list */}
+                                <PegBoard className="mb-6" />
                                 {booksToShow.length > 8 ? (
                                   <ExpandableSection
                                     maxRows={4}

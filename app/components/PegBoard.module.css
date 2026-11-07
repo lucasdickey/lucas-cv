@@ -1,0 +1,84 @@
+/* Peg-board frame above the reading list. The board itself is drawn by
+   public/peg-board/peg-board.js into .board. */
+
+.frame {
+  container-type: inline-size;
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background: #0a0a0c;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Holds the canvas. The script sets the exact aspect ratio; these match it, so
+   the page doesn't jump when the board loads. */
+.board {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 28.9 / 39.77;
+  max-width: 100%;
+}
+@container (min-width: 640px) {
+  .board { aspect-ratio: 82.9 / 45.84; }
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #d8d8d0;
+  font-size: 13px;
+  text-align: center;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 8px 12px;
+  border-top: 1px solid #cccccc;
+  background: #e8e8d0;
+  color: #666666;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.label { min-width: 0; }
+.label b { color: #8b0000; margin-right: 8px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.button {
+  font: inherit;
+  font-size: 12px;
+  color: #333333;
+  background: #f5f5dc;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.button:hover { border-color: #999999; }
+.button:focus-visible,
+.book:focus-visible {
+  outline: 2px solid #8b0000;
+  outline-offset: 2px;
+}
+.count { font-variant-numeric: tabular-nums; }
+
+.books {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px 16px;
+  padding: 8px 12px 10px;
+  background: #f5f5dc;
+  border-top: 1px solid #cccccc;
+  font-size: 13px;
+}
+@container (min-width: 640px) {
+  .books { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.book { color: #0000ff; text-decoration: none; }
+.book:hover { text-decoration: underline; }
+.author { color: #666666; }
