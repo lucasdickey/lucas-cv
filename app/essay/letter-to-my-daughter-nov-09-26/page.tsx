@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     ],
     locale: 'en_US',
     type: 'article',
+    publishedTime: '2026-11-09',
   },
   twitter: {
     card: 'summary_large_image',
@@ -67,6 +68,10 @@ export default function EssayPage() {
         <h1 className="mt-12 mb-12 sm:mt-16 text-[2rem] sm:text-[2.5rem] leading-[1.2] font-normal text-[#1a1a1a] text-balance">
           {title}
         </h1>
+
+        <p className="mb-8 text-[#555555]">
+          <time dateTime="2026-11-09">November 9, 2026</time>
+        </p>
 
         <p className="mb-6">{salutation}</p>
 
