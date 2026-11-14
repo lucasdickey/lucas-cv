@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { SITE_URL } from '../lib/site';
+import { SITE_URL } from '../../lib/site';
 
 const title = "Agency, Curiosity, and the World You’re Walking Into";
 const description =
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    url: `${SITE_URL}/essay`,
+    url: `${SITE_URL}/essay/letter-to-my-daughter-nov-09-26`,
     siteName: 'Lucas Dickey CV',
     images: [
       {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     site: '@lucasdickey4',
   },
   alternates: {
-    canonical: `${SITE_URL}/essay`,
+    canonical: `${SITE_URL}/essay/letter-to-my-daughter-nov-09-26`,
   },
 };
 
@@ -56,7 +56,7 @@ const paragraphs = [
 export default function EssayPage() {
   return (
     <main className="min-h-screen bg-[#f5f5dc] text-[#222222]">
-      <article className="mx-auto max-w-[36rem] px-4 sm:px-6 pt-8 pb-24 sm:pt-12 font-serif text-[1.125rem] sm:text-[1.1875rem] leading-[1.75]">
+      <article className="mx-auto max-w-[42rem] px-4 sm:px-6 pt-8 pb-24 sm:pt-12 font-serif text-[1.125rem] sm:text-[1.1875rem] leading-[1.75]">
         <Link
           href="/"
           className="font-mono text-sm text-[#666666] hover:text-[#8b0000]"
