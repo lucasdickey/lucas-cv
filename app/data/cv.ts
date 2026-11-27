@@ -44,6 +44,16 @@ export const entries: Entry[] = [
       "Senior operator, founder, and product leader (Buttoned up, sanitized version of me, with some spice)",
   },
   {
+    title: "Anthropic - Member of Technical Staff (2026-Present)",
+    description:
+      "Technical Architect based in Seattle, helping enterprise teams put Claude to work. Teach engineers and admins through workshops, onsites, office hours and multi-week cohorts, and train customer technologists to teach others. Cover Claude Code, Claude Tag and Cowork, along with the rollout work behind them: single sign-on, permissions, connectors, spend controls and data handling. Build demos, decks and plugins with the same tools I teach, and bring what customers tell us back to the product teams. After 20+ years building products as a PM and founder, now helping others build with Claude.",
+    publishedDate: "2026-11-27",
+    type: "cv",
+    sourceUrl: "https://www.anthropic.com/",
+    sourceTitle: "Anthropic",
+    sourceDescription: "AI safety and research company - Technical Architect",
+  },
+  {
     title: "Stripe Atlas - Product Manager (2025-2026)",
     description:
       "Product Manager on the Stripe Atlas team through October 2026, working on experimental projects for early-stage company inception. Stripe Atlas has helped 70,000+ startups in 140+ countries incorporate and launch their businesses, streamlining company formation, legal documentation, tax ID registration, banking, and providing startup perks. Built new products and features for founders at the earliest stages of their startup journey. Beyond Atlas, contributed to [Stripe Projects](https://projects.dev) and Stripe's agentic payments efforts, worked on agent steering, and helped drive AI adoption within the product management function.",
